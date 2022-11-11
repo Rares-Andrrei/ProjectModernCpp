@@ -8,14 +8,24 @@ void Zone::SetScore(const uint16_t& score)
 void Zone::SetPlayer(Player* player)
 {
 	this->m_player = player;
-	if (m_captured == true)// daca zona a capturata de la alt jucator , incrementam valoarea acestia cu 100;
-	{
-		this->m_score += 100;
-	}
+	this->m_score += 100;
 }
 
 Zone Zone::operator+(const uint16_t& value)
 {
 	this->m_score += value;
 	return *this;
+}
+
+void Zone::DecrementScore()// scade scorul cu 100 , atunci cand alegem un avantaj 
+{
+	if (this->m_score >= 200)
+	{
+		this->m_score -= 100;
+	}
+}
+
+Zone operator+(const uint16_t& value, Zone& zone)
+{
+	return  zone + value;
 }

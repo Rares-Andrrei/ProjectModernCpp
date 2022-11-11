@@ -4,6 +4,7 @@
 
 class Zone
 {
+protected:
 	uint16_t m_score;
 	bool m_captured;
 	Player* m_player;
@@ -13,6 +14,7 @@ public:
 	void SetPlayer(Player* player);
 	Zone operator +(const uint16_t& value);
 	friend Zone operator+(const uint16_t& value, Zone& zone);
+	void DecrementScore(); // folosit pentru clasa  AVANTAJE
 	~Zone() = default;
 };
 
