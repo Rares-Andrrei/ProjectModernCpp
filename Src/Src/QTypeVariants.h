@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <iostream>
 #include <array>
 class QTypeVariants
 {
@@ -12,5 +13,5 @@ public:
 	void setAnswer(const std::string& answer);
 	void setVariants(const std::array<std::string, 4>& variants);
 	std::string getAnswer() const;
-
+	friend std::ostream& operator <<(std::ostream& os, const QTypeVariants& question); //afisare in consola temporar pana avem gui
 };
