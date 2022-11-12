@@ -139,6 +139,9 @@
     <ClInclude Include="QuestionManager.h" />
     <ClInclude Include="Zone.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="QTypeVariants.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

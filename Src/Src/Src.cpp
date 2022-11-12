@@ -1,7 +1,7 @@
-
 #include <iostream>
 #include "Zone.h"
 #include"Player.h"
+#include "QuestionManager.h"
 // TO DO: 
 //  Creem clasa Player. citim un jucator si il afisam
 //  Creem clasa Numeric Questions, citim o intrebare din fisier si o afisam
@@ -10,6 +10,8 @@
 //  Creem clasa Board , ce contine o matrice de Zone
 int main()
 {
-	std::cout << "Hello World!\n";
+	QuestionManager test;
+	test.addQFiles("QTypeVariants.txt", "ada");
+	std::cout << test.randQTypeVariants();
 }
 
