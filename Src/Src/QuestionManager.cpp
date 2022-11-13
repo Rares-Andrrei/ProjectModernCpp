@@ -31,20 +31,42 @@ bool QuestionManager::readQTypeVariants(const std::string& fileQTypeVariants)
 	return false;
 }
 
-QuestionManager::QuestionManager(const std::string& fileQTypeVariants, const std::string& fileQTypeNumerical)
+void QuestionManager::readQTypeNumerical()
 {
-	readQTypeVariants(fileQTypeVariants);
-	// de apelat si fucntia de add pt intrebar numerice
+	std::string question;
+	std::string answer;
+
+	for (std::ifstream in{ "QTypeNumerical.txt" }; !in.eof();)
+	{
+		std::getline(in, question);
+		std::getline(in, answer);
+		auto answerInteger = std::stoi(answer);
+		m_qNumerical.emplace_back(question, answerInteger);
+	}
 }
 
-void QuestionManager::addQFiles(const std::string& fileQTypeVariants, const std::string& fileQTypeNumerical)
+QuestionManager::QuestionManager(const std::string& fileQTypeVariants)
 {
 	readQTypeVariants(fileQTypeVariants);
-	// de apelat si fucntia de add pt intrebar numerice
+	readQTypeNumerical();
+}
+
+void QuestionManager::addQFiles(const std::string& fileQTypeVariants)
+{
+	readQTypeVariants(fileQTypeVariants);
+	readQTypeNumerical();
 }
 
 QTypeVariants QuestionManager::randQTypeVariants()
 {
 	srand(time(NULL));
 	return m_qWithVariants[rand() % m_qWithVariants.size()];
+}
+
+QTypeNumerical QuestionManager::randQTypeNumerical()
+{
+	std::random_device rd;
+	std::mt19937 eng(rd());
+	std::uniform_int_distribution<> distr(0, m_qNumerical.size() - 1);
+	return m_qNumerical[distr(eng)];
 }
