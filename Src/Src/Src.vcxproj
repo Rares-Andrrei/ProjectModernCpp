@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="QTypeNumerical.cpp" />
     <ClCompile Include="QTypeVariants.cpp" />
     <ClCompile Include="QuestionManager.cpp" />
     <ClCompile Include="Src.cpp" />
@@ -135,11 +136,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
+    <ClInclude Include="QTypeNumerical.h" />
     <ClInclude Include="QTypeVariants.h" />
     <ClInclude Include="QuestionManager.h" />
     <ClInclude Include="Zone.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="QTypeNumerical.txt" />
     <Text Include="QTypeVariants.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -11,7 +11,9 @@
 int main()
 {
 	QuestionManager test;
-	test.addQFiles("QTypeVariants.txt", "ada");
+	test.addQFiles("QTypeVariants.txt");
 	std::cout << test.randQTypeVariants();
+	std::cout << std::endl;
+	std::cout << test.randQTypeNumerical();
 }
 
