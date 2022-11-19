@@ -2,6 +2,7 @@
 #include "Zone.h"
 #include"Player.h"
 #include "QuestionManager.h"
+#include"Advantage_Fifty_Fifty.h"
 // TO DO: 
 //  Creem clasa Player. citim un jucator si il afisam
 //  Creem clasa Numeric Questions, citim o intrebare din fisier si o afisam
@@ -15,5 +16,11 @@ int main()
 	std::cout << test.randQTypeVariants();
 	std::cout << std::endl;
 	std::cout << test.randQTypeNumerical();
+	std::cout << std::endl;
+	
+
+	
+	
+	
 }
 
