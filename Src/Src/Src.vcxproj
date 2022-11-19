@@ -128,6 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnswerSugestion.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="QTypeNumerical.cpp" />
@@ -137,6 +138,7 @@
     <ClCompile Include="Zone.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnswerSugestion.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="QTypeNumerical.h" />
