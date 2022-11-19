@@ -12,7 +12,7 @@
 int main()
 {
 	QuestionManager test;
-	test.addQFiles("QTypeVariants.txt");
+	test.addQFiles("QTypeVariants.txt", "QTypeNumerical.txt");
 	std::cout << test.randQTypeVariants();
 	std::cout << std::endl;
 	std::cout << test.randQTypeNumerical();
