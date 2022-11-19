@@ -25,3 +25,21 @@ void Board::ChangeBoardDimensions()
 	m_board.resize(m_BoardHeight * m_BoardWidth);
 
 }
+
+const std::optional<Zone>& Board::operator[](const Position& indices) const
+{
+	const auto& [row, column] = indices;
+	return m_board[row * m_BoardWidth + column];
+}
+
+std::optional<Zone>& Board::operator[](const Position& indices)
+{
+	const auto& [row, column] = indices;
+	return m_board[row * m_BoardWidth + column];
+}
+
+int Board::getTotalScore()
+{
+	return m_totalScore;
+}
+
