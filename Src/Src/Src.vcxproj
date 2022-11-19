@@ -128,6 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnswerFiftyFifty.cpp" />
     <ClCompile Include="AnswerSugestion.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -138,6 +139,7 @@
     <ClCompile Include="Zone.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnswerFiftyFifty.h" />
     <ClInclude Include="AnswerSugestion.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="Player.h" />

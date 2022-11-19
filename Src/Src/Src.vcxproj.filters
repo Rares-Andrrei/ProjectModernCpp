@@ -39,6 +39,9 @@
     <ClCompile Include="AnswerSugestion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AnswerFiftyFifty.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Zone.h">
@@ -60,6 +63,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AnswerSugestion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnswerFiftyFifty.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

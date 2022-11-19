@@ -2,7 +2,7 @@
 #include "Zone.h"
 #include"Player.h"
 #include "QuestionManager.h"
-#include"Advantage_Fifty_Fifty.h"
+#include"AnswerFiftyFifty.h"
 #include "AnswerSugestion.h"
 // TO DO: 
 //  Creem clasa Player. citim un jucator si il afisam
@@ -18,6 +18,13 @@ int main()
 	std::cout << std::endl;
 	std::cout << test.randQTypeNumerical();
 	std::cout << std::endl;	
+	AnswerFiftyFifty test1("Brazil", { "Colombia","Indonesia","Brazil","Vietnam" });//Testarea avantajului pentru intrebarea Which country produces the most coffee in the world?
+	std::vector<std::string>a = test1.Advantage_utility();
+	for (auto i : a)
+	{
+		std::cout << i << " ";
+	}
+	
 
 
 
