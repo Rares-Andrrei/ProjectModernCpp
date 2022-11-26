@@ -128,9 +128,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Advantages.cpp" />
     <ClCompile Include="AnswerFiftyFifty.cpp" />
     <ClCompile Include="AnswerSugestion.cpp" />
     <ClCompile Include="Board.cpp" />
+    <ClCompile Include="FourCloseAnswers.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="QTypeNumerical.cpp" />
     <ClCompile Include="QTypeVariants.cpp" />
@@ -139,9 +141,11 @@
     <ClCompile Include="Zone.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Advantages.h" />
     <ClInclude Include="AnswerFiftyFifty.h" />
     <ClInclude Include="AnswerSugestion.h" />
     <ClInclude Include="Board.h" />
+    <ClInclude Include="FourCloseAnswers.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="QTypeNumerical.h" />
     <ClInclude Include="QTypeVariants.h" />

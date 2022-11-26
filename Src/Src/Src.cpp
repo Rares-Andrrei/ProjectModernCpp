@@ -4,12 +4,15 @@
 #include "QuestionManager.h"
 #include"AnswerFiftyFifty.h"
 #include "AnswerSugestion.h"
+#include "FourCloseAnswers.h"
+
 // TO DO: 
 //  Creem clasa Player. citim un jucator si il afisam
 //  Creem clasa Numeric Questions, citim o intrebare din fisier si o afisam
 //  Creem clasa QuestionsWithFourAnswers , citim o intrebare din fisier si o afisam
 //  Creem clasa Zone .O instantiem cu valorile necesare
 //  Creem clasa Board , ce contine o matrice de Zone
+
 int main()
 {
 	QuestionManager test;
@@ -26,6 +29,18 @@ int main()
 	{
 		std::cout << i << " ";
 	}
+
+	std::cout << std::endl << std::endl;
+
+	FourCloseAnswers test2;
+	QTypeNumerical intrebare;
+	intrebare = test.randQTypeNumerical();
+	std::cout << intrebare;
+	test2.GenerateVariants(intrebare);
+	std::cout << "generated variants: ";
+	std::cout << test2;
+
+	return 0;
 	
 
 
