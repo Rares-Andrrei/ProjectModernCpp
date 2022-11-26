@@ -1,17 +1,19 @@
 #pragma once
 #include<string>
 #include<iostream>
-enum class Color: uint8_t
-{
-	None,
-	Red,
-	Blue,
-	Green,
-	Yellow
-};
+
 
 class Player
 {
+public:
+	enum class Color : uint8_t
+	{
+		None,
+		Red,
+		Blue,
+		Green,
+		Yellow
+	};
 private:
 	std::string m_firstName;
 	std::string m_lastName;
@@ -21,7 +23,8 @@ public:
 	Player(std::string firstName,std::string lastName);
 	Player(std::string firstName, std::string lastName, Color color);
 	std::string getFirstName()const;
-	Color getColor()const;
+	Player::Color getColor()const;
+	static std::string ColorToString(Player::Color color);
 	void setFirstName(std::string& first_name);
 	void setLastName(std::string& last_name);
 	void setColor(Color color) ;

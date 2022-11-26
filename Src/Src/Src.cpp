@@ -40,7 +40,7 @@ int main()
 	//std::cout << "generated variants: ";
 	//std::cout << test2;
 	Player test4("Mihai", "Stan");
-	test4.setColor(Color::Yellow);
+	test4.setColor(Player::Color::Yellow);
 	std::cout << test4;
 
 	return 0;
