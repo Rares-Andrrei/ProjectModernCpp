@@ -7,11 +7,10 @@ class Zone
 protected:
 	uint16_t m_score;
 	bool m_captured;
-	Player m_player;
+	Player::Color m_color;
 public:
-	Zone() = default;
+	Zone(Player::Color color) ;
 	void SetScore(const uint16_t& score = 100);
-	void SetPlayer(Player player);
 	Zone operator +(const uint16_t& value);
 	friend Zone operator+(const uint16_t& value, Zone& zone);
 	void DecrementScore(); // folosit pentru clasa  AVANTAJE

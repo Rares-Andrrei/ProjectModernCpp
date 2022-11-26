@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Zone.h"
+#include "board.h"
 #include"Player.h"
 #include "QuestionManager.h"
 #include"AnswerFiftyFifty.h"
@@ -42,6 +42,15 @@ int main()
 	Player test4("Mihai", "Stan");
 	test4.setColor(Player::Color::Yellow);
 	std::cout << test4;
+
+
+
+	//test 5
+	Zone z(Player::Color::Blue);
+	Board b(3);
+	b[{2, 2}] = z;
+	std::cout << b;
+
 
 	return 0;
 	

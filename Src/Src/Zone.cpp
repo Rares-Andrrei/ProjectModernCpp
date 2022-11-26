@@ -1,15 +1,16 @@
 #include "Zone.h"
 
+Zone::Zone(Player::Color color)
+{
+	this->m_color = color;
+	this->m_score = 100;
+}
+
 void Zone::SetScore(const uint16_t& score)
 {
 	this->m_score = score;
 }
 
-void Zone::SetPlayer(Player player)
-{
-	this->m_player = player;
-	this->m_score += 100;
-}
 
 Zone Zone::operator+(const uint16_t& value)
 {
@@ -40,7 +41,7 @@ std::ostream& operator<<(std::ostream& out, const Zone& zona)
 	//out << zona.Color<<' '; 
 	// aceasta operatie necesita un nou tip de date : Color, in clasa jucator.
 
-	out << zona.m_player << ' ';
+	out << Player::ColorToString(zona.m_color) << ' ';
 
 
 	return out;

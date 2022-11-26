@@ -134,6 +134,7 @@
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="FourCloseAnswers.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerBase.cpp" />
     <ClCompile Include="QTypeNumerical.cpp" />
     <ClCompile Include="QTypeVariants.cpp" />
     <ClCompile Include="QuestionManager.cpp" />
@@ -147,6 +148,7 @@
     <ClInclude Include="Board.h" />
     <ClInclude Include="FourCloseAnswers.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerBase.h" />
     <ClInclude Include="QTypeNumerical.h" />
     <ClInclude Include="QTypeVariants.h" />
     <ClInclude Include="QuestionManager.h" />

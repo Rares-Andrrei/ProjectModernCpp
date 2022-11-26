@@ -1,7 +1,7 @@
 #include "PlayerBase.h"
 
-PlayerBase::PlayerBase()
-	:Zone()
+PlayerBase::PlayerBase(Player::Color color)
+	:Zone(color )
 {
 	this->SetScore(300);
 }
