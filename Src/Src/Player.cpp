@@ -1,33 +1,53 @@
 #include "Player.h"
 #include<iostream>
 #include<string>
-Player::Player()
+
+
+Player::Player(std::string firstName, std::string lastName)
 {
+    this->m_firstName = firstName;
+    this->m_lastName = lastName;
+    this->m_color = Color::None;
 }
 
-std::string Player::Get_First_Name()
+Player::Player(std::string firstName, std::string lastName, Color color)
 {
-    return m_first_name;
+    this->m_firstName = firstName;
+    this->m_lastName = lastName;
+    this->m_color = color;
+}
+std::string Player::getFirstName() const
+{
+    return m_firstName;
 }
 
-void Player::set_First_Name(std::string& first_name)
+void Player::setFirstName(std::string& const first_name)
 {
-    this->m_first_name = first_name;
+    this->m_firstName = first_name;
 }
 
-void Player::set_Last_Name(std::string& last_name)
+void Player::setLastName(std::string& const last_name) 
 {
-    this->m_last_name = last_name;
+    this->m_lastName = last_name;
 }
 
-std::string Player::Get_Last_Name()
+void Player::setColor(Color const color) 
 {
-    return m_last_name;
+    this->m_color = color;
+}
+Color Player::getColor() const
+{
+    return m_color;
+}
+
+std::string Player::getLastName() const
+{
+    return m_lastName;
 }
 
 std::istream& operator>>(std::istream& in,  Player & player)
 { 
-    in >> player.m_first_name >> player.m_last_name;
+    in >> player.m_firstName >> player.m_lastName;
     return in;
 }
 

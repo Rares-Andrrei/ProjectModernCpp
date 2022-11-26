@@ -1,19 +1,33 @@
 #pragma once
 #include<string>
 #include<iostream>
+enum class Color: uint8_t
+{
+	None,
+	Red,
+	Blue,
+	Green,
+	Yellow
+};
+
 class Player
 {
 private:
-	std::string m_first_name;
-	std::string m_last_name;
+	std::string m_firstName;
+	std::string m_lastName;
+	Color m_color:3;
+
 public:
-	Player();
-	std::string Get_First_Name();
-	void set_First_Name(std::string& first_name);
-	void set_Last_Name(std::string& last_name);
-	std::string Get_Last_Name();
+	Player(std::string firstName,std::string lastName);
+	Player(std::string firstName, std::string lastName, Color color);
+	std::string getFirstName()const;
+	Color getColor()const;
+	void setFirstName(std::string& first_name);
+	void setLastName(std::string& last_name);
+	void setColor(Color color) ;
+	std::string getLastName()const;
 	friend std::istream& operator>>(std::istream& in,  Player & player);
-	friend std::ostream& operator<<(std::ostream& out, Player& player);
+	friend std::ostream& operator<<(std::ostream& out,const Player& player);
 	
 
 };
