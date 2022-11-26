@@ -46,8 +46,7 @@ void Board::ObtainTotalScore()
 		if (z.has_value())
 		{
 			auto zone = z.value();
-			// implementare metoda GetScore in clasa Zone
-			//m_totalScore = zone.GetScore();
+			m_totalScore = zone.getScore();
 		}
 	}
 }
@@ -62,19 +61,19 @@ std::ostream& operator<<(std::ostream& out, Board board)
 	out << '\n';
 	Board::Position pos;
 	auto& [row, column] = pos;
-	for ( row = 0; row < board.m_BoardHeight; row++)
+	for (row = 0; row < board.m_BoardHeight; row++)
 	{
-		for ( column = 0; column < board.m_BoardWidth; column++)
+		for (column = 0; column < board.m_BoardWidth; column++)
 		{
 			if (board[pos].has_value())
 			{
-				//implementare operator afisare pentru clasa ZONE
-				//out << *board[pos] << ' ';
+				out << *board[pos] << ' ';
 			}
 			else {
 				out << "________ ";
 			}
 		}
+		out << std::endl;
 	}
 	return out;
 }
