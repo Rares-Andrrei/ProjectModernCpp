@@ -51,8 +51,31 @@ std::istream& operator>>(std::istream& in,  Player & player)
     return in;
 }
 
-std::ostream& operator<<(std::ostream& out, Player& player)
+std::ostream& operator<<(std::ostream& out, const Player& player)
 {
     out <<"Numele dumneavoastra este: "<< player.m_first_name << "\n"<<"Prenumele dumneavoastra este: " << player.m_last_name;
     return out;// TODO: insert return statement here
+    out << "Prenumele dumneavoastra este: " << player.m_firstName << "\n" << "Numele dumneavoastra este: " << player.m_lastName<<"\n";
+    out << "Culoarea dumneavoastra este: ";
+    Color color = player.getColor();
+    switch (color)
+    {
+    case Color::None:
+        out << "None";
+        break;
+    case Color::Red:
+        out << "Red";
+        break;
+    case Color::Blue:
+        out << "Blue";
+        break;
+    case Color::Green:
+        out << "Green";
+        break;
+    case Color::Yellow:
+        out << "Yellow";
+        break;
+    }
+    return out;
+   
 }
