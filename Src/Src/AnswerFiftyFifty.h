@@ -2,6 +2,7 @@
 #include<vector>
 #include<array>
 #include<string>
+#include"QTypeVariants.h"
 class AnswerFiftyFifty
 {
 private:
@@ -9,9 +10,9 @@ private:
 	std::string m_answer;
 	std::vector<std::string>m_variants;
 public:
-	AnswerFiftyFifty(std::string answer, std::array<std::string, 4>variants);
-	bool Advantage_used();
-	bool get_Advantage_Fifty_Fifty();
-	std::vector<std::string>Advantage_utility();
+	AnswerFiftyFifty(QTypeVariants Q);
+	bool AdvantageUsed();
+	bool getAdvantageFiftyFifty();
+	std::vector<std::string>AdvantageUtility();
 };
 

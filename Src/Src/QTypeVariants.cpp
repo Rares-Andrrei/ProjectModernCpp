@@ -20,6 +20,11 @@ std::string QTypeVariants::getAnswer() const
 	return m_answer;
 }
 
+std::array<std::string, 4> QTypeVariants::getVariants()
+{
+	return m_variants;
+}
+
 std::ostream& operator<<(std::ostream& out, const QTypeVariants& q)
 {
 	out << q.m_question << '\n';

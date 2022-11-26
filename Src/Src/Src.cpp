@@ -14,12 +14,14 @@ int main()
 {
 	QuestionManager test;
 	test.addQFiles("QTypeVariants.txt", "QTypeNumerical.txt");
-	std::cout << test.randQTypeVariants();
+	QTypeVariants test2 = test.randQTypeVariants();
+	std::cout << test2;
+
 	std::cout << std::endl;
 	std::cout << test.randQTypeNumerical();
 	std::cout << std::endl;	
-	AnswerFiftyFifty test1("Brazil", { "Colombia","Indonesia","Brazil","Vietnam" });//Testarea avantajului pentru intrebarea Which country produces the most coffee in the world?
-	std::vector<std::string>a = test1.Advantage_utility();
+	AnswerFiftyFifty test1(test2);//Testarea avantajului pentru intrebarea Which country produces the most coffee in the world?
+	std::vector<std::string>a = test1.AdvantageUtility();
 	for (auto i : a)
 	{
 		std::cout << i << " ";
