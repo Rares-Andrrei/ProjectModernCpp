@@ -6,9 +6,10 @@
 #include "AnswerSugestion.h"
 #include "FourCloseAnswers.h"
 #include "Duel.h"
+#include "ChooseBase.h"
 
 
-//Functie testare duel
+//Functie testare Duel
 void testDuel()
 {
 	QuestionManager questions;
@@ -24,7 +25,9 @@ void testDuel()
 	std::cout << q1;
 	std::string rp1, rp2; //afisare in consola a intrebarii pana avem gui
 
+	std::cout << "blue player answer:";
 	std::getline(std::cin,  rp1);
+	std::cout << "green player answer:";
 	std::getline(std::cin, rp2); //citire din consola a raspunsurilor pana avem gui
 
 	duel.giveAnswers(rp1, rp2); //functie care ia raspunsurile
@@ -47,9 +50,38 @@ void testDuel()
 
 	std::cout << "Zona: " << int(zone->getColor()) << " " << zone->getScore();
 	delete zone;
+	std::cout << std::endl;
 }
 
+// functie testare ChooseBase
+void testChooseBase()
+{
+	///am generat toate intrebarile 
+	QuestionManager questions;
+	questions.addQFiles("QTypeVariants.txt", "QTypeNumerical.txt");
 
+	///am creat un obiect de tip ChooseBase pentru 2 jucatori
+	ChooseBase yes(2);
+	yes.ChooseAndPrintNumericalQuestion(questions);
+
+	///am creat doua obiecte pentru jucatori
+	Player::Color p1 = Player::Color::Blue;
+	Player::Color p2 = Player::Color::Yellow;
+
+	/// pentru cei doi jucatori am preluat raspunsul dat in consola si am facut ordinea in care acestia vor alege
+	/// bazele
+	int playerAnswer;
+	std::cout << "Blue player answer: ";
+	std::cin >> playerAnswer;
+	yes.CreateOrder(p1, playerAnswer);
+	std::cout << "Yellow player answer: ";
+	std::cin >> playerAnswer;
+	yes.CreateOrder(p2, playerAnswer);
+
+	/// am setat clasa PlayerBase in ordinea raspunsurilor corecte
+	yes.setBaseZone();
+	std::cout << std::endl;
+}
 
 
 // TO DO: 
@@ -61,42 +93,10 @@ void testDuel()
 
 int main()
 {
-	//QuestionManager test;
-	//test.addQFiles("QTypeVariants.txt", "QTypeNumerical.txt");
-	//QTypeVariants test3 = test.randQTypeVariants();
-	//std::cout << test3;
-
-	//std::cout << std::endl;
-	//std::cout << test.randQTypeNumerical();
-	//std::cout << std::endl;	
-	//AnswerFiftyFifty test1(test3);//Testarea avantajului pentru intrebarea Which country produces the most coffee in the world?
-	//std::vector<std::string>a = test1.AdvantageUtility();
-	//for (auto i : a)
-	//{
-	//	std::cout << i << " ";
-	//}
-
-	//std::cout << std::endl << std::endl;
-
-	//FourCloseAnswers test2;
-	//QTypeNumerical intrebare;
-	//intrebare = test.randQTypeNumerical();
-	//std::cout << intrebare;
-	//test2.GenerateVariants(intrebare);
-	//std::cout << "generated variants: ";
-	//std::cout << test2;
-	//Player test4("Mihai", "Stan");
-	//test4.setColor(Player::Color::Yellow);
-	//std::cout << test4;
-
-
-
-	////test 5
-	//Zone z(Player::Color::Blue);
-	//Board b(3);
-	//b[{2, 2}] = z;
-	//std::cout << b;
-	testDuel();
+/// testarea clasei QuestionManager
+/// afisarea unei intrebari random impreuna cu variantele de raspuns
+	QuestionManager test;
+	test.addQFiles("QTypeVariants.txt", "QTypeNumerical.txt");
 
 	return 0;
 	
