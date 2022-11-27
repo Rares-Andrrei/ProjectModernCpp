@@ -13,8 +13,10 @@ public:
 	void SetScore(const uint16_t& score = 100);
 	Zone operator +(const uint16_t& value);
 	friend Zone operator+(const uint16_t& value, Zone& zone);
-	void DecrementScore(); // folosit pentru clasa  AVANTAJE
+	void DecrementScore(); // folosit pentru clasa  AVANTAJE si duel
+	void changeOwner(Player::Color newOwnerColor);
 	friend std::ostream& operator<<(std::ostream& out, const Zone& zona);
 	uint16_t getScore();
+	Player::Color getColor();
 	~Zone() = default;
 };

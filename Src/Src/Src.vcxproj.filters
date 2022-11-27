@@ -48,6 +48,9 @@
     <ClCompile Include="FourCloseAnswers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Duel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Zone.h">
@@ -78,6 +81,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FourCloseAnswers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Duel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

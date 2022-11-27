@@ -18,7 +18,7 @@ Zone Zone::operator+(const uint16_t& value)
 	return *this;
 }
 
-void Zone::DecrementScore()// scade scorul cu 100 , atunci cand alegem un avantaj 
+void Zone::DecrementScore()// scade scorul cu 100 , atunci cand alegem un avantaj sau in cadrul duelului
 {
 	if (this->m_score >= 200)
 	{
@@ -26,11 +26,21 @@ void Zone::DecrementScore()// scade scorul cu 100 , atunci cand alegem un avanta
 	}
 }
 
+
+void Zone::changeOwner(Player::Color newOwnerColor)
+{
+	m_color = newOwnerColor;
+}
+
 uint16_t Zone::getScore()
 {
 	return this->m_score;
 }
-
+
+Player::Color Zone::getColor()
+{
+	return m_color;
+}
 Zone operator+(const uint16_t& value, Zone& zone)
 {
 	return  zone + value;
