@@ -132,6 +132,7 @@
     <ClCompile Include="AnswerFiftyFifty.cpp" />
     <ClCompile Include="AnswerSugestion.cpp" />
     <ClCompile Include="Board.cpp" />
+    <ClCompile Include="ChooseBase.cpp" />
     <ClCompile Include="Duel.cpp" />
     <ClCompile Include="FourCloseAnswers.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -147,6 +148,7 @@
     <ClInclude Include="AnswerFiftyFifty.h" />
     <ClInclude Include="AnswerSugestion.h" />
     <ClInclude Include="Board.h" />
+    <ClInclude Include="ChooseBase.h" />
     <ClInclude Include="Duel.h" />
     <ClInclude Include="FourCloseAnswers.h" />
     <ClInclude Include="Player.h" />

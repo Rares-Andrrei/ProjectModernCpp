@@ -98,12 +98,64 @@ int main()
 	QuestionManager test;
 	test.addQFiles("QTypeVariants.txt", "QTypeNumerical.txt");
 
-	return 0;
+	std::cout << "1. Alegere si afisare intrebare cu 4 variante de raspuns: \n";
+	std::cout << test.randQTypeVariants();
+	std::cout << std::endl;
+
+	std::cout << "2. Alegere si afisare intrebare cu raspuns numeric: \n";
+	std::cout << test.randQTypeNumerical();
+	std::cout << std::endl;
+
+
+/// testarea clasei AnswerFiftyFifty
+	QTypeVariants test3 = test.randQTypeVariants();
+	std::cout << "3. Intrebare cu variante de raspuns aleasa random pe care se va folosi avatajul fifty-fifty:\n";
+	std::cout << test3;
+	AnswerFiftyFifty test1(test3);
+
+	std::vector<std::string>a = test1.AdvantageUtility();
+	std::cout << "Raspunsurile ramase dupa folosirea avantajului fiftyfifty:\n";
+	for (auto &i : a)
+	{
+		std::cout << i << " ";
+	}
+
+	std::cout << std::endl<<std::endl;
+
+/// testarea clasei FourCloseAnswers
+	FourCloseAnswers test2;
+	QTypeNumerical intrebare;
+	intrebare = test.randQTypeNumerical();
+
+	std::cout << "4. Intrebare numerica aleasa random pe care se va folosi avantajul de generare a 4 variante de raspuns:\n";
+	std::cout << intrebare;
+	test2.GenerateVariants(intrebare);
+	std::cout << "Variantele de raspuns generate: \n";
+	std::cout << test2;
+	std::cout << std::endl;
 	
+/// testarea clasei Player
+	std::cout << "5. Adaugarea numelui si prenumelui jucatorului impreuna cu culoarea asociata:\n";
+	Player test4("Mihai", "Stan");
+	test4.setColor(Player::Color::Yellow);
+	std::cout << test4;
+	std::cout << std::endl<<std::endl;
 
+/// tetsarea clasei Zone si Board
+	std::cout << "6. Afisarea hartii impreuna cu punerea unui jucator pe o anumita zona:";
+	Zone z(Player::Color::Blue);
+	Board b(3);
+	b[{2, 2}] = z;
+	std::cout << b;
+	std::cout << std::endl;
 
+	std::cout << "7. verificare functie duel: \n";
+	testDuel();
+	std::cout << std::endl;
 
+	std::cout << "8. verificare functie de alegere baza: \n";
+	testChooseBase();
 
-
+	return 0;
 }
 
