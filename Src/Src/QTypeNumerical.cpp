@@ -23,6 +23,5 @@ int QTypeNumerical::getAnswer() const
 std::ostream& operator<<(std::ostream& out, const QTypeNumerical& q)
 {
 	out << q.m_question << std::endl;
-	out << q.m_answer << std::endl;
 	return out;
 }
