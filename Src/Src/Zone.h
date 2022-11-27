@@ -11,8 +11,15 @@ protected:
 public:
 	Zone(Player::Color color) ;
 	void SetScore(const uint16_t& score = 100);
+
+	//Operator for score
 	Zone operator +(const uint16_t& value);
 	friend Zone operator+(const uint16_t& value, Zone& zone);
+
+	//Operator for score
+	Zone operator -(const uint16_t& value);
+	friend Zone operator-(const uint16_t& value, Zone& zone);
+
 	void DecrementScore(); // folosit pentru clasa  AVANTAJE si duel
 	void changeOwner(Player::Color newOwnerColor);
 	friend std::ostream& operator<<(std::ostream& out, const Zone& zona);

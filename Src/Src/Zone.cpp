@@ -18,6 +18,12 @@ Zone Zone::operator+(const uint16_t& value)
 	return *this;
 }
 
+Zone Zone::operator-(const uint16_t& value)
+{
+	this->m_score += value;
+	return *this;
+}
+
 void Zone::DecrementScore()// scade scorul cu 100 , atunci cand alegem un avantaj sau in cadrul duelului
 {
 	if (this->m_score >= 200)
@@ -44,6 +50,11 @@ Player::Color Zone::getColor()
 Zone operator+(const uint16_t& value, Zone& zone)
 {
 	return  zone + value;
+}
+
+Zone operator-(const uint16_t& value, Zone& zone)
+{
+	return  zone - value;
 }
 
 std::ostream& operator<<(std::ostream& out, const Zone& zona)
