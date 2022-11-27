@@ -54,7 +54,7 @@ void testDuel()
 }
 
 // functie testare ChooseBase
-void testChooseBase()
+void testChooseBase(Board& b)
 {
 	///am generat toate intrebarile 
 	QuestionManager questions;
@@ -79,8 +79,11 @@ void testChooseBase()
 	yes.CreateOrder(p2, playerAnswer);
 
 	/// am setat clasa PlayerBase in ordinea raspunsurilor corecte
-	yes.setBaseZone();
+	yes.setBaseZone(b);
 	std::cout << std::endl;
+	std::cout << "9. Afisarea hartii :";
+
+	std::cout << b;
 }
 
 
@@ -154,7 +157,8 @@ int main()
 	std::cout << std::endl;
 
 	std::cout << "8. verificare functie de alegere baza: \n";
-	testChooseBase();
+	Board d;
+	testChooseBase( d);
 
 	return 0;
 }

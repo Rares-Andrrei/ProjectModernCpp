@@ -21,12 +21,17 @@ void ChooseBase::CreateOrder(Player::Color player, int playerAnswer)
 	m_PlayerOrder.push(toInsert);
 }
 
-void ChooseBase::setBaseZone()
+void ChooseBase::setBaseZone(Board& board)
 {
 	while (!m_PlayerOrder.empty())
 	{
 		PlayerBase player(m_PlayerOrder.top().second);
-		std::cout << player;
+		std::cout <<"Curent board format :"<< board;
+		std::cout << player <<"Player please choose a zone :";
+		uint16_t index1, index2;
+
+		std::cin >> index1 >> index2;
+		board[{index1, index2}] = player;
 		m_PlayerOrder.pop();
 	}
 }

@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "PlayerBase.h"
 #include "QuestionManager.h"
+#include "Board.h"
 #include <array>
 #include <queue>
 
@@ -20,7 +21,7 @@ public:
 	void ChooseAndPrintNumericalQuestion(QuestionManager& questions); ///selectare si afisare intrebare random
 	void CreateOrder(Player::Color player, int playerAnswer);
 
-	void setBaseZone();
+	void setBaseZone(Board& board);
 
 };
 
