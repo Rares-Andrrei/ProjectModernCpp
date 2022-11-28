@@ -22,17 +22,17 @@ void Board::ChangeBoardDimensions()
 		this->m_BoardHeight = 4;
 		this->m_BoardWidth = 6;
 	}
-	m_board.resize(m_BoardHeight * m_BoardWidth);
+	m_board.resize(m_BoardHeight * m_BoardWidth);// fill board with empty (Zones)
 
 }
 
-const std::optional<Zone>& Board::operator[](const Position& indices) const
+const std::shared_ptr<Zone>& Board::operator[](const Position& indices) const
 {
 	const auto& [row, column] = indices;
 	return m_board[row * m_BoardWidth + column];
 }
 
-std::optional<Zone>& Board::operator[](const Position& indices)
+std::shared_ptr<Zone>& Board::operator[](const Position& indices)
 {
 	const auto& [row, column] = indices;
 	return m_board[row * m_BoardWidth + column];
@@ -43,10 +43,9 @@ void Board::ObtainTotalScore()
 	m_totalScore = 0;
 	for (const auto& z : m_board)
 	{
-		if (z.has_value())
+		if (z!= nullptr)
 		{
-			auto zone = z.value();
-			m_totalScore = zone.getScore();
+			m_totalScore += z->getScore();
 		}
 	}
 }
@@ -65,9 +64,14 @@ std::ostream& operator<<(std::ostream& out, Board board)
 	{
 		for (column = 0; column < board.m_BoardWidth; column++)
 		{
-			if (board[pos].has_value())
+			if (board[pos]!= nullptr)
 			{
 				out << *board[pos] << ' ';
+
+				/*auto current = board[pos];
+
+				auto d_ptr = std::static_pointer_cast<PlayerBase>(current);
+				out << d_ptr << ' ';*/
 			}
 			else {
 				out << "________ ";
