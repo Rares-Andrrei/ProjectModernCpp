@@ -7,7 +7,41 @@
 #include "FourCloseAnswers.h"
 #include "Duel.h"
 #include "ChooseBase.h"
+#include <memory>
 
+void TestSmartPointers()
+{
+	std::cout << "\nTest 1 : Shared_Ptr: \n";
+	//std::vector<std::shared_ptr<Zone>> vect;
+	//vect.resize(9,std::make_shared<Zone>());
+
+	Board b;
+	std::shared_ptr<Zone> z(std::make_shared < Zone >(Player::Color::Blue));
+	std::shared_ptr<PlayerBase> p(std::make_shared < PlayerBase >(Player::Color::Red));
+	std::cout << *z << ' ' << *p << '\n';
+	b[{1, 1}] = z;
+	b[{2, 0}] = p;
+	std::cout << b;
+	//vect[0] = z;
+	//vect[1] = p;
+	/*for (auto& it : vect)
+	{
+		std::cout << *it << ' ';
+	}*/
+
+	//std::cout << "\n\nTest 2 : Unique_Ptr: \n";
+	//std::vector<std::unique_ptr<Zone>> vect1;
+	//vect1.resize(9, std::make_unique<Zone>());
+	//std::unique_ptr<Zone> z1(new Zone(Player::Color::Blue));
+	//std::unique_ptr<PlayerBase> p1(new PlayerBase(Player::Color::Red));
+	//std::cout << *z1 << ' ' << *p1 << '\n';
+	////vect1[0] = z1;
+	////vect1[1] = p1;
+	//for (auto& it : vect)
+	//{
+	//	std::cout << *it << ' ';
+	//}
+}
 
 //Functie testare Duel
 void testDuel()
@@ -15,7 +49,7 @@ void testDuel()
 	QuestionManager questions;
 	questions.addQFiles("QTypeVariants.txt", "QTypeNumerical.txt");
 	Player::Color p1 = Player::Color::Blue;
-	Zone* zone = new Zone(Player::Color::Green);
+	std::shared_ptr<Zone> zone(std::make_shared<Zone>(Player::Color::Blue));
 	Duel duel(p1, zone);
 	duel.generateQuestion(questions); // ii  dam setul de intrebari 
 
@@ -26,7 +60,7 @@ void testDuel()
 	std::string rp1, rp2; //afisare in consola a intrebarii pana avem gui
 
 	std::cout << "blue player answer:";
-	std::getline(std::cin,  rp1);
+	std::getline(std::cin, rp1);
 	std::cout << "green player answer:";
 	std::getline(std::cin, rp2); //citire din consola a raspunsurilor pana avem gui
 
@@ -39,7 +73,7 @@ void testDuel()
 		QTypeNumerical q2 = duel.getQTypeNumerical();
 
 		std::cout << q2; //afisare in consola a intrebarii pana avem gui
-		int rpi1, rpi2; 
+		int rpi1, rpi2;
 		std::cin >> rpi1 >> rpi2; //citire din consola a raspunsurilor pana avem gui
 
 		duel.giveAnswers(rpi1, rpi2); //trebuie modificata, voi lua ca parametrii un pair cu raspunsul si timpul in care au raspuns si in fucntie de asta o sa se decida castigatoru final
@@ -49,7 +83,7 @@ void testDuel()
 	duel.rewardWinner(); //in fucntie de castigator functia schimba proprietarul zonei / adauga puncte zonei/ scade puncte zonei.
 
 	std::cout << "Zona: " << int(zone->getColor()) << " " << zone->getScore();
-	delete zone;
+	//delete zone;
 	std::cout << std::endl;
 }
 
@@ -87,17 +121,12 @@ void testChooseBase(Board& b)
 }
 
 
-// TO DO: 
-//  Creem clasa Player. citim un jucator si il afisam
-//  Creem clasa Numeric Questions, citim o intrebare din fisier si o afisam
-//  Creem clasa QuestionsWithFourAnswers , citim o intrebare din fisier si o afisam
-//  Creem clasa Zone .O instantiem cu valorile necesare
-//  Creem clasa Board , ce contine o matrice de Zone
-
 int main()
 {
-/// testarea clasei QuestionManager
-/// afisarea unei intrebari random impreuna cu variantele de raspuns
+	TestSmartPointers();
+
+	/// testarea clasei QuestionManager
+	/// afisarea unei intrebari random impreuna cu variantele de raspuns
 	QuestionManager test;
 	test.addQFiles("QTypeVariants.txt", "QTypeNumerical.txt");
 
@@ -110,7 +139,7 @@ int main()
 	std::cout << std::endl;
 
 
-/// testarea clasei AnswerFiftyFifty
+	/// testarea clasei AnswerFiftyFifty
 	QTypeVariants test3 = test.randQTypeVariants();
 	std::cout << "3. Intrebare cu variante de raspuns aleasa random pe care se va folosi avatajul fifty-fifty:\n";
 	std::cout << test3;
@@ -118,14 +147,14 @@ int main()
 
 	std::vector<std::string>a = test1.AdvantageUtility();
 	std::cout << "Raspunsurile ramase dupa folosirea avantajului fiftyfifty:\n";
-	for (auto &i : a)
+	for (auto& i : a)
 	{
 		std::cout << i << " ";
 	}
 
-	std::cout << std::endl<<std::endl;
+	std::cout << std::endl << std::endl;
 
-/// testarea clasei FourCloseAnswers
+	/// testarea clasei FourCloseAnswers
 	FourCloseAnswers test2;
 	QTypeNumerical intrebare;
 	intrebare = test.randQTypeNumerical();
@@ -136,21 +165,22 @@ int main()
 	std::cout << "Variantele de raspuns generate: \n";
 	std::cout << test2;
 	std::cout << std::endl;
-	
-/// testarea clasei Player
+
+	/// testarea clasei Player
 	std::cout << "5. Adaugarea numelui si prenumelui jucatorului impreuna cu culoarea asociata:\n";
 	Player test4("Mihai", "Stan");
 	test4.setColor(Player::Color::Yellow);
 	std::cout << test4;
-	std::cout << std::endl<<std::endl;
+	std::cout << std::endl << std::endl;
 
-/// tetsarea clasei Zone si Board
+	/// tetsarea clasei Zone si Board
 	std::cout << "6. Afisarea hartii impreuna cu punerea unui jucator pe o anumita zona:";
-	Zone z(Player::Color::Blue);
+	std::shared_ptr<Zone> z(std::make_shared<Zone>(Player::Color::Blue));
 	Board b(3);
 	b[{2, 2}] = z;
 	std::cout << b;
 	std::cout << std::endl;
+	std::cout << "7. Testare Smart Pointers" << std::endl;
 
 	std::cout << "7. verificare functie duel: \n";
 	testDuel();
@@ -158,7 +188,7 @@ int main()
 
 	std::cout << "8. verificare functie de alegere baza: \n";
 	Board d;
-	testChooseBase( d);
+	testChooseBase(d);
 
 	return 0;
 }

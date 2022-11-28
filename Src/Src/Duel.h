@@ -11,7 +11,7 @@ class Duel
 	static const uint8_t maxPlayerNumber = 4;
 	static const uint8_t time = 30;
 	std::pair<Player::Color, Player::Color> m_duelingPlayers;
-	Zone* m_zone;
+	std::shared_ptr<Zone> m_zone;
 	std::optional<QTypeVariants> m_qTypeVariants;
 	std::optional<QTypeNumerical> m_qTypeNumerical;
 	Player::Color m_winner;
@@ -20,7 +20,7 @@ class Duel
 public:
 	bool isDraw() const;
 
-	Duel(Player::Color, Zone* zone);
+	Duel(Player::Color, std::shared_ptr<Zone> zone);
 
 	void generateQuestion(QuestionManager& questions);
 

@@ -5,7 +5,7 @@ bool Duel::isDraw() const
 	return m_draw;
 }
 
-Duel::Duel(Player::Color player, Zone* zone)
+Duel::Duel(Player::Color player, std::shared_ptr<Zone> zone)
 {
 	m_duelingPlayers.first = player;
 	m_zone = zone;

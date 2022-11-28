@@ -25,11 +25,10 @@ void ChooseBase::setBaseZone(Board& board)
 {
 	while (!m_PlayerOrder.empty())
 	{
-		PlayerBase player(m_PlayerOrder.top().second);
+		std::shared_ptr<PlayerBase> player(std::make_shared < PlayerBase >(m_PlayerOrder.top().second));
 		std::cout <<"Curent board format :"<< board;
-		std::cout << player <<"Player please choose a zone :";
+		std::cout << *player <<"Player please choose a zone :";
 		uint16_t index1, index2;
-
 		std::cin >> index1 >> index2;
 		board[{index1, index2}] = player;
 		m_PlayerOrder.pop();

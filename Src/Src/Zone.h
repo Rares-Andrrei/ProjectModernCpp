@@ -9,7 +9,7 @@ protected:
 	bool m_captured;
 	Player::Color m_color;
 public:
-	Zone(Player::Color color) ;
+	Zone(Player::Color color = Player::Color::None);
 	void SetScore(const uint16_t& score = 100);
 
 	//Operator for score
@@ -22,8 +22,10 @@ public:
 
 	void DecrementScore(); // folosit pentru clasa  AVANTAJE si duel
 	void changeOwner(Player::Color newOwnerColor);
+
 	friend std::ostream& operator<<(std::ostream& out, const Zone& zona);
+
 	uint16_t getScore();
 	Player::Color getColor();
-	~Zone() = default;
+	virtual ~Zone() = default;
 };

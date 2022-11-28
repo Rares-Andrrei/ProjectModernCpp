@@ -61,7 +61,6 @@ std::ostream& operator<<(std::ostream& out, const Zone& zona)
 {
 	//out << zona.Color<<' '; 
 	// aceasta operatie necesita un nou tip de date : Color, in clasa jucator.
-
 	out << Player::ColorToString(zona.m_color) << ' ';
 
 
