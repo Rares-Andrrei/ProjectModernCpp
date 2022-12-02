@@ -6,7 +6,9 @@
 bool Database::registeUser(Account account)
 {
 	auto unique = m_storage.get_all<Account>(sql::where(sql::c(&Account::getUsername) = account.getUsername()));
-	if (unique.size() == 0)
+	auto unique2 = m_storage.get_all<Account>(sql::where(sql::c(&Account::getNickName) = account.getNickName()));
+
+	if (unique.size() == 0 && unique2.size() == 0)
 	{
 		m_storage.replace(account);
 		return true;
@@ -15,6 +17,7 @@ bool Database::registeUser(Account account)
 	{
 		return false;
 	}
+
 }
 
 void Database::insetMatch(MatchInfo match)

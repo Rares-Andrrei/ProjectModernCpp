@@ -17,7 +17,7 @@
 void testDatabase()
 {
 
-	Database db("file.db");
+	Database db("DatabaseFile/file.db");
 	Account ac("Rares", "raresandrei", "rrs");
 	std::cout << db.loginUser(ac) << std::endl;
 	std::cout << db.registeUser(ac) << std::endl;
