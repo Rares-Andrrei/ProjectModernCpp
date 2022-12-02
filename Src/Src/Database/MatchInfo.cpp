@@ -48,3 +48,59 @@ void MatchInfo::setDate(std::string date)
 {
     m_date = date;
 }
+
+std::string MatchInfo::getFirstPlace() const
+{
+    if (m_ranking[0].has_value())
+    {
+        return m_ranking[0].value();
+    }
+    return "-";
+}
+
+void MatchInfo::setFirstPlace(const std::string& nickname)
+{
+    m_ranking[0] = nickname;
+}
+
+std::string MatchInfo::getSecondPlace() const
+{
+    if (m_ranking[1].has_value())
+    {
+        return m_ranking[1].value();
+    }
+    return "-";
+}
+
+void MatchInfo::setSecondPlace(const std::string& nickname)
+{
+    m_ranking[1] = nickname;
+}
+
+std::string MatchInfo::getThirdPlace() const
+{
+    if (m_ranking[2].has_value())
+    {
+        return m_ranking[2].value();
+    }
+    return "-";
+}
+
+void MatchInfo::setThirdPlace(const std::string& nickname)
+{
+    m_ranking[2] = nickname;
+}
+
+std::string MatchInfo::getFourthPlace() const
+{
+    if (m_ranking[3].has_value())
+    {
+        return m_ranking[3].value();
+    }
+    return "-";
+}
+
+void MatchInfo::setFourthPlace(const std::string& nickname)
+{
+    m_ranking[3] = nickname;
+}
