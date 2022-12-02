@@ -18,6 +18,50 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AdvantagesFile\Advantages.cpp" />
+    <ClCompile Include="AdvantagesFile\AnswerFiftyFifty.cpp" />
+    <ClCompile Include="AdvantagesFile\AnswerSugestion.cpp" />
+    <ClCompile Include="AdvantagesFile\FourCloseAnswers.cpp" />
+    <ClCompile Include="DatabaseFile\Account.cpp" />
+    <ClCompile Include="DatabaseFile\Database.cpp" />
+    <ClCompile Include="DatabaseFile\MatchInfo.cpp" />
+    <ClCompile Include="GameplayFile\Board.cpp" />
+    <ClCompile Include="GameplayFile\ChooseBase.cpp" />
+    <ClCompile Include="GameplayFile\Duel.cpp" />
+    <ClCompile Include="GameplayFile\Player.cpp" />
+    <ClCompile Include="GameplayFile\PlayerBase.cpp" />
+    <ClCompile Include="GameplayFile\Zone.cpp" />
+    <ClCompile Include="QuestionFile\QTypeNumerical.cpp" />
+    <ClCompile Include="QuestionFile\QTypeVariants.cpp" />
+    <ClCompile Include="QuestionFile\QuestionManager.cpp" />
+    <ClCompile Include="src.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AdvantagesFile\Advantages.h" />
+    <ClInclude Include="AdvantagesFile\AnswerFiftyFifty.h" />
+    <ClInclude Include="AdvantagesFile\AnswerSugestion.h" />
+    <ClInclude Include="AdvantagesFile\FourCloseAnswers.h" />
+    <ClInclude Include="DatabaseFile\Account.h" />
+    <ClInclude Include="DatabaseFile\Database.h" />
+    <ClInclude Include="DatabaseFile\MatchInfo.h" />
+    <ClInclude Include="GameplayFile\Board.h" />
+    <ClInclude Include="GameplayFile\ChooseBase.h" />
+    <ClInclude Include="GameplayFile\Duel.h" />
+    <ClInclude Include="GameplayFile\Player.h" />
+    <ClInclude Include="GameplayFile\PlayerBase.h" />
+    <ClInclude Include="GameplayFile\Zone.h" />
+    <ClInclude Include="QuestionFile\QTypeNumerical.h" />
+    <ClInclude Include="QuestionFile\QTypeVariants.h" />
+    <ClInclude Include="QuestionFile\QuestionManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="QuestionFile\QTypeNumerical.txt" />
+    <Text Include="QuestionFile\QTypeVariants.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DatabaseFile\file.db" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -127,41 +171,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Advantages.cpp" />
-    <ClCompile Include="AnswerFiftyFifty.cpp" />
-    <ClCompile Include="AnswerSugestion.cpp" />
-    <ClCompile Include="Board.cpp" />
-    <ClCompile Include="ChooseBase.cpp" />
-    <ClCompile Include="Duel.cpp" />
-    <ClCompile Include="FourCloseAnswers.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerBase.cpp" />
-    <ClCompile Include="QTypeNumerical.cpp" />
-    <ClCompile Include="QTypeVariants.cpp" />
-    <ClCompile Include="QuestionManager.cpp" />
-    <ClCompile Include="Src.cpp" />
-    <ClCompile Include="Zone.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Advantages.h" />
-    <ClInclude Include="AnswerFiftyFifty.h" />
-    <ClInclude Include="AnswerSugestion.h" />
-    <ClInclude Include="Board.h" />
-    <ClInclude Include="ChooseBase.h" />
-    <ClInclude Include="Duel.h" />
-    <ClInclude Include="FourCloseAnswers.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerBase.h" />
-    <ClInclude Include="QTypeNumerical.h" />
-    <ClInclude Include="QTypeVariants.h" />
-    <ClInclude Include="QuestionManager.h" />
-    <ClInclude Include="Zone.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="QTypeNumerical.txt" />
-    <Text Include="QTypeVariants.txt" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

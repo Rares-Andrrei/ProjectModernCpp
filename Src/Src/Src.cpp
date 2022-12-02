@@ -1,13 +1,31 @@
+#define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
+#define _SILENCE_CXX20_CISO646_REMOVED_WARNING
 #include <iostream>
-#include "board.h"
-#include"Player.h"
-#include "QuestionManager.h"
-#include"AnswerFiftyFifty.h"
-#include "AnswerSugestion.h"
-#include "FourCloseAnswers.h"
-#include "Duel.h"
-#include "ChooseBase.h"
 #include <memory>
+
+#include "DatabaseFile/Database.h"
+#include "GameplayFile/Player.h"
+#include "GameplayFile/Board.h"
+#include "GameplayFile/Duel.h"
+#include "GameplayFile/ChooseBase.h"
+#include "QuestionFile/QuestionManager.h"
+#include "AdvantagesFile/AnswerFiftyFifty.h"
+#include "AdvantagesFile/AnswerSugestion.h"
+#include "AdvantagesFile/FourCloseAnswers.h"
+
+
+void testDatabase()
+{
+
+	Database db("file.db");
+	Account ac("Rares", "raresandrei", "rrs");
+	std::cout << db.loginUser(ac) << std::endl;
+	std::cout << db.registeUser(ac) << std::endl;
+	std::cout << db.loginUser(ac) << std::endl;
+	std::list<MatchInfo> test = db.getMatchHistory(ac);
+	std::cout << MatchInfo::getEndtime();
+}
+
 
 void TestSmartPointers()
 {
@@ -44,10 +62,8 @@ void TestSmartPointers()
 }
 
 //Functie testare Duel
-void testDuel()
+void testDuel(QuestionManager questions)
 {
-	QuestionManager questions;
-	questions.addQFiles("QTypeVariants.txt", "QTypeNumerical.txt");
 	Player::Color p1 = Player::Color::Blue;
 	std::shared_ptr<Zone> zone(std::make_shared<Zone>(Player::Color::Blue));
 	Duel duel(p1, zone);
@@ -88,12 +104,8 @@ void testDuel()
 }
 
 // functie testare ChooseBase
-void testChooseBase(Board& b)
+void testChooseBase(Board& b, QuestionManager questions)
 {
-	///am generat toate intrebarile 
-	QuestionManager questions;
-	questions.addQFiles("QTypeVariants.txt", "QTypeNumerical.txt");
-
 	///am creat un obiect de tip ChooseBase pentru 2 jucatori
 	ChooseBase yes(2);
 	yes.ChooseAndPrintNumericalQuestion(questions);
@@ -120,16 +132,10 @@ void testChooseBase(Board& b)
 	std::cout << b;
 }
 
-
-int main()
+void testQuestionManager(QuestionManager test)
 {
-	TestSmartPointers();
-
 	/// testarea clasei QuestionManager
 	/// afisarea unei intrebari random impreuna cu variantele de raspuns
-	QuestionManager test;
-	test.addQFiles("QTypeVariants.txt", "QTypeNumerical.txt");
-
 	std::cout << "1. Alegere si afisare intrebare cu 4 variante de raspuns: \n";
 	std::cout << test.randQTypeVariants();
 	std::cout << std::endl;
@@ -137,8 +143,10 @@ int main()
 	std::cout << "2. Alegere si afisare intrebare cu raspuns numeric: \n";
 	std::cout << test.randQTypeNumerical();
 	std::cout << std::endl;
+}
 
-
+void testAnswerFiftyFifty(QuestionManager test)
+{
 	/// testarea clasei AnswerFiftyFifty
 	QTypeVariants test3 = test.randQTypeVariants();
 	std::cout << "3. Intrebare cu variante de raspuns aleasa random pe care se va folosi avatajul fifty-fifty:\n";
@@ -153,8 +161,11 @@ int main()
 	}
 
 	std::cout << std::endl << std::endl;
-
+}
+void testFourCloseAnswers()
+{
 	/// testarea clasei FourCloseAnswers
+	QuestionManager test;
 	FourCloseAnswers test2;
 	QTypeNumerical intrebare;
 	intrebare = test.randQTypeNumerical();
@@ -166,6 +177,11 @@ int main()
 	std::cout << test2;
 	std::cout << std::endl;
 
+}
+
+
+void testPlayer()
+{
 	/// testarea clasei Player
 	std::cout << "5. Adaugarea numelui si prenumelui jucatorului impreuna cu culoarea asociata:\n";
 	Player test4("Mihai", "Stan");
@@ -173,6 +189,12 @@ int main()
 	std::cout << test4;
 	std::cout << std::endl << std::endl;
 
+
+}
+
+
+void testZoneSiBoard(QuestionManager questions)
+{
 	/// tetsarea clasei Zone si Board
 	std::cout << "6. Afisarea hartii impreuna cu punerea unui jucator pe o anumita zona:";
 	std::shared_ptr<Zone> z(std::make_shared<Zone>(Player::Color::Blue));
@@ -183,12 +205,25 @@ int main()
 	std::cout << "7. Testare Smart Pointers" << std::endl;
 
 	std::cout << "7. verificare functie duel: \n";
-	testDuel();
+	testDuel(questions);
 	std::cout << std::endl;
 
 	std::cout << "8. verificare functie de alegere baza: \n";
 	Board d;
-	testChooseBase(d);
+	testChooseBase(d, questions);
+
+}
+
+int main()
+{
+	/*QuestionManager questions;
+	questions.addQFiles("QuestionFile/QTypeVariants.txt", "QuestionFile/QTypeNumerical.txt");
+	TestSmartPointers();
+	testQuestionManager(questions);
+	testAnswerFiftyFifty(questions);
+	testPlayer();
+	testZoneSiBoard(questions);*/
+	testDatabase();
 
 	return 0;
 }
