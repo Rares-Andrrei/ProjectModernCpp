@@ -153,7 +153,7 @@ void testAnswerFiftyFifty(QuestionManager test)
 	std::cout << test3;
 	AnswerFiftyFifty test1(test3);
 
-	std::vector<std::string>a = test1.AdvantageUtility();
+	std::array<std::string,3>a = test1.AdvantageUtility();
 	std::cout << "Raspunsurile ramase dupa folosirea avantajului fiftyfifty:\n";
 	for (auto& i : a)
 	{
@@ -219,10 +219,10 @@ int main()
 	QuestionManager questions;
 	Board b;
 	questions.addQFiles("QuestionFile/QTypeVariants.txt", "QuestionFile/QTypeNumerical.txt");
-	/*TestSmartPointers();
+	TestSmartPointers();
 	testQuestionManager(questions);
 	testAnswerFiftyFifty(questions);
-	testZoneSiBoard(questions);*/
+	testZoneSiBoard(questions);
 	testPlayer();
 	testChooseBase(b, questions);
 	testDatabase();

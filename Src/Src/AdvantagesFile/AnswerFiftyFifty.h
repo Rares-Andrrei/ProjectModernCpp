@@ -10,9 +10,9 @@ private:
 	std::string m_answer;
 	std::vector<std::string>m_variants;
 public:
-	AnswerFiftyFifty(QTypeVariants Q);
+	AnswerFiftyFifty( QTypeVariants& Q);
 	bool AdvantageUsed();
 	bool getAdvantageFiftyFifty();
-	std::vector<std::string>AdvantageUtility();
+	std::array<std::string,3>AdvantageUtility();
 };
 
