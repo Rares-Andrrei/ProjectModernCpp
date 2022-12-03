@@ -42,7 +42,8 @@ uint16_t Zone::getScore()
 {
 	return this->m_score;
 }
-
+
+
 Player::Color Zone::getColor()
 {
 	return m_color;

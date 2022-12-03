@@ -107,8 +107,8 @@ void testDuel(QuestionManager questions)
 void testChooseBase(Board& b, QuestionManager questions)
 {
 	///am creat un obiect de tip ChooseBase pentru 2 jucatori
-	ChooseBase yes(2);
-	yes.ChooseAndPrintNumericalQuestion(questions);
+	ChooseBase yes(questions,2);
+
 
 	///am creat doua obiecte pentru jucatori
 	Player::Color p1 = Player::Color::Blue;
@@ -216,13 +216,15 @@ void testZoneSiBoard(QuestionManager questions)
 
 int main()
 {
-	/*QuestionManager questions;
+	QuestionManager questions;
+	Board b;
 	questions.addQFiles("QuestionFile/QTypeVariants.txt", "QuestionFile/QTypeNumerical.txt");
-	TestSmartPointers();
+	/*TestSmartPointers();
 	testQuestionManager(questions);
 	testAnswerFiftyFifty(questions);
-	testPlayer();
 	testZoneSiBoard(questions);*/
+	testPlayer();
+	testChooseBase(b, questions);
 	testDatabase();
 
 	return 0;

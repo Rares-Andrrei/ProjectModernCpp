@@ -17,8 +17,8 @@ private:
 
 
 public:
-	ChooseBase(uint16_t numberOfPlayers = 2);
-	void ChooseAndPrintNumericalQuestion(QuestionManager& questions); ///selectare si afisare intrebare random
+	ChooseBase( QuestionManager& questions,uint16_t numberOfPlayers = 2);
+	///selectare si afisare intrebare random
 	void CreateOrder(Player::Color player, int playerAnswer);
 
 	void setBaseZone(Board& board);

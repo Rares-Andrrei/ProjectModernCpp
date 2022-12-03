@@ -3,14 +3,14 @@
 #include<string>
 
 
-Player::Player(std::string firstName, std::string lastName)
+Player::Player(const std::string& firstName, const std::string& lastName)
 {
     this->m_firstName = firstName;
     this->m_lastName = lastName;
     this->m_color = Color::None;
 }
 
-Player::Player(std::string firstName, std::string lastName, Color color)
+Player::Player(const std::string& firstName, const std::string& lastName, const Color& color)
 {
     this->m_firstName = firstName;
     this->m_lastName = lastName;

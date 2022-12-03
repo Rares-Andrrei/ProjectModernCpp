@@ -1,15 +1,13 @@
 #include "ChooseBase.h"
 
-ChooseBase::ChooseBase(uint16_t numberOfPlayers)
+ChooseBase::ChooseBase( QuestionManager& questions,uint16_t numberOfPlayers)
 	:m_numberOfPlayers{ numberOfPlayers }
-{
-}
-
-void ChooseBase::ChooseAndPrintNumericalQuestion(QuestionManager& questions)
 {
 	m_question = questions.randQTypeNumerical();
 	std::cout << m_question;
 }
+
+
 
 void ChooseBase::CreateOrder(Player::Color player, int playerAnswer)
 {
@@ -30,7 +28,20 @@ void ChooseBase::setBaseZone(Board& board)
 		std::cout << *player <<"Player please choose a zone :";
 		uint16_t index1, index2;
 		std::cin >> index1 >> index2;
-		board[{index1, index2}] = player;
+		
+		if (board[{index1, index2}] == nullptr)
+		{
+			board[{index1, index2}] = player;
+
+		}
+		else
+		{
+			std::cout << "This base is already choose, please choose another :";
+			std::cin >> index1 >> index2;
+
+			board[{index1, index2}] = player;
+
+		}
 		m_PlayerOrder.pop();
 	}
 }
