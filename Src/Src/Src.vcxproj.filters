@@ -1,110 +1,166 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="AdvantagesFiles">
+      <UniqueIdentifier>{7751e26e-b47f-473d-baf6-0b1d3f9f6fd5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="QuesionFiles">
+      <UniqueIdentifier>{adb2904b-7f4e-4286-93b6-774296980116}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="DatabaseFiles">
+      <UniqueIdentifier>{fa405530-332b-491e-9a15-ed77a11f2a35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GamePlayFiles">
+      <UniqueIdentifier>{2df7bd17-ec4c-4c4c-a66d-f117535beebd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GamePlayFiles\Cpp">
+      <UniqueIdentifier>{a7e38c5d-2ee7-4f1c-ab34-e5ef020416f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GamePlayFiles\Header">
+      <UniqueIdentifier>{bd7c3a99-e8f6-47c9-a1d3-41f77cbbeac5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="QuesionFiles\Header">
+      <UniqueIdentifier>{db297d14-2f91-4d48-921f-a22461882eb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DatabaseFiles\Header">
+      <UniqueIdentifier>{e79a353b-a6ce-44f8-8296-da7730081aa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AdvantagesFiles\Header">
+      <UniqueIdentifier>{ce4bf753-c060-4471-8445-978b944e67fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AdvantagesFiles\Cpp">
+      <UniqueIdentifier>{0fb5453d-373c-4ab6-bfae-f3e8693b586d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="QuesionFiles\Cpp">
+      <UniqueIdentifier>{ec5a922a-e85c-4d41-b130-381d8e87b384}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DatabaseFiles\Cpp">
+      <UniqueIdentifier>{2ba103c1-8c47-4108-bb27-b5c8bcfc16f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DatabaseFiles\Resources">
+      <UniqueIdentifier>{6b1295b2-534a-44e2-bef8-9a56456b6708}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="QuesionFiles\Resources">
+      <UniqueIdentifier>{4f462590-3610-46bc-9bee-4ab0b54dee41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main">
+      <UniqueIdentifier>{9f4bf40a-2d02-4d73-8cce-cd18d97b2721}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="AdvantagesFile\Advantages.cpp">
+      <Filter>AdvantagesFiles\Cpp</Filter>
     </ClCompile>
-    <ClCompile Include="Zone.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="AdvantagesFile\AnswerFiftyFifty.cpp">
+      <Filter>AdvantagesFiles\Cpp</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="AdvantagesFile\AnswerSugestion.cpp">
+      <Filter>AdvantagesFiles\Cpp</Filter>
     </ClCompile>
-    <ClCompile Include="QTypeVariants.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="AdvantagesFile\FourCloseAnswers.cpp">
+      <Filter>AdvantagesFiles\Cpp</Filter>
     </ClCompile>
-    <ClCompile Include="QuestionManager.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="GameplayFile\Board.cpp">
+      <Filter>GamePlayFiles\Cpp</Filter>
     </ClCompile>
-    <ClCompile Include="QTypeNumerical.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="GameplayFile\ChooseBase.cpp">
+      <Filter>GamePlayFiles\Cpp</Filter>
     </ClCompile>
-    <ClCompile Include="Board.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="GameplayFile\Duel.cpp">
+      <Filter>GamePlayFiles\Cpp</Filter>
     </ClCompile>
-    <ClCompile Include="AnswerSugestion.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="GameplayFile\Player.cpp">
+      <Filter>GamePlayFiles\Cpp</Filter>
     </ClCompile>
-    <ClCompile Include="AnswerFiftyFifty.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="GameplayFile\PlayerBase.cpp">
+      <Filter>GamePlayFiles\Cpp</Filter>
     </ClCompile>
-    <ClCompile Include="Advantages.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="GameplayFile\Zone.cpp">
+      <Filter>GamePlayFiles\Cpp</Filter>
     </ClCompile>
-    <ClCompile Include="FourCloseAnswers.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="QuestionFile\QTypeNumerical.cpp">
+      <Filter>QuesionFiles\Cpp</Filter>
     </ClCompile>
-    <ClCompile Include="Duel.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="QuestionFile\QTypeVariants.cpp">
+      <Filter>QuesionFiles\Cpp</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerBase.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="QuestionFile\QuestionManager.cpp">
+      <Filter>QuesionFiles\Cpp</Filter>
     </ClCompile>
-    <ClCompile Include="ChooseBase.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="DatabaseFile\Account.cpp">
+      <Filter>DatabaseFiles\Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="DatabaseFile\Database.cpp">
+      <Filter>DatabaseFiles\Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="DatabaseFile\MatchInfo.cpp">
+      <Filter>DatabaseFiles\Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src.cpp">
+      <Filter>Main</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Zone.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="AdvantagesFile\Advantages.h">
+      <Filter>AdvantagesFiles\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="AdvantagesFile\AnswerFiftyFifty.h">
+      <Filter>AdvantagesFiles\Header</Filter>
     </ClInclude>
-    <ClInclude Include="QTypeVariants.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="AdvantagesFile\AnswerSugestion.h">
+      <Filter>AdvantagesFiles\Header</Filter>
     </ClInclude>
-    <ClInclude Include="QuestionManager.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="AdvantagesFile\FourCloseAnswers.h">
+      <Filter>AdvantagesFiles\Header</Filter>
     </ClInclude>
-    <ClInclude Include="QTypeNumerical.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="GameplayFile\Board.h">
+      <Filter>GamePlayFiles\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Board.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="GameplayFile\ChooseBase.h">
+      <Filter>GamePlayFiles\Header</Filter>
     </ClInclude>
-    <ClInclude Include="AnswerSugestion.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="GameplayFile\Duel.h">
+      <Filter>GamePlayFiles\Header</Filter>
     </ClInclude>
-    <ClInclude Include="AnswerFiftyFifty.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="GameplayFile\Player.h">
+      <Filter>GamePlayFiles\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Advantages.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="GameplayFile\PlayerBase.h">
+      <Filter>GamePlayFiles\Header</Filter>
     </ClInclude>
-    <ClInclude Include="FourCloseAnswers.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="GameplayFile\Zone.h">
+      <Filter>GamePlayFiles\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Duel.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="QuestionFile\QTypeNumerical.h">
+      <Filter>QuesionFiles\Header</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerBase.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="QuestionFile\QTypeVariants.h">
+      <Filter>QuesionFiles\Header</Filter>
     </ClInclude>
-    <ClInclude Include="ChooseBase.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="QuestionFile\QuestionManager.h">
+      <Filter>QuesionFiles\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="DatabaseFile\Account.h">
+      <Filter>DatabaseFiles\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="DatabaseFile\Database.h">
+      <Filter>DatabaseFiles\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="DatabaseFile\MatchInfo.h">
+      <Filter>DatabaseFiles\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="QTypeVariants.txt">
-      <Filter>Resource Files</Filter>
+    <Text Include="QuestionFile\QTypeNumerical.txt">
+      <Filter>QuesionFiles\Resources</Filter>
     </Text>
-    <Text Include="QTypeNumerical.txt">
-      <Filter>Resource Files</Filter>
+    <Text Include="QuestionFile\QTypeVariants.txt">
+      <Filter>QuesionFiles\Resources</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DatabaseFile\file.db">
+      <Filter>DatabaseFiles\Resources</Filter>
+    </None>
   </ItemGroup>
 </Project>

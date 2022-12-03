@@ -1,7 +1,7 @@
 #pragma once
 #include "AnswerSugestion.h"
-#include "QTypeNumerical.h"
-#include "QTypeVariants.h"
+#include "../QuestionFile/QTypeNumerical.h"
+#include "../QuestionFile/QTypeVariants.h"
 #include <cstdint>
 #include <vector>
 class Advantages

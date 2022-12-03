@@ -1,7 +1,7 @@
 #pragma once
 #include <array>
 
-#include "QTypeNumerical.h"
+#include "../QuestionFile/QTypeNumerical.h"
 
 class FourCloseAnswers
 {

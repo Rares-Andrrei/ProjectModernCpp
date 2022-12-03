@@ -1,7 +1,7 @@
 #pragma once
 #include "Player.h"
 #include "PlayerBase.h"
-#include "QuestionManager.h"
+#include "../QuestionFile/QuestionManager.h"
 #include "Board.h"
 #include <array>
 #include <queue>

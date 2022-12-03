@@ -2,7 +2,7 @@
 #include<vector>
 #include<array>
 #include<string>
-#include"QTypeVariants.h"
+#include "../QuestionFile/QTypeVariants.h"
 class AnswerFiftyFifty
 {
 private:
