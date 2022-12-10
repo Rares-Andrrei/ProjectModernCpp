@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/gui">
+        <file>background.png</file>
+        <file>startMeniu.png</file>
+    </qresource>
+</RCC>
