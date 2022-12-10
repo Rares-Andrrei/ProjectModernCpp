@@ -27,8 +27,66 @@ void ChooseBase::setBaseZone(Board& board)
 		std::cout <<"Curent board format :"<< board;
 		std::cout << *player <<"Player please choose a zone :";
 		uint16_t index1, index2;
+		uint16_t numPlayers = board.getNumberOfPlayers();
 		std::cin >> index1 >> index2;
-		
+		std::string message = "Invalid parameters";
+		if (numPlayers == 2)
+		{
+
+			try
+			{
+				if (index1 > 2 || index2 > 2)
+				{
+					throw(message);
+				}
+			}
+			catch (std::string message)
+			{
+				std::cerr << "Error:" << message << "max is 2 2";
+				return;
+			}
+		}
+		else
+		{
+			if (numPlayers == 3)
+			{
+				try
+				{
+					if (index1 > 4 || index2 > 2)
+					{
+						throw(message);
+					}
+
+				}
+				catch (std::string message)
+				{
+					std::cerr << "Error:" << message << "max is 4 2";
+					return;
+				}
+			}
+
+			else
+			{
+				if (numPlayers == 4)
+				{
+					try
+					{
+						if (index1 > 5 || index2 > 3)
+						{
+							throw(message);
+						}
+
+					}
+					catch (std::string message)
+					{
+						std::cerr << "Error:" << message << "max is 5 3";
+						return;
+					}
+
+				}
+			}
+		}
+
 		if (board[{index1, index2}] == nullptr)
 		{
 			board[{index1, index2}] = player;
