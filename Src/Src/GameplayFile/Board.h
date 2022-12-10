@@ -22,6 +22,7 @@ public:
 	std::shared_ptr<Zone>& operator[](const Position& indices);
 	void ObtainTotalScore();
 	int getTotalScore();
+	uint8_t getNumberOfPlayers();
 
 private:
 	void ChangeBoardDimensions();

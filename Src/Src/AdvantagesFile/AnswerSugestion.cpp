@@ -16,9 +16,21 @@ int AnswerSugestion::useAdvantage(int answer)
 	}
 	else
 	{
-		//throw exception
+		std::string message = "The advantage is already use";
+		try
+		{
+			if (m_used = true)
+			{
+				throw(message);
+			}
+		}
+		catch (std::string message)
+		{
+			std::cerr << "Pay attention" << message;
+		}
 	}
 }
+
 
 bool AnswerSugestion::isUsed()
 {

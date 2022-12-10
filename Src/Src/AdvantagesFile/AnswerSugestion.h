@@ -1,4 +1,5 @@
 #pragma once
+#include<iostream>
 class AnswerSugestion
 {
 	bool m_used;
