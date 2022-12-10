@@ -26,6 +26,7 @@
     <ClCompile Include="DatabaseFile\Account.cpp" />
     <ClCompile Include="DatabaseFile\Database.cpp" />
     <ClCompile Include="DatabaseFile\MatchInfo.cpp" />
+    <ClCompile Include="DatabaseFile\utils.cpp" />
     <ClCompile Include="GameplayFile\Board.cpp" />
     <ClCompile Include="GameplayFile\ChooseBase.cpp" />
     <ClCompile Include="GameplayFile\Duel.cpp" />
@@ -45,6 +46,7 @@
     <ClInclude Include="DatabaseFile\Account.h" />
     <ClInclude Include="DatabaseFile\Database.h" />
     <ClInclude Include="DatabaseFile\MatchInfo.h" />
+    <ClInclude Include="DatabaseFile\utils.h" />
     <ClInclude Include="GameplayFile\Board.h" />
     <ClInclude Include="GameplayFile\ChooseBase.h" />
     <ClInclude Include="GameplayFile\Duel.h" />

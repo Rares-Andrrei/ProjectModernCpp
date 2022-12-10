@@ -99,6 +99,9 @@
     <ClCompile Include="src.cpp">
       <Filter>Main</Filter>
     </ClCompile>
+    <ClCompile Include="DatabaseFile\utils.cpp">
+      <Filter>DatabaseFiles\Cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdvantagesFile\Advantages.h">
@@ -147,6 +150,9 @@
       <Filter>DatabaseFiles\Header</Filter>
     </ClInclude>
     <ClInclude Include="DatabaseFile\MatchInfo.h">
+      <Filter>DatabaseFiles\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="DatabaseFile\utils.h">
       <Filter>DatabaseFiles\Header</Filter>
     </ClInclude>
   </ItemGroup>

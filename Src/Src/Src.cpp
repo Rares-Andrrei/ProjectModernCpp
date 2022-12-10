@@ -13,6 +13,8 @@
 #include "AdvantagesFile/AnswerSugestion.h"
 #include "AdvantagesFile/FourCloseAnswers.h"
 
+#include <crow.h>
+#include "DatabaseFile/utils.h"
 
 void testDatabase()
 {
@@ -25,8 +27,6 @@ void testDatabase()
 	std::list<MatchInfo> test = db.getMatchHistory(ac);
 	std::cout << MatchInfo::getEndtime();
 }
-
-
 void TestSmartPointers()
 {
 	std::cout << "\nTest 1 : Shared_Ptr: \n";
@@ -60,7 +60,6 @@ void TestSmartPointers()
 	//	std::cout << *it << ' ';
 	//}
 }
-
 //Functie testare Duel
 void testDuel(QuestionManager questions)
 {
@@ -102,12 +101,11 @@ void testDuel(QuestionManager questions)
 	//delete zone;
 	std::cout << std::endl;
 }
-
 // functie testare ChooseBase
 void testChooseBase(Board& b, QuestionManager questions)
 {
 	///am creat un obiect de tip ChooseBase pentru 2 jucatori
-	ChooseBase yes(questions,2);
+	ChooseBase yes(questions, 2);
 
 
 	///am creat doua obiecte pentru jucatori
@@ -131,7 +129,6 @@ void testChooseBase(Board& b, QuestionManager questions)
 
 	std::cout << b;
 }
-
 void testQuestionManager(QuestionManager test)
 {
 	/// testarea clasei QuestionManager
@@ -144,7 +141,6 @@ void testQuestionManager(QuestionManager test)
 	std::cout << test.randQTypeNumerical();
 	std::cout << std::endl;
 }
-
 void testAnswerFiftyFifty(QuestionManager test)
 {
 	/// testarea clasei AnswerFiftyFifty
@@ -153,7 +149,7 @@ void testAnswerFiftyFifty(QuestionManager test)
 	std::cout << test3;
 	AnswerFiftyFifty test1(test3);
 
-	std::array<std::string,3>a = test1.AdvantageUtility();
+	std::array<std::string, 3>a = test1.AdvantageUtility();
 	std::cout << "Raspunsurile ramase dupa folosirea avantajului fiftyfifty:\n";
 	for (auto& i : a)
 	{
@@ -178,8 +174,6 @@ void testFourCloseAnswers()
 	std::cout << std::endl;
 
 }
-
-
 void testPlayer()
 {
 	/// testarea clasei Player
@@ -191,8 +185,6 @@ void testPlayer()
 
 
 }
-
-
 void testZoneSiBoard(QuestionManager questions)
 {
 	/// tetsarea clasei Zone si Board
@@ -216,16 +208,47 @@ void testZoneSiBoard(QuestionManager questions)
 
 int main()
 {
-	QuestionManager questions;
-	Board b;
-	questions.addQFiles("QuestionFile/QTypeVariants.txt", "QuestionFile/QTypeNumerical.txt");
-	TestSmartPointers();
-	testQuestionManager(questions);
-	testAnswerFiftyFifty(questions);
-	testZoneSiBoard(questions);
-	testPlayer();
-	testChooseBase(b, questions);
-	testDatabase();
+	Database db("DatabaseFile/file.db");
+	crow::SimpleApp app;
+	CROW_ROUTE(app, "/")([] {
+		return "Hallo guys";
+		});
+	auto& verifyLoginInfo = CROW_ROUTE(app, "/verifylogininfo")
+		.methods(crow::HTTPMethod::Put);
+
+	verifyLoginInfo([&db](const crow::request& req) {
+
+		auto bodyArgs = parseUrlArgs(req.body);
+	auto end = bodyArgs.end();
+	auto usernameIter = bodyArgs.find("username");
+	auto passwordIter = bodyArgs.find("password");
+
+	Account testAccount;
+	testAccount.setPassword(passwordIter->second);
+	testAccount.setUsername(usernameIter->second);
+
+	bool result = db.loginUser(testAccount);
+	if (result == false)
+	{
+		return crow::response(400);
+	}
+	else
+	{
+		return crow::response(200);
+	}
+		});
+	app.port(18080).multithreaded().run();
+
+	//QuestionManager questions;
+	//Board b;
+	//questions.addQFiles("QuestionFile/QTypeVariants.txt", "QuestionFile/QTypeNumerical.txt");
+	//TestSmartPointers();
+	//testQuestionManager(questions);
+	//testAnswerFiftyFifty(questions);
+	//testZoneSiBoard(questions);
+	//testPlayer();
+	//testChooseBase(b, questions);
+	//testDatabase();
 
 	return 0;
 }
