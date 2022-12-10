@@ -8,22 +8,40 @@ Board::Board(const uint8_t NumberOfPlayers)
 
 void Board::ChangeBoardDimensions()
 {
-	if (this->m_NumberOfPlayers == 2)
+	if (this->m_NumberOfPlayers > 4)
 	{
-		this->m_BoardHeight = 3;
-		this->m_BoardWidth = 3;
-	}
-	else if (this->m_NumberOfPlayers == 3)
-	{
-		this->m_BoardHeight = 3;
-		this->m_BoardWidth = 5;
-	}
-	else {
-		this->m_BoardHeight = 4;
-		this->m_BoardWidth = 6;
-	}
-	m_board.resize(m_BoardHeight * m_BoardWidth);// fill board with empty (Zones)
+		std::string message = "So much players, sorry I'm crashed :(";
+		try
+		{
+			throw(message);
+		}
+		catch (std::string message)
+		{
+			std::cout << std::endl;
+			std::cerr << message;
+			return;
 
+		}
+	}
+	else
+	{
+		if (this->m_NumberOfPlayers == 2)
+		{
+			this->m_BoardHeight = 3;
+			this->m_BoardWidth = 3;
+		}
+		else if (this->m_NumberOfPlayers == 3)
+		{
+			this->m_BoardHeight = 3;
+			this->m_BoardWidth = 5;
+		}
+		else {
+			this->m_BoardHeight = 4;
+			this->m_BoardWidth = 6;
+		}
+		m_board.resize(m_BoardHeight * m_BoardWidth);// fill board with empty (Zones)
+
+	}
 }
 
 const std::shared_ptr<Zone>& Board::operator[](const Position& indices) const
@@ -53,6 +71,11 @@ void Board::ObtainTotalScore()
 int Board::getTotalScore()
 {
 	return m_totalScore;
+}
+
+uint8_t Board::getNumberOfPlayers()
+{
+	return m_NumberOfPlayers;
 }
 
 std::ostream& operator<<(std::ostream& out, Board board)
