@@ -213,6 +213,7 @@ int main()
 	CROW_ROUTE(app, "/")([] {
 		return "Hallo guys";
 		});
+
 	auto& verifyLoginInfo = CROW_ROUTE(app, "/verifylogininfo")
 		.methods(crow::HTTPMethod::Put);
 
@@ -237,6 +238,37 @@ int main()
 		return crow::response(200);
 	}
 		});
+
+	
+	auto& registerUser = CROW_ROUTE(app, "/register")
+		.methods(crow::HTTPMethod::Put);
+
+	registerUser([&db](const crow::request& req) {
+
+		auto bodyArgs = parseUrlArgs(req.body);
+	auto end = bodyArgs.end();
+	auto nicknameIter = bodyArgs.find("nickname");
+	auto usernameIter = bodyArgs.find("username");
+	auto passwordIter = bodyArgs.find("password");
+
+	Account testAccount;
+	testAccount.setNickName(nicknameIter->second);
+	testAccount.setPassword(passwordIter->second);
+	testAccount.setUsername(usernameIter->second);
+
+	bool result = db.registeUser(testAccount);
+	if (result == false)
+	{
+		return crow::response(400);
+	}
+	else
+	{
+		return crow::response(200);
+	}
+		});
+
+
+	
 	app.port(18080).multithreaded().run();
 
 	//QuestionManager questions;
