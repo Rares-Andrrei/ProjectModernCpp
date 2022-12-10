@@ -41,10 +41,24 @@ void QuestionManager::readQTypeNumerical(const std::string& fileQTypeNumerical)
 
 	for (std::ifstream in{ fileQTypeNumerical }; !in.eof();)
 	{
-		std::getline(in, question);
-		std::getline(in, answer);
-		auto answerInteger = std::stoi(answer);
-		m_qNumerical.emplace_back(question, answerInteger);
+		if (in.is_open())
+		{
+			std::getline(in, question);
+			std::getline(in, answer);
+			auto answerInteger = std::stoi(answer);
+			m_qNumerical.emplace_back(question, answerInteger);
+		}
+		else
+		{
+			std::string message = "The file doesn't opened";
+			try
+			{
+				throw(message);
+			}
+			catch (std::string message) {
+				std::cerr << "Error:" << message;
+			}
+		}
 	}
 }
 
