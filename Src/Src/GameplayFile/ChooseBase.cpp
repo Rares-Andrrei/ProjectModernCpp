@@ -94,11 +94,36 @@ void ChooseBase::setBaseZone(Board& board)
 		}
 		else
 		{
-			std::cout << "This base is already choose, please choose another :";
-			std::cin >> index1 >> index2;
+			bool frag = false;
+			int count = 0;
+			while (frag == false && count < 2)
+			{
+				std::cout << "This base is already choose, please choose another :";
+				std::cin >> index1 >> index2;
+				if (board[{index1, index2}] == nullptr)
+				{
+					board[{index1, index2}] = player;
+					frag = true;
 
-			board[{index1, index2}] = player;
+				}
+				else
+					count++;
+			}
+			if (count == 2)
+			{
+				std::string message = "You are too stupid for this game broski, don't play";
+				try
+				{
+					throw(message);
 
+				}
+				catch (std::string message)
+				{
+					std::cerr << message;
+					return;
+				}
+
+			}
 		}
 		m_PlayerOrder.pop();
 	}
