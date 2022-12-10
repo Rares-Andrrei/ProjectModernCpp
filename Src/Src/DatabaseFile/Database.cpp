@@ -17,7 +17,6 @@ bool Database::registeUser(Account account)
 	{
 		return false;
 	}
-
 }
 
 void Database::insetMatch(MatchInfo match)
@@ -53,6 +52,16 @@ bool Database::loginUser(Account account)
 		{
 			return true;
 		}
+	}
+	return false;
+}
+
+bool Database::checkUsername(std::string username)
+{
+	m_account.setUsername(username);
+	if (auto user = m_storage.get_pointer<Account>(m_account.getUsername()))
+	{
+		return true;
 	}
 	return false;
 }

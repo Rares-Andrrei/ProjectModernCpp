@@ -210,6 +210,7 @@ int main()
 {
 	Database db("DatabaseFile/file.db");
 	crow::SimpleApp app;
+
 	CROW_ROUTE(app, "/")([] {
 		return "Hallo guys";
 		});
@@ -239,7 +240,7 @@ int main()
 	}
 		});
 
-	
+
 	auto& registerUser = CROW_ROUTE(app, "/register")
 		.methods(crow::HTTPMethod::Put);
 
@@ -268,6 +269,25 @@ int main()
 		});
 
 
+	auto& validateUsername = CROW_ROUTE(app, "/validateusername")
+		.methods(crow::HTTPMethod::Put);
+	
+	validateUsername([&db](const crow::request& req) {
+
+		auto bodyArgs = parseUrlArgs(req.body);
+	auto end = bodyArgs.end();
+	auto usernameIter = bodyArgs.find("username");
+
+	bool result = db.checkUsername(usernameIter->second);
+	if (result == true)
+	{
+		return crow::response(400);
+	}
+	else
+	{
+		return crow::response(200);
+	}
+		});
 	
 	app.port(18080).multithreaded().run();
 

@@ -31,10 +31,12 @@ using Storage = decltype(createStorage(""));
 class Database
 {
 	Storage m_storage;
+	Account m_account;
 
 public:
 	Database(const std::string& filename);
 	bool loginUser(Account account);
+	bool checkUsername(std::string username);
 	bool registeUser(Account account);
 	void insetMatch(MatchInfo match);
 	std::list<MatchInfo> getMatchHistory(Account account);
