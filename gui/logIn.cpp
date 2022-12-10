@@ -1,4 +1,7 @@
 #include "logIn.h"
+#include <cpr/cpr.h>
+#include <crow.h>
+#include <string>
 
 logIn::logIn(QWidget* parent)
     : QMainWindow(parent)
@@ -13,8 +16,22 @@ void logIn::onEnterButtonClicked()
     QString username = ui.l_username->text();
     QString password = ui.l_password->text();
 
-    //verificari dupa ce se fac rutele cu serverul
+	std::string usernameString, passwordString;
+	usernameString=username.toLocal8Bit().constData();
+	passwordString = password.toLocal8Bit().constData();
+	
+	auto response = cpr::Put(
+		cpr::Url{ "http://localhost:18080/verifylogininfo" },
+		cpr::Payload{
+			{ "username", usernameString },
+			{ "password", passwordString }
+		}
+	);
 
-    if (password != "123456789")
-        QMessageBox::about(this, "Incorrect password", "The password is incorrect, try again");
+	if (response.status_code == 200 || response.status_code == 202) {
+		QMessageBox::information(this, "Success", "Account was found");
+	}
+	else {
+		QMessageBox::information(this, "Failure", "The account was not found");
+	}
 }
