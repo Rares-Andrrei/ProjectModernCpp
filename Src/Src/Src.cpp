@@ -11,6 +11,8 @@
 #include "AnswerSugestion.h"
 #include "FourCloseAnswers.h"
 
+#include <crow.h>
+#include "utils.h"
 
 void TestSmartPointers()
 {
