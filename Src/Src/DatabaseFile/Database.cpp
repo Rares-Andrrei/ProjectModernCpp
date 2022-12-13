@@ -26,11 +26,12 @@ void Database::insetMatch(MatchInfo match)
 
 std::list<MatchInfo> Database::getMatchHistory(Account account)
 {
-	
-	auto list1 = m_storage.get_all<MatchInfo, std::list<MatchInfo>>(sql::where(sql::c(&MatchInfo::getFirstPlace) = account.getNickName()));
-	auto list2 = m_storage.get_all<MatchInfo, std::list<MatchInfo>>(sql::where(sql::c(&MatchInfo::getSecondPlace) = account.getNickName()));
-	auto list3 = m_storage.get_all<MatchInfo, std::list<MatchInfo>>(sql::where(sql::c(&MatchInfo::getThirdPlace) = account.getNickName()));
-	auto list4 = m_storage.get_all<MatchInfo, std::list<MatchInfo>>(sql::where(sql::c(&MatchInfo::getFourthPlace) = account.getNickName()));
+	using namespace sqlite_orm;
+	std::string nickname = account.getNickName();
+	auto list1 = m_storage.get_all<MatchInfo, std::list<MatchInfo>>(sql::where(sql::c(&MatchInfo::getFirstPlace) == nickname));
+	auto list2 = m_storage.get_all<MatchInfo, std::list<MatchInfo>>(sql::where(sql::c(&MatchInfo::getSecondPlace) == nickname));
+	auto list3 = m_storage.get_all<MatchInfo, std::list<MatchInfo>>(sql::where(sql::c(&MatchInfo::getThirdPlace) == nickname));
+	auto list4 = m_storage.get_all<MatchInfo, std::list<MatchInfo>>(sql::where(sql::c(&MatchInfo::getFourthPlace) == nickname));
 	std::list<MatchInfo> merged;
 	merged.insert(merged.end(), list1.begin(), list1.end());
 	merged.insert(merged.end(), list2.begin(), list2.end());

@@ -1,11 +1,11 @@
 #pragma once
-#include "../QuestionFile/QuestionManager.h"
+#include "QuestionManager.h"
 #include <optional>
 #include "Player.h"
 #include <utility>
 #include "Zone.h"
-#include "../QuestionFile/QTypeNumerical.h"
-#include "../QuestionFile/QTypeVariants.h"
+#include "QTypeNumerical.h"
+#include "QTypeVariants.h"
 class Duel
 {
 	static const uint8_t maxPlayerNumber = 4;

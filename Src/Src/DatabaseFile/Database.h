@@ -1,6 +1,4 @@
 #pragma once
-#define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
-#define _SILENCE_CXX20_CISO646_REMOVED_WARNING
 #include <list>
 #include <sqlite_orm/sqlite_orm.h>
 #include "MatchInfo.h"

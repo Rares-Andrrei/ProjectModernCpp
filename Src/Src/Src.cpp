@@ -1,32 +1,17 @@
-#define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
-#define _SILENCE_CXX20_CISO646_REMOVED_WARNING
 #include <iostream>
 #include <memory>
 
-#include "DatabaseFile/Database.h"
-#include "GameplayFile/Player.h"
-#include "GameplayFile/Board.h"
-#include "GameplayFile/Duel.h"
-#include "GameplayFile/ChooseBase.h"
-#include "QuestionFile/QuestionManager.h"
-#include "AdvantagesFile/AnswerFiftyFifty.h"
-#include "AdvantagesFile/AnswerSugestion.h"
-#include "AdvantagesFile/FourCloseAnswers.h"
+#include "Database.h"
+#include "Player.h"
+#include "Board.h"
+#include "Duel.h"
+#include "ChooseBase.h"
+#include "QuestionManager.h"
+#include "AnswerFiftyFifty.h"
+#include "AnswerSugestion.h"
+#include "FourCloseAnswers.h"
 
-#include <crow.h>
-#include "DatabaseFile/utils.h"
 
-void testDatabase()
-{
-
-	Database db("DatabaseFile/file.db");
-	Account ac("Rares", "raresandrei", "rrs");
-	std::cout << db.loginUser(ac) << std::endl;
-	std::cout << db.registeUser(ac) << std::endl;
-	std::cout << db.loginUser(ac) << std::endl;
-	std::list<MatchInfo> test = db.getMatchHistory(ac);
-	std::cout << MatchInfo::getEndtime();
-}
 void TestSmartPointers()
 {
 	std::cout << "\nTest 1 : Shared_Ptr: \n";
@@ -205,7 +190,17 @@ void testZoneSiBoard(QuestionManager questions)
 	testChooseBase(d, questions);
 
 }
+void testDatabase()
+{
 
+	Database db("DatabaseFile/file.db");
+	Account ac("Rares", "raresandrei", "rrs");
+	std::cout << db.loginUser(ac) << std::endl;
+	std::cout << db.registeUser(ac) << std::endl;
+	std::cout << db.loginUser(ac) << std::endl;
+	std::list<MatchInfo> test = db.getMatchHistory(ac);
+	std::cout << MatchInfo::getEndtime();
+}
 int main()
 {
 	Database db("DatabaseFile/file.db");
@@ -300,7 +295,9 @@ int main()
 	//testZoneSiBoard(questions);
 	//testPlayer();
 	//testChooseBase(b, questions);
-	//testDatabase();
+
+
+	testDatabase();
 
 	return 0;
 }
