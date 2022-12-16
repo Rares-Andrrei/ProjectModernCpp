@@ -18,4 +18,8 @@ private:
 
 private slots:
 	void onEnterButtonClicked();
+	void onGoBackButtonClicked();
+	void onShowPasswordButtonChecked();
+	void onShowConfirmedPasswordButtonChecked();
+
 };

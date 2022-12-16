@@ -5,7 +5,45 @@ signUp::signUp(QWidget* parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
+
+	ui.s_password->setEchoMode(QLineEdit::Password);
+	ui.s_confirmPassword->setEchoMode(QLineEdit::Password);
+
 	connect(ui.enterButton, SIGNAL(clicked()), SLOT(onEnterButtonClicked()));
+	connect(ui.goBackButton, SIGNAL(clicked()), SLOT(onGoBackButtonClicked()));
+	connect(ui.showPasswordButton, SIGNAL(clicked()), SLOT(onShowPasswordButtonChecked()));
+	connect(ui.showConfirmedPasswordButton, SIGNAL(clicked()), SLOT(onShowConfirmedPasswordButtonChecked()));
+
+	ui.s_name->setPlaceholderText("Name");
+	ui.s_username->setPlaceholderText("Username");
+	ui.s_password->setPlaceholderText("Password");
+	ui.s_confirmPassword->setPlaceholderText("Confirm password");
+
+	ui.s_name->setClearButtonEnabled(true);
+	ui.s_username->setClearButtonEnabled(true);
+	ui.s_password->setClearButtonEnabled(true);
+	ui.s_confirmPassword->setClearButtonEnabled(true);
+}
+
+void signUp::onGoBackButtonClicked()
+{
+	this->close();
+}
+
+void signUp::onShowPasswordButtonChecked()
+{
+	if (ui.showPasswordButton->checkState()==Qt::Checked)
+		ui.s_password->setEchoMode(QLineEdit::Normal);
+	else
+		ui.s_password->setEchoMode(QLineEdit::Password);
+}
+
+void signUp::onShowConfirmedPasswordButtonChecked()
+{
+	if (ui.showConfirmedPasswordButton->checkState() == Qt::Checked)
+		ui.s_confirmPassword->setEchoMode(QLineEdit::Normal);
+	else
+		ui.s_confirmPassword->setEchoMode(QLineEdit::Password);
 }
 
 void signUp::onEnterButtonClicked()
