@@ -14,6 +14,16 @@ protected:
 	QTypeNumerical m_question;
 	int m_questionAnswer;
 
+	class CompareResponsesAndTime
+	{
+	public:
+		bool operator()(const std::tuple<int, int, Player::Color>& p1, const std::tuple<int, int, Player::Color>& p2)
+		{
+			const auto& [DistFromCorrectAnswer, ResponseTime, Player] = p1;
+			const auto& [DistFromCorrectAnswer2, ResponseTime2, Player2] = p2;
+			return DistFromCorrectAnswer < DistFromCorrectAnswer2 || (DistFromCorrectAnswer == DistFromCorrectAnswer2 && ResponseTime < ResponseTime2);
+		}
+	};
 	std::priority_queue <std::tuple<int, int, Player::Color>, std::vector<std::tuple<int, int, Player::Color>>, CompareResponsesAndTime> m_PlayerOrder;
 
 
