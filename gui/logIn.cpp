@@ -7,6 +7,7 @@ logIn::logIn(QWidget* parent)
     : QMainWindow(parent)
 {
     ui.setupUi(this);
+	lobbyWindow.reset(new lobby());
 
 	ui.l_password->setEchoMode(QLineEdit::Password);
 
@@ -59,6 +60,8 @@ void logIn::onEnterButtonClicked()
 
 	if (response.status_code == 200 || response.status_code == 202) {
 		QMessageBox::information(this, "Success", "Account was found");
+		QApplication::closeAllWindows();
+		lobbyWindow->show();
 	}
 	else {
 		QMessageBox::information(this, "Failure", "The account was not found");
