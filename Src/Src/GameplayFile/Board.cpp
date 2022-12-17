@@ -1,6 +1,6 @@
 #include "Board.h"
 
-Board::Board(const uint8_t NumberOfPlayers)
+Board::Board(const uint8_t& NumberOfPlayers)
 	:m_NumberOfPlayers{ NumberOfPlayers }
 {
 	this->ChangeBoardDimensions();
@@ -92,6 +92,18 @@ int Board::getTotalScore()
 uint8_t Board::getNumberOfPlayers()
 {
 	return m_NumberOfPlayers;
+}
+
+bool Board::CheckIfBoardIsFull()
+{
+	for (const auto& zone : m_board)
+	{
+		if (zone == nullptr)
+		{
+			return false;
+		}
+	}
+	return true;
 }
 
 std::ostream& operator<<(std::ostream& out, Board board)
