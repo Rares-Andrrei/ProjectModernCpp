@@ -10,7 +10,6 @@
 class ChooseRegion
 {
 protected:
-	uint16_t m_numberOfPlayers;
 	QTypeNumerical m_question;
 	int m_questionAnswer;
 
@@ -28,11 +27,11 @@ protected:
 
 
 public:
-	ChooseRegion(QuestionManager& questions, const  uint16_t& numberOfPlayers);
+	ChooseRegion(QuestionManager& questions);
 
 	void CreateOrder(const Player::Color& player, const  int& playerAnswer, const int& responseTime);
 
-	void setBaseZone(Board& board);
+	void setRegionZone(Board& board);
 
 };
 

@@ -11,12 +11,9 @@
 
 class ChooseBase :public ChooseRegion
 {
-private:
-
 public:
-	ChooseBase(QuestionManager& questions/*, const uint16_t& numberOfPlayers*/);
-	///selectare si afisare intrebare random
-	
+	ChooseBase(QuestionManager& questions);
+
 	void setBaseZone(Board& board);
 };
 
