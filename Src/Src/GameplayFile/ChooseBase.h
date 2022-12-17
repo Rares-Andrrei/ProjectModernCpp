@@ -1,27 +1,22 @@
 #pragma once
+#include <cstdlib>
 #include "Player.h"
 #include "PlayerBase.h"
 #include "QuestionManager.h"
 #include "Board.h"
 #include <array>
 #include <queue>
+#include "ChooseRegion.h"
+#include <memory>
 
-class ChooseBase
+class ChooseBase :public ChooseRegion
 {
 private:
-	uint16_t m_numberOfPlayers;
-	QTypeNumerical m_question;
-	int m_questionAnswer;
-
-	std::priority_queue <std::pair<int, Player::Color>, std::vector<std::pair<int, Player::Color>>, std::greater<std::pair<int, Player::Color>>> m_PlayerOrder;
-
 
 public:
-	ChooseBase( QuestionManager& questions,uint16_t numberOfPlayers = 2);
+	ChooseBase(QuestionManager& questions, const uint16_t& numberOfPlayers);
 	///selectare si afisare intrebare random
-	void CreateOrder(Player::Color player, int playerAnswer);
-
+	
 	void setBaseZone(Board& board);
-
 };
 

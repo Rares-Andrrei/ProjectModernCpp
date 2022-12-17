@@ -104,10 +104,10 @@ void testChooseBase(Board& b, QuestionManager questions)
 	int playerAnswer;
 	std::cout << "Blue player answer: ";
 	std::cin >> playerAnswer;
-	yes.CreateOrder(p1, playerAnswer);
+	yes.CreateOrder(p1,0, playerAnswer);
 	std::cout << "Yellow player answer: ";
 	std::cin >> playerAnswer;
-	yes.CreateOrder(p2, playerAnswer);
+	yes.CreateOrder(p2,0, playerAnswer);
 
 	/// am setat clasa PlayerBase in ordinea raspunsurilor corecte
 	yes.setBaseZone(b);
