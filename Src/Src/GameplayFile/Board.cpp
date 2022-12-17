@@ -118,11 +118,6 @@ std::ostream& operator<<(std::ostream& out, Board board)
 			if (board.m_board[row * board.m_BoardWidth + column] != nullptr)
 			{
 				out << *board.m_board[row * board.m_BoardWidth + column] << ' ';
-
-				/*auto current = board[pos];
-
-				auto d_ptr = std::static_pointer_cast<PlayerBase>(current);
-				out << d_ptr << ' ';*/
 			}
 			else {
 				out << "________ ";

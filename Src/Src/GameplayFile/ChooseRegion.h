@@ -25,7 +25,6 @@ protected:
 	};
 	std::priority_queue <std::tuple<int, int, Player::Color>, std::vector<std::tuple<int, int, Player::Color>>, CompareResponsesAndTime> m_PlayerOrder;
 
-
 public:
 	ChooseRegion(QuestionManager& questions);
 

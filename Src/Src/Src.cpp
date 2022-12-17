@@ -10,6 +10,7 @@
 #include "AnswerFiftyFifty.h"
 #include "AnswerSugestion.h"
 #include "FourCloseAnswers.h"
+#include "ChooseRegion.h"
 
 #include <crow.h>
 #include "utils.h"
@@ -92,29 +93,49 @@ void testDuel(QuestionManager questions)
 void testChooseBase(Board& b, QuestionManager questions)
 {
 	///am creat un obiect de tip ChooseBase pentru 2 jucatori
-	ChooseBase yes(questions, 2);
-
-
-	///am creat doua obiecte pentru jucatori
+	Board b1(3);
 	Player::Color p1 = Player::Color::Blue;
 	Player::Color p2 = Player::Color::Yellow;
-
-	/// pentru cei doi jucatori am preluat raspunsul dat in consola si am facut ordinea in care acestia vor alege
-	/// bazele
+	Player::Color p3 = Player::Color::Green;
+	
+	ChooseBase chooseBase(questions);
 	int playerAnswer;
+	
 	std::cout << "Blue player answer: ";
 	std::cin >> playerAnswer;
-	yes.CreateOrder(p1,0, playerAnswer);
+	chooseBase.CreateOrder(p1, 0, playerAnswer);
+	
 	std::cout << "Yellow player answer: ";
 	std::cin >> playerAnswer;
-	yes.CreateOrder(p2,0, playerAnswer);
+	chooseBase.CreateOrder(p2, 0, playerAnswer);
+	
+	std::cout << "Green player answer: ";
+	std::cin >> playerAnswer;
+	chooseBase.CreateOrder(p3, 0, playerAnswer);
+	
+	chooseBase.setBaseZone(b1);
+	
+	while (!b1.CheckIfBoardIsFull())
+	{
+		ChooseRegion chooseRegion(questions);
+		int playerAnswer;
+		std::cout << "Blue player answer: ";
+		std::cin >> playerAnswer;
+		chooseRegion.CreateOrder(p1, 0, playerAnswer);
+		std::cout << "Yellow player answer: ";
+		std::cin >> playerAnswer;
+		chooseRegion.CreateOrder(p2, 0, playerAnswer);
+		std::cout << "Green player answer: ";
+		std::cin >> playerAnswer;
+		chooseRegion.CreateOrder(p3, 0, playerAnswer);
 
-	/// am setat clasa PlayerBase in ordinea raspunsurilor corecte
-	yes.setBaseZone(b);
+		/// am setat clasa PlayerBase in ordinea raspunsurilor corecte
+		chooseRegion.setRegionZone(b1);
+	}
 	std::cout << std::endl;
 	std::cout << "9. Afisarea hartii :";
 
-	std::cout << b;
+	std::cout << b1;
 }
 void testQuestionManager(QuestionManager test)
 {
@@ -206,7 +227,7 @@ void testDatabase()
 int main()
 {
 	Database db("DatabaseFile/file.db");
-	crow::SimpleApp app;
+	/*crow::SimpleApp app;
 
 	CROW_ROUTE(app, "/")([] {
 		return "Hallo guys";
@@ -268,7 +289,7 @@ int main()
 
 	auto& validateUsername = CROW_ROUTE(app, "/validateusername")
 		.methods(crow::HTTPMethod::Put);
-	
+
 	validateUsername([&db](const crow::request& req) {
 
 		auto bodyArgs = parseUrlArgs(req.body);
@@ -285,18 +306,18 @@ int main()
 		return crow::response(200);
 	}
 		});
-	
-	app.port(18080).multithreaded().run();
 
-	//QuestionManager questions;
-	//Board b;
-	//questions.addQFiles("QuestionFile/QTypeVariants.txt", "QuestionFile/QTypeNumerical.txt");
-	//TestSmartPointers();
-	//testQuestionManager(questions);
-	//testAnswerFiftyFifty(questions);
-	//testZoneSiBoard(questions);
-	//testPlayer();
-	//testChooseBase(b, questions);
+	app.port(18080).multithreaded().run()*/;
+
+	QuestionManager questions;
+	Board b;
+	questions.addQFiles("QuestionFile/QTypeVariants.txt", "QuestionFile/QTypeNumerical.txt");
+	TestSmartPointers();
+	testQuestionManager(questions);
+	testAnswerFiftyFifty(questions);
+	testZoneSiBoard(questions);
+	testPlayer();
+	testChooseBase(b, questions);
 
 
 	testDatabase();

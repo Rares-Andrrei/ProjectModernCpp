@@ -35,7 +35,6 @@ void ChooseRegion::setRegionZone(Board& board)
 		{
 			try
 			{
-
 				std::shared_ptr<Zone> player(std::make_shared < Zone >(Player));
 				std::cout << "Curent board format :" << board;
 				std::cout << *player << "Player please choose a zone :";

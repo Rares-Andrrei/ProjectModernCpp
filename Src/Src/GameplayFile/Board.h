@@ -5,7 +5,6 @@
 #include <vector>
 #include <memory>
 
-
 class Board
 {
 	uint8_t m_NumberOfPlayers; // Numarul maxim de jucatori este 4
@@ -16,14 +15,14 @@ class Board
 
 public:
 	Board(const uint8_t& NumberOfPlayers = 2);
-	
+
 	using Position = std::pair<int, int>;
-	
+
 	friend std::ostream& operator <<(std::ostream& out, Board board);
-	
+
 	const std::shared_ptr<Zone>& operator[](const Position& indices) const;
 	std::shared_ptr<Zone>& operator[](const Position& indices);
-	
+
 	void ObtainTotalScore();
 	int getTotalScore();
 	uint8_t getNumberOfPlayers();
