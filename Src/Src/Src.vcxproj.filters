@@ -157,15 +157,15 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="QuestionFile\QTypeNumerical.txt">
+    <Text Include="QTypeNumerical.txt">
       <Filter>QuesionFiles\Resources</Filter>
     </Text>
-    <Text Include="QuestionFile\QTypeVariants.txt">
+    <Text Include="QTypeVariants.txt">
       <Filter>QuesionFiles\Resources</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <None Include="DatabaseFile\file.db">
+    <None Include="file.db">
       <Filter>DatabaseFiles\Resources</Filter>
     </None>
   </ItemGroup>
