@@ -15,6 +15,11 @@ void QTypeNumerical::setAnswer(const int& answer)
 	m_answer = answer;
 }
 
+std::string QTypeNumerical::getQuestion() const
+{
+	return m_question;
+}
+
 int QTypeNumerical::getAnswer() const
 {
 	return m_answer;

@@ -14,8 +14,9 @@ public:
 
 	void setQuestion(const std::string& question);
 	void setAnswer(const int& answer);
+	std::string getQuestion() const;
 
-	int getAnswer()const;
+	int getAnswer() const;
 
 	friend std::ostream& operator <<(std::ostream& out, const QTypeNumerical& q);
 };
