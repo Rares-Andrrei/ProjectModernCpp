@@ -203,7 +203,8 @@ void testDatabase()
 	std::list<MatchInfo> test = db.getMatchHistory(ac);
 	std::cout << MatchInfo::getEndtime();
 }
-int main()
+
+void routeFct()
 {
 	Database db("DatabaseFile/file.db");
 	crow::SimpleApp app;
@@ -268,7 +269,7 @@ int main()
 
 	auto& validateUsername = CROW_ROUTE(app, "/validateusername")
 		.methods(crow::HTTPMethod::Put);
-	
+
 	validateUsername([&db](const crow::request& req) {
 
 		auto bodyArgs = parseUrlArgs(req.body);
@@ -285,9 +286,21 @@ int main()
 		return crow::response(200);
 	}
 		});
-	
-	app.port(18080).multithreaded().run();
 
+	app.port(18080).multithreaded().run();
+}
+
+void testQuest()
+{
+	QuestionManager test;
+	test.addQFiles("QTypeVariants.txt", "QTypeNumerical.txt");
+	Database db("file.db");
+	test.pushQuestionsInDb(db);
+}
+int main()
+{
+	testQuest();
+	//routeFct();
 	//QuestionManager questions;
 	//Board b;
 	//questions.addQFiles("QuestionFile/QTypeVariants.txt", "QuestionFile/QTypeNumerical.txt");
@@ -297,9 +310,7 @@ int main()
 	//testZoneSiBoard(questions);
 	//testPlayer();
 	//testChooseBase(b, questions);
-
-
-	testDatabase();
+	//testDatabase();
 
 	return 0;
 }
