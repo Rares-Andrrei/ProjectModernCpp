@@ -53,9 +53,6 @@ void signUp::onEnterButtonClicked()
 	QString password = ui.s_password->text();
 	QString confirmPassword = ui.s_confirmPassword->text();
 
-	//daca username ul nu e unic, eroare
-	//daca parola nu e la fel ca confimPassword, eroare
-
 	if (password != confirmPassword)
 	{
 		QMessageBox::about(this, "Sign up error", "The passwords do not match");
@@ -71,6 +68,7 @@ void signUp::onEnterButtonClicked()
 		QMessageBox::about(this, "Sign up error", "Please fill in all the fields");
 		return;
 	}
+
 	auto response = cpr::Put(
 		cpr::Url{ "http://localhost:18080/validateusername" },
 		cpr::Payload{
