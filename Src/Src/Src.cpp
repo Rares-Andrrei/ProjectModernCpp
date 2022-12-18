@@ -307,7 +307,7 @@ int main()
 	}
 		});
 
-	app.port(18080).multithreaded().run()*/;
+	app.port(18080).multithreaded().run();*/
 
 	QuestionManager questions;
 	Board b;
