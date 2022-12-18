@@ -2,6 +2,7 @@
 #include <vector>
 #include "QTypeVariants.h"
 #include "QTypeNumerical.h"
+#include "Database.h"
 
 class QuestionManager
 {
@@ -13,6 +14,7 @@ public:
 	QuestionManager() = default;
 	QuestionManager(const std::string& fileQTypeVariants, const std::string& fileQTypeNumerical);
 	void addQFiles(const std::string& fileQTypeVariants, const std::string& fileQTypeNumerical);
+	void pushQuestionsInDb(Database& db);
 	QTypeVariants randQTypeVariants();
 	QTypeNumerical randQTypeNumerical();
 };

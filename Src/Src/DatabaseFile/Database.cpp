@@ -45,6 +45,17 @@ Database::Database(const std::string& filename) : m_storage{createStorage(filena
 	m_storage.sync_schema();
 }
 
+void Database::insertQTypeVariants(const std::vector<QTypeVariants>& questions)
+{
+	m_storage.replace_range(questions.begin(), questions.end());
+}
+
+void Database::insertQTypeNumerical(const std::vector<QTypeNumerical>& questions)
+{
+	m_storage.replace_range(questions.begin(), questions.end());
+}
+
+
 bool Database::loginUser(Account account)
 {
 	if (auto user = m_storage.get_pointer<Account>(account.getUsername()))
