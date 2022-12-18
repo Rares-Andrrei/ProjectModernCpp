@@ -24,6 +24,7 @@ public:
 	//GameLogic& operator=(GameLogic&&) = delete;
 
 	void StartGame();
+	void EndGame();
 	void addPlayer(const std::string& firstName, const std::string& lastName);
 
 	~GameLogic() = default;

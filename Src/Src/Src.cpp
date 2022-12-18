@@ -2,18 +2,10 @@
 #include <memory>
 
 #include "Database.h"
-#include "Player.h"
-#include "Board.h"
-#include "Duel.h"
-#include "ChooseBase.h"
-#include "QuestionManager.h"
-#include "AnswerFiftyFifty.h"
-#include "AnswerSugestion.h"
-#include "FourCloseAnswers.h"
-#include "ChooseRegion.h"
 
 #include <crow.h>
 #include "utils.h"
+#include "GameLogic.h"
 
 void TestSmartPointers()
 {
@@ -224,6 +216,14 @@ void testDatabase()
 	std::list<MatchInfo> test = db.getMatchHistory(ac);
 	std::cout << MatchInfo::getEndtime();
 }
+void testMatch( const int& numberOfPlayers)
+{
+	GameLogic game(numberOfPlayers);
+	game.addPlayer("Rares", "raresandrei");
+	game.addPlayer("Alex", "alex1032");
+	game.StartGame();
+	game.
+}
 int main()
 {
 	Database db("DatabaseFile/file.db");
@@ -312,13 +312,13 @@ int main()
 	QuestionManager questions;
 	Board b;
 	questions.addQFiles("QuestionFile/QTypeVariants.txt", "QuestionFile/QTypeNumerical.txt");
-	TestSmartPointers();
-	testQuestionManager(questions);
-	testAnswerFiftyFifty(questions);
-	testZoneSiBoard(questions);
-	testPlayer();
-	testChooseBase(b, questions);
-
+	//TestSmartPointers();
+	//testQuestionManager(questions);
+	//testAnswerFiftyFifty(questions);
+	//testZoneSiBoard(questions);
+	//testPlayer();
+	//testChooseBase(b, questions);
+	testMatch(2);
 
 	testDatabase();
 
