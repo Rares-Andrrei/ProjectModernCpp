@@ -11,6 +11,9 @@ gui::gui(QWidget* parent)
 	connect(ui.playButton, SIGNAL(clicked()), SLOT(onPlayButtonClicked()));
 	connect(ui.signUpButton, SIGNAL(clicked()), SLOT(onSignUpButtonClicked()));
 	connect(ui.loginButton, SIGNAL(clicked()), SLOT(onLogInButtonClicked()));
+
+	ui.loginButton->setToolTip("Log in with an existing account");
+	ui.signUpButton->setToolTip("Create a new account");
 }
 
 void gui::onSignUpButtonClicked()

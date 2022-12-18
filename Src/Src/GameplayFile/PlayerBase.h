@@ -6,8 +6,8 @@ class PlayerBase: virtual public Zone
 	int m_lives = 3;
 public:
 	PlayerBase(Player::Color color);
-	PlayerBase operator--();
-	PlayerBase operator--(int);
+	
+	void DecrementLives();
 
 	PlayerBase operator +(const uint16_t& value);
 	friend PlayerBase operator+(const uint16_t& value, PlayerBase& zone);

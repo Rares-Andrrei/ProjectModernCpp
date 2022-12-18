@@ -102,6 +102,9 @@
     <ClCompile Include="DatabaseFile\utils.cpp">
       <Filter>DatabaseFiles\Cpp</Filter>
     </ClCompile>
+    <ClCompile Include="GameplayFile\ChooseRegion.cpp">
+      <Filter>GamePlayFiles\Cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdvantagesFile\Advantages.h">
@@ -154,6 +157,9 @@
     </ClInclude>
     <ClInclude Include="DatabaseFile\utils.h">
       <Filter>DatabaseFiles\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="GameplayFile\ChooseRegion.h">
+      <Filter>GamePlayFiles\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

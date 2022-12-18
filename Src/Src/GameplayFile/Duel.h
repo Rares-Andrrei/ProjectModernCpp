@@ -8,7 +8,6 @@
 #include "QTypeVariants.h"
 class Duel
 {
-	static const uint8_t maxPlayerNumber = 4;
 	static const uint8_t time = 30;
 	std::pair<Player::Color, Player::Color> m_duelingPlayers;
 	std::shared_ptr<Zone> m_zone;
@@ -25,13 +24,12 @@ public:
 	void generateQuestion(QuestionManager& questions);
 
 	QTypeVariants getQTypeVariants();
-
 	QTypeNumerical getQTypeNumerical();
 
 	void giveAnswers(int attacker, int defender);
-
 	void giveAnswers(std::string attacker, std::string defender);
 
+	void giveNumericalAnswers(std::tuple<int, int, Player::Color> attacker, std::tuple<int, int, Player::Color> defender);
 	Player::Color getWinner();
 	void rewardWinner();
 };

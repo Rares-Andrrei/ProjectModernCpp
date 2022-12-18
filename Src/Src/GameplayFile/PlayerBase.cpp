@@ -6,15 +6,9 @@ PlayerBase::PlayerBase(Player::Color color)
 	this->SetScore(300);
 }
 
-PlayerBase PlayerBase::operator--()
+void PlayerBase::DecrementLives()
 {
-	this->m_lives--;
-	return *this;
-}
-
-PlayerBase PlayerBase::operator--(int)
-{
-	return (*this)--;
+	m_lives--;
 }
 
 PlayerBase PlayerBase::operator+(const uint16_t& value)

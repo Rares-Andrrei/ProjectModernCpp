@@ -1,6 +1,6 @@
 #include "Board.h"
 
-Board::Board(const uint8_t NumberOfPlayers)
+Board::Board(const uint8_t& NumberOfPlayers)
 	:m_NumberOfPlayers{ NumberOfPlayers }
 {
 	this->ChangeBoardDimensions();
@@ -47,12 +47,28 @@ void Board::ChangeBoardDimensions()
 const std::shared_ptr<Zone>& Board::operator[](const Position& indices) const
 {
 	const auto& [row, column] = indices;
+	if (row > m_BoardHeight || row < 0 || column < 0 || column > m_BoardWidth)
+	{
+		throw std::exception("Board Index Out of range");
+	}
+	if (m_board[row * m_BoardWidth + column] != nullptr)
+	{
+		throw std::exception("Board position already occupied");
+	}
 	return m_board[row * m_BoardWidth + column];
 }
 
 std::shared_ptr<Zone>& Board::operator[](const Position& indices)
 {
 	const auto& [row, column] = indices;
+	if (row > m_BoardHeight || row < 0 || column < 0 || column > m_BoardWidth)
+	{
+		throw std::exception("Board Index Out of range");
+	}
+	if (m_board[row * m_BoardWidth + column] != nullptr)
+	{
+		throw std::exception("Board position already occupied");
+	}
 	return m_board[row * m_BoardWidth + column];
 }
 
@@ -61,7 +77,7 @@ void Board::ObtainTotalScore()
 	m_totalScore = 0;
 	for (const auto& z : m_board)
 	{
-		if (z!= nullptr)
+		if (z != nullptr)
 		{
 			m_totalScore += z->getScore();
 		}
@@ -78,23 +94,30 @@ uint8_t Board::getNumberOfPlayers()
 	return m_NumberOfPlayers;
 }
 
+bool Board::CheckIfBoardIsFull()
+{
+	for (const auto& zone : m_board)
+	{
+		if (zone == nullptr)
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
 std::ostream& operator<<(std::ostream& out, Board board)
 {
 	out << '\n';
-	Board::Position pos;
-	auto& [row, column] = pos;
-	for (row = 0; row < board.m_BoardHeight; row++)
+	//Board::Position pos;
+	//auto& [row, column] = pos;
+	for (int row = 0; row < board.m_BoardHeight; row++)
 	{
-		for (column = 0; column < board.m_BoardWidth; column++)
+		for (int column = 0; column < board.m_BoardWidth; column++)
 		{
-			if (board[pos]!= nullptr)
+			if (board.m_board[row * board.m_BoardWidth + column] != nullptr)
 			{
-				out << *board[pos] << ' ';
-
-				/*auto current = board[pos];
-
-				auto d_ptr = std::static_pointer_cast<PlayerBase>(current);
-				out << d_ptr << ' ';*/
+				out << *board.m_board[row * board.m_BoardWidth + column] << ' ';
 			}
 			else {
 				out << "________ ";

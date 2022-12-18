@@ -78,6 +78,42 @@ void Duel::giveAnswers(std::string attackerAnswer, std::string defenderAnswer)
 	}
 }
 
+void Duel::giveNumericalAnswers(std::tuple<int, int, Player::Color> attacker, std::tuple<int, int, Player::Color> defender)
+{
+	m_draw = false;
+	auto& [attackerAnswer, attackerResponseTime, attackerPlayer] = attacker;
+	auto& [defenderAnswer, defenderResponseTime, defenderPlayer] = defender;
+	int corectAnswer = m_qTypeNumerical.value().getAnswer();
+
+	int attackerAnswerError = abs(attackerAnswer - corectAnswer);
+	int defenderAnswerError = abs(defenderAnswer - corectAnswer);
+
+	if (attackerAnswerError == defenderAnswerError)
+	{
+		if (attackerResponseTime == defenderResponseTime)
+		{
+			m_draw = true;
+			return;
+		}
+		else if (attackerResponseTime < defenderResponseTime)
+		{
+			m_winner = attackerPlayer;
+		}
+		else
+		{
+			m_winner = defenderPlayer;
+		}
+	}
+	else if (attackerAnswerError < defenderAnswerError)
+	{
+		m_winner = attackerPlayer;
+	}
+	else
+	{
+		m_winner = defenderPlayer;
+	}
+}
+
 Player::Color Duel::getWinner()
 {
 	return m_winner;
@@ -90,16 +126,13 @@ void Duel::rewardWinner()
 	{
 		*m_zone = *m_zone + 100;
 	}
+	else if (m_zone->getScore() == 100)
+	{
+		m_zone->changeOwner(attacker);
+	}
 	else
 	{
-		if (m_zone->getScore() == 100)
-		{
-			m_zone->changeOwner(attacker);
-		}
-		else
-		{
-			m_zone->DecrementScore();
-		}
+		m_zone->DecrementScore();
 	}
 }
 

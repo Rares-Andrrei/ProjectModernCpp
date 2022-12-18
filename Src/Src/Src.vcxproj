@@ -29,7 +29,9 @@
     <ClCompile Include="DatabaseFile\utils.cpp" />
     <ClCompile Include="GameplayFile\Board.cpp" />
     <ClCompile Include="GameplayFile\ChooseBase.cpp" />
+    <ClCompile Include="GameplayFile\ChooseRegion.cpp" />
     <ClCompile Include="GameplayFile\Duel.cpp" />
+    <ClCompile Include="GameplayFile\GameLogic.cpp" />
     <ClCompile Include="GameplayFile\Player.cpp" />
     <ClCompile Include="GameplayFile\PlayerBase.cpp" />
     <ClCompile Include="GameplayFile\Zone.cpp" />
@@ -49,7 +51,9 @@
     <ClInclude Include="DatabaseFile\utils.h" />
     <ClInclude Include="GameplayFile\Board.h" />
     <ClInclude Include="GameplayFile\ChooseBase.h" />
+    <ClInclude Include="GameplayFile\ChooseRegion.h" />
     <ClInclude Include="GameplayFile\Duel.h" />
+    <ClInclude Include="GameplayFile\GameLogic.h" />
     <ClInclude Include="GameplayFile\Player.h" />
     <ClInclude Include="GameplayFile\PlayerBase.h" />
     <ClInclude Include="GameplayFile\Zone.h" />

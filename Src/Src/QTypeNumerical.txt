@@ -120,8 +120,8 @@ Including the antenna on top, how many meters tall is the Eiffel Tower?
 324
 How long, in days, hours was the total duration of the successful Apollo 11 mission which landed on the moon in 1969?
 8
- How many times does the word ‘blood’ appear in Shakespeare’s ‘Macbeth’?
- 42
+How many times does the word ‘blood’ appear in Shakespeare’s ‘Macbeth’?
+42
 Sultan Kösen is the world’s tallest living man – how tall is he, in centimeters?
 251
 How long (in km) is the Volga River (the longest river in Europe)?
@@ -175,7 +175,7 @@ How old was Van Gogh when he died?
 How many active volcanoes are there in Japan?
 111
 How tall (in meters) is Mount Fuji?
-3,776
+3776
 When was the Eiffel Tower build?
 1889
 How many detective novels did Agatha Christie write?
