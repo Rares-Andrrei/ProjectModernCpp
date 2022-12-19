@@ -13,7 +13,18 @@ void GameLogic::StartGame()
 		std::cout << "Not enough players to start the game" << std::endl;
 		return;
 	}
-	
+	m_board = Board(k_numberOfPlayers);
+	m_questions.addQFiles("QuestionFile/QTypeVariants.txt", "QuestionFile/QTypeNumerical.txt");
+	chooseBasePhase();
+	chooseRegionsPhase();
+	duelsPhase();
+}
+
+void GameLogic::EndGame()
+{
+	m_board.ObtainTotalScore();
+}
+
 void GameLogic::chooseBasePhase()
 {
 	ChooseBase chooseBase(m_questions);
