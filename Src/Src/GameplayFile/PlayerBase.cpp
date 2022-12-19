@@ -6,6 +6,11 @@ PlayerBase::PlayerBase(Player::Color color)
 	this->SetScore(300);
 }
 
+uint16_t PlayerBase::getNumberOfLifesLeft() const
+{
+	return m_lives;
+}
+
 void PlayerBase::DecrementLives()
 {
 	m_lives--;

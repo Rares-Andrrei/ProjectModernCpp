@@ -6,6 +6,7 @@ class PlayerBase: virtual public Zone
 	int m_lives = 3;
 public:
 	PlayerBase(Player::Color color);
+	uint16_t getNumberOfLifesLeft() const ;
 	
 	void DecrementLives();
 

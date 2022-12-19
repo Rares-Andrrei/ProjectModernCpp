@@ -14,7 +14,6 @@ class GameLogic
 	std::vector<Player> m_players;
 	std::vector<Player> m_eliminatedPlayers;
 	//std::vector<std::shared_ptr<Advantages>> m_advantages; // de vazut unde sa fie folosit . 
-	uint16_t m_roundCounter = 0;
 
 public:
 	GameLogic(const uint16_t& numberOfPlayers);
@@ -28,5 +27,12 @@ public:
 	void addPlayer(const std::string& firstName, const std::string& lastName);
 
 	~GameLogic() = default;
+private:
+
+	void phases();
+	void chooseBasePhase();
+	void chooseRegionsPhase();
+	void duelsPhase();
+	bool checkIfPlayerWasEliminated(std::shared_ptr<PlayerBase>& playerBase);
 };
 
