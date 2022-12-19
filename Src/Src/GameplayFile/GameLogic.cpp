@@ -14,6 +14,25 @@ void GameLogic::StartGame()
 		return;
 	}
 	
+void GameLogic::chooseRegionsPhase()
+{
+	uint16_t roundCounter = 0;
+
+	while (m_board.CheckIfBoardIsFull() == false)
+	{
+		int playerAnswer;
+		ChooseRegion chooseRegion(m_questions);
+
+		for (uint16_t index = 0; index < m_players.size(); index++)
+		{
+			std::cout << Player::ColorToString(m_players[index].getColor()) << " player answer: ";
+			std::cin >> playerAnswer;
+			chooseRegion.CreateOrder(m_players[index].getColor(), 0, playerAnswer);
+		}
+
+		chooseRegion.setRegionZone(m_board);
+	}
+}
 }
 
 void GameLogic::addPlayer(const std::string& firstName, const std::string& lastName)
