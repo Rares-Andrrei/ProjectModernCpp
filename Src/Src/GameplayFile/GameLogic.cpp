@@ -14,6 +14,20 @@ void GameLogic::StartGame()
 		return;
 	}
 	
+void GameLogic::chooseBasePhase()
+{
+	ChooseBase chooseBase(m_questions);
+	int playerAnswer;
+	for (uint16_t index = 0; index < m_players.size(); index++)
+	{
+		std::cout << Player::ColorToString(m_players[index].getColor()) << " player answer: ";
+		std::cin >> playerAnswer;
+		chooseBase.CreateOrder(m_players[index].getColor(), 0, playerAnswer);
+	}
+
+	chooseBase.setBaseZone(m_board);
+}
+
 void GameLogic::chooseRegionsPhase()
 {
 	uint16_t roundCounter = 0;
