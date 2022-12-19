@@ -39,8 +39,8 @@ void Board::ChangeBoardDimensions()
 			this->m_BoardHeight = 4;
 			this->m_BoardWidth = 6;
 		}
-		m_board.resize(m_BoardHeight * m_BoardWidth);// fill board with empty (Zones)
-
+		m_board.resize(m_BoardHeight * m_BoardWidth + 1);// fill board with empty (Zones)
+		m_board[m_BoardHeight * m_BoardWidth] = std::make_shared<Zone>(Player::Color::None);// default value for board
 	}
 }
 
@@ -49,11 +49,7 @@ const std::shared_ptr<Zone>& Board::operator[](const Position& indices) const
 	const auto& [row, column] = indices;
 	if (row > m_BoardHeight || row < 0 || column < 0 || column > m_BoardWidth)
 	{
-		throw std::exception("Board Index Out of range");
-	}
-	if (m_board[row * m_BoardWidth + column] != nullptr)
-	{
-		throw std::exception("Board position already occupied");
+		return m_board[m_BoardHeight * m_BoardWidth];
 	}
 	return m_board[row * m_BoardWidth + column];
 }
@@ -61,13 +57,9 @@ const std::shared_ptr<Zone>& Board::operator[](const Position& indices) const
 std::shared_ptr<Zone>& Board::operator[](const Position& indices)
 {
 	const auto& [row, column] = indices;
-	if (row > m_BoardHeight || row < 0 || column < 0 || column > m_BoardWidth)
+	if (row >= m_BoardHeight || row < 0 || column < 0 || column >= m_BoardWidth)
 	{
-		throw std::exception("Board Index Out of range");
-	}
-	if (m_board[row * m_BoardWidth + column] != nullptr)
-	{
-		throw std::exception("Board position already occupied");
+		return m_board[m_BoardHeight * m_BoardWidth];
 	}
 	return m_board[row * m_BoardWidth + column];
 }
@@ -96,9 +88,9 @@ uint8_t Board::getNumberOfPlayers()
 
 bool Board::CheckIfBoardIsFull()
 {
-	for (const auto& zone : m_board)
+	for (uint16_t index = 0; index < m_board.size()-1; index++)
 	{
-		if (zone == nullptr)
+		if (m_board[index] == nullptr)
 		{
 			return false;
 		}
@@ -117,7 +109,7 @@ void Board::eliminatePlayer(const Player::Color& elimated, const Player::Color& 
 	}
 }
 
-std::ostream& operator<<(std::ostream& out, Board board)
+std::ostream& operator<<(std::ostream& out, const Board& board)
 {
 	out << '\n';
 	//Board::Position pos;

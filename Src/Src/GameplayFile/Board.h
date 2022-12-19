@@ -18,7 +18,7 @@ public:
 
 	using Position = std::pair<int, int>;
 
-	friend std::ostream& operator <<(std::ostream& out, Board board);
+	friend std::ostream& operator <<(std::ostream& out,const Board& board);
 
 	const std::shared_ptr<Zone>& operator[](const Position& indices) const;
 	std::shared_ptr<Zone>& operator[](const Position& indices);

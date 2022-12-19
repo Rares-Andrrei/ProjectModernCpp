@@ -26,7 +26,7 @@ void ChooseRegion::setRegionZone(Board& board)
 		twoPlayersGame = true;
 	while (!m_PlayerOrder.empty())
 	{
-		auto& [DistFromCorrectAnswer, ResponseTime, Player] = m_PlayerOrder.top();
+		auto& [DistFromCorrectAnswer, ResponseTime, PlayerColor] = m_PlayerOrder.top();
 		int regionsLeftToTake = m_PlayerOrder.size();
 		if (twoPlayersGame == false)
 			regionsLeftToTake--;
@@ -35,22 +35,25 @@ void ChooseRegion::setRegionZone(Board& board)
 		{
 			try
 			{
-				std::shared_ptr<Zone> player(std::make_shared < Zone >(Player));
+				std::shared_ptr<Zone> player(std::make_shared < Zone >(PlayerColor));
 				std::cout << "Curent board format :" << board;
 				std::cout << *player << "Player please choose a zone :";
-
-				uint16_t index1, index2;
-				uint16_t numPlayers = board.getNumberOfPlayers();
-				std::cin >> index1 >> index2;
-				std::string message = "Invalid parameters";
-				board[{index1, index2}] = player;
-				regionsLeftToTake--;
+				
+				Board::Position position;
+				auto& [row, column] = position;
+				std::cin >> row >> column;
+				if (board[position] == nullptr)
+				{
+					board[position] = player;
+					regionsLeftToTake--;
+					continue;
+				}
+				throw std::invalid_argument("This zone is already taken or is invalid");
 			}
 			catch (const std::exception& ex)
 			{
 				//std::cout << std::endl;
-				std::cout << ex.what();
-				std::cout << std::endl;
+				std::cout << ex.what()<<std::endl;
 			}
 		}
 		m_PlayerOrder.pop();
