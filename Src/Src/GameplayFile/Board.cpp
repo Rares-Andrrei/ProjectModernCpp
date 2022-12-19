@@ -106,6 +106,17 @@ bool Board::CheckIfBoardIsFull()
 	return true;
 }
 
+void Board::eliminatePlayer(const Player::Color& elimated, const Player::Color& newOwner)
+{
+	for (auto& zone : m_board)
+	{
+		if (zone->getColor() == elimated)
+		{
+			zone->changeOwner(newOwner);
+		}
+	}
+}
+
 std::ostream& operator<<(std::ostream& out, Board board)
 {
 	out << '\n';

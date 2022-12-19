@@ -27,6 +27,7 @@ public:
 	int getTotalScore();
 	uint8_t getNumberOfPlayers();
 	bool CheckIfBoardIsFull();
+	void eliminatePlayer(const Player::Color& elimated, const Player::Color& newOwner);
 
 private:
 	void ChangeBoardDimensions();

@@ -1,41 +1,48 @@
 #include "Duel.h"
 
-bool Duel::isDraw() const
-{
-	return m_draw;
-}
-
 Duel::Duel(Player::Color player, std::shared_ptr<Zone> zone)
 {
 	m_duelingPlayers.first = player;
 	m_zone = zone;
 	m_duelingPlayers.second = m_zone->getColor();
-	m_winner = Player::Color::None;
+	m_winner = zone->getColor();
 	m_draw = false;
 }
 
 
 void Duel::generateQuestion(QuestionManager& questions)
 {
-	if (!m_qTypeVariants)
-	{
-		m_qTypeVariants = questions.randQTypeVariants();
-	}
-	else
-	{
-		m_qTypeNumerical = questions.randQTypeNumerical();
-	}
+	m_qTypeVariants = questions.randQTypeVariants();
+	m_qTypeNumerical = questions.randQTypeNumerical();
 }
 
-QTypeVariants Duel::getQTypeVariants()
+void Duel::startDuel()
 {
-	return m_qTypeVariants.value();
+	std::string attackerResponse;
+	std::string defenderResonse;
+	std::cout << m_qTypeVariants.value();
+	std::string aux;
+	std::getline(std::cin,  aux);
+	std::cout << Player::ColorToString(m_duelingPlayers.first) << " player answer:";
+	std::getline(std::cin, attackerResponse);
+	std::cout << Player::ColorToString(m_duelingPlayers.second) << " player answer:";
+	std::getline(std::cin, defenderResonse);
+
+	this->giveAnswers(attackerResponse, defenderResonse);
+
+	if (m_winner == Player::Color::None && m_draw)
+	{
+		std::cout << m_qTypeNumerical.value();
+		int attackerNumericalResponse, defenderNumericalResponse;
+		std::cin >> attackerNumericalResponse >> defenderNumericalResponse;
+
+		this->giveNumericalAnswers({ attackerNumericalResponse,0,m_duelingPlayers.first }, { defenderNumericalResponse,0,m_duelingPlayers.second });
+	}
+	std::cout << "The Winner is PlayerID:  " << int(m_winner) << " or Color: " << Player::ColorToString(m_winner) << std::endl;
+	rewardWinner();
+	std::cout << std::endl;
 }
 
-QTypeNumerical Duel::getQTypeNumerical()
-{
-	return m_qTypeNumerical.value();
-}
 
 void Duel::giveAnswers(int attackerAnswer, int defenderAnswer)
 {
@@ -72,10 +79,6 @@ void Duel::giveAnswers(std::string attackerAnswer, std::string defenderAnswer)
 	{
 		m_winner = attacker;
 	}
-	else if (defenderAnswer == corectAnswer)
-	{
-		m_winner = defender;
-	}
 }
 
 void Duel::giveNumericalAnswers(std::tuple<int, int, Player::Color> attacker, std::tuple<int, int, Player::Color> defender)
@@ -99,40 +102,38 @@ void Duel::giveNumericalAnswers(std::tuple<int, int, Player::Color> attacker, st
 		{
 			m_winner = attackerPlayer;
 		}
-		else
-		{
-			m_winner = defenderPlayer;
-		}
 	}
 	else if (attackerAnswerError < defenderAnswerError)
 	{
 		m_winner = attackerPlayer;
 	}
-	else
-	{
-		m_winner = defenderPlayer;
-	}
-}
-
-Player::Color Duel::getWinner()
-{
-	return m_winner;
 }
 
 void Duel::rewardWinner()
 {
 	auto& [attacker, defender] = m_duelingPlayers;
+
+
 	if (m_winner == defender)
 	{
 		*m_zone = *m_zone + 100;
 	}
-	else if (m_zone->getScore() == 100)
-	{
-		m_zone->changeOwner(attacker);
-	}
 	else
 	{
-		m_zone->DecrementScore();
+		auto isBase = std::dynamic_pointer_cast<PlayerBase>(m_zone);
+		if (std::dynamic_pointer_cast<PlayerBase>(m_zone) != nullptr)
+		{
+			isBase->DecrementLives();
+		}
+		else if (m_zone->getScore() == 100)
+		{
+			m_zone->changeOwner(attacker);
+		}
+		else
+		{
+			m_zone->DecrementScore();
+		}
 	}
+
 }
 

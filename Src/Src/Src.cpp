@@ -41,46 +41,46 @@ void TestSmartPointers()
 	//}
 }
 //Functie testare Duel
-void testDuel(QuestionManager questions)
-{
-	Player::Color p1 = Player::Color::Blue;
-	std::shared_ptr<Zone> zone(std::make_shared<Zone>(Player::Color::Blue));
-	Duel duel(p1, zone);
-	duel.generateQuestion(questions); // ii  dam setul de intrebari 
-
-	QTypeVariants q1 = duel.getQTypeVariants(); //luam intrebarea generata
-
-
-	std::cout << q1;
-	std::string rp1, rp2; //afisare in consola a intrebarii pana avem gui
-
-	std::cout << "blue player answer:";
-	std::getline(std::cin, rp1);
-	std::cout << "green player answer:";
-	std::getline(std::cin, rp2); //citire din consola a raspunsurilor pana avem gui
-
-	duel.giveAnswers(rp1, rp2); //functie care ia raspunsurile
-
-	if (duel.getWinner() == Player::Color::None && duel.isDraw()) //daca este None inseamna ca a fost remiza si trebuie sa mai generam o intrebare de tip numeric sa stabilim castigatorul
-	{
-
-		duel.generateQuestion(questions); //generam iar intrebare, functia stie daca a fost remiza si va genera intrebare de tip numeric de data asta.
-		QTypeNumerical q2 = duel.getQTypeNumerical();
-
-		std::cout << q2; //afisare in consola a intrebarii pana avem gui
-		int rpi1, rpi2;
-		std::cin >> rpi1 >> rpi2; //citire din consola a raspunsurilor pana avem gui
-
-		duel.giveAnswers(rpi1, rpi2); //trebuie modificata, voi lua ca parametrii un pair cu raspunsul si timpul in care au raspuns si in fucntie de asta o sa se decida castigatoru final
-	}
-	std::cout << int(duel.getWinner()) << std::endl; //putem returna culoarea castigatorului, functia poate fi folosita pt afisare in interfata grafica
-
-	duel.rewardWinner(); //in fucntie de castigator functia schimba proprietarul zonei / adauga puncte zonei/ scade puncte zonei.
-
-	std::cout << "Zona: " << int(zone->getColor()) << " " << zone->getScore();
-	//delete zone;
-	std::cout << std::endl;
-}
+//void testDuel(QuestionManager questions)
+//{
+//	Player::Color p1 = Player::Color::Blue;
+//	std::shared_ptr<Zone> zone(std::make_shared<Zone>(Player::Color::Blue));
+//	Duel duel(p1, zone);
+//	duel.generateQuestion(questions); // ii  dam setul de intrebari 
+//
+//	QTypeVariants q1 = duel.getQTypeVariants(); //luam intrebarea generata
+//
+//
+//	std::cout << q1;
+//	std::string rp1, rp2; //afisare in consola a intrebarii pana avem gui
+//
+//	std::cout << "blue player answer:";
+//	std::getline(std::cin, rp1);
+//	std::cout << "green player answer:";
+//	std::getline(std::cin, rp2); //citire din consola a raspunsurilor pana avem gui
+//
+//	duel.giveAnswers(rp1, rp2); //functie care ia raspunsurile
+//
+//	if (duel.getWinner() == Player::Color::None && duel.isDraw()) //daca este None inseamna ca a fost remiza si trebuie sa mai generam o intrebare de tip numeric sa stabilim castigatorul
+//	{
+//
+//		duel.generateQuestion(questions); //generam iar intrebare, functia stie daca a fost remiza si va genera intrebare de tip numeric de data asta.
+//		QTypeNumerical q2 = duel.getQTypeNumerical();
+//
+//		std::cout << q2; //afisare in consola a intrebarii pana avem gui
+//		int rpi1, rpi2;
+//		std::cin >> rpi1 >> rpi2; //citire din consola a raspunsurilor pana avem gui
+//
+//		duel.giveAnswers(rpi1, rpi2); //trebuie modificata, voi lua ca parametrii un pair cu raspunsul si timpul in care au raspuns si in fucntie de asta o sa se decida castigatoru final
+//	}
+//	std::cout << int(duel.getWinner()) << std::endl; //putem returna culoarea castigatorului, functia poate fi folosita pt afisare in interfata grafica
+//
+//	duel.rewardWinner(); //in fucntie de castigator functia schimba proprietarul zonei / adauga puncte zonei/ scade puncte zonei.
+//
+//	std::cout << "Zona: " << int(zone->getColor()) << " " << zone->getScore();
+//	//delete zone;
+//	std::cout << std::endl;
+//}
 // functie testare ChooseBase
 void testChooseBase(Board& b, QuestionManager questions)
 {
@@ -89,24 +89,24 @@ void testChooseBase(Board& b, QuestionManager questions)
 	Player::Color p1 = Player::Color::Blue;
 	Player::Color p2 = Player::Color::Yellow;
 	Player::Color p3 = Player::Color::Green;
-	
+
 	ChooseBase chooseBase(questions);
 	int playerAnswer;
-	
+
 	std::cout << "Blue player answer: ";
 	std::cin >> playerAnswer;
 	chooseBase.CreateOrder(p1, 0, playerAnswer);
-	
+
 	std::cout << "Yellow player answer: ";
 	std::cin >> playerAnswer;
 	chooseBase.CreateOrder(p2, 0, playerAnswer);
-	
+
 	std::cout << "Green player answer: ";
 	std::cin >> playerAnswer;
 	chooseBase.CreateOrder(p3, 0, playerAnswer);
-	
+
 	chooseBase.setBaseZone(b1);
-	
+
 	while (!b1.CheckIfBoardIsFull())
 	{
 		ChooseRegion chooseRegion(questions);
@@ -197,7 +197,7 @@ void testZoneSiBoard(QuestionManager questions)
 	std::cout << "7. Testare Smart Pointers" << std::endl;
 
 	std::cout << "7. verificare functie duel: \n";
-	testDuel(questions);
+	//testDuel(questions);
 	std::cout << std::endl;
 
 	std::cout << "8. verificare functie de alegere baza: \n";
@@ -216,13 +216,13 @@ void testDatabase()
 	std::list<MatchInfo> test = db.getMatchHistory(ac);
 	std::cout << MatchInfo::getEndtime();
 }
-void testMatch( const int& numberOfPlayers)
+void testMatch(const int& numberOfPlayers)
 {
 	GameLogic game(numberOfPlayers);
 	game.addPlayer("Rares", "raresandrei");
 	game.addPlayer("Alex", "alex1032");
 	game.StartGame();
-	game.
+	game.EndGame();
 }
 int main()
 {
@@ -311,7 +311,13 @@ int main()
 
 	QuestionManager questions;
 	Board b;
+
 	questions.addQFiles("QuestionFile/QTypeVariants.txt", "QuestionFile/QTypeNumerical.txt");
+	
+	//std::shared_ptr<PlayerBase> zone(std::make_shared<PlayerBase>(Player::Color::Red));
+	//Duel duel(Player::Color::Blue, zone);
+	//duel.generateQuestion(questions);
+	//duel.startDuel();
 	//TestSmartPointers();
 	//testQuestionManager(questions);
 	//testAnswerFiftyFifty(questions);
