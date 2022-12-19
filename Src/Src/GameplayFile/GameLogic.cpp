@@ -58,7 +58,7 @@ void GameLogic::chooseRegionsPhase()
 		chooseRegion.setRegionZone(m_board);
 	}
 }
-
+// 0 0 0 0 0 1 1 1 1 1 1 2 0 2 1 1 1 0 2 1 2 2 0 0 2 0
 void GameLogic::duelsPhase()
 {
 	uint16_t maxRounds = 5;
@@ -70,18 +70,30 @@ void GameLogic::duelsPhase()
 		roundCounter++;
 		for (const auto& player : m_players)
 		{
-			std::cout << m_board<<std::endl;
+			std::cout <<std::endl<< m_board << std::endl;
 			std::cout << Player::ColorToString(player.getColor()) << " Choose a zone to Attack : ";
 			Board::Position position;
 			auto& [row, column] = position;
 			while (true)
 			{
-				std::cin >> row >> column;
-				if (m_board[position]->getColor() != player.getColor())
-					break;
-				else {
-					std::cout << "You can't attack your own zone, please choose another one : ";
+				try
+				{
+					std::cin >> row >> column;
+					if (m_board[position]->getColor() == Player::Color::None )
+					{
+						throw std::out_of_range("Board Index Out of range , Please choose another position: ");
+					}
+					if (m_board[position]->getColor() != player.getColor())
+						break;
+					else {
+						throw std::logic_error("You can't attack your own zone , Please choose another position: ");
+					}
 				}
+				catch (const std::exception& e)
+				{
+					std::cout << std::endl << e.what() << std::endl;
+				}
+
 			}
 			Duel duel(player.getColor(), m_board[position]);
 			duel.generateQuestion(m_questions);
