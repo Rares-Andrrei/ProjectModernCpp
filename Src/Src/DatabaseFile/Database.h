@@ -14,7 +14,7 @@ inline auto createStorage(const std::string& filename)
 			"Account",
 			sql::make_column("Username", &Account::getUsername, &Account::setUsername, sql::primary_key()),
 			sql::make_column("Password", &Account::getPassword, &Account::setPassword),
-			sql::make_column("NickName", &Account::getNickName, &Account::setNickName)
+			sql::make_column("NickName", &Account::getNickName, &Account::setNickName, sql::unique())
 		),
 		sql::make_table(
 			"MatchInfo",
@@ -25,7 +25,8 @@ inline auto createStorage(const std::string& filename)
 			sql::make_column("FourthPlace", &MatchInfo::getFourthPlace, &MatchInfo::setFourthPlace)
 		),
 		sql::make_table("QuestionsTypeVaraints",
-			sql::make_column("Question", &QTypeVariants::getQuestion, &QTypeVariants::setQuestion, sql::primary_key()),
+			sql::make_column("Id", &QTypeVariants::getId, &QTypeVariants::setId, sql::primary_key()),
+			sql::make_column("Question", &QTypeVariants::getQuestion, &QTypeVariants::setQuestion, sql::unique()),
 			sql::make_column("Var1", &QTypeVariants::getVariant<0>, &QTypeVariants::setVariant<0>),
 			sql::make_column("Var2", &QTypeVariants::getVariant<1>, &QTypeVariants::setVariant<1>),
 			sql::make_column("Var3", &QTypeVariants::getVariant<2>, &QTypeVariants::setVariant<2>),
@@ -33,7 +34,8 @@ inline auto createStorage(const std::string& filename)
 			sql::make_column("Answer", &QTypeVariants::getAnswer, &QTypeVariants::setAnswer)
 		),
 		sql::make_table("QuestionsTypeNumerical",
-			sql::make_column("Question", &QTypeNumerical::getQuestion, &QTypeNumerical::setQuestion, sql::primary_key()),
+			sql::make_column("Id", &QTypeNumerical::getId, &QTypeNumerical::setId, sql::primary_key()),
+			sql::make_column("Question", &QTypeNumerical::getQuestion, &QTypeNumerical::setQuestion, sql::unique()),
 			sql::make_column("Answer", &QTypeNumerical::getAnswer, &QTypeNumerical::setAnswer)
 		)
 	);
@@ -47,8 +49,8 @@ class Database
 
 public:
 	Database(const std::string& filename);
-	void insertQTypeVariants(const std::vector<QTypeVariants>& questions);
-	void insertQTypeNumerical(const std::vector<QTypeNumerical>& questions);
+	void insertQTypeVariants(std::vector<QTypeVariants>& questions);
+	void insertQTypeNumerical(std::vector<QTypeNumerical>& questions);
 	QTypeVariants randQTypeVariants();
 	QTypeNumerical randQTypeNumerical();
 	bool loginUser(Account account);

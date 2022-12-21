@@ -4,7 +4,7 @@
 #include <array>
 class QTypeVariants
 {
-	//int m_id;
+	int m_id;
 	std::string defaultAnswer;
 	static const int maxVariantsNr = 3;
 	std::string m_question;
@@ -12,8 +12,8 @@ class QTypeVariants
 	std::array<std::string, 4> m_variants;
 public:
 	QTypeVariants();
-	/*int getId() const;
-	void setId(int id);*/
+	int getId() const;
+	void setId(int id);
 
 	void setQuestion(const std::string& question);
 	std::string getQuestion() const;
