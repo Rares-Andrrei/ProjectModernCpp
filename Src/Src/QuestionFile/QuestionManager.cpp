@@ -1,6 +1,8 @@
 #include "QuestionManager.h"
+#include "Database.h"
 #include <fstream>
 #include <random>
+
 
 bool QuestionManager::readQTypeVariants(const std::string& fileQTypeVariants)
 {
@@ -22,10 +24,8 @@ bool QuestionManager::readQTypeVariants(const std::string& fileQTypeVariants)
 				variants[i] = temporary;
 			}
 			std::getline(qFile, temporary);
-			question.setAnswer(temporary);			
 			question.setVariants(variants);
-			m_qWithVariants.push_back(question);
-
+			question.setAnswer(temporary);	
 			m_qWithVariants.push_back(question);
 		}
 		qFile.close();
@@ -72,6 +72,12 @@ void QuestionManager::addQFiles(const std::string& fileQTypeVariants, const std:
 {
 	readQTypeVariants(fileQTypeVariants);
 	readQTypeNumerical(fileQTypeNumerical);
+}
+
+void QuestionManager::pushQuestionsInDb(Database& db)
+{
+	db.insertQTypeVariants(m_qWithVariants);
+	db.insertQTypeNumerical(m_qNumerical);
 }
 
 QTypeVariants QuestionManager::randQTypeVariants()

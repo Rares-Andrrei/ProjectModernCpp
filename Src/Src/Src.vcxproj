@@ -62,11 +62,11 @@
     <ClInclude Include="QuestionFile\QuestionManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="QuestionFile\QTypeNumerical.txt" />
-    <Text Include="QuestionFile\QTypeVariants.txt" />
+    <Text Include="QTypeNumerical.txt" />
+    <Text Include="QTypeVariants.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DatabaseFile\file.db" />
+    <None Include="file.db" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

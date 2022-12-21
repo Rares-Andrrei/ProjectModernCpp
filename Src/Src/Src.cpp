@@ -224,10 +224,11 @@ void testMatch(const int& numberOfPlayers)
 	game.StartGame();
 	game.EndGame();
 }
-int main()
+
+void routeFct()
 {
 	Database db("DatabaseFile/file.db");
-	/*crow::SimpleApp app;
+	crow::SimpleApp app;
 
 	CROW_ROUTE(app, "/")([] {
 		return "Hallo guys";
@@ -307,26 +308,32 @@ int main()
 	}
 		});
 
-	app.port(18080).multithreaded().run();*/
+	app.port(18080).multithreaded().run();
+}
 
-	QuestionManager questions;
-	Board b;
-
-	questions.addQFiles("QuestionFile/QTypeVariants.txt", "QuestionFile/QTypeNumerical.txt");
-	
-	//std::shared_ptr<PlayerBase> zone(std::make_shared<PlayerBase>(Player::Color::Red));
-	//Duel duel(Player::Color::Blue, zone);
-	//duel.generateQuestion(questions);
-	//duel.startDuel();
+void testQuest()
+{
+	QuestionManager test;
+	test.addQFiles("QTypeVariants.txt", "QTypeNumerical.txt");
+	Database db("file.db");
+	test.pushQuestionsInDb(db);
+	std::cout << db.randQTypeVariants();
+	std::cout << db.randQTypeNumerical();
+}
+int main()
+{
+	testQuest();
+	//routeFct();
+	//QuestionManager questions;
+	//Board b;
+	//questions.addQFiles("QuestionFile/QTypeVariants.txt", "QuestionFile/QTypeNumerical.txt");
 	//TestSmartPointers();
 	//testQuestionManager(questions);
 	//testAnswerFiftyFifty(questions);
 	//testZoneSiBoard(questions);
 	//testPlayer();
 	//testChooseBase(b, questions);
-	testMatch(2);
-
-	testDatabase();
+	//testDatabase();
 
 	return 0;
 }
