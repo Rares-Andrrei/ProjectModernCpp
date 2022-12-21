@@ -1,10 +1,8 @@
 #include "QTypeVariants.h"
 
 
-QTypeVariants::QTypeVariants()
+QTypeVariants::QTypeVariants() : defaultAnswer{ "No answer found" }, m_id{-1}, m_answer{defaultAnswer}
 {
-	defaultAnswer = "No answer found";
-	m_answer = defaultAnswer;
 }
 
 void QTypeVariants::setQuestion(const std::string& question)
@@ -17,15 +15,15 @@ std::string QTypeVariants::getQuestion() const
 	return m_question;
 }
 
-//int QTypeVariants::getId() const
-//{
-//	return m_id;
-//}
-//
-//void QTypeVariants::setId(int id)
-//{
-//	m_id = id;
-//}
+int QTypeVariants::getId() const
+{
+	return m_id;
+}
+
+void QTypeVariants::setId(int id)
+{
+	m_id = id;
+}
 
 void QTypeVariants::setAnswer(const std::string& answer)
 {

@@ -5,6 +5,16 @@ QTypeNumerical::QTypeNumerical(const std::string& question, int answer)
 {
 }
 
+int QTypeNumerical::getId() const
+{
+	return m_id;
+}
+
+void QTypeNumerical::setId(int id)
+{
+	m_id = id;
+}
+
 void QTypeNumerical::setQuestion(const std::string& question)
 {
 	m_question = question;

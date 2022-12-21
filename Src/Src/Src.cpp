@@ -317,6 +317,8 @@ void testQuest()
 	test.addQFiles("QTypeVariants.txt", "QTypeNumerical.txt");
 	Database db("file.db");
 	test.pushQuestionsInDb(db);
+	std::cout << db.randQTypeVariants();
+	std::cout << db.randQTypeNumerical();
 }
 int main()
 {

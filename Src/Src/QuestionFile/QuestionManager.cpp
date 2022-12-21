@@ -27,8 +27,6 @@ bool QuestionManager::readQTypeVariants(const std::string& fileQTypeVariants)
 			question.setVariants(variants);
 			question.setAnswer(temporary);	
 			m_qWithVariants.push_back(question);
-
-			m_qWithVariants.push_back(question);
 		}
 		qFile.close();
 		return true;
