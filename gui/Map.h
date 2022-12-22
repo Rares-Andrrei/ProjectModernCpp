@@ -13,6 +13,15 @@ public:
 
 private:
 	Ui::MapClass ui;
-	std::shared_ptr<Battle>battleWindow;
+	std::shared_ptr<Battle>BattleWindow;
 private slots:
+	void onzona1Clicked();
+	void onzona2Clicked();
+	void onzona3Clicked();
+	void onzona4Clicked();
+	void onzona5Clicked();
+	void onzona6Clicked();
+	void onzona7Clicked();
+	void onzona8Clicked();
+	void onzona9Clicked();
 };

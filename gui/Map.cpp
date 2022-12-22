@@ -4,7 +4,7 @@ Map::Map(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
-	battleWindow.reset(new Battle());
+	BattleWindow.reset(new Battle());
 	connect(ui.zona1, SIGNAL(clicked()), SLOT(onzona1Clicked()));
 	connect(ui.zona2, SIGNAL(clicked()), SLOT(onzona2Clicked()));
 	connect(ui.zona3, SIGNAL(clicked()), SLOT(onzona3Clicked()));
@@ -18,3 +18,46 @@ Map::Map(QWidget *parent)
 
 Map::~Map()
 {}
+void Map::onzona1Clicked()
+{
+	BattleWindow->show();
+}
+void Map::onzona2Clicked()
+{
+	BattleWindow->show();
+}
+
+void Map::onzona3Clicked()
+{
+	BattleWindow->show();
+}
+
+void Map::onzona4Clicked()
+{
+	BattleWindow->show();
+}
+
+void Map::onzona5Clicked()
+{
+	BattleWindow->show();
+}
+
+void Map::onzona6Clicked()
+{
+	BattleWindow->show();
+}
+
+void Map::onzona7Clicked()
+{
+	BattleWindow->show();
+}
+
+void Map::onzona8Clicked()
+{
+	BattleWindow->show();
+}
+
+void Map::onzona9Clicked()
+{
+	BattleWindow->show();
+}
