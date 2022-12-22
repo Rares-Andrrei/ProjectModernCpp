@@ -49,6 +49,12 @@
     <ClCompile Include="lobby.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="logIn.ui">
@@ -60,6 +66,12 @@
     <QtUic Include="lobby.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+    <QtUic Include="Map.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="Battle.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="logIn.h">
@@ -69,6 +81,12 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="lobby.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Map.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Battle.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

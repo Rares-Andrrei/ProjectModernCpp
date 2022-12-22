@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MapClass</class>
+ <widget class="QMainWindow" name="MapClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1920</width>
+    <height>1080</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1920</width>
+    <height>1080</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1920</width>
+    <height>1080</height>
+   </size>
+  </property>
+  <property name="cursor">
+   <cursorShape>PointingHandCursor</cursorShape>
+  </property>
+  <property name="windowTitle">
+   <string>Map</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-image: url(:/gui/mapBackground.png);</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>-110</x>
+      <y>-60</y>
+      <width>2101</width>
+      <height>1181</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:transparent;</string>
+    </property>
+    <property name="lineWidth">
+     <number>9</number>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>Ro.png</pixmap>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="zona1">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>80</y>
+      <width>381</width>
+      <height>361</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:transparent;</string>
+    </property>
+    <property name="text">
+     <string>                                           zona1</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="zona2">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>130</y>
+      <width>261</width>
+      <height>311</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:transparent;</string>
+    </property>
+    <property name="text">
+     <string>zona2</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="zona4">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>450</y>
+      <width>501</width>
+      <height>311</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:transparent;
+</string>
+    </property>
+    <property name="text">
+     <string>zona4</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="zona5">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>440</y>
+      <width>261</width>
+      <height>321</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:transparent;
+</string>
+    </property>
+    <property name="text">
+     <string>zona5</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="zona6">
+    <property name="geometry">
+     <rect>
+      <x>1070</x>
+      <y>440</y>
+      <width>501</width>
+      <height>321</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:transparent;</string>
+    </property>
+    <property name="text">
+     <string>zona6</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="zona7">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>760</y>
+      <width>201</width>
+      <height>191</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:transparent;
+</string>
+    </property>
+    <property name="text">
+     <string>                                              zona7</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="zona8">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>760</y>
+      <width>261</width>
+      <height>201</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:transparent;
+</string>
+    </property>
+    <property name="text">
+     <string>zona8</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="zona9">
+    <property name="geometry">
+     <rect>
+      <x>1070</x>
+      <y>760</y>
+      <width>421</width>
+      <height>191</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:transparent;
+</string>
+    </property>
+    <property name="text">
+     <string>zona9</string>
+    </property>
+   </widget>
+   <widget class="Line" name="line">
+    <property name="geometry">
+     <rect>
+      <x>790</x>
+      <y>140</y>
+      <width>16</width>
+      <height>811</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:transparent;</string>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="lineWidth">
+     <number>2</number>
+    </property>
+    <property name="midLineWidth">
+     <number>10</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="line_2">
+    <property name="geometry">
+     <rect>
+      <x>1053</x>
+      <y>140</y>
+      <width>20</width>
+      <height>811</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:transparent;</string>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="lineWidth">
+     <number>2</number>
+    </property>
+    <property name="midLineWidth">
+     <number>10</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="line_3">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>750</y>
+      <width>901</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:transparent;</string>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="lineWidth">
+     <number>2</number>
+    </property>
+    <property name="midLineWidth">
+     <number>10</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="line_4">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>430</y>
+      <width>941</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:transparent;</string>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="lineWidth">
+     <number>2</number>
+    </property>
+    <property name="midLineWidth">
+     <number>10</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="zona3">
+    <property name="geometry">
+     <rect>
+      <x>1060</x>
+      <y>73</y>
+      <width>321</width>
+      <height>371</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:transparent</string>
+    </property>
+    <property name="text">
+     <string>zona3</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

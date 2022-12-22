@@ -3,5 +3,7 @@
         <file>background.png</file>
         <file>startMeniu.png</file>
         <file>backgroundLobby.png</file>
+        <file>mapBackground.png</file>
+        <file>Ro.png</file>
     </qresource>
 </RCC>

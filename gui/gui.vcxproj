@@ -90,9 +90,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Battle.cpp" />
     <ClCompile Include="lobby.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="signUp.cpp" />
     <QtRcc Include="gui.qrc" />
+    <QtUic Include="Battle.ui" />
     <QtUic Include="gui.ui" />
     <QtMoc Include="gui.h" />
     <ClCompile Include="gui.cpp" />
@@ -100,6 +103,7 @@
     <ClCompile Include="main.cpp" />
     <QtUic Include="lobby.ui" />
     <QtUic Include="logIn.ui" />
+    <QtUic Include="Map.ui" />
     <QtUic Include="signUp.ui" />
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +114,12 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="lobby.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Map.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Battle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
