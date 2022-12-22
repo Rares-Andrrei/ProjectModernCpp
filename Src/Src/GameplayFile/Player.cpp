@@ -3,6 +3,11 @@
 #include<string>
 
 
+Player::Player()
+    :m_color{Player::Color::None}, m_lastName{""} ,m_firstName{""}
+{
+}
+
 Player::Player(const std::string& firstName, const std::string& lastName)
 {
     this->m_firstName = firstName;

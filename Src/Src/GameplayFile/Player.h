@@ -20,6 +20,7 @@ private:
 	Color m_color:3;
 
 public:
+	Player();
 	Player(const std::string& firstName,const std::string& lastName);
 	Player(const std::string& firstName, const std::string& lastName, const Color& color);
 	std::string getFirstName()const;
