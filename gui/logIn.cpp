@@ -4,14 +4,14 @@
 #include <string>
 
 logIn::logIn(QWidget* parent)
-    : QMainWindow(parent)
+	: QMainWindow(parent)
 {
-    ui.setupUi(this);
+	ui.setupUi(this);
 	lobbyWindow.reset(new lobby());
 
 	ui.l_password->setEchoMode(QLineEdit::Password);
 
-    connect(ui.enterButton, SIGNAL(clicked()), SLOT(onEnterButtonClicked()));
+	connect(ui.enterButton, SIGNAL(clicked()), SLOT(onEnterButtonClicked()));
 	connect(ui.goBackButton, SIGNAL(clicked()), SLOT(onGoBackButtonClicked()));
 	connect(ui.showPasswordButton, SIGNAL(clicked()), SLOT(onShowPasswordButtonChecked()));
 
@@ -37,11 +37,11 @@ void logIn::onShowPasswordButtonChecked()
 
 void logIn::onEnterButtonClicked()
 {
-    QString username = ui.l_username->text();
-    QString password = ui.l_password->text();
+	QString username = ui.l_username->text();
+	QString password = ui.l_password->text();
 
 	std::string usernameString, passwordString;
-	usernameString=username.toLocal8Bit().constData();
+	usernameString = username.toLocal8Bit().constData();
 	passwordString = password.toLocal8Bit().constData();
 
 	if (usernameString.empty() || passwordString.empty())
@@ -49,7 +49,7 @@ void logIn::onEnterButtonClicked()
 		QMessageBox::about(this, "Log in error", "Please fill in all the fields");
 		return;
 	}
-	
+
 	auto response = cpr::Put(
 		cpr::Url{ "http://localhost:18080/verifylogininfo" },
 		cpr::Payload{
@@ -58,12 +58,21 @@ void logIn::onEnterButtonClicked()
 		}
 	);
 
-	if (response.status_code == 200 || response.status_code == 202) {
-		QMessageBox::information(this, "Success", "Account was found");
-		QApplication::closeAllWindows();
-		lobbyWindow->show();
+	if (response.status_code == 401) 
+	{
+		QMessageBox::information(this, "Failure", "The account was not found");
+
 	}
 	else {
-		QMessageBox::information(this, "Failure", "The account was not found");
+
+		QMessageBox::information(this, "Success", "Account was found");
+
+		//Create a new player instance
+		crow::json::rvalue resData = crow::json::load(response.text);
+		PlayerInstance player(resData["firstname"].s(), resData["lastname"].s());
+		lobbyWindow->setPlayer(player);
+
+		QApplication::closeAllWindows();
+		lobbyWindow->show();
 	}
 }

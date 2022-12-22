@@ -8,6 +8,8 @@
 
 #include "lobby.h"
 
+#include "PlayersInstance.h"
+
 class logIn : public QMainWindow
 {
 	Q_OBJECT

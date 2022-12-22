@@ -13,6 +13,7 @@ private:
 	Color m_color : 3;
 
 public:
+	PlayerInstance();
 	PlayerInstance(const std::string& firstName, const std::string& lastName);
 	PlayerInstance(const std::string& firstName, const std::string& lastName, const Color& color);
 
