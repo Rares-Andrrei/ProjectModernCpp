@@ -11,11 +11,43 @@ lobby::lobby(QWidget *parent)
 	connect(ui.twoPlayersButton, SIGNAL(clicked()), SLOT(ontwoPlayersButtonClicked()));
 }
 
+void lobby::setPlayer(PlayerInstance player)
+{
+	this->Player = player;
+}
+
 lobby::~lobby()
 {
-	
+	auto response = cpr::Put(
+		cpr::Url{ "http://localhost:18080/logout" },
+		cpr::Payload{
+			{ "username", Player.getFirstName()},
+		}
+	);
+
+	if (response.status_code == 200 || response.status_code == 202) {
+		QMessageBox::information(this, "Logout", "U have been logged out");
+
+
+		QApplication::closeAllWindows();
+	}
+	else {
+		QMessageBox::information(this, "Failure", "The logout failed");
+	}
 }
 void lobby::ontwoPlayersButtonClicked()
 {
-	MapWindow->show();
+	auto response = cpr::Put(
+		cpr::Url{ "http://localhost:18080/queueTwoPlayerGame" },
+		cpr::Payload{
+			{ "username", Player.getFirstName()}
+		}
+	);
+
+	if (response.status_code == 201)
+	{
+		QMessageBox::information(this, "queue", "Please wait for more players to connect");
+
+	}
+
 }
