@@ -3,6 +3,8 @@
 #include <QMainWindow>
 #include "ui_Map.h"
 #include"Battle.h"
+#include "ColorEnum.h"
+
 class Map : public QMainWindow
 {
 	Q_OBJECT
@@ -11,6 +13,7 @@ public:
 	Map(QWidget *parent = nullptr);
 	~Map();
 
+	//void 
 private:
 	Ui::MapClass ui;
 	std::shared_ptr<Battle>BattleWindow;

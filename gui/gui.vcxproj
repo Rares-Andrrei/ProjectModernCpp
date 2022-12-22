@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A8D39B29-D248-4DB4-BE1D-05F569AE1016}</ProjectGuid>
     <Keyword>QtVS_v304</Keyword>
-    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0.19041.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0.19041.0</WindowsTargetPlatformVersion>
     <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
   </PropertyGroup>
@@ -91,8 +91,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Battle.cpp" />
+    <ClCompile Include="ColorEnum.cpp" />
     <ClCompile Include="lobby.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="PlayersInstance.cpp" />
     <ClCompile Include="signUp.cpp" />
     <QtRcc Include="gui.qrc" />
     <QtUic Include="Battle.ui" />
@@ -120,6 +122,10 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Battle.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ColorEnum.h" />
+    <ClInclude Include="PlayersInstance.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

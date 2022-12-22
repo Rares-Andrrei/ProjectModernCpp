@@ -12,7 +12,9 @@ lobby::lobby(QWidget *parent)
 }
 
 lobby::~lobby()
-{}
+{
+	
+}
 void lobby::ontwoPlayersButtonClicked()
 {
 	MapWindow->show();

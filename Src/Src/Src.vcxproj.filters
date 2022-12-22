@@ -105,6 +105,8 @@
     <ClCompile Include="GameplayFile\ChooseRegion.cpp">
       <Filter>GamePlayFiles\Cpp</Filter>
     </ClCompile>
+    <ClCompile Include="GameplayFile\GameLogic.cpp" />
+    <ClCompile Include="ManualTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdvantagesFile\Advantages.h">
@@ -161,6 +163,8 @@
     <ClInclude Include="GameplayFile\ChooseRegion.h">
       <Filter>GamePlayFiles\Header</Filter>
     </ClInclude>
+    <ClInclude Include="GameplayFile\GameLogic.h" />
+    <ClInclude Include="ManualTests.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="QTypeNumerical.txt">
