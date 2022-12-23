@@ -8,6 +8,9 @@
 #include "PlayersInstance.h"
 #include <cpr/cpr.h>
 
+#include <qtimer.h>
+#include <qthread.h>
+
 class lobby : public QMainWindow
 {
 	Q_OBJECT
@@ -17,6 +20,7 @@ public:
 	void setPlayer(PlayerInstance player);
 	~lobby();
 
+	
 private:
 	PlayerInstance Player;
 	

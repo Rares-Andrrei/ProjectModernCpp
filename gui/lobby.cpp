@@ -1,6 +1,6 @@
 #include "lobby.h"
 
-lobby::lobby(QWidget *parent)
+lobby::lobby(QWidget* parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
@@ -37,17 +37,51 @@ lobby::~lobby()
 }
 void lobby::ontwoPlayersButtonClicked()
 {
-	auto response = cpr::Put(
-		cpr::Url{ "http://localhost:18080/queueTwoPlayerGame" },
-		cpr::Payload{
-			{ "username", Player.getFirstName()}
-		}
-	);
+	QTimer timer;
+
+	bool stopLoop = false;
+	QObject::connect(&timer, &QTimer::timeout, [&]()
+		{
+
+			auto response = cpr::Put(
+				cpr::Url{ "http://localhost:18080/queueTwoPlayerGame" },
+				cpr::Payload{
+					{ "username", Player.getFirstName()}
+				});
 
 	if (response.status_code == 201)
 	{
-		QMessageBox::information(this, "queue", "Please wait for more players to connect");
-
+		//Queue message 
 	}
+	else if (response.status_code == 200)
+	{
+		QMessageBox::information(this, "queue", "Game started");
+		stopLoop = true;
+		MapWindow->show();
+		this->close();
+	}
+	else
+	{
+		QMessageBox::information(this, "queue", "The queue failed");
+		stopLoop = true;
+	}
+		});
 
+	timer.start(3000);
+
+	while (!stopLoop)
+	{
+		QCoreApplication::processEvents();
+		QThread::msleep(100);
+	}
+	QThread::msleep(5000);
+	auto response = cpr::Put(
+		cpr::Url{ "http://localhost:18080/eliminatePlayerFromQueue" },
+		cpr::Payload{
+			{ "username", Player.getFirstName()}
+		});
+	if (response.status_code != 200)
+	{
+		QMessageBox::information(this, "queue", "The queue failed");
+	}
 }
