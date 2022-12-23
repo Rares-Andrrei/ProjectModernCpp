@@ -1,6 +1,11 @@
 #include "GameLogic.h"
 
 
+GameLogic::GameLogic()
+	:k_numberOfPlayers{ 2 }
+{
+}
+
 GameLogic::GameLogic(const uint16_t& numberOfPlayers)
 	: k_numberOfPlayers(numberOfPlayers)
 {
@@ -70,7 +75,7 @@ void GameLogic::duelsPhase()
 		roundCounter++;
 		for (const auto& player : m_players)
 		{
-			std::cout <<std::endl<< m_board << std::endl;
+			std::cout << std::endl << m_board << std::endl;
 			std::cout << Player::ColorToString(player.getColor()) << " Choose a zone to Attack : ";
 			Board::Position position;
 			auto& [row, column] = position;
@@ -79,7 +84,7 @@ void GameLogic::duelsPhase()
 				try
 				{
 					std::cin >> row >> column;
-					if (m_board[position]->getColor() == Player::Color::None )
+					if (m_board[position]->getColor() == Player::Color::None)
 					{
 						throw std::out_of_range("Board Index Out of range , Please choose another position: ");
 					}

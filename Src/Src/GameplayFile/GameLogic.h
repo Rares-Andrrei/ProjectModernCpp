@@ -16,6 +16,7 @@ class GameLogic
 	//std::vector<std::shared_ptr<Advantages>> m_advantages; // de vazut unde sa fie folosit . 
 
 public:
+	GameLogic();
 	GameLogic(const uint16_t& numberOfPlayers);
 	//GameLogic(const GameLogic&) = delete;
 	//GameLogic(GameLogic&&) = delete;
