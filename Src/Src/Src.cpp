@@ -46,7 +46,7 @@ void routeFct()
 		twoPlayers.push_back({ key, playersOnline.at(key).getFirstName(), playersOnline.at(key).getLastName() });
 		playersInGame.insert(key);
 	}
-	if (twoPlayers.size() != 2)
+	if (twoPlayers.size() < 2)
 	{
 		std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		return crow::response(201); // 201 means that the player is queued

@@ -40,6 +40,9 @@ void lobby::ontwoPlayersButtonClicked()
 	QTimer timer;
 
 	bool stopLoop = false;
+	QPushButton* button = ui.twoPlayersButton;
+	button->setEnabled(false);
+
 	QObject::connect(&timer, &QTimer::timeout, [&]()
 		{
 
@@ -55,7 +58,7 @@ void lobby::ontwoPlayersButtonClicked()
 	}
 	else if (response.status_code == 200)
 	{
-		QMessageBox::information(this, "queue", "Game started");
+		// Game found message
 		stopLoop = true;
 		MapWindow->show();
 		this->close();
@@ -80,6 +83,8 @@ void lobby::ontwoPlayersButtonClicked()
 		cpr::Payload{
 			{ "username", Player.getFirstName()}
 		});
+	button->setEnabled(true);
+	button->show();
 	if (response.status_code != 200)
 	{
 		QMessageBox::information(this, "queue", "The queue failed");
