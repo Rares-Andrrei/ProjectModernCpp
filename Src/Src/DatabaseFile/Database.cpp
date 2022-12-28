@@ -4,28 +4,34 @@
 #include "MatchInfo.h"
 #include "utils.h"
 
-bool Database::registeUser(Account account)
+CredentialErrors Database::registerUser(const Account& account)
 {
-	auto unique = m_storage.get_all<Account>(sql::where(sql::c(&Account::getUsername) = account.getUsername()));
-	auto unique2 = m_storage.get_all<Account>(sql::where(sql::c(&Account::getNickName) = account.getNickName()));
+	CredentialErrors check = account.checkAccount();
+	if (check != CredentialErrors::Valid)
+	{
+		return check;
+	}
+	auto uniqueUser = m_storage.get_all<Account>(sql::where(sql::c(&Account::getUsername) = account.getUsername()));
+	auto uniqueName = m_storage.get_all<Account>(sql::where(sql::c(&Account::getNickName) = account.getNickName()));
 
-	if (unique.size() == 0 && unique2.size() == 0)
+	if (uniqueName.size() != 0)
 	{
-		m_storage.replace(account);
-		return true;
+		return CredentialErrors::NameTaken;
 	}
-	else
+	if (uniqueUser.size() != 0)
 	{
-		return false;
+		return CredentialErrors::UserTaken;
 	}
+	m_storage.replace(account);
+	return CredentialErrors::Valid;
 }
 
-void Database::insetMatch(MatchInfo match)
+void Database::insertMatch(const MatchInfo& match)
 {
 	m_storage.replace(match);
 }
 
-std::list<MatchInfo> Database::getMatchHistory(Account account)
+std::list<MatchInfo> Database::getMatchHistory(const Account& account)
 {
 	using namespace sqlite_orm;
 	std::string nickname = account.getNickName();
@@ -107,24 +113,19 @@ QTypeNumerical Database::randQTypeNumerical()
 }
 
 
-bool Database::loginUser(Account account)
+CredentialErrors Database::loginUser(Account& account)
 {
 	if (auto user = m_storage.get_pointer<Account>(account.getUsername()))
 	{
 		if (user->getPassword() == account.getPassword())
 		{
-			return true;
+			account.setNickName(user->getNickName());
+			return CredentialErrors::Valid;
+		}
+		else
+		{
+			return CredentialErrors::IncorrectPassword;
 		}
 	}
-	return false;
-}
-
-bool Database::checkUsername(std::string username)
-{
-	m_account.setUsername(username);
-	if (auto user = m_storage.get_pointer<Account>(m_account.getUsername()))
-	{
-		return true;
-	}
-	return false;
+	return CredentialErrors::IncorrectAccount;
 }

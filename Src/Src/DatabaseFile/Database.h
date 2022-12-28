@@ -1,5 +1,6 @@
 #pragma once
 #include <list>
+#include "CredentialErrors.h"
 #include <sqlite_orm/sqlite_orm.h>
 #include "MatchInfo.h"
 #include "Account.h"
@@ -53,9 +54,11 @@ public:
 	void insertQTypeNumerical(std::vector<QTypeNumerical>& questions);
 	QTypeVariants randQTypeVariants();
 	QTypeNumerical randQTypeNumerical();
-	bool loginUser(Account account);
-	bool checkUsername(std::string username);
-	bool registeUser(Account account);
-	void insetMatch(MatchInfo match);
-	std::list<MatchInfo> getMatchHistory(Account account);
+
+	CredentialErrors loginUser(Account& account);
+
+	CredentialErrors registerUser(const Account& account);
+
+	void insertMatch(const MatchInfo& match);
+	std::list<MatchInfo> getMatchHistory(const Account& account);
 };
