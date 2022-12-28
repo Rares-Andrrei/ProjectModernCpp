@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ActivePlayers.cpp" />
     <ClCompile Include="AdvantagesFile\Advantages.cpp" />
     <ClCompile Include="AdvantagesFile\AnswerFiftyFifty.cpp" />
     <ClCompile Include="AdvantagesFile\AnswerSugestion.cpp" />
@@ -39,13 +40,16 @@
     <ClCompile Include="QuestionFile\QTypeNumerical.cpp" />
     <ClCompile Include="QuestionFile\QTypeVariants.cpp" />
     <ClCompile Include="QuestionFile\QuestionManager.cpp" />
+    <ClCompile Include="Route.cpp" />
     <ClCompile Include="src.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ActivePlayers.h" />
     <ClInclude Include="AdvantagesFile\Advantages.h" />
     <ClInclude Include="AdvantagesFile\AnswerFiftyFifty.h" />
     <ClInclude Include="AdvantagesFile\AnswerSugestion.h" />
     <ClInclude Include="AdvantagesFile\FourCloseAnswers.h" />
+    <ClInclude Include="CredentialErrors.h" />
     <ClInclude Include="DatabaseFile\Account.h" />
     <ClInclude Include="DatabaseFile\Database.h" />
     <ClInclude Include="DatabaseFile\MatchInfo.h" />
@@ -62,6 +66,7 @@
     <ClInclude Include="QuestionFile\QTypeNumerical.h" />
     <ClInclude Include="QuestionFile\QTypeVariants.h" />
     <ClInclude Include="QuestionFile\QuestionManager.h" />
+    <ClInclude Include="Route.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="QTypeNumerical.txt" />

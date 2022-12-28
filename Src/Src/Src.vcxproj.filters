@@ -107,6 +107,8 @@
     </ClCompile>
     <ClCompile Include="GameplayFile\GameLogic.cpp" />
     <ClCompile Include="ManualTests.cpp" />
+    <ClCompile Include="Route.cpp" />
+    <ClCompile Include="ActivePlayers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdvantagesFile\Advantages.h">
@@ -165,6 +167,11 @@
     </ClInclude>
     <ClInclude Include="GameplayFile\GameLogic.h" />
     <ClInclude Include="ManualTests.h" />
+    <ClInclude Include="CredentialErrors.h">
+      <Filter>DatabaseFiles\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Route.h" />
+    <ClInclude Include="ActivePlayers.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="QTypeNumerical.txt">

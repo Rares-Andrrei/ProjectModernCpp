@@ -42,20 +42,20 @@ void testFourCloseAnswers()
 void testDatabase()
 {
 
-	Database db("DatabaseFile/file.db");
+	/*Database db("DatabaseFile/file.db");
 	Account ac("Rares", "raresandrei", "rrs");
 	std::cout << db.loginUser(ac) << std::endl;
 	std::cout << db.registeUser(ac) << std::endl;
 	std::cout << db.loginUser(ac) << std::endl;
 	std::list<MatchInfo> test = db.getMatchHistory(ac);
-	std::cout << MatchInfo::getEndtime();
+	std::cout << MatchInfo::getEndtime();*/
 }
 
 void testMatch(const int& numberOfPlayers)
 {
 	GameLogic game(numberOfPlayers);
-	game.addPlayer("Rares", "raresandrei");
-	game.addPlayer("Alex", "alex1032");
+	game.addPlayer("Rares");
+	game.addPlayer("Alex");
 	game.StartGame();
 	game.EndGame();
 }
