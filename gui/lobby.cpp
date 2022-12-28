@@ -5,9 +5,11 @@ lobby::lobby(QWidget* parent)
 {
 	ui.setupUi(this);
 	MapWindow.reset(new Map());
-	ui.twoPlayersButton->setStyleSheet("Text-align:left, up");
-	ui.threePlayersButton->setStyleSheet("Text-align:left, up");
-	ui.fourPlayersButton->setStyleSheet("Text-align:left, up");
+
+	ui.twoPlayersButton->setStyleSheet("background-image:url(:/gui/twoPlayers.png)");
+	ui.threePlayersButton->setStyleSheet("background-image:url(:/gui/threePlayers.png)");
+	ui.fourPlayersButton->setStyleSheet("background-image:url(:/gui/fourPlayers.png)");
+
 	connect(ui.twoPlayersButton, SIGNAL(clicked()), SLOT(ontwoPlayersButtonClicked()));
 }
 
