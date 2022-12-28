@@ -1,10 +1,12 @@
 #include "logIn.h"
 #include <cpr/cpr.h>
 #include <crow.h>
+#include "CredentialErrors.h"
+#include "Route.h"
 #include <string>
 
-logIn::logIn(QWidget* parent)
-	: QMainWindow(parent)
+logIn::logIn(Route& routes, QWidget* parent)
+	: m_routes{ routes }, QMainWindow(parent)
 {
 	ui.setupUi(this);
 	lobbyWindow.reset(new lobby());
@@ -49,30 +51,27 @@ void logIn::onEnterButtonClicked()
 		QMessageBox::about(this, "Log in error", "Please fill in all the fields");
 		return;
 	}
-
-	auto response = cpr::Put(
-		cpr::Url{ "http://localhost:18080/verifylogininfo" },
-		cpr::Payload{
-			{ "username", usernameString },
-			{ "password", passwordString }
-		}
-	);
-
-	if (response.status_code == 401) 
+	CredentialErrors check = m_routes.login(usernameString, passwordString);
+	if (check == CredentialErrors::IncorrectAccount)
 	{
-		QMessageBox::information(this, "Failure", "The account was not found");
-
+		QMessageBox::information(this, "Failure", "Account was not found");
+		return;
 	}
-	else {
-
-		QMessageBox::information(this, "Success", "Account was found");
-
-		//Create a new player instance
-		crow::json::rvalue resData = crow::json::load(response.text);
-		PlayerInstance player(resData["firstname"].s(), resData["lastname"].s());
-		lobbyWindow->setPlayer(player);
-
+	else if (check == CredentialErrors::IncorrectPassword)
+	{
+		QMessageBox::information(this, "Failure", "Incorrect password");
+		return;
+	}
+	else if (check == CredentialErrors::Valid)
+	{
+		QMessageBox::information(this,"Success", "Account was found");
 		QApplication::closeAllWindows();
 		lobbyWindow->show();
 	}
+	else
+	{
+		QMessageBox::information(this, "Failure", "An unknown error occured");
+		return;
+	}
+
 }
