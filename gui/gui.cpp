@@ -1,12 +1,12 @@
 #include "gui.h"
 
-gui::gui(QWidget* parent)
-	: QMainWindow(parent)
+gui::gui(Route& routes, QWidget* parent)
+	: m_routes{ routes }, QMainWindow(parent)
 {
 	ui.setupUi(this);
 
-	signUpWindow.reset(new signUp());
-	logInWindow.reset(new logIn());
+	signUpWindow.reset(new signUp(m_routes));
+	logInWindow.reset(new logIn(m_routes));
 
 	connect(ui.playButton, SIGNAL(clicked()), SLOT(onPlayButtonClicked()));
 	connect(ui.signUpButton, SIGNAL(clicked()), SLOT(onSignUpButtonClicked()));

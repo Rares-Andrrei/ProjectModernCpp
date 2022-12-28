@@ -1,8 +1,10 @@
 #include "signUp.h"
 #include <cpr/cpr.h>
+#include "Route.h"
+#include "CredentialErrors.h"
 
-signUp::signUp(QWidget* parent)
-	: QMainWindow(parent)
+signUp::signUp(Route& routes, QWidget* parent)
+	: m_routes{ routes }, QMainWindow(parent)
 {
 	ui.setupUi(this);
 
@@ -68,32 +70,40 @@ void signUp::onEnterButtonClicked()
 		QMessageBox::about(this, "Sign up error", "Please fill in all the fields");
 		return;
 	}
-
-	auto response = cpr::Put(
-		cpr::Url{ "http://localhost:18080/validateusername" },
-		cpr::Payload{
-			{"username", usernameString}
-		}
-	);
-	if (response.status_code == 400)
+	CredentialErrors check = m_routes.signUp(usernameString, passwordString, nicknameString);
+	if (check == CredentialErrors::NameSize)
 	{
-		QMessageBox::information(this, "Username already used", "Selected Username isn't available");
+		QMessageBox::about(this, "Name size error", "Your name must containt at least 6 caracters");
 		return;
 	}
-	response = cpr::Put(
-		cpr::Url{ "http://localhost:18080/register" },
-		cpr::Payload{
-			{ "username", usernameString },
-			{ "password", passwordString },
-			{ "nickname", nicknameString }
-		}
-	);
-
-	if (response.status_code == 200) // register succesful
+	else if (check == CredentialErrors::UsernameSize)
 	{
-		QMessageBox::information(this, "Success", "Account was registered");
+		QMessageBox::about(this, "Username size error", "Your Username must containt at least 6 caracters");
+		return;
 	}
-	else {
-		QMessageBox::information(this, "Failure", "The account wasn't registered");
+	else if (check == CredentialErrors::PasswordSize)
+	{
+		QMessageBox::about(this, "Passwor size error", "Your Password must containt at least 6 caracters");
+		return;
+	}
+	else if (check == CredentialErrors::UserTaken)
+	{
+		QMessageBox::about(this, "Username error", "This Username is already taken");
+		return;
+	}
+	else if (check == CredentialErrors::NameTaken)
+	{
+		QMessageBox::about(this, "Name error", "This name is already taken");
+		return;
+	}
+	else if ((check == CredentialErrors::Valid))
+	{
+		QMessageBox::about(this, "Success", "Account was registered");
+		return;
+	}
+	else
+	{
+		QMessageBox::information(this, "Failure", "An unknown error occured");
+		return;
 	}
 }
