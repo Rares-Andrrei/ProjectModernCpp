@@ -15,21 +15,18 @@ public:
 		Yellow
 	};
 private:
-	std::string m_firstName;
-	std::string m_lastName;
+	std::string m_name;
 	Color m_color:3;
 
 public:
 	Player();
-	Player(const std::string& firstName,const std::string& lastName);
-	Player(const std::string& firstName, const std::string& lastName, const Color& color);
-	std::string getFirstName()const;
+	Player(const std::string& name);
+	Player(const std::string& name, const Color& color);
 	Player::Color getColor()const;
 	static std::string ColorToString(Player::Color color);
-	void setFirstName(std::string& first_name);
-	void setLastName(std::string& last_name);
+	void setName(std::string& name);
 	void setColor(Color color) ;
-	std::string getLastName()const;
+	std::string getName()const;
 	friend std::istream& operator>>(std::istream& in,  Player & player);
 	friend std::ostream& operator<<(std::ostream& out,const Player& player);
 	

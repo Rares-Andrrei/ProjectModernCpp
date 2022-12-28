@@ -25,7 +25,7 @@ public:
 
 	void StartGame();
 	void EndGame();
-	void addPlayer(const std::string& firstName, const std::string& lastName);
+	void addPlayer(const std::string& name);
 
 	~GameLogic() = default;
 private:

@@ -4,41 +4,26 @@
 
 
 Player::Player()
-    :m_color{Player::Color::None}, m_lastName{""} ,m_firstName{""}
+    :  m_name{ "" }, m_color{Player::Color::None}
 {
 }
 
-Player::Player(const std::string& firstName, const std::string& lastName)
+Player::Player(const std::string& name) : m_name{name}, m_color{Player::Color::None}
 {
-    this->m_firstName = firstName;
-    this->m_lastName = lastName;
-    this->m_color = Color::None;
 }
 
-Player::Player(const std::string& firstName, const std::string& lastName, const Color& color)
+Player::Player(const std::string& name, const Color& color) : m_name{ name }, m_color{color}
 {
-    this->m_firstName = firstName;
-    this->m_lastName = lastName;
-    this->m_color = color;
-}
-std::string Player::getFirstName() const
-{
-    return m_firstName;
 }
 
-void Player::setFirstName(std::string& const first_name)
-{
-    this->m_firstName = first_name;
-}
-
-void Player::setLastName(std::string& const last_name) 
-{
-    this->m_lastName = last_name;
-}
 
 void Player::setColor(Color const color) 
 {
     this->m_color = color;
+}
+std::string Player::getName() const
+{
+    return m_name;
 }
 Player::Color Player::getColor() const
 {
@@ -64,20 +49,21 @@ std::string Player::ColorToString(Player::Color color)
     }
 }
 
-std::string Player::getLastName() const
+void Player::setName(std::string& name)
 {
-    return m_lastName;
+    m_name = name;
 }
+
 
 std::istream& operator>>(std::istream& in,  Player & player)
 { 
-    in >> player.m_firstName >> player.m_lastName;
+    in >> player.m_name;
     return in;
 }
 
 std::ostream& operator<<(std::ostream& out, const Player& player)
 {
-    out << "Prenumele dumneavoastra este: " << player.m_firstName << "\n" << "Numele dumneavoastra este: " << player.m_lastName<<"\n";
+    out << "Numele dumneavoastra este: " << player.m_name<<"\n";
     out << "Culoarea dumneavoastra este: ";
     out << Player::ColorToString(player.m_color);
 
