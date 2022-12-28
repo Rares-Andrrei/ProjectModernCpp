@@ -1,4 +1,5 @@
 #pragma once
+#include "CredentialErrors.h"
 #include <string>
 #include <optional>
 class Account
@@ -15,7 +16,7 @@ public:
 	void setUsername(const std::string& username);
 	void setPassword(const std::string& password);
 	void setNickName(const std::string& nickName); 
-	bool checkAccount();
+	CredentialErrors checkAccount() const;
 };
 
 
