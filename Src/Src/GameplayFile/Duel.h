@@ -8,15 +8,15 @@
 class Duel
 {
 	static const uint8_t time = 30;
-	std::pair<Player::Color, Player::Color> m_duelingPlayers;
+	std::pair<Color::ColorEnum, Color::ColorEnum> m_duelingPlayers;
 	std::shared_ptr<Zone> m_zone;
 	std::optional<QTypeVariants> m_qTypeVariants;
 	std::optional<QTypeNumerical> m_qTypeNumerical;
-	Player::Color m_winner;
+	Color::ColorEnum m_winner;
 	bool m_draw;
 
 public:
-	Duel(Player::Color, std::shared_ptr<Zone> zone);
+	Duel(const Color::ColorEnum& player, std::shared_ptr<Zone> zone);
 	void generateQuestion(QuestionManager& questions);
 	void startDuel();
 
@@ -24,6 +24,6 @@ private:
 	void giveAnswers(int attacker, int defender);
 	void giveAnswers(std::string attacker, std::string defender);
 
-	void giveNumericalAnswers(std::tuple<int, int, Player::Color> attacker, std::tuple<int, int, Player::Color> defender);
+	void giveNumericalAnswers(std::tuple<int, int, Color::ColorEnum> attacker, std::tuple<int, int, Color::ColorEnum> defender);
 	void rewardWinner();
 };

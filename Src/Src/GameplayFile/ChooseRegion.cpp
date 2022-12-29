@@ -6,11 +6,11 @@ ChooseRegion::ChooseRegion(QuestionManager& questions)
 	std::cout << m_question;
 }
 
-void ChooseRegion::CreateOrder(const Player::Color& player, const int& playerAnswer, const int& responseTime)
+void ChooseRegion::CreateOrder(const Color::ColorEnum& player, const int& playerAnswer, const int& responseTime)
 {
 	int differenceBetweenPlayerAnswerAndQuestionAnswer = std::abs(playerAnswer - m_question.getAnswer());
 
-	std::tuple<int, int, Player::Color> toInsert;
+	std::tuple<int, int, Color::ColorEnum> toInsert;
 
 	std::get<0>(toInsert) = differenceBetweenPlayerAnswerAndQuestionAnswer;
 	std::get<1>(toInsert) = responseTime;

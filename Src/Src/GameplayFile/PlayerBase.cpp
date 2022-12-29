@@ -1,6 +1,6 @@
 #include "PlayerBase.h"
 
-PlayerBase::PlayerBase(Player::Color color)
+PlayerBase::PlayerBase(const Color::ColorEnum& color)
 	:Zone(color )
 {
 	this->SetScore(300);
@@ -29,7 +29,7 @@ PlayerBase operator+(const uint16_t& value, PlayerBase& zone)
 
 std::ostream& operator<<(std::ostream& out, const PlayerBase& zona)
 {
-	out <<"B:" << Player::ColorToString(zona.m_color) << ' ';
+	out <<"B:" << Color::ColorToString(zona.m_color) << ' ';
 	//out << "\nB:" << (const Zone&)zona;
 	
 

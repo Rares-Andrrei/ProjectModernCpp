@@ -16,19 +16,19 @@ protected:
 	class CompareResponsesAndTime
 	{
 	public:
-		bool operator()(const std::tuple<int, int, Player::Color>& p1, const std::tuple<int, int, Player::Color>& p2)
+		bool operator()(const std::tuple<int, int, Color::ColorEnum>& p1, const std::tuple<int, int, Color::ColorEnum>& p2)
 		{
 			const auto& [DistFromCorrectAnswer, ResponseTime, Player] = p1;
 			const auto& [DistFromCorrectAnswer2, ResponseTime2, Player2] = p2;
 			return DistFromCorrectAnswer < DistFromCorrectAnswer2 || (DistFromCorrectAnswer == DistFromCorrectAnswer2 && ResponseTime < ResponseTime2);
 		}
 	};
-	std::priority_queue <std::tuple<int, int, Player::Color>, std::vector<std::tuple<int, int, Player::Color>>, CompareResponsesAndTime> m_PlayerOrder;
+	std::priority_queue <std::tuple<int, int, Color::ColorEnum>, std::vector<std::tuple<int, int, Color::ColorEnum>>, CompareResponsesAndTime> m_PlayerOrder;
 
 public:
 	ChooseRegion(QuestionManager& questions);
 
-	void CreateOrder(const Player::Color& player, const  int& playerAnswer, const int& responseTime);
+	void CreateOrder(const Color::ColorEnum& player, const  int& playerAnswer, const int& responseTime);
 
 	void setRegionZone(Board& board);
 
