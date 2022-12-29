@@ -4,7 +4,7 @@ lobby::lobby(QWidget* parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
-	MapWindow.reset(new Map());
+	Game.reset(new TriviadorGame());
 
 	ui.twoPlayersButton->setStyleSheet("background-image:url(:/gui/twoPlayers.png)");
 	ui.threePlayersButton->setStyleSheet("background-image:url(:/gui/threePlayers.png)");
@@ -63,7 +63,8 @@ void lobby::ontwoPlayersButtonClicked()
 	{
 		// Game found message
 		stopLoop = true;
-		MapWindow->show();
+		Game->setNumberOfPlayers(2);
+		Game->show();
 		this->close();
 	}
 	else

@@ -97,6 +97,7 @@
     <ClCompile Include="PlayersInstance.cpp" />
     <ClCompile Include="Route.cpp" />
     <ClCompile Include="signUp.cpp" />
+    <ClCompile Include="TriviadorGame.cpp" />
     <QtRcc Include="gui.qrc" />
     <QtUic Include="Battle.ui" />
     <QtUic Include="gui.ui" />
@@ -108,6 +109,7 @@
     <QtUic Include="logIn.ui" />
     <QtUic Include="Map.ui" />
     <QtUic Include="signUp.ui" />
+    <QtUic Include="TriviadorGame.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="logIn.h" />
@@ -129,6 +131,7 @@
     <ClInclude Include="CredentialErrors.h" />
     <ClInclude Include="PlayersInstance.h" />
     <ClInclude Include="Route.h" />
+    <QtMoc Include="TriviadorGame.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
