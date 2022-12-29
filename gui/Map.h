@@ -3,7 +3,11 @@
 #include <QMainWindow>
 #include "ui_Map.h"
 #include"Battle.h"
+<<<<<<< Updated upstream
 #include "ColorEnum.h"
+=======
+#include  "../Color/Color/Color.h"
+>>>>>>> Stashed changes
 
 class Map : public QMainWindow
 {

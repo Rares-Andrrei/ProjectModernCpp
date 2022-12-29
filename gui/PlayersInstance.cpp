@@ -4,7 +4,7 @@
 
 
 PlayerInstance::PlayerInstance()
-	:m_color{ Color::None }, m_firstName{ "" }, m_lastName{ "" }
+	:m_color{ Color::getDefaultColor()}, m_firstName{""}, m_lastName{""}
 {
 }
 
@@ -12,10 +12,10 @@ PlayerInstance::PlayerInstance(const std::string& firstName, const std::string& 
 {
 	this->m_firstName = firstName;
 	this->m_lastName = lastName;
-	this->m_color = Color::None;
+	this->m_color = Color::getDefaultColor();
 }
 
-PlayerInstance::PlayerInstance(const std::string& firstName, const std::string& lastName, const Color& color)
+PlayerInstance::PlayerInstance(const std::string& firstName, const std::string& lastName, const Color::ColorEnum& color)
 {
 	this->m_firstName = firstName;
 	this->m_lastName = lastName;
@@ -36,11 +36,11 @@ void PlayerInstance::setLastName(std::string& const last_name)
 	this->m_lastName = last_name;
 }
 
-void PlayerInstance::setColor(Color const color)
+void PlayerInstance::setColor(Color::ColorEnum const color)
 {
 	this->m_color = color;
 }
-Color PlayerInstance::getColor() const
+Color::ColorEnum PlayerInstance::getColor() const
 {
 	return m_color;
 }
