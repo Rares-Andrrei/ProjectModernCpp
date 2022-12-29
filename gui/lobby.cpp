@@ -20,6 +20,7 @@ void lobby::setPlayer(PlayerInstance player)
 
 lobby::~lobby()
 {
+	// TD : de mutat intr-o functie separata
 	auto response = cpr::Put(
 		cpr::Url{ "http://localhost:18080/logout" },
 		cpr::Payload{
@@ -47,7 +48,7 @@ void lobby::ontwoPlayersButtonClicked()
 
 	QObject::connect(&timer, &QTimer::timeout, [&]()
 		{
-
+			// TD : de mutat ruta intr-o functei separata 
 			auto response = cpr::Put(
 				cpr::Url{ "http://localhost:18080/queueTwoPlayerGame" },
 				cpr::Payload{

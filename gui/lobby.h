@@ -2,7 +2,7 @@
 
 #include <QMainWindow>
 #include "ui_lobby.h"
-#include"Map.h"
+#include "TriviadorGame.h"
 #include <qmessagebox.h>
 
 #include "PlayersInstance.h"
@@ -16,16 +16,16 @@ class lobby : public QMainWindow
 	Q_OBJECT
 
 public:
-	lobby(QWidget *parent = nullptr);
+	lobby(QWidget* parent = nullptr);
 	void setPlayer(PlayerInstance player);
 	~lobby();
 
-	
+
 private:
 	PlayerInstance Player;
-	
+
 	Ui::lobbyClass ui;
-	std::shared_ptr<Map>MapWindow;
+	std::unique_ptr<TriviadorGame> Game;
 private slots:
 	void ontwoPlayersButtonClicked();
 };
