@@ -45,6 +45,11 @@ Color::ColorEnum PlayerInstance::getColor() const
 	return m_color;
 }
 
+std::string PlayerInstance::getColorToString() const
+{
+	return Color::ColorToString(m_color);
+}
+
 std::string PlayerInstance::getLastName() const
 {
 	return m_lastName;

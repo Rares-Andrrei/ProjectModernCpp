@@ -1,11 +1,7 @@
 #pragma once
 #include<string>
 #include<iostream>
-<<<<<<< Updated upstream
-#include "ColorEnum.h"
-=======
 #include  "../Color/Color/Color.h"
->>>>>>> Stashed changes
 
 class PlayerInstance
 {
@@ -24,6 +20,7 @@ public:
 	std::string getFirstName()const;
 	void setColor(Color::ColorEnum color);
 	Color::ColorEnum getColor()const;
+	std::string getColorToString()const;
 	void setFirstName(std::string& first_name);
 	void setLastName(std::string& last_name);
 	std::string getLastName()const;

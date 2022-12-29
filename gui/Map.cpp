@@ -1,6 +1,6 @@
 #include "Map.h"
 
-Map::Map(QWidget *parent)
+Map::Map(QWidget* parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
@@ -20,17 +20,13 @@ Map::~Map()
 {}
 void Map::onzona1Clicked()
 {
+
 	BattleWindow->show();
-<<<<<<< Updated upstream
-=======
-	BattleWindow->show();
-	Color::ColorEnum color = Color::getColor(1);
-	std::string culoare = Color::ColorToString(color);
+	auto culoare = Player.getColorToString();
 	QString qstr = QString::fromStdString(culoare);
 	ui.zona1->setPalette(QPalette(QColor(qstr)));
 	ui.zona1->setAutoFillBackground(true);
 	update();
->>>>>>> Stashed changes
 }
 void Map::onzona2Clicked()
 {

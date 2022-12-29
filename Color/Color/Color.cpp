@@ -1,6 +1,6 @@
 #include "Color.h"
 
-std::string ColorToString(const Color::ColorEnum& color)
+std::string Color::ColorToString(const Color::ColorEnum& color)
 {
 	switch (color)
 	{
@@ -17,7 +17,7 @@ std::string ColorToString(const Color::ColorEnum& color)
 	}
 }
 
-Color::ColorEnum getColor(const int& index)
+Color::ColorEnum Color::getColor(const int& index)
 {
 	switch (index)
 	{

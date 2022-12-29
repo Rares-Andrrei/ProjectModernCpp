@@ -3,11 +3,8 @@
 #include <QMainWindow>
 #include "ui_Map.h"
 #include"Battle.h"
-<<<<<<< Updated upstream
-#include "ColorEnum.h"
-=======
-#include  "../Color/Color/Color.h"
->>>>>>> Stashed changes
+
+#include "PlayersInstance.h"
 
 class Map : public QMainWindow
 {
@@ -19,6 +16,7 @@ public:
 
 	//void 
 private:
+	PlayerInstance Player;
 	Ui::MapClass ui;
 	std::shared_ptr<Battle>BattleWindow;
 private slots:
