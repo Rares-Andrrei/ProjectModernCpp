@@ -91,7 +91,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Battle.cpp" />
-    <ClCompile Include="ColorEnum.cpp" />
     <ClCompile Include="lobby.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="PlayersInstance.cpp" />
@@ -124,7 +123,6 @@
     <QtMoc Include="Battle.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ColorEnum.h" />
     <ClInclude Include="PlayersInstance.h" />
   </ItemGroup>
   <ItemGroup>

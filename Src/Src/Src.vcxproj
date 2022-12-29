@@ -70,6 +70,11 @@
   <ItemGroup>
     <None Include="file.db" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Color\Color\Color.vcxproj">
+      <Project>{375b82c3-f193-4085-89a2-fd9ffb4b97aa}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

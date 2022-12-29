@@ -197,7 +197,8 @@ void routeFct()
 int main()
 {
 	testQuest();
-	routeFct();
+	//routeFct();
+	testMatch(2);
 	//QuestionManager questions;
 	//Board b;
 	//questions.addQFiles("QuestionFile/QTypeVariants.txt", "QuestionFile/QTypeNumerical.txt");
