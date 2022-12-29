@@ -4,83 +4,49 @@
 
 
 Player::Player()
-    :m_color{Player::Color::None}, m_lastName{""} ,m_firstName{""}
+	:m_color{ Color::getDefaultColor() }, m_username{ "" }, m_nickName{ "" }
 {
 }
 
-Player::Player(const std::string& firstName, const std::string& lastName)
+Player::Player(const std::string& username, const std::string& nickname)
+	:m_color{ Color::getDefaultColor() }, m_username{ username }, m_nickName{ nickname }
 {
-    this->m_firstName = firstName;
-    this->m_lastName = lastName;
-    this->m_color = Color::None;
 }
 
-Player::Player(const std::string& firstName, const std::string& lastName, const Color& color)
+Player::Player(const std::string& username, const std::string& nickname, const Color::ColorEnum& color)
+	:m_color{ color }, m_username{ username }, m_nickName{ nickname }
 {
-    this->m_firstName = firstName;
-    this->m_lastName = lastName;
-    this->m_color = color;
 }
 std::string Player::getFirstName() const
 {
-    return m_firstName;
+	return m_username;
 }
 
-void Player::setFirstName(std::string& const first_name)
+void Player::setFirstName(const std::string& username)
 {
-    this->m_firstName = first_name;
+	this->m_username = username;
 }
 
-void Player::setLastName(std::string& const last_name) 
+void Player::setLastName(const std::string& nickname)
 {
-    this->m_lastName = last_name;
+	this->m_nickName = nickname;
 }
 
-void Player::setColor(Color const color) 
+void Player::setColor(const Color::ColorEnum& color)
 {
-    this->m_color = color;
+	this->m_color = color;
 }
-Player::Color Player::getColor() const
+Color::ColorEnum Player::getColor() const
 {
-    return m_color;
+	return m_color;
 }
 
-std::string Player::ColorToString(Player::Color color)
+std::string Player::ColorToString(const Color::ColorEnum& color)
 {
-    switch (color)
-    {
-    case Color::None:
-        return "None";
-    case Color::Red:
-        return "Red";
-    case Color::Blue:
-        return "Blue";
-    case Color::Green:
-        return "Green";
-    case Color::Yellow:
-        return "Yellow";
-    default: 
-        return "";
-    }
+	return Color::ColorToString(color);
 }
 
 std::string Player::getLastName() const
 {
-    return m_lastName;
-}
-
-std::istream& operator>>(std::istream& in,  Player & player)
-{ 
-    in >> player.m_firstName >> player.m_lastName;
-    return in;
-}
-
-std::ostream& operator<<(std::ostream& out, const Player& player)
-{
-    out << "Prenumele dumneavoastra este: " << player.m_firstName << "\n" << "Numele dumneavoastra este: " << player.m_lastName<<"\n";
-    out << "Culoarea dumneavoastra este: ";
-    out << Player::ColorToString(player.m_color);
-
-    return out;
-   
+	return m_nickName;
 }
