@@ -4,7 +4,7 @@
 #include "ui_Map.h"
 #include"Battle.h"
 
-#include "PlayersInstance.h"
+#include "../Player/Player/Player.h"
 
 class Map : public QMainWindow
 {
@@ -16,7 +16,7 @@ public:
 
 	//void 
 private:
-	PlayerInstance Player;
+	Player player;
 	Ui::MapClass ui;
 	std::shared_ptr<Battle>BattleWindow;
 private slots:

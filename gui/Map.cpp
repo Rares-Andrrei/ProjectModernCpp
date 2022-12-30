@@ -22,7 +22,7 @@ void Map::onzona1Clicked()
 {
 
 	BattleWindow->show();
-	auto culoare = Player.getColorToString();
+	auto culoare = player.getColorToString();
 	QString qstr = QString::fromStdString(culoare);
 	ui.zona1->setPalette(QPalette(QColor(qstr)));
 	ui.zona1->setAutoFillBackground(true);

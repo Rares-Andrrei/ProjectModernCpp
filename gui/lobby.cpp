@@ -11,9 +11,9 @@ lobby::lobby(QWidget* parent)
 	connect(ui.twoPlayersButton, SIGNAL(clicked()), SLOT(ontwoPlayersButtonClicked()));
 }
 
-void lobby::setPlayer(PlayerInstance player)
+void lobby::setPlayer(Player play)
 {
-	this->Player = player;
+	this->player = play;
 }
 
 lobby::~lobby()
@@ -21,7 +21,7 @@ lobby::~lobby()
 	auto response = cpr::Put(
 		cpr::Url{ "http://localhost:18080/logout" },
 		cpr::Payload{
-			{ "username", Player.getFirstName()},
+			{ "username", player.getFirstName()},
 		}
 	);
 
@@ -49,7 +49,7 @@ void lobby::ontwoPlayersButtonClicked()
 			auto response = cpr::Put(
 				cpr::Url{ "http://localhost:18080/queueTwoPlayerGame" },
 				cpr::Payload{
-					{ "username", Player.getFirstName()}
+					{ "username", player.getFirstName()}
 				});
 
 	if (response.status_code == 201)
@@ -81,7 +81,7 @@ void lobby::ontwoPlayersButtonClicked()
 	auto response = cpr::Put(
 		cpr::Url{ "http://localhost:18080/eliminatePlayerFromQueue" },
 		cpr::Payload{
-			{ "username", Player.getFirstName()}
+			{ "username", player.getFirstName()}
 		});
 	button->setEnabled(true);
 	button->show();

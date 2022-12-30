@@ -5,7 +5,7 @@
 #include"Map.h"
 #include <qmessagebox.h>
 
-#include "PlayersInstance.h"
+#include "../Player/Player/Player.h"
 #include <cpr/cpr.h>
 
 #include <qtimer.h>
@@ -17,12 +17,12 @@ class lobby : public QMainWindow
 
 public:
 	lobby(QWidget *parent = nullptr);
-	void setPlayer(PlayerInstance player);
+	void setPlayer(Player play);
 	~lobby();
 
 	
 private:
-	PlayerInstance Player;
+	Player player;
 	
 	Ui::lobbyClass ui;
 	std::shared_ptr<Map>MapWindow;
