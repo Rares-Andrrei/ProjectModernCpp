@@ -129,6 +129,9 @@
     <ProjectReference Include="..\Color\Color\Color.vcxproj">
       <Project>{375b82c3-f193-4085-89a2-fd9ffb4b97aa}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\Player\Player\Player.vcxproj">
+      <Project>{ac86939f-1b4c-4f30-adb1-e153072b6879}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
