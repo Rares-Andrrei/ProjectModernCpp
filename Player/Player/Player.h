@@ -14,21 +14,29 @@ class PLAYER_API Player
 public:
 
 private:
-	 std::string m_firstName;
-	 std::string m_lastName;
+	std::string m_username;
+	std::string m_nickname;
 	Color::ColorEnum m_color : 3;
 public:
-	Player() = default;
-	Player(const std::string& firstName, const std::string& lastName);
-	Player(const std::string& firstName, const std::string& lastName, const Color::ColorEnum& color);
+	Player();
+	Player(const std::string& username, const std::string& nickname);
+	Player(const std::string& username, const std::string& nickname, const Color::ColorEnum& color);
 
-	std::string getFirstName()const;
+	Player(const Player& other);
+	Player(Player&& other);
+
+	Player& operator=(const Player& other);
+	Player& operator=(Player&& other);
+
+	std::string getUsername()const;
+	void setUsername(const std::string& first_name);
+
 	void setColor(Color::ColorEnum color);
 	Color::ColorEnum getColor()const;
 	std::string getColorToString()const;
-	void setFirstName(std::string& first_name);
-	void setLastName(std::string& last_name);
-	std::string getLastName()const;
+
+	void setNickname(const std::string& last_name);
+	std::string getNickname()const;
 };
 
 
