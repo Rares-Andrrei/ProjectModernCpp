@@ -32,7 +32,6 @@
     <ClCompile Include="GameplayFile\ChooseRegion.cpp" />
     <ClCompile Include="GameplayFile\Duel.cpp" />
     <ClCompile Include="GameplayFile\GameLogic.cpp" />
-    <ClCompile Include="GameplayFile\Player.cpp" />
     <ClCompile Include="GameplayFile\PlayerBase.cpp" />
     <ClCompile Include="GameplayFile\Zone.cpp" />
     <ClCompile Include="ManualTests.cpp" />
@@ -55,7 +54,6 @@
     <ClInclude Include="GameplayFile\ChooseRegion.h" />
     <ClInclude Include="GameplayFile\Duel.h" />
     <ClInclude Include="GameplayFile\GameLogic.h" />
-    <ClInclude Include="GameplayFile\Player.h" />
     <ClInclude Include="GameplayFile\PlayerBase.h" />
     <ClInclude Include="GameplayFile\Zone.h" />
     <ClInclude Include="ManualTests.h" />
@@ -73,6 +71,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Color\Color\Color.vcxproj">
       <Project>{375b82c3-f193-4085-89a2-fd9ffb4b97aa}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Player\Player\Player.vcxproj">
+      <Project>{ac86939f-1b4c-4f30-adb1-e153072b6879}</Project>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">

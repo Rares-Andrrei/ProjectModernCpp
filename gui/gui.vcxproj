@@ -93,7 +93,6 @@
     <ClCompile Include="Battle.cpp" />
     <ClCompile Include="lobby.cpp" />
     <ClCompile Include="Map.cpp" />
-    <ClCompile Include="PlayersInstance.cpp" />
     <ClCompile Include="signUp.cpp" />
     <QtRcc Include="gui.qrc" />
     <QtUic Include="Battle.ui" />
@@ -121,9 +120,6 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Battle.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="PlayersInstance.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Color\Color\Color.vcxproj">

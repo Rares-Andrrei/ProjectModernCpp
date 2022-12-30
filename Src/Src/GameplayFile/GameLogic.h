@@ -1,7 +1,7 @@
 #pragma once
 #include "Board.h"
 #include "QuestionManager.h"
-#include "Player.h"
+#include "../../Player/Player/Player.h"
 #include  "Advantages.h"
 #include "ChooseBase.h"
 #include "Duel.h"

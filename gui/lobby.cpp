@@ -21,7 +21,7 @@ lobby::~lobby()
 	auto response = cpr::Put(
 		cpr::Url{ "http://localhost:18080/logout" },
 		cpr::Payload{
-			{ "username", player.getFirstName()},
+			{ "username", player.getUsername()},
 		}
 	);
 
@@ -49,7 +49,7 @@ void lobby::ontwoPlayersButtonClicked()
 			auto response = cpr::Put(
 				cpr::Url{ "http://localhost:18080/queueTwoPlayerGame" },
 				cpr::Payload{
-					{ "username", player.getFirstName()}
+					{ "username", player.getUsername()}
 				});
 
 	if (response.status_code == 201)
@@ -81,7 +81,7 @@ void lobby::ontwoPlayersButtonClicked()
 	auto response = cpr::Put(
 		cpr::Url{ "http://localhost:18080/eliminatePlayerFromQueue" },
 		cpr::Payload{
-			{ "username", player.getFirstName()}
+			{ "username", player.getUsername()}
 		});
 	button->setEnabled(true);
 	button->show();

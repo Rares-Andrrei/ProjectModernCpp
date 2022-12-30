@@ -1,6 +1,6 @@
 #pragma once
 #include <cstdlib>
-#include "Player.h"
+#include "../../Player/Player/Player.h"
 #include "PlayerBase.h"
 #include "QuestionManager.h"
 #include "Board.h"

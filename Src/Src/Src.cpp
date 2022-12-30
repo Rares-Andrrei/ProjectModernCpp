@@ -43,7 +43,7 @@ void routeFct()
 	if (playersOnline.find(usernameIter->second) != playersOnline.end() && playersInGame.find(usernameIter->second) == playersInGame.end())
 	{
 		std::string key = usernameIter->second;
-		twoPlayers.push_back({ key, playersOnline.at(key).getFirstName(), playersOnline.at(key).getLastName() });
+		twoPlayers.push_back({ key, playersOnline.at(key).getUsername(), playersOnline.at(key).getNickname() });
 		playersInGame.insert(key);
 	}
 	if (twoPlayers.size() < 2)
@@ -121,7 +121,7 @@ void routeFct()
 		playersOnline[usernameIter->second] = (Player(usernameIter->second, ""));
 		crow::json::wvalue playerInstance;
 		playerInstance["firstname"] = usernameIter->second;
-		playerInstance["lastname"] = playersOnline[usernameIter->second].getLastName();
+		playerInstance["lastname"] = playersOnline[usernameIter->second].getNickname();
 		connections_players[usernameIter->second] = connections;
 		return crow::response(playerInstance);
 	}

@@ -69,9 +69,6 @@
     <ClCompile Include="GameplayFile\Duel.cpp">
       <Filter>GamePlayFiles\Cpp</Filter>
     </ClCompile>
-    <ClCompile Include="GameplayFile\Player.cpp">
-      <Filter>GamePlayFiles\Cpp</Filter>
-    </ClCompile>
     <ClCompile Include="GameplayFile\PlayerBase.cpp">
       <Filter>GamePlayFiles\Cpp</Filter>
     </ClCompile>
@@ -128,9 +125,6 @@
       <Filter>GamePlayFiles\Header</Filter>
     </ClInclude>
     <ClInclude Include="GameplayFile\Duel.h">
-      <Filter>GamePlayFiles\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="GameplayFile\Player.h">
       <Filter>GamePlayFiles\Header</Filter>
     </ClInclude>
     <ClInclude Include="GameplayFile\PlayerBase.h">
