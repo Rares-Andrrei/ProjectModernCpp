@@ -36,3 +36,39 @@ void QTypeVariantsWindow::requestQuestion()
 	ui.VariantD->setText("D");
 }
 
+void QTypeVariantsWindow::on_Variant1_clicked()
+{
+	variant = "a";
+	on_Variant_clicked();
+}
+
+void QTypeVariantsWindow::on_Variant2_clicked()
+{
+	variant = "b";
+	on_Variant_clicked();
+}
+
+void QTypeVariantsWindow::on_Variant3_clicked()
+{
+	variant = "c";
+	on_Variant_clicked();
+}
+
+void QTypeVariantsWindow::on_Variant4_clicked()
+{
+	variant = "d";
+	on_Variant_clicked();
+}
+
+void QTypeVariantsWindow::on_Variant_clicked()
+{
+	auto button = qobject_cast<QPushButton*>(QObject::sender());
+	if (m_Variant)
+	{
+		m_Variant->setStyleSheet("QPushButton { background-color: white; }");
+	}
+	button->setStyleSheet("QPushButton { background-color: green; }");
+
+	m_Variant = button;
+}
+
