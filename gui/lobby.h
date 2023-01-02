@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include "ui_lobby.h"
 #include "TriviadorGame.h"
+#include "Route.h"
 #include <qmessagebox.h>
 
 #include "PlayersInstance.h"
@@ -16,7 +17,7 @@ class lobby : public QMainWindow
 	Q_OBJECT
 
 public:
-	lobby(QWidget* parent = nullptr);
+	lobby(Route& route, QWidget* parent = nullptr);
 	void setPlayer(PlayerInstance player);
 	~lobby();
 
@@ -24,7 +25,8 @@ public:
 
 private:
 	PlayerInstance Player;
-
+	bool m_stopLoop;
+	Route& m_routes;
 	Ui::lobbyClass ui;
 	std::unique_ptr<TriviadorGame> Game;
 private slots:
