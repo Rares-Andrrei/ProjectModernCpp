@@ -40,10 +40,11 @@ void Route::enterTwoPlayersLobby()
 		auto bodyArgs = parseUrlArgs(req.body);
 	auto end = bodyArgs.end();
 	auto sessionKeyIter = bodyArgs.find("sessionKey");
-	if (m_players->isActive(sessionKeyIter->second))
+	if (m_players->isActive(sessionKeyIter->second) && playersInGame.count(sessionKeyIter->second) == 0)
 	{
 		std::string key = sessionKeyIter->second;
 		twoPlayers.push_back(m_players->getPlayer(key));
+		playersInGame.insert(key);
 	}
 	if (twoPlayers.size() < 2)
 	{
@@ -71,6 +72,7 @@ void Route::exitTwoPlayersLobby()
 		if (it->getName() == playerName)
 		{
 			twoPlayers.remove(it);
+			playersInGame.erase(sessionKeyIter->second);
 			return crow::response(200);
 		}
 	}

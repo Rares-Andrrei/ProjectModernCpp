@@ -12,6 +12,7 @@ class Route
 	std::shared_ptr<Players> m_players;
 
 	std::unordered_map<uint16_t, GameLogic> gamesActive;
+	std::unordered_set< std::string> playersInGame;
 	std::list<std::shared_ptr<Player>> twoPlayers;
 
 public:
