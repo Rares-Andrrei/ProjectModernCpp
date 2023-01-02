@@ -1,4 +1,5 @@
 #include "lobby.h"
+#include <QMovie>
 
 lobby::lobby(QWidget* parent)
 	: QMainWindow(parent)
@@ -6,11 +7,20 @@ lobby::lobby(QWidget* parent)
 	ui.setupUi(this);
 	Game.reset(new TriviadorGame(this));
 
-	ui.twoPlayersButton->setStyleSheet("background-image:url(:/gui/twoPlayers.png)");
-	ui.threePlayersButton->setStyleSheet("background-image:url(:/gui/threePlayers.png)");
-	ui.fourPlayersButton->setStyleSheet("background-image:url(:/gui/fourPlayers.png)");
+	ui.twoPlayersButton->setStyleSheet("QPushButton { background-image:url(:/gui/twoPlayers.png); text-align: left, up; border-radius: 5px; }");
+	ui.threePlayersButton->setStyleSheet("QPushButton { background-image:url(:/gui/threePlayers.png); text-align: left, up; border-radius: 5px; }");
+	ui.fourPlayersButton->setStyleSheet("QPushButton { background-image:url(:/gui/fourPlayers.png); text-align: left, up; border-radius: 5px; }");
 
-	connect(ui.twoPlayersButton, SIGNAL(clicked()), SLOT(ontwoPlayersButtonClicked()));
+	QMovie* movie = new QMovie(":/gui/32x32.gif");
+	ui.loadingLabel->setMovie(movie);
+	ui.loadingLabel->show();
+	movie->start();
+
+	connect(ui.twoPlayersButton, SIGNAL(clicked()), SLOT(onTwoPlayersButtonClicked()));
+	connect(ui.threePlayersButton, SIGNAL(clicked()), SLOT(onThreePlayersButtonClicked()));
+	connect(ui.fourPlayersButton, SIGNAL(clicked()), SLOT(onFourPlayersButtonClicked()));
+
+	connect(ui.cancelButton, SIGNAL(clicked()), SLOT(onCancelButtonClicked()));
 }
 
 void lobby::setPlayer(PlayerInstance player)
@@ -18,28 +28,10 @@ void lobby::setPlayer(PlayerInstance player)
 	this->Player = player;
 }
 
-lobby::~lobby()
+void lobby::onTwoPlayersButtonClicked()
 {
-	// TD : de mutat intr-o functie separata
-	auto response = cpr::Put(
-		cpr::Url{ "http://localhost:18080/logout" },
-		cpr::Payload{
-			{ "username", Player.getFirstName()},
-		}
-	);
+	ui.lobbyGameModes->setCurrentIndex(1);
 
-	if (response.status_code == 200 || response.status_code == 202) {
-		QMessageBox::information(this, "Logout", "U have been logged out");
-
-
-		QApplication::closeAllWindows();
-	}
-	else {
-		QMessageBox::information(this, "Failure", "The logout failed");
-	}
-}
-void lobby::ontwoPlayersButtonClicked()
-{
 	QTimer timer;
 
 	bool stopLoop = false;
@@ -92,5 +84,43 @@ void lobby::ontwoPlayersButtonClicked()
 	if (response.status_code != 200)
 	{
 		QMessageBox::information(this, "queue", "The queue failed");
+	}
+}
+
+void lobby::onThreePlayersButtonClicked()
+{
+	ui.lobbyGameModes->setCurrentIndex(1);
+
+}
+
+void lobby::onFourPlayersButtonClicked()
+{
+	ui.lobbyGameModes->setCurrentIndex(1);
+
+}
+
+void lobby::onCancelButtonClicked()
+{
+	ui.lobbyGameModes->setCurrentIndex(0);
+}
+
+lobby::~lobby()
+{
+	// TD : de mutat intr-o functie separata
+	auto response = cpr::Put(
+		cpr::Url{ "http://localhost:18080/logout" },
+		cpr::Payload{
+			{ "username", Player.getFirstName()},
+		}
+	);
+
+	if (response.status_code == 200 || response.status_code == 202) {
+		QMessageBox::information(this, "Logout", "U have been logged out");
+
+
+		QApplication::closeAllWindows();
+	}
+	else {
+		QMessageBox::information(this, "Failure", "The logout failed");
 	}
 }

@@ -21,12 +21,17 @@ public:
 	~lobby();
 
 
+
 private:
 	PlayerInstance Player;
 
 	Ui::lobbyClass ui;
 	std::unique_ptr<TriviadorGame> Game;
 private slots:
-	void ontwoPlayersButtonClicked();
+	void onTwoPlayersButtonClicked();
+	void onThreePlayersButtonClicked();
+	void onFourPlayersButtonClicked();
+
+	void onCancelButtonClicked();
 };
 // broadcast
