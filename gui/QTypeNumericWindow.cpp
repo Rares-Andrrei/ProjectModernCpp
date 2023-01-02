@@ -4,10 +4,20 @@ QTypeNumericWindow::QTypeNumericWindow(QWidget* parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
-	//connect(m_timer, &QTimer::timeout,this, &QTypeNumericWindow::on_Timer_Timeout);
-	ui.TimeRemaining->setRange(0, 100);
+	m_TimeRemaining = new QTimer(this);
+	m_timer = new QTimer(this);
+
+	connect(m_TimeRemaining, &QTimer::timeout, this, &QTypeNumericWindow::on_TimeRemaining_Timeout);
+	connect(m_timer, &QTimer::timeout, this, &QTypeNumericWindow::on_Timer_Timeout);
+	connect(ui.Delete, &QPushButton::pressed, this, &QTypeNumericWindow::on_Delete_pressed);
+	connect(ui.Delete, &QPushButton::released, this, &QTypeNumericWindow::on_Delete_release);
+
+	ui.TimeRemaining->setRange(0, 3000);
 	ui.TimeRemaining->setValue(0);
+
+	// nu sunt sigur daca trebuie ?
 	ui.Answer->setClearButtonEnabled(true);
+	ui.Answer->setEnabled(false);
 
 	// Use a stylesheet to customize the appearance of the slider
 	ui.TimeRemaining->setStyleSheet("QSlider {"
@@ -32,20 +42,6 @@ QTypeNumericWindow::QTypeNumericWindow(QWidget* parent)
 		"  image: url(:/images/handle.png);"
 		"}"
 		"QSlider::groove:horizontal { background: green; }");
-	QTimer timer;
-	QObject::connect(&timer, &QTimer::timeout, [&]() {
-		int value = ui.TimeRemaining->value();
-	if (value < ui.TimeRemaining->maximum())
-	{
-		ui.TimeRemaining->setValue(value + 1);
-		update();
-	}
-	else {
-		timer.stop();
-		// REQUEST :: send the response  provided to the server
-	}
-		});
-	timer.start(1000);
 	requestQuestion();
 
 	//TD:  Clasa custom pentru button , pentru a simplifica codul
@@ -73,7 +69,12 @@ void QTypeNumericWindow::requestQuestion()
 	ui.Question->setFont(QFont("Arial", 25));
 	ui.Question->setAlignment(Qt::AlignCenter);
 	// Request :: ask the server fro a random question 
-	// se the Question label to the given one
+}
+
+void QTypeNumericWindow::showEvent(QShowEvent* event)
+{
+	m_TimeRemaining->start(10);
+	QWidget::showEvent(event);
 }
 
 void QTypeNumericWindow::on_Number0_clicked()
@@ -122,19 +123,48 @@ void QTypeNumericWindow::on_Delete_clicked()
 }
 void QTypeNumericWindow::on_Enter_clicked()
 {
+	m_TimeRemaining->stop();
+	disableAllButtons();
+	ui.TimeRemaining->setEnabled(false);
+	int value = ui.TimeRemaining->value();
 	// Request :: send the response  provided to the server
 }
 
-//void QTypeNumericWindow::on_Delete_pressed()
-//{
-//	m_timer->start(100);
-//}
-//void QTypeNumericWindow::on_Delete_release()
-//{
-//	m_timer->stop();
-//}
-//void QTypeNumericWindow::on_Timer_Timeout()
-//{
-//	if (ui.Answer->text().length() > 0)
-//		ui.Answer->setText(ui.Answer->text().left(ui.Answer->text().length() - 1));
-//}
+void QTypeNumericWindow::on_Delete_pressed()
+{
+	m_timer->start(100);
+}
+void QTypeNumericWindow::on_Delete_release()
+{
+	m_timer->stop();
+}
+void QTypeNumericWindow::on_Timer_Timeout()
+{
+	if (ui.Answer->text().length() > 0)
+	{
+		ui.Answer->setText(ui.Answer->text().left(ui.Answer->text().length() - 1));
+	}
+	else {
+		m_timer->stop();
+	}
+}
+void QTypeNumericWindow::on_TimeRemaining_Timeout()
+{
+	int value = ui.TimeRemaining->value();
+	if (value < ui.TimeRemaining->maximum())
+	{
+		ui.TimeRemaining->setValue(value + 1);
+	}
+	else {
+		m_TimeRemaining->stop();
+		// REQUEST :: send the response  provided to the server
+	}
+}
+
+void QTypeNumericWindow::disableAllButtons()
+{
+	for (const auto& button : findChildren<QAbstractButton*>())
+	{
+		button->setEnabled(false);
+	}
+}

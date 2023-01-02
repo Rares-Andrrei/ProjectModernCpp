@@ -36,7 +36,7 @@ void logIn::onShowPasswordButtonChecked()
 	else
 		ui.l_password->setEchoMode(QLineEdit::Password);
 }
-
+#include "QTypeNumericWindow.h"
 void logIn::onEnterButtonClicked()
 {
 	QString username = ui.l_username->text();
@@ -66,7 +66,9 @@ void logIn::onEnterButtonClicked()
 	{
 		QMessageBox::information(this,"Success", "Account was found");
 		QApplication::closeAllWindows();
-		lobbyWindow->show();
+		QTypeNumericWindow* window = new QTypeNumericWindow(this);
+		window->show();
+		//lobbyWindow->show();
 	}
 	else
 	{
