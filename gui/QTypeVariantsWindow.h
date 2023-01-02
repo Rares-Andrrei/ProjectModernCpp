@@ -24,8 +24,13 @@ private slots:
 	void on_Variant4_clicked();
 	void on_Variant_clicked();
 	void on_Enter_clicked();
+	void on_TimeRemaining_Timeout();
+
+private:
+	void disableAllButtons();
 
 	QPushButton* m_Variant = nullptr;
+	QTimer* m_timeRemaining;
 	QString variant = "";
 	Ui::QTypeVariantsWindowClass ui;
 };

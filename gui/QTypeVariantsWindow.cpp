@@ -4,11 +4,38 @@ QTypeVariantsWindow::QTypeVariantsWindow(QWidget* parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
+	m_timeRemaining = new QTimer(this);
 	connect(m_timeRemaining, &QTimer::timeout, this, &QTypeVariantsWindow::on_TimeRemaining_Timeout);
 	connect(ui.VariantA, &QPushButton::clicked, this, &QTypeVariantsWindow::on_Variant1_clicked);
 	connect(ui.VariantB, &QPushButton::clicked, this, &QTypeVariantsWindow::on_Variant2_clicked);
 	connect(ui.VariantC, &QPushButton::clicked, this, &QTypeVariantsWindow::on_Variant3_clicked);
 	connect(ui.VariantD, &QPushButton::clicked, this, &QTypeVariantsWindow::on_Variant4_clicked);
+
+	ui.TimeSlider->setRange(0, 3000);
+	ui.TimeSlider->setValue(0);
+	ui.TimeSlider->setStyleSheet("QSlider {"
+		"  background: transparent;"
+		"  height: 10px;"
+		"  border: 0px solid #777;"
+		"  border-radius: 5px;"
+		"}"
+		"QSlider::groove:horizontal {"
+		"  background: #777;"
+		"  height: 8px;"
+		"  border: 0px solid #777;"
+		"  border-radius: 4px;"
+		"}"
+		"QSlider::handle:horizontal {"
+		"  background: #eee;"
+		"  width: 20px;"
+		"  margin-top: -3px;"
+		"  margin-bottom: -3px;"
+		"  border: 1px solid #777;"
+		"  border-radius: 10px;"
+		"  image: url(:/images/handle.png);"
+		"}"
+		"QSlider::groove:horizontal { background: green; }");
+
 	ui.VariantA->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	ui.VariantB->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	ui.VariantC->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
