@@ -76,4 +76,65 @@ void QTypeNumericWindow::requestQuestion()
 	// se the Question label to the given one
 }
 
+void QTypeNumericWindow::on_Number0_clicked()
+{
+	ui.Answer->setText(ui.Answer->text() + "0");
 }
+void QTypeNumericWindow::on_Number1_clicked()
+{
+	ui.Answer->setText(ui.Answer->text() + "1");
+}
+void QTypeNumericWindow::on_Number2_clicked()
+{
+	ui.Answer->setText(ui.Answer->text() + "2");
+}
+void QTypeNumericWindow::on_Number3_clicked()
+{
+	ui.Answer->setText(ui.Answer->text() + "3");
+}
+void QTypeNumericWindow::on_Number4_clicked()
+{
+	ui.Answer->setText(ui.Answer->text() + "4");
+}
+void QTypeNumericWindow::on_Number5_clicked()
+{
+	ui.Answer->setText(ui.Answer->text() + "5");
+}
+void QTypeNumericWindow::on_Number6_clicked()
+{
+	ui.Answer->setText(ui.Answer->text() + "6");
+}
+void QTypeNumericWindow::on_Number7_clicked()
+{
+	ui.Answer->setText(ui.Answer->text() + "7");
+}
+void QTypeNumericWindow::on_Number8_clicked()
+{
+	ui.Answer->setText(ui.Answer->text() + "8");
+}
+void QTypeNumericWindow::on_Number9_clicked()
+{
+	ui.Answer->setText(ui.Answer->text() + "9");
+}
+void QTypeNumericWindow::on_Delete_clicked()
+{
+	ui.Answer->setText(ui.Answer->text().left(ui.Answer->text().length() - 1));
+}
+void QTypeNumericWindow::on_Enter_clicked()
+{
+	// Request :: send the response  provided to the server
+}
+
+//void QTypeNumericWindow::on_Delete_pressed()
+//{
+//	m_timer->start(100);
+//}
+//void QTypeNumericWindow::on_Delete_release()
+//{
+//	m_timer->stop();
+//}
+//void QTypeNumericWindow::on_Timer_Timeout()
+//{
+//	if (ui.Answer->text().length() > 0)
+//		ui.Answer->setText(ui.Answer->text().left(ui.Answer->text().length() - 1));
+//}
