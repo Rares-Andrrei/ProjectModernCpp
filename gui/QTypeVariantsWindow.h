@@ -14,6 +14,9 @@ public:
 	~QTypeVariantsWindow();
 	void requestQuestion();
 
+protected:
+	void showEvent(QShowEvent* event) override;
+
 private slots:
 	void on_Variant1_clicked();
 	void on_Variant2_clicked();

@@ -36,6 +36,12 @@ void QTypeVariantsWindow::requestQuestion()
 	ui.VariantD->setText("D");
 }
 
+void QTypeVariantsWindow::showEvent(QShowEvent* event)
+{
+	m_timeRemaining->start(10);
+	QWidget::showEvent(event);
+}
+
 void QTypeVariantsWindow::on_Variant1_clicked()
 {
 	variant = "a";
@@ -70,5 +76,16 @@ void QTypeVariantsWindow::on_Variant_clicked()
 	button->setStyleSheet("QPushButton { background-color: green; }");
 
 	m_Variant = button;
+}
+
+void QTypeVariantsWindow::on_Enter_clicked()
+{
+	m_timeRemaining->stop();
+	ui.TimeSlider->setEnabled(false);
+	disableAllButtons();
+	int value = ui.TimeSlider->value();
+	if (variant == "")
+		variant = "NULL"; // daca nu a ales un raspuns in timp util , este declarat ca fiind gresit
+	// REQUEST :: send the response  provided to the server + the time 
 }
 
