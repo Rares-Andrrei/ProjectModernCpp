@@ -46,4 +46,34 @@ QTypeNumericWindow::QTypeNumericWindow(QWidget* parent)
 	}
 		});
 	timer.start(1000);
+	requestQuestion();
+
+	//TD:  Clasa custom pentru button , pentru a simplifica codul
+	ui.Number0->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	ui.Number1->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	ui.Number2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	ui.Number3->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	ui.Number4->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	ui.Number5->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	ui.Number6->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	ui.Number7->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	ui.Number8->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	ui.Number9->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	ui.Enter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	ui.Delete->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+}
+
+QTypeNumericWindow::~QTypeNumericWindow()
+{}
+
+void QTypeNumericWindow::requestQuestion()
+{
+	ui.Question->setWordWrap(true);
+	ui.Question->setText("This is a long message that will be displayed in a scrollable text edit widget.This is a long message that will be displayed in a scrollable text edit widget.");
+	ui.Question->setFont(QFont("Arial", 25));
+	ui.Question->setAlignment(Qt::AlignCenter);
+	// Request :: ask the server fro a random question 
+	// se the Question label to the given one
+}
+
 }
