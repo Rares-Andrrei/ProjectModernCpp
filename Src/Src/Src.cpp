@@ -14,7 +14,7 @@
 #include <thread>
 #include <chrono>
 
-void GameLobby(crow::SimpleApp& app, const  std::unordered_map< std::string, Player>& playersOnline)
+void GameLobby(crow::SimpleApp& app, const  std::unordered_map< const char*, Player>& playersOnline)
 {
 
 
@@ -26,23 +26,25 @@ void routeFct()
 	Database db("file.db");
 	crow::SimpleApp app;
 
-	std::unordered_map< std::string, Player> playersOnline;
+	std::unordered_map< const char*, Player> playersOnline;
 	int gamesCnt = 0;
 	std::unordered_map<uint16_t, GameLogic> gamesActive;
-	std::list<std::tuple< std::string, std::string, std::string	>> twoPlayers;
-	std::unordered_set< std::string> playersInGame;
-	std::unordered_map<std::string, std::string> connections_players;
+	std::list<std::tuple< const char*, const char*, const char*	>> twoPlayers;
+	std::unordered_set< const char*> playersInGame;
+	std::unordered_map<const char*, const char*> connections_players;
 
 	auto& queueTwoPlayers = CROW_ROUTE(app, "/queueTwoPlayerGame").methods(crow::HTTPMethod::Put);
 	queueTwoPlayers([&playersOnline, &twoPlayers, &gamesActive, &gamesCnt, &playersInGame](const crow::request& req) {
-
+		
+	    
 		auto bodyArgs = parseUrlArgs(req.body);
 	auto end = bodyArgs.end();
 	auto usernameIter = bodyArgs.find("username");
+	const char* usernameI = usernameIter->second.c_str();
 
-	if (playersOnline.find(usernameIter->second) != playersOnline.end() && playersInGame.find(usernameIter->second) == playersInGame.end())
+	if (playersOnline.find(usernameI) != playersOnline.end() && playersInGame.find(usernameI) == playersInGame.end())
 	{
-		std::string key = usernameIter->second;
+		const char* key = usernameIter->second.c_str();
 		twoPlayers.push_back({ key, playersOnline.at(key).getUsername(), playersOnline.at(key).getNickname() });
 		playersInGame.insert(key);
 	}
@@ -66,7 +68,7 @@ void routeFct()
 	auto usernameIter = bodyArgs.find("username");
 	if (usernameIter != end)
 	{
-		std::string key = usernameIter->second;
+		const char* key = usernameIter->second.c_str();
 		playersInGame.erase(key);
 		for (auto it = twoPlayers.begin(); it != twoPlayers.end(); ++it)
 		{
@@ -87,7 +89,7 @@ void routeFct()
 	auto usernameIter = bodyArgs.find("username");
 	for (auto& it : twoPlayers)
 	{
-		if (std::get<0>(it) == usernameIter->second)
+		if (std::get<0>(it) == usernameIter->second.c_str())
 		{
 			twoPlayers.remove(it);
 			return crow::response(200);
@@ -102,7 +104,7 @@ void routeFct()
 
 		auto bodyArgs = parseUrlArgs(req.body);
 
-	auto connections = req.remote_ip_address;
+	auto connections = req.remote_ip_address.c_str();
 	auto end = bodyArgs.end();
 	auto usernameIter = bodyArgs.find("username");
 	auto passwordIter = bodyArgs.find("password");
@@ -118,11 +120,13 @@ void routeFct()
 	}
 	else
 	{
-		playersOnline[usernameIter->second] = (Player(usernameIter->second, ""));
+		const char* username = usernameIter->second.c_str();
+		const char* n = "";
+		playersOnline[usernameIter->second.c_str()] = (Player(username, n));
 		crow::json::wvalue playerInstance;
-		playerInstance["firstname"] = usernameIter->second;
-		playerInstance["lastname"] = playersOnline[usernameIter->second].getNickname();
-		connections_players[usernameIter->second] = connections;
+		playerInstance["firstname"] = usernameIter->second.c_str();
+		playerInstance["lastname"] = playersOnline[usernameIter->second.c_str()].getNickname();
+		connections_players[usernameIter->second.c_str()] = connections;
 		return crow::response(playerInstance);
 	}
 		});
@@ -135,7 +139,7 @@ void routeFct()
 	auto end = bodyArgs.end();
 	auto usernameIter = bodyArgs.find("username");
 
-	playersOnline.erase(usernameIter->second);
+	playersOnline.erase(usernameIter->second.c_str());
 
 	return crow::response(200);
 

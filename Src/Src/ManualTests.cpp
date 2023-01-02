@@ -54,8 +54,12 @@ void testDatabase()
 void testMatch(const int& numberOfPlayers)
 {
 	GameLogic game(numberOfPlayers);
-	game.addPlayer("Rares", "raresandrei");
-	game.addPlayer("Alex", "alex1032");
+	const char* user1 = "Rares";
+	const char* pwr = "raresandrei";
+	game.addPlayer(user1,pwr);
+	const char* user2 = "Alex";
+	const char* pwr1 = "alex1032";
+	game.addPlayer(user2, pwr1);
 	game.StartGame();
 	game.EndGame();
 }

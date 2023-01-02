@@ -19,7 +19,7 @@ public:
 	};
 
 public:
-	static std::string ColorToString(const ColorEnum& color);
+	static const char* ColorToString(const ColorEnum& color);
 	static ColorEnum getColor(const int& index);
 	static ColorEnum getDefaultColor();
 };

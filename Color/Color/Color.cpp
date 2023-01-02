@@ -1,6 +1,6 @@
 #include "Color.h"
 
-std::string Color::ColorToString(const Color::ColorEnum& color)
+const char* Color::ColorToString(const Color::ColorEnum& color)
 {
 	switch (color)
 	{

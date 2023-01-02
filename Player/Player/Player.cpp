@@ -7,12 +7,12 @@ Player::Player()
 {
 }
 
-Player::Player(const std::string& username, const std::string& nickname)
+Player::Player(const const char*& username, const const char*& nickname)
 	:m_username{ username }, m_nickname{ nickname }, m_color{ Color::getDefaultColor() }
 {
 }
 
-Player::Player(const std::string& username, const std::string& nickname, const Color::ColorEnum& color)
+Player::Player(const const char*& username, const const char*& nickname, const Color::ColorEnum& color)
 	:m_username{ username }, m_nickname{ nickname }, m_color{ color }
 {
 }
@@ -47,7 +47,7 @@ Player& Player::operator=(Player&& other)
 	return *this;
 }
 
-std::string Player::getUsername() const
+const char* Player::getUsername() const
 {
 	return m_username;
 }
@@ -62,22 +62,22 @@ Color::ColorEnum Player::getColor() const
 	return m_color;
 }
 
-std::string Player::getColorToString() const
+const char* Player::getColorToString() const
 {
 	return Color::ColorToString(m_color);
 }
 
-void Player::setUsername(const std::string& first_name)
+void Player::setUsername(const const char*& first_name)
 {
 	this->m_username = first_name;
 }
 
-void Player::setNickname(const std::string& last_name)
+void Player::setNickname(const const char*& last_name)
 {
 	this->m_nickname = last_name;
 }
 
-std::string Player::getNickname() const
+const char* Player::getNickname() const
 {
 	return m_nickname;
 }

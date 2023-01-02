@@ -69,7 +69,11 @@ void logIn::onEnterButtonClicked()
 
 		//Create a new player instance
 		crow::json::rvalue resData = crow::json::load(response.text);
-		Player player(resData["firstname"].s(), resData["lastname"].s());//aici imi arunca o exceptie si nu stiu de ce
+		std::string nickname = resData["firstname"].s();
+		std::string username = resData["lastname"].s();
+		const char* nicknameChar = nickname.data();
+		const char* usernameChar = username.data();
+		Player player(usernameChar, nicknameChar);
 		lobbyWindow->setPlayer(player);
 
 		QApplication::closeAllWindows();
