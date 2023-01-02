@@ -9,7 +9,7 @@ logIn::logIn(Route& routes, QWidget* parent)
 	: m_routes{ routes }, QMainWindow(parent)
 {
 	ui.setupUi(this);
-	lobbyWindow.reset(new lobby());
+	lobbyWindow.reset(new lobby(m_routes));
 
 	ui.l_password->setEchoMode(QLineEdit::Password);
 

@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ActivePlayers.cpp" />
     <ClCompile Include="AdvantagesFile\Advantages.cpp" />
     <ClCompile Include="AdvantagesFile\AnswerFiftyFifty.cpp" />
     <ClCompile Include="AdvantagesFile\AnswerSugestion.cpp" />
@@ -28,6 +27,8 @@
     <ClCompile Include="DatabaseFile\Database.cpp" />
     <ClCompile Include="DatabaseFile\MatchInfo.cpp" />
     <ClCompile Include="DatabaseFile\utils.cpp" />
+    <ClCompile Include="Lobby.cpp" />
+    <ClCompile Include="Players.cpp" />
     <ClCompile Include="GameplayFile\Board.cpp" />
     <ClCompile Include="GameplayFile\ChooseBase.cpp" />
     <ClCompile Include="GameplayFile\ChooseRegion.cpp" />
@@ -44,7 +45,6 @@
     <ClCompile Include="src.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ActivePlayers.h" />
     <ClInclude Include="AdvantagesFile\Advantages.h" />
     <ClInclude Include="AdvantagesFile\AnswerFiftyFifty.h" />
     <ClInclude Include="AdvantagesFile\AnswerSugestion.h" />
@@ -54,6 +54,8 @@
     <ClInclude Include="DatabaseFile\Database.h" />
     <ClInclude Include="DatabaseFile\MatchInfo.h" />
     <ClInclude Include="DatabaseFile\utils.h" />
+    <ClInclude Include="Lobby.h" />
+    <ClInclude Include="Players.h" />
     <ClInclude Include="GameplayFile\Board.h" />
     <ClInclude Include="GameplayFile\ChooseBase.h" />
     <ClInclude Include="GameplayFile\ChooseRegion.h" />
