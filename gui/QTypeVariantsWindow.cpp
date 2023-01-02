@@ -116,3 +116,23 @@ void QTypeVariantsWindow::on_Enter_clicked()
 	// REQUEST :: send the response  provided to the server + the time 
 }
 
+void QTypeVariantsWindow::on_TimeRemaining_Timeout()
+{
+	int value = ui.TimeSlider->value();
+	if (value < ui.TimeSlider->maximum())
+	{
+		ui.TimeSlider->setValue(value + 1);
+	}
+	else {
+		m_timeRemaining->stop();
+		on_Enter_clicked();
+	}
+}
+
+void QTypeVariantsWindow::disableAllButtons()
+{
+	for (const auto& button : findChildren<QAbstractButton*>())
+	{
+		button->setEnabled(false);
+	}
+}
