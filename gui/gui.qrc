@@ -10,5 +10,7 @@
         <file>fourPlayers.png</file>
         <file>backgroundQuestions.png</file>
         <file>fiftyFifty.png</file>
+        <file>generateAnAnswer.png</file>
+        <file>generateFourAnswers.png</file>
     </qresource>
 </RCC>

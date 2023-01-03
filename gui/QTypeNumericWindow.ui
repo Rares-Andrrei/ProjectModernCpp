@@ -6,12 +6,24 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1474</width>
-    <height>770</height>
+    <width>1300</width>
+    <height>700</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>1300</width>
+    <height>700</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1300</width>
+    <height>700</height>
+   </size>
+  </property>
   <property name="windowTitle">
-   <string>QTypeNumericWindow</string>
+   <string>TIE-BREAKER</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QLineEdit" name="Answer">
@@ -45,6 +57,9 @@
       <width>861</width>
       <height>91</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(128, 162, 201);</string>
     </property>
     <property name="text">
      <string>TextLabel</string>
@@ -146,28 +161,69 @@
      </item>
     </layout>
    </widget>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>-10</x>
+      <y>-10</y>
+      <width>1311</width>
+      <height>711</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/gui/backgroundQuestions.png);</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="generateFourVariantsButton">
+    <property name="geometry">
+     <rect>
+      <x>960</x>
+      <y>310</y>
+      <width>111</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/gui/generateFourAnswers.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="generateAnswerButton">
+    <property name="geometry">
+     <rect>
+      <x>960</x>
+      <y>480</y>
+      <width>111</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/gui/generateAnAnswer.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <zorder>frame</zorder>
+   <zorder>Answer</zorder>
+   <zorder>TimeRemaining</zorder>
+   <zorder>Question</zorder>
+   <zorder>gridLayoutWidget</zorder>
+   <zorder>generateFourVariantsButton</zorder>
+   <zorder>generateAnswerButton</zorder>
   </widget>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1474</width>
-     <height>22</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-  </widget>
-  <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="gui.qrc"/>
+ </resources>
  <connections/>
 </ui>
