@@ -26,6 +26,8 @@ private slots:
 	void on_Enter_clicked();
 	void on_TimeRemaining_Timeout();
 
+	void onFiftyFiftyButtonClicked();
+
 private:
 	void disableAllButtons();
 

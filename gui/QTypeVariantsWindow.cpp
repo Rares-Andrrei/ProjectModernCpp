@@ -34,7 +34,7 @@ QTypeVariantsWindow::QTypeVariantsWindow(QWidget* parent)
 		"  border-radius: 10px;"
 		"  image: url(:/images/handle.png);"
 		"}"
-		"QSlider::groove:horizontal { background: green; }");
+		"QSlider::groove:horizontal { background-color: rgb(42, 103, 174); }");
 
 	ui.VariantA->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	ui.VariantB->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -42,6 +42,9 @@ QTypeVariantsWindow::QTypeVariantsWindow(QWidget* parent)
 	ui.VariantD->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 	requestQuestion();
+
+	ui.fiftyFiftyAdvantajeButton->setToolTip("50-50 : this advantage eliminates 2 variants");
+	connect(ui.fiftyFiftyAdvantajeButton, SIGNAL(clicked()), SLOT(onFiftyFiftyButtonClicked()));
 }
 
 QTypeVariantsWindow::~QTypeVariantsWindow()
@@ -127,6 +130,19 @@ void QTypeVariantsWindow::on_TimeRemaining_Timeout()
 		m_timeRemaining->stop();
 		on_Enter_clicked();
 	}
+}
+
+void QTypeVariantsWindow::onFiftyFiftyButtonClicked()
+{
+	//trebuie vazut daca avantajul poate fi folosit
+	   //- daca jucatorul are destule puncte pentru a lua avantajul
+	   //- daca avantajul a mai fost sau nu folosit
+
+	delete ui.VariantC;
+	delete ui.VariantD;
+
+	ui.VariantA->setFixedSize(470, 170);
+	ui.VariantB->setFixedSize(470, 170);
 }
 
 void QTypeVariantsWindow::disableAllButtons()
