@@ -6,8 +6,8 @@
 #include <cstdlib>
 #include <Qtime>
 
+#include "PlayersInstance.h"
 #include "Map.h"
-
 #include "QTypeNumericWindow.h"
 #include "QTypeVariantsWindow.h"
 
@@ -31,6 +31,8 @@ public:
 
 	void StartGame();
 
+	void setPlayer(const std::shared_ptr<PlayerInstance>& player);
+
 private:
 	void chooseBasePhase();
 
@@ -46,6 +48,7 @@ private:
 
 private:
 	uint16_t m_numberOfPlayers;
+	std::shared_ptr<PlayerInstance>m_player;
 
 	Ui::TriviadorGameClass ui;
 	std::shared_ptr<QTypeNumericWindow> m_QTypeNumericWindow;

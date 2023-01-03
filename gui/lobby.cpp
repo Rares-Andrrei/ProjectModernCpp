@@ -59,6 +59,7 @@ void lobby::onTwoPlayersButtonClicked()
 		m_stopLoop = true;
 		Game.reset(new TriviadorGame(this));
 		Game->setNumberOfPlayers(2);
+		Game->setPlayer(std::make_shared<PlayerInstance>(Player));
 		Game->StartGame();
 	}
 	else if (resp == 200)

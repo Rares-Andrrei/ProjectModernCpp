@@ -1,6 +1,6 @@
 #include "Map.h"
 
-Map::Map(QWidget *parent)
+Map::Map(QWidget* parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
@@ -18,46 +18,136 @@ Map::Map(QWidget *parent)
 
 Map::~Map()
 {}
+void Map::setNumberOfInterractions(const int& numberOfInterractions)
+{
+	m_numberOfInterractions = numberOfInterractions;
+}
+void Map::setPlayer(const std::shared_ptr<PlayerInstance>& player)
+{
+	m_player = player;
+}
 void Map::onzona1Clicked()
 {
-	BattleWindow->show();
+	if (m_validateMove == true)
+	{
+		m_validateMove = false;
+		m_numberOfInterractions--;
+		ui.zona1->setAutoFillBackground(true);
+		ui.zona1->setPalette(QPalette(QColor(QString::fromStdString(ColorToString(m_player->getColor())))));
+	}
+	else {
+		QMessageBox::information(this, "Error", "You cann't move here");
+	}
 }
 void Map::onzona2Clicked()
 {
-	BattleWindow->show();
+	if (m_validateMove == true)
+	{
+		m_validateMove = false;
+		m_numberOfInterractions--;
+		ui.zona2->setAutoFillBackground(true);
+		ui.zona2->setPalette(QPalette(QColor(QString::fromStdString(ColorToString(m_player->getColor())))));
+	}
+	else {
+		QMessageBox::information(this, "Error", "You cann't move here");
+	}
 }
 
 void Map::onzona3Clicked()
 {
-	BattleWindow->show();
+	if (m_validateMove == true)
+	{
+		m_validateMove = false;
+		m_numberOfInterractions--;
+		ui.zona3->setAutoFillBackground(true);
+		ui.zona3->setPalette(QPalette(QColor(QString::fromStdString(ColorToString(m_player->getColor())))));
+	}
+	else {
+		QMessageBox::information(this, "Error", "You cann't move here");
+	}
 }
 
 void Map::onzona4Clicked()
 {
-	BattleWindow->show();
+	if (m_validateMove == true)
+	{
+		m_validateMove = false;
+		m_numberOfInterractions--;
+		ui.zona4->setAutoFillBackground(true);
+		ui.zona4->setPalette(QPalette(QColor(QString::fromStdString(ColorToString(m_player->getColor())))));
+	}
+	else {
+		QMessageBox::information(this, "Error", "You cann't move here");
+	}
 }
 
 void Map::onzona5Clicked()
 {
-	BattleWindow->show();
+	if (m_validateMove == true)
+	{
+		m_validateMove = false;
+		m_numberOfInterractions--;
+		ui.zona5->setAutoFillBackground(true);
+		ui.zona5->setPalette(QPalette(QColor(QString::fromStdString(ColorToString(m_player->getColor())))));
+	}
+	else {
+		QMessageBox::information(this, "Error", "You cann't move here");
+	}
 }
 
 void Map::onzona6Clicked()
 {
-	BattleWindow->show();
+	if (m_validateMove == true)
+	{
+		m_validateMove = false;
+		m_numberOfInterractions--;
+		ui.zona6->setAutoFillBackground(true);
+		ui.zona6->setPalette(QPalette(QColor(QString::fromStdString(ColorToString(m_player->getColor())))));
+	}
+	else {
+		QMessageBox::information(this, "Error", "You cann't move here");
+	}
 }
 
 void Map::onzona7Clicked()
 {
-	BattleWindow->show();
+	if (m_validateMove == true)
+	{
+		m_validateMove = false;
+		m_numberOfInterractions--;
+		ui.zona7->setAutoFillBackground(true);
+		ui.zona7->setPalette(QPalette(QColor(QString::fromStdString(ColorToString(m_player->getColor())))));
+	}
+	else {
+		QMessageBox::information(this, "Error", "You cann't move here");
+	}
 }
 
 void Map::onzona8Clicked()
 {
-	BattleWindow->show();
+	if (m_validateMove == true)
+	{
+		m_validateMove = false;
+		m_numberOfInterractions--;
+		ui.zona8->setAutoFillBackground(true);
+		ui.zona8->setPalette(QPalette(QColor(QString::fromStdString(ColorToString(m_player->getColor())))));
+	}
+	else {
+		QMessageBox::information(this, "Error", "You cann't move here");
+	}
 }
 
 void Map::onzona9Clicked()
 {
-	BattleWindow->show();
+	if (m_validateMove == true)
+	{
+		m_validateMove = false;
+		m_numberOfInterractions--;
+		ui.zona9->setAutoFillBackground(true);
+		ui.zona9->setPalette(QPalette(QColor(QString::fromStdString(ColorToString(m_player->getColor())))));
+	}
+	else {
+		QMessageBox::information(this, "Error", "You cann't move here");
+	}
 }
+

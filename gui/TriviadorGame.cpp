@@ -49,6 +49,11 @@ void TriviadorGame::StartGame()
 	//EndGame();
 }
 
+void TriviadorGame::setPlayer(const std::shared_ptr<PlayerInstance>& player)
+{
+	m_player = player;
+}
+
 void TriviadorGame::chooseBasePhase()
 {
 	// Request :: intrebare numerica
@@ -56,6 +61,7 @@ void TriviadorGame::chooseBasePhase()
 	// GUI :: deschidere fereastra cu intrebarea numerica
 	// fereastra va contine si butoane pentru a introduce un raspuns , care va fi trimis catre server pentru a crea ordinea
 	m_QTypeNumericWindow = std::make_shared<QTypeNumericWindow>(new QTypeNumericWindow());
+	m_QTypeNumericWindow->setPlayer(m_player);
 	m_QTypeNumericWindow->show();
 
 	QTimer* timer = new QTimer(this);
@@ -169,6 +175,8 @@ void TriviadorGame::checkNumericWindowClosed()
 {
 	if (!m_QTypeNumericWindow->isVisible())
 	{
+		MapWindow->setNumberOfInterractions(2);
+		MapWindow->setPlayer(m_player);
 		MapWindow->show();
 	}
 }
