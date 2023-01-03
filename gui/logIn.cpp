@@ -62,7 +62,7 @@ void logIn::onEnterButtonClicked()
 		QMessageBox::information(this, "Failure", "Incorrect password");
 		return;
 	case CredentialErrors::Valid:
-		QMessageBox::information(this, "Success", "Account was found");
+		//QMessageBox::information(this, "Success", "Account was found");
 		QApplication::closeAllWindows();
 		lobbyWindow->show();
 		break;

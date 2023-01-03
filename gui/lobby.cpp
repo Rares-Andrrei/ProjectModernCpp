@@ -5,7 +5,6 @@ lobby::lobby(Route& route, QWidget* parent)
 	: m_routes(route), QMainWindow(parent)
 {
 	ui.setupUi(this);
-	Game.reset(new TriviadorGame(this));
 
 	ui.twoPlayersButton->setStyleSheet("QPushButton { background-image:url(:/gui/twoPlayers.png); text-align: left, up; border-radius: 5px; }");
 	ui.threePlayersButton->setStyleSheet("QPushButton { background-image:url(:/gui/threePlayers.png); text-align: left, up; border-radius: 5px; }");
@@ -42,6 +41,7 @@ lobby::~lobby()
 }
 void lobby::onTwoPlayersButtonClicked()
 {
+	ui.lobbyGameModes->setCurrentIndex(1);
 	QTimer timer;
 	m_stopLoop = false;
 	QPushButton* button = ui.twoPlayersButton;
@@ -53,8 +53,13 @@ void lobby::onTwoPlayersButtonClicked()
 
 	if (resp == 201)
 	{
+		this->hide();
 		//Queue message 
-		ui.lobbyGameModes->setCurrentIndex(1);
+		//temporarly for testing 
+		m_stopLoop = true;
+		Game.reset(new TriviadorGame(this));
+		Game->setNumberOfPlayers(2);
+		Game->StartGame();
 	}
 	else if (resp == 200)
 	{
@@ -78,7 +83,7 @@ void lobby::onTwoPlayersButtonClicked()
 		QCoreApplication::processEvents();
 		QThread::msleep(100);
 	}
-	QThread::msleep(5000);
+	QThread::msleep(100);
 }
 
 void lobby::onThreePlayersButtonClicked()

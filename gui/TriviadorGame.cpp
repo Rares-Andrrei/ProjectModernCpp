@@ -5,7 +5,6 @@ TriviadorGame::TriviadorGame(QWidget* parent)
 {
 	ui.setupUi(this);
 	MapWindow.reset(new Map());
-
 }
 
 TriviadorGame::~TriviadorGame()
