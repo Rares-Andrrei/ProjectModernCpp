@@ -7,6 +7,8 @@
 #include <cstdlib>
 #include <Qtime>
 
+#include "QTypeNumericWindow.h"
+
 class TriviadorGame : public QMainWindow
 {
 	Q_OBJECT

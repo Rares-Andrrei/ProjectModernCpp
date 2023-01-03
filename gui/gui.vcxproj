@@ -96,6 +96,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="PlayersInstance.cpp" />
     <ClCompile Include="QTypeNumericWindow.cpp" />
+    <ClCompile Include="QTypeVariantsWindow.cpp" />
     <ClCompile Include="Route.cpp" />
     <ClCompile Include="signUp.cpp" />
     <ClCompile Include="TriviadorGame.cpp" />
@@ -110,6 +111,7 @@
     <QtUic Include="logIn.ui" />
     <QtUic Include="Map.ui" />
     <QtUic Include="QTypeNumericWindow.ui" />
+    <QtUic Include="QTypeVariantsWindow.ui" />
     <QtUic Include="signUp.ui" />
     <QtUic Include="TriviadorGame.ui" />
   </ItemGroup>
@@ -133,6 +135,7 @@
     <ClInclude Include="CredentialErrors.h" />
     <ClInclude Include="PlayersInstance.h" />
     <QtMoc Include="QTypeNumericWindow.h" />
+    <QtMoc Include="QTypeVariantsWindow.h" />
     <ClInclude Include="Route.h" />
     <QtMoc Include="TriviadorGame.h" />
   </ItemGroup>

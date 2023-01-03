@@ -36,7 +36,8 @@ void logIn::onShowPasswordButtonChecked()
 	else
 		ui.l_password->setEchoMode(QLineEdit::Password);
 }
-
+#include "QTypeNumericWindow.h"
+#include "QTypeVariantsWindow.h"
 void logIn::onEnterButtonClicked()
 {
 	QString username = ui.l_username->text();
@@ -69,4 +70,5 @@ void logIn::onEnterButtonClicked()
 		QMessageBox::information(this, "Failure", "An unknown error has occured");
 		break;
 	}
+
 }
