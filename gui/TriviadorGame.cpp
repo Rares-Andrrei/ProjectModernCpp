@@ -5,6 +5,7 @@ TriviadorGame::TriviadorGame(QWidget* parent)
 {
 	ui.setupUi(this);
 	MapWindow.reset(new Map(this));
+	m_NumericWindowTimer = std::make_unique<QTimer>();
 }
 
 TriviadorGame::~TriviadorGame()
@@ -64,10 +65,10 @@ void TriviadorGame::chooseBasePhase()
 	m_QTypeNumericWindow->setPlayer(m_player);
 	m_QTypeNumericWindow->show();
 
-	QTimer* timer = new QTimer(this);
-	timer->setInterval(500);
-	QObject::connect(timer, &QTimer::timeout, this, &TriviadorGame::checkNumericWindowClosed);
-	timer->start();
+	
+	m_NumericWindowTimer->setInterval(500);
+	QObject::connect(m_NumericWindowTimer.get(), &QTimer::timeout, this, &TriviadorGame::checkNumericWindowClosed);
+	m_NumericWindowTimer->start();
 	// GUI :: inchidere fereastra cu intrebarea numerica
 
 	// GUI :: deschidere fereastra cu harta
@@ -175,6 +176,7 @@ void TriviadorGame::checkNumericWindowClosed()
 {
 	if (!m_QTypeNumericWindow->isVisible())
 	{
+		m_NumericWindowTimer->stop();
 		MapWindow->setNumberOfInterractions(2);
 		MapWindow->setPlayer(m_player);
 		MapWindow->show();

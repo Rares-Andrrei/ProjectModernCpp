@@ -50,6 +50,7 @@ private:
 	uint16_t m_numberOfPlayers;
 	std::shared_ptr<PlayerInstance>m_player;
 
+	std::unique_ptr<QTimer> m_NumericWindowTimer;
 	Ui::TriviadorGameClass ui;
 	std::shared_ptr<QTypeNumericWindow> m_QTypeNumericWindow;
 	std::shared_ptr<QTypeVariantsWindow> m_QTypeVariantsWindow;
