@@ -114,6 +114,7 @@ void QTypeVariantsWindow::on_Enter_clicked()
 	if (variant == "")
 		variant = "NULL"; // daca nu a ales un raspuns in timp util , este declarat ca fiind gresit
 	// REQUEST :: send the response  provided to the server + the time 
+	this->close();
 }
 
 void QTypeVariantsWindow::on_TimeRemaining_Timeout()

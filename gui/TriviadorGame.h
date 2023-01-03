@@ -3,11 +3,13 @@
 #include <QMainWindow>
 #include <memory>
 #include "ui_TriviadorGame.h"
-#include "Map.h"
 #include <cstdlib>
 #include <Qtime>
 
+#include "Map.h"
+
 #include "QTypeNumericWindow.h"
+#include "QTypeVariantsWindow.h"
 
 class TriviadorGame : public QMainWindow
 {
@@ -40,9 +42,13 @@ private:
 
 	void displayPodium();
 
+	void checkNumericWindowClosed();
+
 private:
 	uint16_t m_numberOfPlayers;
 
 	Ui::TriviadorGameClass ui;
+	std::shared_ptr<QTypeNumericWindow> m_QTypeNumericWindow;
+	std::shared_ptr<QTypeVariantsWindow> m_QTypeVariantsWindow;
 	std::unique_ptr<Map> MapWindow;
 };

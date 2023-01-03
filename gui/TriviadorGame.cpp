@@ -4,7 +4,7 @@ TriviadorGame::TriviadorGame(QWidget* parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
-	MapWindow.reset(new Map());
+	MapWindow.reset(new Map(this));
 }
 
 TriviadorGame::~TriviadorGame()
@@ -39,14 +39,14 @@ void TriviadorGame::StartGame()
 	displayLoadingMessage(/*timer*/); // de discutat timpul de incarcare necesar
 	chooseBasePhase();
 
-	displayLoadingMessage(/*timer*/); // de discutat timpul de incarcare necesar
-	chooseRegionsPhase();
+	//displayLoadingMessage(/*timer*/); // de discutat timpul de incarcare necesar
+	//chooseRegionsPhase();
 
-	displayLoadingMessage(/*timer*/); // de discutat timpul de incarcare necesar
-	duelsPhase();
+	//displayLoadingMessage(/*timer*/); // de discutat timpul de incarcare necesar
+	//duelsPhase();
 
-	displayLoadingMessage(/*timer*/); // de discutat timpul de incarcare necesar
-	EndGame();
+	//displayLoadingMessage(/*timer*/); // de discutat timpul de incarcare necesar
+	//EndGame();
 }
 
 void TriviadorGame::chooseBasePhase()
@@ -55,10 +55,17 @@ void TriviadorGame::chooseBasePhase()
 
 	// GUI :: deschidere fereastra cu intrebarea numerica
 	// fereastra va contine si butoane pentru a introduce un raspuns , care va fi trimis catre server pentru a crea ordinea
+	m_QTypeNumericWindow = std::make_shared<QTypeNumericWindow>(new QTypeNumericWindow());
+	m_QTypeNumericWindow->show();
+
+	QTimer* timer = new QTimer(this);
+	timer->setInterval(500);
+	QObject::connect(timer, &QTimer::timeout, this, &TriviadorGame::checkNumericWindowClosed);
+	timer->start();
 	// GUI :: inchidere fereastra cu intrebarea numerica
 
 	// GUI :: deschidere fereastra cu harta
-	MapWindow->show(); // clientul va trebui sa aibe access la butoane doar atunci cand primeste un raspuns pozitiv de la server
+	//MapWindow->show(); // clientul va trebui sa aibe access la butoane doar atunci cand primeste un raspuns pozitiv de la server
 	// GUI :: inchidere fereastra cu harta
 }
 
@@ -156,4 +163,12 @@ void TriviadorGame::displayPodium()
 	// GUI :: deschidere fereastra cu podiumul
 	// GUI :: fereastra primeste un vector de jucatori si scoruri pe care ii va afisa 
 	// GUI :: inchidere fereastra cu podiumul
+}
+
+void TriviadorGame::checkNumericWindowClosed()
+{
+	if (!m_QTypeNumericWindow->isVisible())
+	{
+		MapWindow->show();
+	}
 }

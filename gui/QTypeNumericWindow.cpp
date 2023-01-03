@@ -128,6 +128,7 @@ void QTypeNumericWindow::on_Enter_clicked()
 	ui.TimeRemaining->setEnabled(false);
 	int value = ui.TimeRemaining->value();
 	// Request :: send the response  provided to the server
+	this->close();
 }
 
 void QTypeNumericWindow::on_Delete_pressed()
@@ -157,6 +158,7 @@ void QTypeNumericWindow::on_TimeRemaining_Timeout()
 	}
 	else {
 		m_TimeRemaining->stop();
+		on_Enter_clicked();
 		// REQUEST :: send the response  provided to the server
 	}
 }
