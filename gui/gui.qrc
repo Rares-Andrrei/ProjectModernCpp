@@ -8,5 +8,7 @@
         <file>threePlayers.png</file>
         <file>twoPlayers.png</file>
         <file>fourPlayers.png</file>
+        <file>backgroundQuestions.png</file>
+        <file>fiftyFifty.png</file>
     </qresource>
 </RCC>
