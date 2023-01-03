@@ -2,6 +2,32 @@
 #include <cpr/cpr.h>
 #include <iostream>
 #include <sstream>
+
+std::string Route::getSessionKey()
+{
+	return m_sessionKey;
+}
+
+bool Route::leaveLobby()
+{
+	auto response = cpr::Put(
+		cpr::Url{ "http://localhost:18080/eliminatePlayerFromQueue" },
+		cpr::Payload{
+			{ "sessionKey", m_sessionKey}
+		});
+	return response.status_code == 200;
+}
+
+int Route::enterTwoPlayersLobby()
+{
+	auto response = cpr::Put(
+		cpr::Url{ "http://localhost:18080/queueTwoPlayerGame" },
+		cpr::Payload{
+			{ "sessionKey", m_sessionKey}
+		});
+	return response.status_code;
+}
+
 CredentialErrors Route::login(std::string username, std::string password)
 {
 	auto response = cpr::Post(
@@ -14,22 +40,18 @@ CredentialErrors Route::login(std::string username, std::string password)
 	std::stringstream s(std::string(1, response.text[0]));
 	int resp;
 	s >> resp;
-	if (resp == static_cast<int>(CredentialErrors::IncorrectAccount))
+
+	switch (resp)
 	{
+	case static_cast<int>(CredentialErrors::IncorrectAccount):
 		return CredentialErrors::IncorrectAccount;
-	}
-	else if (resp == static_cast<int>(CredentialErrors::IncorrectPassword))
-	{
+	case static_cast<int>(CredentialErrors::IncorrectPassword):
 		return CredentialErrors::IncorrectPassword;
-	}
-	else if (resp == static_cast<int>(CredentialErrors::Valid))
-	{
+	case static_cast<int>(CredentialErrors::Valid):
 		response.text.erase(response.text.begin());
 		m_sessionKey = response.text;
 		return CredentialErrors::Valid;
-	}
-	else
-	{
+	default:
 		return CredentialErrors::Other;
 	}
 }
@@ -47,32 +69,39 @@ CredentialErrors Route::signUp(std::string username, std::string password, std::
 	std::stringstream s(response.text);
 	int resp;
 	s >> resp;
-	if (resp == static_cast<int>(CredentialErrors::NameSize))
+
+	switch (resp)
 	{
+	case static_cast<int>(CredentialErrors::NameSize):
 		return CredentialErrors::NameSize;
-	}
-	else if (resp == static_cast<int>(CredentialErrors::UsernameSize))
-	{
+	case static_cast<int>(CredentialErrors::UsernameSize):
 		return CredentialErrors::UsernameSize;
-	}
-	else if (resp == static_cast<int>(CredentialErrors::PasswordSize))
-	{
+	case static_cast<int>(CredentialErrors::PasswordSize):
 		return CredentialErrors::PasswordSize;
-	}
-	else if (resp == static_cast<int>(CredentialErrors::UserTaken))
-	{
+	case static_cast<int>(CredentialErrors::UserTaken):
 		return CredentialErrors::UserTaken;
-	}
-	else if (resp == static_cast<int>(CredentialErrors::NameTaken))
-	{
+	case static_cast<int>(CredentialErrors::NameTaken):
 		return CredentialErrors::NameTaken;
-	}
-	else if(resp == static_cast<int>(CredentialErrors::Valid))
-	{
+	case static_cast<int>(CredentialErrors::Valid):
 		return CredentialErrors::Valid;
-	}
-	else
-	{
+
+	default:
 		return CredentialErrors::Other;
+	}
+}
+
+bool Route::logOut()
+{
+	auto response = cpr::Put(
+		cpr::Url{ "http://localhost:18080/logOut" },
+		cpr::Payload{
+			{ "sessionKey", m_sessionKey}
+		}
+	);
+	if (response.status_code == 200 || response.status_code == 202) {
+		return true;
+	}
+	else {
+		return false;
 	}
 }

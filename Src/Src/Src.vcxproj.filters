@@ -108,7 +108,8 @@
     <ClCompile Include="GameplayFile\GameLogic.cpp" />
     <ClCompile Include="ManualTests.cpp" />
     <ClCompile Include="Route.cpp" />
-    <ClCompile Include="ActivePlayers.cpp" />
+    <ClCompile Include="Players.cpp" />
+    <ClCompile Include="Lobby.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdvantagesFile\Advantages.h">
@@ -171,7 +172,8 @@
       <Filter>DatabaseFiles\Header</Filter>
     </ClInclude>
     <ClInclude Include="Route.h" />
-    <ClInclude Include="ActivePlayers.h" />
+    <ClInclude Include="Players.h" />
+    <ClInclude Include="Lobby.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="QTypeNumerical.txt">

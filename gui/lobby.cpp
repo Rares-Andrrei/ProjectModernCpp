@@ -1,16 +1,26 @@
 #include "lobby.h"
+#include <QMovie>
 
-lobby::lobby(QWidget* parent)
-	: QMainWindow(parent)
+lobby::lobby(Route& route, QWidget* parent)
+	: m_routes(route), QMainWindow(parent)
 {
 	ui.setupUi(this);
 	Game.reset(new TriviadorGame(this));
 
-	ui.twoPlayersButton->setStyleSheet("background-image:url(:/gui/twoPlayers.png)");
-	ui.threePlayersButton->setStyleSheet("background-image:url(:/gui/threePlayers.png)");
-	ui.fourPlayersButton->setStyleSheet("background-image:url(:/gui/fourPlayers.png)");
+	ui.twoPlayersButton->setStyleSheet("QPushButton { background-image:url(:/gui/twoPlayers.png); text-align: left, up; border-radius: 5px; }");
+	ui.threePlayersButton->setStyleSheet("QPushButton { background-image:url(:/gui/threePlayers.png); text-align: left, up; border-radius: 5px; }");
+	ui.fourPlayersButton->setStyleSheet("QPushButton { background-image:url(:/gui/fourPlayers.png); text-align: left, up; border-radius: 5px; }");
 
-	connect(ui.twoPlayersButton, SIGNAL(clicked()), SLOT(ontwoPlayersButtonClicked()));
+	QMovie* movie = new QMovie(":/gui/32x32.gif");
+	ui.loadingLabel->setMovie(movie);
+	ui.loadingLabel->show();
+	movie->start();
+
+	connect(ui.twoPlayersButton, SIGNAL(clicked()), SLOT(onTwoPlayersButtonClicked()));
+	connect(ui.threePlayersButton, SIGNAL(clicked()), SLOT(onThreePlayersButtonClicked()));
+	connect(ui.fourPlayersButton, SIGNAL(clicked()), SLOT(onFourPlayersButtonClicked()));
+
+	connect(ui.cancelButton, SIGNAL(clicked()), SLOT(onCancelButtonClicked()));
 }
 
 void lobby::setPlayer(PlayerInstance player)
@@ -20,49 +30,36 @@ void lobby::setPlayer(PlayerInstance player)
 
 lobby::~lobby()
 {
-	// TD : de mutat intr-o functie separata
-	auto response = cpr::Put(
-		cpr::Url{ "http://localhost:18080/logout" },
-		cpr::Payload{
-			{ "username", Player.getFirstName()},
-		}
-	);
-
-	if (response.status_code == 200 || response.status_code == 202) {
+	m_routes.leaveLobby();
+	if (m_routes.logOut())
+	{
 		QMessageBox::information(this, "Logout", "U have been logged out");
-
-
 		QApplication::closeAllWindows();
 	}
-	else {
+	else{
 		QMessageBox::information(this, "Failure", "The logout failed");
 	}
 }
-void lobby::ontwoPlayersButtonClicked()
+void lobby::onTwoPlayersButtonClicked()
 {
 	QTimer timer;
-
-	bool stopLoop = false;
+	m_stopLoop = false;
 	QPushButton* button = ui.twoPlayersButton;
 	button->setEnabled(false);
 
 	QObject::connect(&timer, &QTimer::timeout, [&]()
 		{
-			// TD : de mutat ruta intr-o functei separata 
-			auto response = cpr::Put(
-				cpr::Url{ "http://localhost:18080/queueTwoPlayerGame" },
-				cpr::Payload{
-					{ "username", Player.getFirstName()}
-				});
+			int resp = m_routes.enterTwoPlayersLobby();
 
-	if (response.status_code == 201)
+	if (resp == 201)
 	{
 		//Queue message 
+		ui.lobbyGameModes->setCurrentIndex(1);
 	}
-	else if (response.status_code == 200)
+	else if (resp == 200)
 	{
 		// Game found message
-		stopLoop = true;
+		m_stopLoop = true;
 		Game->setNumberOfPlayers(2);
 		Game->show();
 		this->hide();
@@ -70,27 +67,45 @@ void lobby::ontwoPlayersButtonClicked()
 	else
 	{
 		QMessageBox::information(this, "queue", "The queue failed");
-		stopLoop = true;
+		m_stopLoop = true;
 	}
 		});
 
 	timer.start(3000);
 
-	while (!stopLoop)
+	while (!m_stopLoop)
 	{
 		QCoreApplication::processEvents();
 		QThread::msleep(100);
 	}
 	QThread::msleep(5000);
-	auto response = cpr::Put(
-		cpr::Url{ "http://localhost:18080/eliminatePlayerFromQueue" },
-		cpr::Payload{
-			{ "username", Player.getFirstName()}
-		});
+}
+
+void lobby::onThreePlayersButtonClicked()
+{
+	ui.lobbyGameModes->setCurrentIndex(1);
+
+}
+
+void lobby::onFourPlayersButtonClicked()
+{
+	ui.lobbyGameModes->setCurrentIndex(1);
+
+}
+
+void lobby::onCancelButtonClicked()
+{
+	ui.lobbyGameModes->setCurrentIndex(0);
+	QPushButton* button = ui.twoPlayersButton;
 	button->setEnabled(true);
 	button->show();
-	if (response.status_code != 200)
+	m_stopLoop = true;
+	if (m_routes.leaveLobby())
 	{
-		QMessageBox::information(this, "queue", "The queue failed");
+		QMessageBox::information(this, "queue", "You left the queue");
+	}
+	else
+	{
+		QMessageBox::information(this, "queue", "Error leaving the queue");
 	}
 }

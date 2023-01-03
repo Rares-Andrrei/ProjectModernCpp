@@ -9,7 +9,7 @@ logIn::logIn(Route& routes, QWidget* parent)
 	: m_routes{ routes }, QMainWindow(parent)
 {
 	ui.setupUi(this);
-	lobbyWindow.reset(new lobby());
+	lobbyWindow.reset(new lobby(m_routes));
 
 	ui.l_password->setEchoMode(QLineEdit::Password);
 
@@ -52,26 +52,21 @@ void logIn::onEnterButtonClicked()
 		return;
 	}
 	CredentialErrors check = m_routes.login(usernameString, passwordString);
-	if (check == CredentialErrors::IncorrectAccount)
+	switch (check)
 	{
+	case CredentialErrors::IncorrectAccount:
 		QMessageBox::information(this, "Failure", "Account was not found");
 		return;
-	}
-	else if (check == CredentialErrors::IncorrectPassword)
-	{
+	case CredentialErrors::IncorrectPassword:
 		QMessageBox::information(this, "Failure", "Incorrect password");
 		return;
-	}
-	else if (check == CredentialErrors::Valid)
-	{
-		QMessageBox::information(this,"Success", "Account was found");
+	case CredentialErrors::Valid:
+		QMessageBox::information(this, "Success", "Account was found");
 		QApplication::closeAllWindows();
 		lobbyWindow->show();
+		break;
+	default:
+		QMessageBox::information(this, "Failure", "An unknown error has occured");
+		break;
 	}
-	else
-	{
-		QMessageBox::information(this, "Failure", "An unknown error occured");
-		return;
-	}
-
 }

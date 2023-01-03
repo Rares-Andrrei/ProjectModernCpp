@@ -15,15 +15,19 @@
 #include <chrono>
 
 #include "Route.h"
-
+#include "Players.h"
 
 
 void useRoutes()
 {
 	Database db("file.db");
-	Route r(db);
+	std::shared_ptr<Players> playerList = std::make_shared<Players>();
+	Route r(db, playerList);
 	r.loginRoute();
 	r.signUpRoute();
+	r.enterTwoPlayersLobby();
+	r.exitTwoPlayersLobby();
+	r.logOutRoute();
 	r.startApp();
 }
 

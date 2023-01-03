@@ -71,39 +71,28 @@ void signUp::onEnterButtonClicked()
 		return;
 	}
 	CredentialErrors check = m_routes.signUp(usernameString, passwordString, nicknameString);
-	if (check == CredentialErrors::NameSize)
+	switch(check)
 	{
+	case CredentialErrors::NameSize:
 		QMessageBox::about(this, "Name size error", "Your name must containt at least 6 caracters");
 		return;
-	}
-	else if (check == CredentialErrors::UsernameSize)
-	{
+	case CredentialErrors::UsernameSize:
 		QMessageBox::about(this, "Username size error", "Your Username must containt at least 6 caracters");
 		return;
-	}
-	else if (check == CredentialErrors::PasswordSize)
-	{
+	case CredentialErrors::PasswordSize:
 		QMessageBox::about(this, "Passwor size error", "Your Password must containt at least 6 caracters");
 		return;
-	}
-	else if (check == CredentialErrors::UserTaken)
-	{
+	case CredentialErrors::UserTaken:
 		QMessageBox::about(this, "Username error", "This Username is already taken");
 		return;
-	}
-	else if (check == CredentialErrors::NameTaken)
-	{
+	case CredentialErrors::NameTaken:
 		QMessageBox::about(this, "Name error", "This name is already taken");
 		return;
-	}
-	else if ((check == CredentialErrors::Valid))
-	{
+	case CredentialErrors::Valid:
 		QMessageBox::about(this, "Success", "Account was registered");
 		return;
-	}
-	else
-	{
-		QMessageBox::information(this, "Failure", "An unknown error occured");
+	default:
+		QMessageBox::information(this, "Failure", "An unknown error has occured");
 		return;
 	}
 }
