@@ -99,6 +99,9 @@
       <height>111</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(128, 162, 201);</string>
+    </property>
     <property name="text">
      <string>TextLabel</string>
     </property>

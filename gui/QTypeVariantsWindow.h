@@ -29,8 +29,13 @@ private slots:
 	void onFiftyFiftyButtonClicked();
 
 private:
-	void disableAllButtons();
+	void buttonsConnections();
+	void createTimeSlider();
+	void createAnswerVariants();
+	void advantageButtonEnabled();
 
+	void disableAllButtons();
+	
 	QPushButton* m_Variant = nullptr;
 	QTimer* m_timeRemaining;
 	QString variant = "";

@@ -1,16 +1,20 @@
 #include "QTypeVariantsWindow.h"
 
-QTypeVariantsWindow::QTypeVariantsWindow(QWidget* parent)
-	: QMainWindow(parent)
+void QTypeVariantsWindow::buttonsConnections()
 {
-	ui.setupUi(this);
 	m_timeRemaining = new QTimer(this);
+
 	connect(m_timeRemaining, &QTimer::timeout, this, &QTypeVariantsWindow::on_TimeRemaining_Timeout);
 	connect(ui.VariantA, &QPushButton::clicked, this, &QTypeVariantsWindow::on_Variant1_clicked);
 	connect(ui.VariantB, &QPushButton::clicked, this, &QTypeVariantsWindow::on_Variant2_clicked);
 	connect(ui.VariantC, &QPushButton::clicked, this, &QTypeVariantsWindow::on_Variant3_clicked);
 	connect(ui.VariantD, &QPushButton::clicked, this, &QTypeVariantsWindow::on_Variant4_clicked);
 
+	connect(ui.fiftyFiftyAdvantajeButton, SIGNAL(clicked()), SLOT(onFiftyFiftyButtonClicked()));
+}
+
+void QTypeVariantsWindow::createTimeSlider()
+{
 	ui.TimeSlider->setRange(0, 3000);
 	ui.TimeSlider->setValue(0);
 	ui.TimeSlider->setStyleSheet("QSlider {"
@@ -35,16 +39,36 @@ QTypeVariantsWindow::QTypeVariantsWindow(QWidget* parent)
 		"  image: url(:/images/handle.png);"
 		"}"
 		"QSlider::groove:horizontal { background-color: rgb(42, 103, 174); }");
+}
 
+void QTypeVariantsWindow::createAnswerVariants()
+{
 	ui.VariantA->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	ui.VariantB->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	ui.VariantC->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	ui.VariantD->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 	requestQuestion();
+}
 
-	ui.fiftyFiftyAdvantajeButton->setToolTip("50-50 : this advantage eliminates 2 variants");
-	connect(ui.fiftyFiftyAdvantajeButton, SIGNAL(clicked()), SLOT(onFiftyFiftyButtonClicked()));
+void QTypeVariantsWindow::advantageButtonEnabled()
+{
+	//daca avantajul a fost deja apasat o data sa dispara
+	/*if (1 == 1)
+		delete ui.fiftyFiftyAdvantajeButton;
+	else*/
+		ui.fiftyFiftyAdvantajeButton->setToolTip("50-50 : this advantage eliminates 2 variants");
+}
+
+QTypeVariantsWindow::QTypeVariantsWindow(QWidget* parent)
+	: QMainWindow(parent)
+{
+	ui.setupUi(this);
+
+	buttonsConnections();
+	createTimeSlider();
+	createAnswerVariants();
+	advantageButtonEnabled();
 }
 
 QTypeVariantsWindow::~QTypeVariantsWindow()
@@ -143,7 +167,11 @@ void QTypeVariantsWindow::onFiftyFiftyButtonClicked()
 
 	ui.VariantA->setFixedSize(470, 170);
 	ui.VariantB->setFixedSize(470, 170);
+
+	//dupa ce a fost folosit avantajul sa dispara
+	delete ui.fiftyFiftyAdvantajeButton;
 }
+
 
 void QTypeVariantsWindow::disableAllButtons()
 {

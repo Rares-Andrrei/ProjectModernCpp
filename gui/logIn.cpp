@@ -69,7 +69,8 @@ void logIn::onEnterButtonClicked()
 		QApplication::closeAllWindows();
 		QTypeNumericWindow* NumericalWindow = new QTypeNumericWindow(this);
 		QTypeVariantsWindow* VariantsWindow = new QTypeVariantsWindow(this);
-		VariantsWindow->show();
+		//VariantsWindow->show();
+		NumericalWindow->show();
 		//lobbyWindow->show();
 	}
 	else
