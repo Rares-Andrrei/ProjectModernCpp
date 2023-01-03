@@ -71,6 +71,11 @@ void QTypeNumericWindow::requestQuestion()
 	// Request :: ask the server fro a random question 
 }
 
+void QTypeNumericWindow::setPlayer(const std::shared_ptr<PlayerInstance>& player)
+{
+	m_player = player;
+}
+
 void QTypeNumericWindow::showEvent(QShowEvent* event)
 {
 	m_TimeRemaining->start(10);
