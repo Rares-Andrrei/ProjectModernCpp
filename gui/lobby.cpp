@@ -15,7 +15,6 @@ lobby::lobby(Route& route, QWidget* parent)
 	ui.loadingLabel->setMovie(movie);
 	ui.loadingLabel->show();
 	movie->start();
-
 	connect(ui.twoPlayersButton, SIGNAL(clicked()), SLOT(onTwoPlayersButtonClicked()));
 	connect(ui.threePlayersButton, SIGNAL(clicked()), SLOT(onThreePlayersButtonClicked()));
 	connect(ui.fourPlayersButton, SIGNAL(clicked()), SLOT(onFourPlayersButtonClicked()));
@@ -23,10 +22,6 @@ lobby::lobby(Route& route, QWidget* parent)
 	connect(ui.cancelButton, SIGNAL(clicked()), SLOT(onCancelButtonClicked()));
 }
 
-void lobby::setPlayer(PlayerInstance player)
-{
-	this->Player = player;
-}
 
 lobby::~lobby()
 {
@@ -42,54 +37,75 @@ lobby::~lobby()
 }
 void lobby::onTwoPlayersButtonClicked()
 {
-	QTimer timer;
-	m_stopLoop = false;
-	QPushButton* button = ui.twoPlayersButton;
-	button->setEnabled(false);
 
-	QObject::connect(&timer, &QTimer::timeout, [&]()
-		{
-			int resp = m_routes.enterTwoPlayersLobby();
+	//QTimer timer;
+	//QPushButton* button = ui.twoPlayersButton;
+	//button->setEnabled(false);
+	//QObject::connect(&timer, &QTimer::timeout, [&]()
+	//	{
+	//		int resp = m_routes.enterTwoPlayersLobby();
 
-	if (resp == 201)
+	//if (resp == 201)
+	//{
+	//	//Queue message 
+	//	ui.lobbyGameModes->setCurrentIndex(1);
+	//}
+	//else if (resp == 200)
+	//{
+	//	// Game found message
+	//	m_stopLoop = true;
+	//	Game->setNumberOfPlayers(2);
+	//	Game->show();
+	//	this->hide();
+	//}
+	//else
+	//{
+	//	QMessageBox::information(this, "queue", "The queue failed");
+	//	m_stopLoop = true;
+	//}
+	//	});
+
+	//timer.start(3000);
+
+	//while (!m_stopLoop)
+	//{
+	//	QCoreApplication::processEvents();
+	//	QThread::msleep(100);
+	//}
+	//QThread::msleep(5000);
+
+	ui.lobbyGameModes->setCurrentIndex(1);
+	m_routes.enterLobby(2, m_players);
+	if (m_players.size() > 0)
 	{
-		//Queue message 
-		ui.lobbyGameModes->setCurrentIndex(1);
-	}
-	else if (resp == 200)
-	{
-		// Game found message
-		m_stopLoop = true;
 		Game->setNumberOfPlayers(2);
 		Game->show();
 		this->hide();
 	}
-	else
-	{
-		QMessageBox::information(this, "queue", "The queue failed");
-		m_stopLoop = true;
-	}
-		});
-
-	timer.start(3000);
-
-	while (!m_stopLoop)
-	{
-		QCoreApplication::processEvents();
-		QThread::msleep(100);
-	}
-	QThread::msleep(5000);
 }
 
 void lobby::onThreePlayersButtonClicked()
 {
 	ui.lobbyGameModes->setCurrentIndex(1);
-
+	m_routes.enterLobby(3, m_players);
+	if (m_players.size() > 0)
+	{
+		Game->setNumberOfPlayers(3);
+		Game->show();
+		this->hide();
+	}
 }
 
 void lobby::onFourPlayersButtonClicked()
 {
 	ui.lobbyGameModes->setCurrentIndex(1);
+	m_routes.enterLobby(4, m_players);
+	if (m_players.size() > 0)
+	{
+		Game->setNumberOfPlayers(4);
+		Game->show();
+		this->hide();
+	}
 
 }
 
