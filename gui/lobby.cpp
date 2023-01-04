@@ -22,9 +22,10 @@ lobby::lobby(Route& route, QWidget* parent)
 	connect(ui.cancelButton, SIGNAL(clicked()), SLOT(onCancelButtonClicked()));
 }
 
-void lobby::setPlayer(const std::shared_ptr<Player>& play)
+void lobby::setPlayer(const std::shared_ptr<PlayerQString>& play)
 {
-	this->m_Player = play;
+	auto val = play->getName();
+	this->m_Player = std::make_shared<PlayerQString>(val);
 }
 
 lobby::~lobby()

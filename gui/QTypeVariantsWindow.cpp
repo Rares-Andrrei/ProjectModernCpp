@@ -63,7 +63,7 @@ void QTypeVariantsWindow::requestQuestion()
 	ui.VariantD->setText("D");
 }
 
-void QTypeVariantsWindow::setPlayer(const std::shared_ptr<Player>& player)
+void QTypeVariantsWindow::setPlayer(const std::shared_ptr<PlayerQString>& player)
 {
 	m_player = player;
 }

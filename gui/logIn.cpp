@@ -1,9 +1,5 @@
 #include "logIn.h"
-#include <cpr/cpr.h>
-#include <crow.h>
-#include "CredentialErrors.h"
-#include "Route.h"
-#include <string>
+
 
 logIn::logIn(Route& routes, QWidget* parent)
 	: m_routes{ routes }, QMainWindow(parent)
@@ -36,8 +32,7 @@ void logIn::onShowPasswordButtonChecked()
 	else
 		ui.l_password->setEchoMode(QLineEdit::Password);
 }
-#include "QTypeNumericWindow.h"
-#include "QTypeVariantsWindow.h"
+
 void logIn::onEnterButtonClicked()
 {
 	QString username = ui.l_username->text();
@@ -64,6 +59,7 @@ void logIn::onEnterButtonClicked()
 	case CredentialErrors::Valid:
 		//QMessageBox::information(this, "Success", "Account was found");
 		QApplication::closeAllWindows();
+		lobbyWindow->setPlayer(std::make_shared<PlayerQString>(username));
 		lobbyWindow->show();
 		break;
 	default:

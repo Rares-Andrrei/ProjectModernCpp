@@ -5,8 +5,8 @@
 #include "ui_TriviadorGame.h"
 #include <cstdlib>
 #include <Qtime>
+#include "PlayerQString.h"
 
-#include "../Player/Player/Player.h"
 #include "Map.h"
 #include "QTypeNumericWindow.h"
 #include "QTypeVariantsWindow.h"
@@ -22,6 +22,13 @@ public:
 		Win,
 		Draw
 	};
+	enum class GamePhase
+	{
+		ChooseBase,
+		ChooseRegions,
+		Duels,
+		End
+	};
 	TriviadorGame(QWidget* parent = nullptr);
 	~TriviadorGame();
 
@@ -31,7 +38,7 @@ public:
 
 	void StartGame();
 
-	void setPlayer(const std::shared_ptr<Player>& player);
+	void setPlayer(const std::shared_ptr<PlayerQString>& player);
 
 private:
 	void chooseBasePhase();
@@ -48,9 +55,10 @@ private:
 
 private:
 	uint16_t m_numberOfPlayers;
-	std::shared_ptr<Player>m_player;
+	std::shared_ptr<PlayerQString>m_player;
 
-	std::unique_ptr<QTimer> m_NumericWindowTimer;
+	GamePhase m_gamePhase : 2 = GamePhase::ChooseBase;
+	std::unique_ptr<QTimer> t_NumericWindowTimer;
 	Ui::TriviadorGameClass ui;
 	std::shared_ptr<QTypeNumericWindow> m_QTypeNumericWindow;
 	std::shared_ptr<QTypeVariantsWindow> m_QTypeVariantsWindow;

@@ -93,6 +93,7 @@
     <ClCompile Include="Battle.cpp" />
     <ClCompile Include="lobby.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="PlayerQString.cpp" />
     <ClCompile Include="QTypeNumericWindow.cpp" />
     <ClCompile Include="QTypeVariantsWindow.cpp" />
     <ClCompile Include="Route.cpp" />
@@ -133,11 +134,9 @@
       <Project>{375b82c3-f193-4085-89a2-fd9ffb4b97aa}</Project>
     </ProjectReference>
     <ClInclude Include="CredentialErrors.h" />
-    <ProjectReference Include="..\Player\Player\Player.vcxproj">
-      <Project>{ac86939f-1b4c-4f30-adb1-e153072b6879}</Project>
-    </ProjectReference>
     <QtMoc Include="QTypeNumericWindow.h" />
     <QtMoc Include="QTypeVariantsWindow.h" />
+    <ClInclude Include="PlayerQString.h" />
     <ClInclude Include="Route.h" />
     <QtMoc Include="TriviadorGame.h" />
   </ItemGroup>
