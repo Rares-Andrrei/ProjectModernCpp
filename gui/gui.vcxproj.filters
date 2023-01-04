@@ -55,6 +55,24 @@
     <ClCompile Include="Battle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ColorEnum.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayersInstance.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Route.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TriviadorGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QTypeNumericWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QTypeVariantsWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="logIn.ui">
@@ -70,6 +88,15 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="Battle.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="TriviadorGame.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="QTypeNumericWindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="QTypeVariantsWindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -89,5 +116,28 @@
     <QtMoc Include="Battle.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="TriviadorGame.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="QTypeNumericWindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="QTypeVariantsWindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ColorEnum.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayersInstance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Route.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CredentialErrors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

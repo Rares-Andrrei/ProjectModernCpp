@@ -27,6 +27,8 @@
     <ClCompile Include="DatabaseFile\Database.cpp" />
     <ClCompile Include="DatabaseFile\MatchInfo.cpp" />
     <ClCompile Include="DatabaseFile\utils.cpp" />
+    <ClCompile Include="Lobby.cpp" />
+    <ClCompile Include="Players.cpp" />
     <ClCompile Include="GameplayFile\Board.cpp" />
     <ClCompile Include="GameplayFile\ChooseBase.cpp" />
     <ClCompile Include="GameplayFile\ChooseRegion.cpp" />
@@ -38,6 +40,7 @@
     <ClCompile Include="QuestionFile\QTypeNumerical.cpp" />
     <ClCompile Include="QuestionFile\QTypeVariants.cpp" />
     <ClCompile Include="QuestionFile\QuestionManager.cpp" />
+    <ClCompile Include="Route.cpp" />
     <ClCompile Include="src.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -45,10 +48,13 @@
     <ClInclude Include="AdvantagesFile\AnswerFiftyFifty.h" />
     <ClInclude Include="AdvantagesFile\AnswerSugestion.h" />
     <ClInclude Include="AdvantagesFile\FourCloseAnswers.h" />
+    <ClInclude Include="CredentialErrors.h" />
     <ClInclude Include="DatabaseFile\Account.h" />
     <ClInclude Include="DatabaseFile\Database.h" />
     <ClInclude Include="DatabaseFile\MatchInfo.h" />
     <ClInclude Include="DatabaseFile\utils.h" />
+    <ClInclude Include="Lobby.h" />
+    <ClInclude Include="Players.h" />
     <ClInclude Include="GameplayFile\Board.h" />
     <ClInclude Include="GameplayFile\ChooseBase.h" />
     <ClInclude Include="GameplayFile\ChooseRegion.h" />
@@ -60,6 +66,7 @@
     <ClInclude Include="QuestionFile\QTypeNumerical.h" />
     <ClInclude Include="QuestionFile\QTypeVariants.h" />
     <ClInclude Include="QuestionFile\QuestionManager.h" />
+    <ClInclude Include="Route.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="QTypeNumerical.txt" />

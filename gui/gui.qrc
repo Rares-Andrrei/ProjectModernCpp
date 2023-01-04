@@ -5,5 +5,9 @@
         <file>backgroundLobby.png</file>
         <file>mapBackground.png</file>
         <file>Ro.png</file>
+        <file>fourPlayers.png</file>
+        <file>threePlayers.png</file>
+        <file>twoPlayers.png</file>
+        <file>32x32.gif</file>
     </qresource>
 </RCC>

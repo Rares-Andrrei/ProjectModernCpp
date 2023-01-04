@@ -4,20 +4,27 @@
 #include "ui_Map.h"
 #include"Battle.h"
 
+#include <qstring.h>
+#include <qmessagebox.h>
 #include "../Player/Player/Player.h"
+#include "PlayersInstance.h"
 
 class Map : public QMainWindow
 {
 	Q_OBJECT
 
 public:
-	Map(QWidget *parent = nullptr);
+	Map(QWidget* parent = nullptr);
 	~Map();
 
-	//void 
+	void setNumberOfInterractions(const int& numberOfInterractions);
+	void setPlayer(const std::shared_ptr<PlayerInstance>& player);
 private:
 	Player player;
 	Ui::MapClass ui;
+	int m_numberOfInterractions;
+	bool m_validateMove = true;
+	std::shared_ptr<PlayerInstance> m_player;
 	std::shared_ptr<Battle>BattleWindow;
 private slots:
 	void onzona1Clicked();

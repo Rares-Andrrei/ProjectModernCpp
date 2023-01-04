@@ -33,22 +33,23 @@ void Account::setNickName(const std::string& nickName)
     this->m_nickName = nickName;
 }
 
-bool Account::checkAccount()
+CredentialErrors Account::checkAccount() const
 {
-    if (m_username.size() < 6)
-    {
-        return false;
-    }
-    else if (m_password.size() < 6)
-    {
-        return false;
-    }
     if (m_nickName.has_value())
     {
         if (m_nickName.value().size() < 6)
         {
-            return false;
+            return CredentialErrors::NameSize;
         }
     }
-    return true;
+    if (m_username.size() < 6)
+    {
+        return CredentialErrors::UsernameSize;
+    }
+    if (m_password.size() < 6)
+    {
+        return CredentialErrors::PasswordSize;
+    }
+
+    return CredentialErrors::Valid;
 }
