@@ -1,7 +1,10 @@
 #include "Route.h"
+#include "PlayersInstance.h"
 #include <cpr/cpr.h>
+#include <crow.h>
 #include <iostream>
 #include <sstream>
+#include <QCoreApplication>
 
 std::string Route::getSessionKey()
 {
@@ -17,6 +20,61 @@ bool Route::leaveLobby()
 		});
 	return response.status_code == 200;
 }
+
+//std::string Route::getQuestionTypeNuemrical()
+//{
+//	auto response = cpr::Get(
+//		cpr::Url{ "http://localhost:18080/getQuestionTypeNumerical" },
+//		cpr::Payload{
+//			{}
+//		});
+//	if (response.status_code == 200)
+//	{
+//		return response.text;
+//	}
+//	else
+//	{
+//		return "";
+//	}
+//}
+
+void Route::enterLobby(int type, std::vector<Player>& players)
+{
+	cpr::Url url{ "http://localhost:18080/enterLobby" };
+
+	cpr::Payload payload{
+			{ "sessionKey", m_sessionKey},
+			{ "lobbyType", std::to_string(type)}
+	};
+
+	auto lambda = [](cpr::Response response) {
+		return response.text;
+	};
+
+	auto future_text = cpr::PostCallback(lambda, url, payload);
+
+	while (future_text.wait_for(std::chrono::seconds(0)) != std::future_status::ready)
+	{
+		QCoreApplication::processEvents();
+	}
+	auto aux = future_text.get();
+	if (aux != "")
+	{
+		crow::json::rvalue resData = crow::json::load(aux);
+		m_gameId = resData["lobbyID"].i();
+		for (int i = 1; i <= 2; i++)
+		{
+			Player p;
+			std::string a = "playerName" + std::to_string(i);
+			p.setColor(Player::stringToColor(resData["playerColor" + std::to_string(i)].s()));
+			p.setName(resData["playerName" + std::to_string(i)].s());
+			p.setScore(resData["playerScore" + std::to_string(i)].i());
+			players.push_back(p);
+		}
+	}
+}
+
+
 
 int Route::enterTwoPlayersLobby()
 {
