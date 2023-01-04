@@ -45,6 +45,18 @@ Player& Player::operator=(Player&& other)
 	return *this;
 }
 
+Player& Player::operator+=(int score)
+{
+	m_score += score;
+	return *this;
+}
+
+Player& Player::operator-=(int score)
+{
+	m_score -= score;
+	return *this;
+}
+
 const char* Player::getUsername() const
 {
 	return m_username;

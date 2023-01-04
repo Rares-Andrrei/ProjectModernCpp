@@ -28,6 +28,9 @@ public:
 	Player& operator=(const Player& other);
 	Player& operator=(Player&& other);
 
+	Player& operator+=(int score);
+	Player& operator-=(int score);
+
 	const char* getUsername()const;
 	void setUsername(const const char*& first_name);
 
