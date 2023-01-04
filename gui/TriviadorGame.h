@@ -50,6 +50,7 @@ private:
 	void chooseRegionsPhase();
 
 	void duelsPhase();
+	void startDuel();
 
 	void EndGame();
 
@@ -67,9 +68,15 @@ private:
 	std::shared_ptr<PlayerQString>m_player;
 
 	GamePhase m_gamePhase : 3 = GamePhase::None;
-	DuelStatus m_duelStatus : 2 = DuelStatus::None;
+	DuelStatus m_duelStatus : 3 = DuelStatus::None;
 	
 	bool changePhase = true;
+	bool m_MapWindowClosed = false;
+	bool m_VariantsWindowClosed = false;
+	bool duelFinished = false;
+	
+	int m_numberOfDuels = 0;
+	int m_MaxNumberOfDuels = 0;
 	
 	std::unique_ptr<QTimer> t_MapWindowTimer;
 	std::unique_ptr<QTimer> t_NumericWindowTimer;
