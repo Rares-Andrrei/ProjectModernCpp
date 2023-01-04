@@ -55,11 +55,9 @@ void testMatch(const int& numberOfPlayers)
 {
 	GameLogic game(numberOfPlayers);
 	const char* user1 = "Rares";
-	const char* pwr = "raresandrei";
-	game.addPlayer(user1,pwr);
+	game.addPlayer(user1);
 	const char* user2 = "Alex";
-	const char* pwr1 = "alex1032";
-	game.addPlayer(user2, pwr1);
+	game.addPlayer(user2);
 	game.StartGame();
 	game.EndGame();
 }

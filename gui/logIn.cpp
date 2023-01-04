@@ -69,11 +69,9 @@ void logIn::onEnterButtonClicked()
 
 		//Create a new player instance
 		crow::json::rvalue resData = crow::json::load(response.text);
-		std::string nickname = resData["firstname"].s();
-		std::string username = resData["lastname"].s();
+		std::string nickname = resData["nickname"].s();
 		const char* nicknameChar = nickname.data();
-		const char* usernameChar = username.data();
-		Player player(usernameChar, nicknameChar);
+		Player player(nicknameChar);
 		lobbyWindow->setPlayer(player);
 
 		QApplication::closeAllWindows();

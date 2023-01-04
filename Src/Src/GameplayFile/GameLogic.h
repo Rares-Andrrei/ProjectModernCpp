@@ -25,7 +25,7 @@ public:
 
 	void StartGame();
 	void EndGame();
-	void addPlayer(const const char*& firstName, const const char*& lastName);
+	void addPlayer(const const char*& firstName);
 
 	~GameLogic() = default;
 private:
