@@ -5,7 +5,22 @@ TriviadorGame::TriviadorGame(QWidget* parent)
 {
 	ui.setupUi(this);
 	MapWindow.reset(new Map(this));
+
 	t_NumericWindowTimer = std::make_unique<QTimer>();
+	t_NumericWindowTimer->setInterval(500);
+	connect(t_NumericWindowTimer.get(), &QTimer::timeout, this, &TriviadorGame::checkNumericWindowClosed);
+
+	t_checkCurrentPhase = std::make_unique<QTimer>();
+	t_checkCurrentPhase->setInterval(500);
+	connect(t_checkCurrentPhase.get(), &QTimer::timeout, this, &TriviadorGame::checkCurrentPhase);
+
+	t_MapWindowTimer = std::make_unique<QTimer>();
+	t_MapWindowTimer->setInterval(500);
+	connect(t_MapWindowTimer.get(), &QTimer::timeout, this, &TriviadorGame::checkMapWindowClosed);
+
+	t_VariantsWindowTimer = std::make_unique<QTimer>();
+	t_VariantsWindowTimer->setInterval(500);
+	connect(t_VariantsWindowTimer.get(), &QTimer::timeout, this, &TriviadorGame::checkVariantsWindowClosed);
 }
 
 TriviadorGame::~TriviadorGame()
@@ -23,6 +38,8 @@ void TriviadorGame::displayLoadingMessage(/*const QTimer& timer*/)
 
 void TriviadorGame::StartGame()
 {
+	t_checkCurrentPhase->start();
+	t_NumericWindowTimer->start();
 	//TODO :
 	// afisare loading screen
 	// Etape :
@@ -52,8 +69,14 @@ void TriviadorGame::StartGame()
 
 void TriviadorGame::setPlayer(const std::shared_ptr<PlayerQString>& player)
 {
-	auto val = player->getName();
-	m_player = std::make_shared<PlayerQString>(val);
+	m_player = std::make_shared<PlayerQString>(player->getName());
+	MapWindow->setPlayer(m_player);
+}
+
+void TriviadorGame::showEvent(QShowEvent* event)
+{
+	t_checkCurrentPhase->start();
+	this->hide();
 }
 
 void TriviadorGame::chooseBasePhase()
@@ -62,14 +85,11 @@ void TriviadorGame::chooseBasePhase()
 
 	// GUI :: deschidere fereastra cu intrebarea numerica
 	// fereastra va contine si butoane pentru a introduce un raspuns , care va fi trimis catre server pentru a crea ordinea
-	m_QTypeNumericWindow = std::make_shared<QTypeNumericWindow>(new QTypeNumericWindow());
+	m_QTypeNumericWindow.reset(new QTypeNumericWindow(this));
 	m_QTypeNumericWindow->setPlayer(m_player);
 	m_QTypeNumericWindow->show();
 
-	
-	t_NumericWindowTimer->setInterval(500);
-	QObject::connect(t_NumericWindowTimer.get(), &QTimer::timeout, this, &TriviadorGame::checkNumericWindowClosed);
-	t_NumericWindowTimer->start();
+
 	// GUI :: inchidere fereastra cu intrebarea numerica
 
 	// GUI :: deschidere fereastra cu harta
@@ -175,11 +195,98 @@ void TriviadorGame::displayPodium()
 
 void TriviadorGame::checkNumericWindowClosed()
 {
-	if (!m_QTypeNumericWindow->isVisible())
+	if (changePhase == true) // daca o faza s-a terminat , asteptam sa trecem la urmatoarea
 	{
-		t_NumericWindowTimer->stop();
-		MapWindow->setNumberOfInterractions(2);
-		MapWindow->setPlayer(m_player);
-		MapWindow->show();
+		return;
 	}
+	
+	if (m_gamePhase == GamePhase::ChooseBase)
+	{
+		if (!MapWindow->isVisible() && !m_QTypeNumericWindow->isVisible())
+		{
+			m_QTypeNumericWindow.reset(new QTypeNumericWindow(this));
+			MapWindow->setNumberOfInterractions(m_numberOfPlayers);
+			MapWindow->show();
+			changePhase = true;
+		}
+	}
+	else if (m_gamePhase == GamePhase::ChooseRegions)
+	{
+		if (!m_QTypeNumericWindow->isVisible())
+		{
+			m_QTypeNumericWindow.reset();
+			MapWindow->setNumberOfInterractions(m_numberOfPlayers * 2);
+			MapWindow->show();
+		}
+	}
+	else if (m_gamePhase == GamePhase::Duels && m_duelStatus == DuelStatus::Draw)
+	{
+		if (!m_QTypeNumericWindow->isVisible())
+		{
+			m_QTypeNumericWindow.reset();
+			MapWindow->setNumberOfInterractions(1);
+			MapWindow->show();
+		}
+	}
+}
+
+void TriviadorGame::checkMapWindowClosed()
+{
+}
+
+void TriviadorGame::checkVariantsWindowClosed()
+{
+}
+
+void TriviadorGame::checkCurrentPhase()
+{
+	if (checkIfWindowsAreClosed() == false)
+	{
+		return;
+	}
+	
+	if (m_gamePhase == GamePhase::None && changePhase == true)
+	{
+		t_NumericWindowTimer->start();
+		changePhase = false;
+		m_gamePhase = GamePhase::ChooseBase;
+		chooseBasePhase();
+	}
+	else if (m_gamePhase == GamePhase::ChooseBase && changePhase == true)
+	{
+		changePhase = false;
+		m_gamePhase = GamePhase::ChooseRegions;
+		chooseRegionsPhase();
+	}
+	else if (m_gamePhase == GamePhase::ChooseRegions && changePhase == true)
+	{
+		changePhase = false;
+		m_gamePhase = GamePhase::Duels;
+		t_VariantsWindowTimer->start();
+		duelsPhase();
+	}
+	else if (m_gamePhase == GamePhase::Duels && changePhase == true)
+	{
+		changePhase = false;
+		t_checkCurrentPhase->stop();
+
+		t_MapWindowTimer->stop();
+		t_VariantsWindowTimer->stop();
+		t_NumericWindowTimer->stop();
+
+		m_gamePhase = GamePhase::End;
+		EndGame();
+	}
+}
+
+bool TriviadorGame::checkIfWindowsAreClosed()
+{
+	for (auto& window : findChildren<QWidget*>())
+	{
+		if (window->isVisible())
+		{
+			return false;
+		}
+	}
+	return true;
 }

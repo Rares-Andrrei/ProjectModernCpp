@@ -61,7 +61,7 @@ void lobby::onTwoPlayersButtonClicked()
 		Game.reset(new TriviadorGame(this));
 		Game->setNumberOfPlayers(2);
 		Game->setPlayer(m_Player);
-		Game->StartGame();
+		Game->show();
 	}
 	else if (resp == 200)
 	{

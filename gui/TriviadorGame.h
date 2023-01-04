@@ -18,12 +18,14 @@ class TriviadorGame : public QMainWindow
 public:
 	enum class DuelStatus
 	{
+		None,
 		Lose,
 		Win,
 		Draw
 	};
 	enum class GamePhase
 	{
+		None,
 		ChooseBase,
 		ChooseRegions,
 		Duels,
@@ -39,6 +41,8 @@ public:
 	void StartGame();
 
 	void setPlayer(const std::shared_ptr<PlayerQString>& player);
+protected:
+	void showEvent(QShowEvent* event) override;
 
 private:
 	void chooseBasePhase();
@@ -52,14 +56,28 @@ private:
 	void displayPodium();
 
 	void checkNumericWindowClosed();
+	void checkMapWindowClosed();
+	void checkVariantsWindowClosed();
+	void checkCurrentPhase();
+
+	bool checkIfWindowsAreClosed();
 
 private:
 	uint16_t m_numberOfPlayers;
 	std::shared_ptr<PlayerQString>m_player;
 
-	GamePhase m_gamePhase : 2 = GamePhase::ChooseBase;
+	GamePhase m_gamePhase : 3 = GamePhase::None;
+	DuelStatus m_duelStatus : 2 = DuelStatus::None;
+	
+	bool changePhase = true;
+	
+	std::unique_ptr<QTimer> t_MapWindowTimer;
 	std::unique_ptr<QTimer> t_NumericWindowTimer;
+	std::unique_ptr<QTimer> t_VariantsWindowTimer;
+	std::unique_ptr<QTimer> t_checkCurrentPhase;
+	
 	Ui::TriviadorGameClass ui;
+	
 	std::shared_ptr<QTypeNumericWindow> m_QTypeNumericWindow;
 	std::shared_ptr<QTypeVariantsWindow> m_QTypeVariantsWindow;
 	std::unique_ptr<Map> MapWindow;
