@@ -15,12 +15,12 @@ public:
 
 private:
 	const char* m_username;
-	const char* m_nickname;
+	int m_score;
 	Color::ColorEnum m_color : 3;
 public:
 	Player();
-	Player( const const char*& username, const const char*& nickname);
-	Player(const const char*& username, const const char*& nickname, const Color::ColorEnum& color);
+	Player(const const char*& username);
+	Player(const const char*& username, const Color::ColorEnum& color);
 
 	Player(const Player& other);
 	Player(Player&& other);
@@ -31,12 +31,12 @@ public:
 	const char* getUsername()const;
 	void setUsername(const const char*& first_name);
 
-	void setColor(Color::ColorEnum color);
+	void setColor(const Color::ColorEnum& color);
 	Color::ColorEnum getColor()const;
-	const char* getColorToString()const;
+	std::string getColorToString()const;
 
-	void setNickname(const const char*& last_name);
-	const char* getNickname()const;
+	void setScore(int score);
+	int getScore()const;
 };
 
 
