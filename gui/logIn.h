@@ -5,6 +5,7 @@
 
 #include <QString>
 #include <QMessageBox>
+#include <memory>
 #include "Route.h"
 #include "lobby.h"
 

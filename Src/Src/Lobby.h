@@ -1,7 +1,8 @@
 #pragma once
 #include <unordered_map>
 #include <memory>
-#include "Player.h"
+#include "../../Player/Player/Player.h"
+
 class Lobby
 {
 public:

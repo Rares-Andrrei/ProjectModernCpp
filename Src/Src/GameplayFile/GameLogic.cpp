@@ -126,7 +126,7 @@ bool GameLogic::checkIfPlayerWasEliminated(std::shared_ptr<PlayerBase>& playerBa
 	return playerBase->getNumberOfLifesLeft() == 0;
 }
 
-void GameLogic::addPlayer(const const char*& firstName)
+void GameLogic::addPlayer(const const char* firstName)
 {
 	m_players.emplace_back(firstName, static_cast<Color::ColorEnum>(m_players.size() + 1));
 }

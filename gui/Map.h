@@ -7,8 +7,6 @@
 #include <qstring.h>
 #include <qmessagebox.h>
 #include "../Player/Player/Player.h"
-#include "PlayersInstance.h"
-
 class Map : public QMainWindow
 {
 	Q_OBJECT
@@ -18,13 +16,13 @@ public:
 	~Map();
 
 	void setNumberOfInterractions(const int& numberOfInterractions);
-	void setPlayer(const std::shared_ptr<PlayerInstance>& player);
+	void setPlayer(const std::shared_ptr<Player>& player);
 private:
 	Player player;
 	Ui::MapClass ui;
 	int m_numberOfInterractions;
 	bool m_validateMove = true;
-	std::shared_ptr<PlayerInstance> m_player;
+	std::shared_ptr<Player> m_player;
 	std::shared_ptr<Battle>BattleWindow;
 private slots:
 	void onzona1Clicked();

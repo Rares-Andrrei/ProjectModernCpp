@@ -3,17 +3,17 @@
 
 
 Player::Player()
-	:m_color{ Color::getDefaultColor() }, m_username{ }
+	:m_color{ Color::getDefaultColor() }, m_name{ }
 {
 }
 
-Player::Player(const const char*& username)
-	:m_username{ username }, m_color{ Color::getDefaultColor() }
+Player::Player( const char* const& name)
+	:m_name{ name }, m_color{ Color::getDefaultColor() }
 {
 }
 
-Player::Player(const const char*& username, const Color::ColorEnum& color)
-	:m_username{ username }, m_color{ color }
+Player::Player( const char* const& name, const Color::ColorEnum& color)
+	:m_name{ name }, m_color{ color }
 {
 }
 
@@ -30,7 +30,7 @@ Player::Player(Player&& other)
 Player& Player::operator=(const Player& other)
 {
 	this->m_color = other.m_color;
-	this->m_username = other.m_username;
+	this->m_name = other.m_name;
 
 	return *this;
 }
@@ -38,7 +38,7 @@ Player& Player::operator=(const Player& other)
 Player& Player::operator=(Player&& other)
 {
 	this->m_color = other.m_color;
-	this->m_username = other.m_username;
+	this->m_name = other.m_name;
 
 	new(&other) Player;
 
@@ -57,9 +57,9 @@ Player& Player::operator-=(int score)
 	return *this;
 }
 
-const char* Player::getUsername() const
+const char* Player::getName() const
 {
-	return m_username;
+	return m_name;
 }
 
 void Player::setColor(const Color::ColorEnum& color)
@@ -87,8 +87,8 @@ int Player::getScore() const
 	return m_score;
 }
 
-void Player::setUsername(const const char*& first_name)
+void Player::setName( const char* const& name)
 {
-	this->m_username = first_name;
+	this->m_name = name;
 }
 

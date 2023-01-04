@@ -22,9 +22,9 @@ lobby::lobby(Route& route, QWidget* parent)
 	connect(ui.cancelButton, SIGNAL(clicked()), SLOT(onCancelButtonClicked()));
 }
 
-void lobby::setPlayer(Player play)
+void lobby::setPlayer(const std::shared_ptr<Player>& play)
 {
-	this->player = play;
+	this->m_Player = play;
 }
 
 lobby::~lobby()
@@ -35,7 +35,7 @@ lobby::~lobby()
 		QMessageBox::information(this, "Logout", "U have been logged out");
 		QApplication::closeAllWindows();
 	}
-	else{
+	else {
 		QMessageBox::information(this, "Failure", "The logout failed");
 	}
 }
@@ -59,7 +59,7 @@ void lobby::onTwoPlayersButtonClicked()
 		m_stopLoop = true;
 		Game.reset(new TriviadorGame(this));
 		Game->setNumberOfPlayers(2);
-		Game->setPlayer(std::make_shared<PlayerInstance>(Player));
+		Game->setPlayer(m_Player);
 		Game->StartGame();
 	}
 	else if (resp == 200)

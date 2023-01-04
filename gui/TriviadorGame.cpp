@@ -50,7 +50,7 @@ void TriviadorGame::StartGame()
 	//EndGame();
 }
 
-void TriviadorGame::setPlayer(const std::shared_ptr<PlayerInstance>& player)
+void TriviadorGame::setPlayer(const std::shared_ptr<Player>& player)
 {
 	m_player = player;
 }

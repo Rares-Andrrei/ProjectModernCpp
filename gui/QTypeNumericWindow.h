@@ -3,7 +3,7 @@
 #include <QMainWindow>
 #include "ui_QTypeNumericWindow.h"
 #include <memory>
-#include "PlayersInstance.h"
+#include "../Player/Player/Player.h"
 
 class QTypeNumericWindow : public QMainWindow
 {
@@ -14,7 +14,7 @@ public:
 	~QTypeNumericWindow();
 
 	void requestQuestion();
-	void setPlayer(const std::shared_ptr<PlayerInstance>& player);
+	void setPlayer(const std::shared_ptr<Player>& player);
 
 protected:
 	void showEvent(QShowEvent* event) override;
@@ -42,6 +42,6 @@ private:
 	void disableAllButtons();
 	QTimer* m_TimeRemaining;
 	QTimer* m_timer;
-	std::shared_ptr<PlayerInstance> m_player;
+	std::shared_ptr<Player> m_player;
 	Ui::QTypeNumericWindowClass ui;
 };

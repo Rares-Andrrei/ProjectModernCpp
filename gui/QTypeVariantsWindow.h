@@ -2,7 +2,7 @@
 
 #include <QMainWindow>
 #include "ui_QTypeVariantsWindow.h"
-#include "PlayersInstance.h"
+#include "../Player/Player/Player.h"
 #include <string>
 #include <QTimer>
 #include <memory>
@@ -15,7 +15,7 @@ public:
 	QTypeVariantsWindow(QWidget* parent = nullptr);
 	~QTypeVariantsWindow();
 	void requestQuestion();
-	void setPlayer(const std::shared_ptr<PlayerInstance>& player);
+	void setPlayer(const std::shared_ptr<Player>& player);
 protected:
 	void showEvent(QShowEvent* event) override;
 
@@ -34,6 +34,6 @@ private:
 	QPushButton* m_Variant = nullptr;
 	QTimer* m_timeRemaining;
 	QString variant = "";
-	std::shared_ptr<PlayerInstance> m_player;
+	std::shared_ptr<Player> m_player;
 	Ui::QTypeVariantsWindowClass ui;
 };
