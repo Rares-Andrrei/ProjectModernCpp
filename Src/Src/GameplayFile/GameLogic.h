@@ -11,8 +11,8 @@ class GameLogic
 	Board m_board;
 	QuestionManager m_questions;
 	const uint16_t k_numberOfPlayers;
-	std::vector<Player> m_players;
-	std::vector<Player> m_eliminatedPlayers;
+	std::vector<std::shared_ptr<Player>> m_players;
+	std::vector<std::shared_ptr<Player>> m_eliminatedPlayers;
 	//std::vector<std::shared_ptr<Advantages>> m_advantages; // de vazut unde sa fie folosit . 
 
 public:
@@ -25,7 +25,7 @@ public:
 
 	void StartGame();
 	void EndGame();
-	void addPlayer(const std::string& name);
+	void addPlayer(std::shared_ptr<Player> player);
 
 	~GameLogic() = default;
 private:

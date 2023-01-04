@@ -14,6 +14,7 @@ class PlayersQueue
 
 public:
 	PlayersQueue();
+	void deleteLobby(std::shared_ptr<Lobby> lobby);
 	std::shared_ptr<Lobby> addPlayerToLobby(std::string sessionKey, Lobby::LobbyType lobby);
 	void kickPlayerFromLobby(const std::string& sessionKey);
 

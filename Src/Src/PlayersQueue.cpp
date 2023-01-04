@@ -6,6 +6,15 @@ PlayersQueue::PlayersQueue()
 
 }
 
+void PlayersQueue::deleteLobby(std::shared_ptr<Lobby> lobby)
+{
+    Lobby::LobbyType lType = lobby->getType();
+    if (m_lobbies.count(lType) > 0 && m_lobbies[lType] == lobby)
+    {
+        m_lobbies.erase(lType);
+    }
+}
+
 std::shared_ptr<Lobby> PlayersQueue::addPlayerToLobby(std::string sessionKey, Lobby::LobbyType lobby)
 {
     if (m_lobbies.count(lobby) > 0 && m_lobbies[lobby]->playersInLobby() < static_cast<int>(lobby))
@@ -41,6 +50,10 @@ std::shared_ptr<Player> PlayersQueue::getPlayer(const std::string& sessionKey)
 std::string PlayersQueue::addActivePlayer(const Account& ac)
 {
     std::string sessionKey = ac.getNickName() + ac.getUsername();
+    if (isActive(sessionKey))
+    {
+        return "NULL";
+    }
     m_players.emplace(sessionKey, std::make_shared<Player>(ac.getNickName()));
     return sessionKey;
 }

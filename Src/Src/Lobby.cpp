@@ -1,9 +1,30 @@
 #include "Lobby.h"
 #include <sstream>
 
+
+Lobby::LobbyType Lobby::getType()
+{
+	return m_type;
+}
+
+long Lobby::getId()
+{
+	return m_uniqueId;
+}
+
 int Lobby::playersInLobby()
 {
 	return m_players.size();
+}
+
+std::vector<std::shared_ptr<Player>> Lobby::getPlayers()
+{
+	std::vector<std::shared_ptr<Player>> players;
+	for (auto player : m_players)
+	{
+		players.push_back(player.second);
+	}
+	return players;
 }
 
 void Lobby::addPlayer(const std::string& sessionKey, std::shared_ptr<Player> player)

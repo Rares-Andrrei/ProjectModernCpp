@@ -76,15 +76,7 @@ void Route::enterLobby(int type, std::vector<Player>& players)
 
 
 
-int Route::enterTwoPlayersLobby()
-{
-	auto response = cpr::Put(
-		cpr::Url{ "http://localhost:18080/queueTwoPlayerGame" },
-		cpr::Payload{
-			{ "sessionKey", m_sessionKey}
-		});
-	return response.status_code;
-}
+
 
 CredentialErrors Route::login(std::string username, std::string password)
 {
@@ -101,6 +93,8 @@ CredentialErrors Route::login(std::string username, std::string password)
 
 	switch (resp)
 	{
+	case static_cast<int>(CredentialErrors::AlreadyConnected):
+		return CredentialErrors::AlreadyConnected;
 	case static_cast<int>(CredentialErrors::IncorrectAccount):
 		return CredentialErrors::IncorrectAccount;
 	case static_cast<int>(CredentialErrors::IncorrectPassword):

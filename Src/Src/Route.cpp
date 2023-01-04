@@ -2,6 +2,19 @@
 #include "utils.h"
 #include<string>
 
+void Route::addActiveGame(std::shared_ptr<Lobby> lobby)
+{
+	if (m_gamesActive.count(lobby->getId()) == 0)
+	{
+		m_gamesActive[lobby->getId()] = std::make_shared<GameLogic>(GameLogic(static_cast<int>(lobby->getType())));
+		std::vector<std::shared_ptr<Player>> players = lobby->getPlayers();
+		for (auto player : players)
+		{
+			m_gamesActive[lobby->getId()]->addPlayer(player);
+		}
+	}
+}
+
 Route::Route(Database& db, std::shared_ptr<PlayersQueue> players) : m_db{db}, m_waitingList{players}
 {
 
@@ -23,6 +36,10 @@ void Route::loginRoute()
 		if (check == CredentialErrors::Valid)
 		{
 			sessionKey = m_waitingList->addActivePlayer(account);
+			if (sessionKey == "NULL")
+			{
+				check = CredentialErrors::AlreadyConnected;
+			}
 		}
 		crow::response res;
 		res.body = std::to_string(static_cast<int>(check)) + sessionKey;
@@ -48,6 +65,8 @@ void Route::enterLobbyRoute()
 		crow::response resp;
 		if (lobby->existInLobby(sessionKeyIter->second))
 		{
+			addActiveGame(lobby);
+			m_waitingList->deleteLobby(lobby);
 			crow::json::wvalue json = lobby->getPlayersData();
 			return crow::response(json);
 		}

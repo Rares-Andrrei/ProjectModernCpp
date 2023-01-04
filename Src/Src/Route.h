@@ -11,12 +11,9 @@ class Route
 	Database& m_db;
 	crow::SimpleApp m_app;
 	std::shared_ptr<PlayersQueue> m_waitingList;
+	std::unordered_map<long, std::shared_ptr<GameLogic>> m_gamesActive;
 
-
-	std::unordered_map<uint16_t, GameLogic> gamesActive;
-	std::unordered_set< std::string> playersInGame;
-	std::list<std::shared_ptr<Player>> twoPlayers;
-
+	void addActiveGame(std::shared_ptr<Lobby> lobby);
 public:
 	Route(Database& db, std::shared_ptr<PlayersQueue> players);
 
