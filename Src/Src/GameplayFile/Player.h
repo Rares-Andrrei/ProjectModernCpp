@@ -16,6 +16,7 @@ public:
 	};
 private:
 	std::string m_name;
+	int m_score;
 	Color m_color:3;
 
 public:
@@ -24,6 +25,8 @@ public:
 	Player(const std::string& name, const Color& color);
 	Player::Color getColor()const;
 	static std::string ColorToString(Player::Color color);
+	void setScore(int score);
+	int getScore();
 	void setName(std::string& name);
 	void setColor(Color color) ;
 	std::string getName()const;

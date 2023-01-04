@@ -4,15 +4,15 @@
 
 
 Player::Player()
-    :  m_name{ "" }, m_color{Player::Color::None}
+    :  m_name{ "" }, m_color{Player::Color::None}, m_score{ 0 }
 {
 }
 
-Player::Player(const std::string& name) : m_name{name}, m_color{Player::Color::None}
+Player::Player(const std::string& name) : m_name{name}, m_color{Player::Color::None}, m_score { 0 }
 {
 }
 
-Player::Player(const std::string& name, const Color& color) : m_name{ name }, m_color{color}
+Player::Player(const std::string& name, const Color& color) : m_name{ name }, m_color{color}, m_score{ 0 }
 {
 }
 
@@ -47,6 +47,16 @@ std::string Player::ColorToString(Player::Color color)
     default: 
         return "";
     }
+}
+
+void Player::setScore(int score)
+{
+    m_score = score;
+}
+
+int Player::getScore()
+{
+    return m_score;
 }
 
 void Player::setName(std::string& name)
