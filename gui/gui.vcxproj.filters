@@ -124,10 +124,10 @@
     <ClInclude Include="PlayersInstance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Route.h">
+    <ClInclude Include="CredentialErrors.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CredentialErrors.h">
+    <ClInclude Include="Route.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

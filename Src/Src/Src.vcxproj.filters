@@ -108,7 +108,7 @@
     <ClCompile Include="GameplayFile\GameLogic.cpp" />
     <ClCompile Include="ManualTests.cpp" />
     <ClCompile Include="Route.cpp" />
-    <ClCompile Include="Players.cpp" />
+    <ClCompile Include="PlayersQueue.cpp" />
     <ClCompile Include="Lobby.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -172,7 +172,7 @@
       <Filter>DatabaseFiles\Header</Filter>
     </ClInclude>
     <ClInclude Include="Route.h" />
-    <ClInclude Include="Players.h" />
+    <ClInclude Include="PlayersQueue.h" />
     <ClInclude Include="Lobby.h" />
   </ItemGroup>
   <ItemGroup>
