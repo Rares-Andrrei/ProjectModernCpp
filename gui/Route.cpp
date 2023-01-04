@@ -65,7 +65,6 @@ void Route::enterLobby(int type, std::vector<Player>& players)
 		for (int i = 1; i <= 2; i++)
 		{
 			Player p;
-			std::string a = "playerName" + std::to_string(i);
 			p.setColor(Player::stringToColor(resData["playerColor" + std::to_string(i)].s()));
 			p.setName(resData["playerName" + std::to_string(i)].s());
 			p.setScore(resData["playerScore" + std::to_string(i)].i());
