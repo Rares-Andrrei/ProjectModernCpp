@@ -1,9 +1,13 @@
 #include "Zone.h"
 
-Zone::Zone(Player::Color color)
+Zone::Zone(const Color::ColorEnum& color)
+	:m_color{ color }, m_score{ 100 }
 {
-	this->m_color = color;
-	this->m_score = 100;
+}
+
+Zone::Zone()
+	:m_color{ Color::getDefaultColor() }, m_score{ 100 }
+{
 }
 
 void Zone::SetScore(const uint16_t& score)
@@ -32,8 +36,7 @@ void Zone::DecrementScore()// scade scorul cu 100 , atunci cand alegem un avanta
 	}
 }
 
-
-void Zone::changeOwner(Player::Color newOwnerColor)
+void Zone::changeOwner(Color::ColorEnum newOwnerColor)
 {
 	m_color = newOwnerColor;
 }
@@ -43,11 +46,11 @@ uint16_t Zone::getScore()
 	return this->m_score;
 }
 
-
-Player::Color Zone::getColor()
+Color::ColorEnum Zone::getColor()
 {
 	return m_color;
 }
+
 Zone operator+(const uint16_t& value, Zone& zone)
 {
 	return  zone + value;
@@ -62,8 +65,7 @@ std::ostream& operator<<(std::ostream& out, const Zone& zona)
 {
 	//out << zona.Color<<' '; 
 	// aceasta operatie necesita un nou tip de date : Color, in clasa jucator.
-	out << Player::ColorToString(zona.m_color) << ' ';
-
+	out << Color::ColorToString(zona.m_color) << ' ';
 
 	return out;
 }

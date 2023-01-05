@@ -28,4 +28,4 @@ public:
 	void signUpRoute();
 	void logOutRoute();
 	void startApp();
-};
+}; 

@@ -5,7 +5,7 @@
 #include <unordered_set>
 #include <array>
 #include <memory>
-#include "Player.h"
+#include "../../Player/Player/Player.h"
 
 class PlayersQueue
 {

@@ -40,7 +40,7 @@ void Board::ChangeBoardDimensions()
 			this->m_BoardWidth = 6;
 		}
 		m_board.resize(m_BoardHeight * m_BoardWidth + 1);// fill board with empty (Zones)
-		m_board[m_BoardHeight * m_BoardWidth] = std::make_shared<Zone>(Player::Color::None);// default value for board
+		m_board[m_BoardHeight * m_BoardWidth] = std::make_shared<Zone>(Color::getDefaultColor());// default value for board
 	}
 }
 
@@ -98,7 +98,7 @@ bool Board::CheckIfBoardIsFull()
 	return true;
 }
 
-void Board::eliminatePlayer(const Player::Color& elimated, const Player::Color& newOwner)
+void Board::eliminatePlayer(const Color::ColorEnum& elimated, const Color::ColorEnum& newOwner)
 {
 	for (auto& zone : m_board)
 	{

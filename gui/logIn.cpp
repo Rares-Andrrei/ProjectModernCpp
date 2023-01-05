@@ -1,9 +1,5 @@
 #include "logIn.h"
-#include <cpr/cpr.h>
-#include <crow.h>
-#include "CredentialErrors.h"
-#include "Route.h"
-#include <string>
+
 
 logIn::logIn(Route& routes, QWidget* parent)
 	: m_routes{ routes }, QMainWindow(parent)
@@ -66,10 +62,12 @@ void logIn::onEnterButtonClicked()
 		QMessageBox::information(this, "Success", "Account was found");
 		QApplication::closeAllWindows();
 		lobbyWindow.reset(new lobby(m_routes));
+		lobbyWindow->setPlayer(std::make_shared<PlayerQString>(username));
 		lobbyWindow->show();
 		break;
 	default:
 		QMessageBox::information(this, "Failure", "An unknown error has occured");
 		break;
 	}
+
 }

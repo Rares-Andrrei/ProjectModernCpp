@@ -1,7 +1,8 @@
 #pragma once
 #include <unordered_map>
 #include <memory>
-#include "Player.h"
+#include "../../Player/Player/Player.h"
+#include"../../Color/Color/Color.h"
 #include <crow.h>
 #include <stack>
 class Lobby
@@ -17,7 +18,7 @@ public:
 private:
 	long m_uniqueId;
 	LobbyType m_type;
-	std::stack<Player::Color> m_avalableColors;
+	std::stack<Color::ColorEnum> m_avalableColors;
 	std::unordered_map<std::string, std::shared_ptr<Player>> m_players;
 public:
 	Lobby(LobbyType type);

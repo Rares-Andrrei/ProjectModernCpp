@@ -1,15 +1,17 @@
 #pragma once
 #include <cstdint>
-#include "Player.h"
+#include <iostream>
+#include "../../Color/Color/Color.h"
 
 class Zone
 {
 protected:
 	uint16_t m_score;
 	bool m_captured;
-	Player::Color m_color;
+	Color::ColorEnum m_color;
 public:
-	Zone(Player::Color color = Player::Color::None);
+	Zone();
+	Zone(const Color::ColorEnum& color );
 	void SetScore(const uint16_t& score = 100);
 
 	//Operator for score
@@ -21,11 +23,11 @@ public:
 	friend Zone operator-(const uint16_t& value, Zone& zone);
 
 	void DecrementScore(); // folosit pentru clasa  AVANTAJE si duel
-	void changeOwner(Player::Color newOwnerColor);
+	void changeOwner(Color::ColorEnum newOwnerColor);
 
 	friend std::ostream& operator<<(std::ostream& out, const Zone& zona);
 
 	uint16_t getScore();
-	Player::Color getColor();
+	Color::ColorEnum getColor();
 	virtual ~Zone() = default;
 };

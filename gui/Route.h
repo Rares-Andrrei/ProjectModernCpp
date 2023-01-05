@@ -3,6 +3,7 @@
 #include <vector>
 #include "PlayersInstance.h"
 #include "CredentialErrors.h"
+#include "PlayerQString.h"
 class Route
 {
 	std::string m_sessionKey;
@@ -11,7 +12,7 @@ public:
 	//std::string getQuestionTypeNuemrical();
 
 	bool leaveLobby();
-	void enterLobby(int type, std::vector<Player>& players);
+	void enterLobby(int type, std::vector<PlayerQString>& players);
 
 	CredentialErrors login(std::string username, std::string password);
 	std::string getSessionKey();

@@ -19,7 +19,7 @@ void GameLogic::StartGame()
 		return;
 	}
 	m_board = Board(k_numberOfPlayers);
-	m_questions.addQFiles("QuestionFile/QTypeVariants.txt", "QuestionFile/QTypeNumerical.txt");
+	m_questions.addQFiles("QTypeVariants.txt", "QTypeNumerical.txt");
 	chooseBasePhase();
 	chooseRegionsPhase();
 	duelsPhase();
@@ -36,7 +36,7 @@ void GameLogic::chooseBasePhase()
 	int playerAnswer;
 	for (uint16_t index = 0; index < m_players.size(); index++)
 	{
-		std::cout << Player::ColorToString(m_players[index]->getColor()) << " player answer: ";
+		std::cout << Color::ColorToString(m_players[index]->getColor()) << " player answer: ";
 		std::cin >> playerAnswer;
 		chooseBase.CreateOrder(m_players[index]->getColor(), 0, playerAnswer);
 	}
@@ -55,7 +55,7 @@ void GameLogic::chooseRegionsPhase()
 
 		for (uint16_t index = 0; index < m_players.size(); index++)
 		{
-			std::cout << Player::ColorToString(m_players[index]->getColor()) << " player answer: ";
+			std::cout << Color::ColorToString(m_players[index]->getColor()) << " player answer: ";
 			std::cin >> playerAnswer;
 			chooseRegion.CreateOrder(m_players[index]->getColor(), 0, playerAnswer);
 		}
@@ -76,7 +76,7 @@ void GameLogic::duelsPhase()
 		for (const auto& player : m_players)
 		{
 			std::cout << std::endl << m_board << std::endl;
-			std::cout << Player::ColorToString(player->getColor()) << " Choose a zone to Attack : ";
+			std::cout << Color::ColorToString(player->getColor()) << " Choose a zone to Attack : ";
 			Board::Position position;
 			auto& [row, column] = position;
 			while (true)
@@ -84,7 +84,7 @@ void GameLogic::duelsPhase()
 				try
 				{
 					std::cin >> row >> column;
-					if (m_board[position]->getColor() == Player::Color::None)
+					if (m_board[position]->getColor() == Color::ColorEnum::None)
 					{
 						throw std::out_of_range("Board Index Out of range , Please choose another position: ");
 					}

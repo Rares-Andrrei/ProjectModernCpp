@@ -55,12 +55,6 @@
     <ClCompile Include="Battle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ColorEnum.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayersInstance.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Route.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -68,6 +62,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="QTypeNumericWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QTypeVariantsWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerQString.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -93,6 +93,9 @@
     <QtUic Include="QTypeNumericWindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+    <QtUic Include="QTypeVariantsWindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="logIn.h">
@@ -116,6 +119,9 @@
     <QtMoc Include="QTypeNumericWindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="QTypeVariantsWindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ColorEnum.h">
@@ -128,6 +134,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Route.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerQString.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

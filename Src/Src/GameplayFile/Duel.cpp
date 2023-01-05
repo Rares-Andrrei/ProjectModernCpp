@@ -1,12 +1,8 @@
 #include "Duel.h"
 
-Duel::Duel(Player::Color player, std::shared_ptr<Zone> zone)
+Duel::Duel(const Color::ColorEnum& player, std::shared_ptr<Zone> zone)
+	:m_duelingPlayers{ player, zone->getColor() }, m_zone{ zone }, m_draw{ false }
 {
-	m_duelingPlayers.first = player;
-	m_zone = zone;
-	m_duelingPlayers.second = m_zone->getColor();
-	m_winner = zone->getColor();
-	m_draw = false;
 }
 
 
@@ -23,14 +19,14 @@ void Duel::startDuel()
 	std::cout << m_qTypeVariants.value();
 	std::string aux;
 	std::getline(std::cin,  aux);
-	std::cout << Player::ColorToString(m_duelingPlayers.first) << " player answer:";
+	std::cout << Color::ColorToString(m_duelingPlayers.first) << " player answer:";
 	std::getline(std::cin, attackerResponse);
-	std::cout << Player::ColorToString(m_duelingPlayers.second) << " player answer:";
+	std::cout << Color::ColorToString(m_duelingPlayers.second) << " player answer:";
 	std::getline(std::cin, defenderResonse);
 
 	this->giveAnswers(attackerResponse, defenderResonse);
 
-	if (m_winner == Player::Color::None && m_draw)
+	if (m_winner == Color::ColorEnum::None && m_draw)
 	{
 		std::cout << m_qTypeNumerical.value();
 		int attackerNumericalResponse, defenderNumericalResponse;
@@ -38,7 +34,7 @@ void Duel::startDuel()
 
 		this->giveNumericalAnswers({ attackerNumericalResponse,0,m_duelingPlayers.first }, { defenderNumericalResponse,0,m_duelingPlayers.second });
 	}
-	std::cout << "The Winner is PlayerID:  " << int(m_winner) << " or Color: " << Player::ColorToString(m_winner) << std::endl;
+	std::cout << "The Winner is PlayerID:  " << int(m_winner) << " or Color: " << Color::ColorToString(m_winner) << std::endl;
 	rewardWinner();
 	std::cout << std::endl;
 }
@@ -81,7 +77,7 @@ void Duel::giveAnswers(std::string attackerAnswer, std::string defenderAnswer)
 	}
 }
 
-void Duel::giveNumericalAnswers(std::tuple<int, int, Player::Color> attacker, std::tuple<int, int, Player::Color> defender)
+void Duel::giveNumericalAnswers(std::tuple<int, int, Color::ColorEnum> attacker, std::tuple<int, int, Color::ColorEnum> defender)
 {
 	m_draw = false;
 	auto& [attackerAnswer, attackerResponseTime, attackerPlayer] = attacker;
