@@ -1,5 +1,4 @@
 #include "Route.h"
-#include "PlayersInstance.h"
 #include <cpr/cpr.h>
 #include <crow.h>
 #include <iostream>
@@ -38,7 +37,7 @@ bool Route::leaveLobby()
 //	}
 //}
 
-void Route::enterLobby(int type, std::vector<Player>& players)
+void Route::enterLobby(int type, std::vector<PlayerQString>& players)
 {
 	cpr::Url url{ "http://localhost:18080/enterLobby" };
 
@@ -64,9 +63,9 @@ void Route::enterLobby(int type, std::vector<Player>& players)
 		m_gameId = resData["lobbyID"].i();
 		for (int i = 1; i <= 2; i++)
 		{
-			Player p;
-			p.setColor(Player::stringToColor(resData["playerColor" + std::to_string(i)].s()));
-			p.setName(resData["playerName" + std::to_string(i)].s());
+			PlayerQString p;
+			p.setColor(Color::StringToColor(resData["playerColor" + std::to_string(i)].s()));
+			p.setName(QString::fromStdString(resData["playerName" + std::to_string(i)].s()));
 			p.setScore(resData["playerScore" + std::to_string(i)].i());
 			players.push_back(p);
 		}

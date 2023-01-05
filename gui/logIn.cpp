@@ -61,8 +61,8 @@ void logIn::onEnterButtonClicked()
 	case CredentialErrors::Valid:
 		//QMessageBox::information(this, "Success", "Account was found");
 		QApplication::closeAllWindows();
-		lobbyWindow->setPlayer(std::make_shared<PlayerQString>(username));
 		lobbyWindow.reset(new lobby(m_routes));
+		lobbyWindow->setPlayer(std::make_shared<PlayerQString>(username));
 		lobbyWindow->show();
 		break;
 	default:

@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "PlayersInstance.h"
+#include "PlayerQString.h"
 #include "CredentialErrors.h"
 class Route
 {
@@ -11,7 +11,7 @@ public:
 	//std::string getQuestionTypeNuemrical();
 
 	bool leaveLobby();
-	void enterLobby(int type, std::vector<Player>& players);
+	void enterLobby(int type, std::vector<PlayerQString>& players);
 
 	CredentialErrors login(std::string username, std::string password);
 	std::string getSessionKey();

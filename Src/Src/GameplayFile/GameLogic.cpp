@@ -55,7 +55,7 @@ void GameLogic::chooseRegionsPhase()
 
 		for (uint16_t index = 0; index < m_players.size(); index++)
 		{
-			std::cout << Player::ColorToString(m_players[index]->getColor()) << " player answer: ";
+			std::cout << Color::ColorToString(m_players[index]->getColor()) << " player answer: ";
 			std::cin >> playerAnswer;
 			chooseRegion.CreateOrder(m_players[index]->getColor(), 0, playerAnswer);
 		}
@@ -76,7 +76,7 @@ void GameLogic::duelsPhase()
 		for (const auto& player : m_players)
 		{
 			std::cout << std::endl << m_board << std::endl;
-			std::cout << Player::ColorToString(player->getColor()) << " Choose a zone to Attack : ";
+			std::cout << Color::ColorToString(player->getColor()) << " Choose a zone to Attack : ";
 			Board::Position position;
 			auto& [row, column] = position;
 			while (true)

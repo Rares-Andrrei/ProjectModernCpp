@@ -14,13 +14,13 @@ class PLAYER_API Player
 public:
 
 private:
-	const char* m_name;
+	std::string m_name;
 	int m_score;
 	Color::ColorEnum m_color : 3;
 public:
 	Player();
-	Player(const char* const& name);
-	Player(const char* const& name, const Color::ColorEnum& color);
+	Player(const std::string& name);
+	Player(const std::string& name, const Color::ColorEnum& color);
 
 	Player(const Player& other);
 	Player(Player&& other);
@@ -31,8 +31,8 @@ public:
 	Player& operator+=(int score);
 	Player& operator-=(int score);
 
-	const char* getName()const;
-	void setName(const char* const& name);
+	std::string getName()const;
+	void setName(const std::string& name);
 
 	void setColor(const Color::ColorEnum& color);
 	Color::ColorEnum getColor()const;

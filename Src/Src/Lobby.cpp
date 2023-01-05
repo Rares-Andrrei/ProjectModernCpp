@@ -34,7 +34,7 @@ void Lobby::addPlayer(const std::string& sessionKey, std::shared_ptr<Player> pla
 	m_players.emplace(sessionKey, player);
 }
 
-Lobby::Lobby(LobbyType type) : m_type{ type }, m_avalableColors{ {Player::Color::Blue, Player::Color::Green, Player::Color::Red, Player::Color::Yellow} }, m_uniqueId{currentCount++}
+Lobby::Lobby(LobbyType type) : m_type{ type }, m_avalableColors{ {Color::ColorEnum::Blue, Color::ColorEnum::Green, Color::ColorEnum::Red, Color::ColorEnum::Yellow} }, m_uniqueId{ currentCount++ }
 {
 }
 
@@ -65,7 +65,7 @@ bool Lobby::existInLobby(const std::string& sessionKey)
 void Lobby::removePlayer(const std::string& sessionKey)
 {
 	m_avalableColors.push(m_players[sessionKey]->getColor());
-	m_players[sessionKey]->setColor(Player::Color::None);
+	m_players[sessionKey]->setColor(Color::ColorEnum::None);
 	m_players.erase(sessionKey);
 
 }
@@ -78,7 +78,7 @@ crow::json::wvalue Lobby::getPlayersData()
 	for (const auto& p : m_players)
 	{
 		json["playerName" + std::to_string(playerNr)] = p.second->getName();
-		json["playerColor" + std::to_string(playerNr)] = Player::ColorToString(p.second->getColor());
+		json["playerColor" + std::to_string(playerNr)] = Color::ColorToString(p.second->getColor());
 		json["playerScore" + std::to_string(playerNr)] = p.second->getScore();
 		playerNr++;
 	}

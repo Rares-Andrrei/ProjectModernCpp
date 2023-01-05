@@ -42,3 +42,27 @@ Color::ColorEnum Color::getDefaultColor()
 {
 	return Color::ColorEnum::None;
 }
+
+Color::ColorEnum Color::StringToColor(const std::string& color)
+{
+	if (color == "red")
+	{
+		return Color::ColorEnum::Red;
+	}
+	else if (color == "green")
+	{
+		return Color::ColorEnum::Green;
+	}
+	else if (color == "blue")
+	{
+		return Color::ColorEnum::Blue;
+	}
+	else if (color == "yellow")
+	{
+		return Color::ColorEnum::Yellow;
+	}
+	else
+	{
+		return Color::ColorEnum::None;
+	}
+}

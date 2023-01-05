@@ -49,7 +49,6 @@ void lobby::onTwoPlayersButtonClicked()
 	//QObject::connect(&timer, &QTimer::timeout, [&]()
 	//	{
 	//		int resp = m_routes.enterTwoPlayersLobby();
-
 	//if (resp == 201)
 	//{
 	//	//Queue message 
@@ -69,9 +68,7 @@ void lobby::onTwoPlayersButtonClicked()
 	//	m_stopLoop = true;
 	//}
 	//	});
-
 	//timer.start(3000);
-
 	//while (!m_stopLoop)
 	//{
 	//	QCoreApplication::processEvents();
@@ -87,21 +84,6 @@ void lobby::onTwoPlayersButtonClicked()
 		Game->show();
 		this->hide();
 	}
-	else
-	{
-		QMessageBox::information(this, "queue", "The queue failed");
-		m_stopLoop = true;
-	}
-		});
-
-	timer.start(3000);
-
-	while (!m_stopLoop)
-	{
-		QCoreApplication::processEvents();
-		QThread::msleep(100);
-	}
-	QThread::msleep(100);
 }
 
 void lobby::onThreePlayersButtonClicked()

@@ -31,7 +31,7 @@ private:
 	std::shared_ptr<PlayerQString> m_Player;
 	bool m_stopLoop;
 
-	std::vector<Player> m_players;
+	std::vector<PlayerQString> m_players;
 	Route& m_routes;
 	Ui::lobbyClass ui;
 	std::unique_ptr<TriviadorGame> Game;
