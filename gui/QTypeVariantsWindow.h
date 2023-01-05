@@ -28,9 +28,16 @@ private slots:
 	void on_Enter_clicked();
 	void on_TimeRemaining_Timeout();
 
-private:
-	void disableAllButtons();
+	void onFiftyFiftyButtonClicked();
 
+private:
+	void buttonsConnections();
+	void createTimeSlider();
+	void createAnswerVariants();
+	void advantageButtonEnabled();
+
+	void disableAllButtons();
+	
 	QPushButton* m_Variant = nullptr;
 	QTimer* m_timeRemaining;
 	QString variant = "";
