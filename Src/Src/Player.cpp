@@ -30,6 +30,7 @@ Player::Player(Player&& other)
 Player& Player::operator=(const Player& other)
 {
 	this->m_color = other.m_color;
+	this->m_score = other.m_score;
 	this->m_name = other.m_name;
 
 	return *this;
@@ -38,6 +39,7 @@ Player& Player::operator=(const Player& other)
 Player& Player::operator=(Player&& other)
 {
 	this->m_color = other.m_color;
+	this->m_score = other.m_score;
 	this->m_name = other.m_name;
 
 	new(&other) Player;
