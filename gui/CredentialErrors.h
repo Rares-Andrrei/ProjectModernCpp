@@ -8,6 +8,7 @@ enum class CredentialErrors : int
 	NameTaken,
 	IncorrectAccount,
 	IncorrectPassword,
+	AlreadyConnected,
 	Valid,
 	Other
 };

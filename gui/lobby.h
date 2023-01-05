@@ -12,7 +12,7 @@
 #include "PlayerQString.h"
 #include <cpr/cpr.h>
 #include <memory>
-
+#include <crow.h>
 #include <qtimer.h>
 #include <qthread.h>
 
@@ -30,6 +30,8 @@ public:
 private:
 	std::shared_ptr<PlayerQString> m_Player;
 	bool m_stopLoop;
+
+	std::vector<Player> m_players;
 	Route& m_routes;
 	Ui::lobbyClass ui;
 	std::unique_ptr<TriviadorGame> Game;
@@ -37,7 +39,6 @@ private slots:
 	void onTwoPlayersButtonClicked();
 	void onThreePlayersButtonClicked();
 	void onFourPlayersButtonClicked();
-
 	void onCancelButtonClicked();
 };
 // broadcast

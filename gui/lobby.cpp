@@ -14,7 +14,6 @@ lobby::lobby(Route& route, QWidget* parent)
 	ui.loadingLabel->setMovie(movie);
 	ui.loadingLabel->show();
 	movie->start();
-
 	connect(ui.twoPlayersButton, SIGNAL(clicked()), SLOT(onTwoPlayersButtonClicked()));
 	connect(ui.threePlayersButton, SIGNAL(clicked()), SLOT(onThreePlayersButtonClicked()));
 	connect(ui.fourPlayersButton, SIGNAL(clicked()), SLOT(onFourPlayersButtonClicked()));
@@ -42,31 +41,48 @@ lobby::~lobby()
 }
 void lobby::onTwoPlayersButtonClicked()
 {
+
 	ui.lobbyGameModes->setCurrentIndex(1);
-	QTimer timer;
-	m_stopLoop = false;
-	QPushButton* button = ui.twoPlayersButton;
-	button->setEnabled(false);
+	//QTimer timer;
+	//QPushButton* button = ui.twoPlayersButton;
+	//button->setEnabled(false);
+	//QObject::connect(&timer, &QTimer::timeout, [&]()
+	//	{
+	//		int resp = m_routes.enterTwoPlayersLobby();
 
-	QObject::connect(&timer, &QTimer::timeout, [&]()
-		{
-			int resp = m_routes.enterTwoPlayersLobby();
+	//if (resp == 201)
+	//{
+	//	//Queue message 
+	//	ui.lobbyGameModes->setCurrentIndex(1);
+	//}
+	//else if (resp == 200)
+	//{
+	//	// Game found message
+	//	m_stopLoop = true;
+	//	Game->setNumberOfPlayers(2);
+	//	Game->show();
+	//	this->hide();
+	//}
+	//else
+	//{
+	//	QMessageBox::information(this, "queue", "The queue failed");
+	//	m_stopLoop = true;
+	//}
+	//	});
 
-	if (resp == 201)
+	//timer.start(3000);
+
+	//while (!m_stopLoop)
+	//{
+	//	QCoreApplication::processEvents();
+	//	QThread::msleep(100);
+	//}
+	//QThread::msleep(5000);
+
+	ui.lobbyGameModes->setCurrentIndex(1);
+	m_routes.enterLobby(2, m_players);
+	if (m_players.size() > 0)
 	{
-		this->hide();
-		//Queue message 
-		//temporarly for testing 
-		m_stopLoop = true;
-		Game.reset(new TriviadorGame(this));
-		Game->setNumberOfPlayers(2);
-		Game->setPlayer(m_Player);
-		Game->show();
-	}
-	else if (resp == 200)
-	{
-		// Game found message
-		m_stopLoop = true;
 		Game->setNumberOfPlayers(2);
 		Game->show();
 		this->hide();
@@ -91,12 +107,25 @@ void lobby::onTwoPlayersButtonClicked()
 void lobby::onThreePlayersButtonClicked()
 {
 	ui.lobbyGameModes->setCurrentIndex(1);
-
+	m_routes.enterLobby(3, m_players);
+	if (m_players.size() > 0)
+	{
+		Game->setNumberOfPlayers(3);
+		Game->show();
+		this->hide();
+	}
 }
 
 void lobby::onFourPlayersButtonClicked()
 {
 	ui.lobbyGameModes->setCurrentIndex(1);
+	m_routes.enterLobby(4, m_players);
+	if (m_players.size() > 0)
+	{
+		Game->setNumberOfPlayers(4);
+		Game->show();
+		this->hide();
+	}
 
 }
 

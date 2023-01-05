@@ -15,18 +15,18 @@
 #include <chrono>
 
 #include "Route.h"
-#include "Players.h"
+#include "PlayersQueue.h"
 
-
+long Lobby::currentCount = 0;
 void useRoutes()
 {
 	Database db("file.db");
-	std::shared_ptr<Players> playerList = std::make_shared<Players>();
+	std::shared_ptr<PlayersQueue> playerList = std::make_shared<PlayersQueue>();
 	Route r(db, playerList);
 	r.loginRoute();
 	r.signUpRoute();
-	r.enterTwoPlayersLobby();
-	r.exitTwoPlayersLobby();
+	r.enterLobbyRoute();
+	r.exitLobbyRoute();
 	r.logOutRoute();
 	r.startApp();
 }

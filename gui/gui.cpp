@@ -5,9 +5,6 @@ gui::gui(Route& routes, QWidget* parent)
 {
 	ui.setupUi(this);
 
-	signUpWindow.reset(new signUp(m_routes));
-	logInWindow.reset(new logIn(m_routes));
-
 	connect(ui.playButton, SIGNAL(clicked()), SLOT(onPlayButtonClicked()));
 	connect(ui.signUpButton, SIGNAL(clicked()), SLOT(onSignUpButtonClicked()));
 	connect(ui.loginButton, SIGNAL(clicked()), SLOT(onLogInButtonClicked()));
@@ -18,11 +15,13 @@ gui::gui(Route& routes, QWidget* parent)
 
 void gui::onSignUpButtonClicked()
 {
+	signUpWindow.reset(new signUp(m_routes));
 	signUpWindow->show();
 }
 
 void gui::onLogInButtonClicked()
 {
+	logInWindow.reset(new logIn(m_routes));
 	logInWindow->show();
 }
 

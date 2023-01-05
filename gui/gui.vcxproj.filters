@@ -124,10 +124,19 @@
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Route.h">
+    <ClInclude Include="ColorEnum.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayersInstance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CredentialErrors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Route.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerQString.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PlayerQString.h">
