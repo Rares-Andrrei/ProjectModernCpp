@@ -107,6 +107,7 @@
     <ClCompile Include="Route.cpp" />
     <ClCompile Include="PlayersQueue.cpp" />
     <ClCompile Include="Lobby.cpp" />
+    <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdvantagesFile\Advantages.h">
@@ -168,6 +169,7 @@
     <ClInclude Include="Route.h" />
     <ClInclude Include="PlayersQueue.h" />
     <ClInclude Include="Lobby.h" />
+    <ClInclude Include="Player.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="QTypeNumerical.txt">

@@ -54,7 +54,7 @@ std::string PlayersQueue::addActivePlayer(const Account& ac)
     {
         return "NULL";
     }
-    m_players.emplace(sessionKey, std::make_shared<Player>(ac.getNickName().c_str()));
+    m_players.emplace(sessionKey, std::make_shared<Player>(ac.getNickName()));
     return sessionKey;
 }
 

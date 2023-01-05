@@ -45,6 +45,7 @@ void lobby::onTwoPlayersButtonClicked()
 	m_routes.enterLobby(2, m_players);
 	if (m_players.size() > 0)
 	{
+		Game = std::make_unique<TriviadorGame>();
 		Game->setNumberOfPlayers(2);
 		Game->show();
 		this->hide();
@@ -57,6 +58,7 @@ void lobby::onThreePlayersButtonClicked()
 	m_routes.enterLobby(3, m_players);
 	if (m_players.size() > 0)
 	{
+		Game = std::make_unique<TriviadorGame>();
 		Game->setNumberOfPlayers(3);
 		Game->show();
 		this->hide();
@@ -69,6 +71,7 @@ void lobby::onFourPlayersButtonClicked()
 	m_routes.enterLobby(4, m_players);
 	if (m_players.size() > 0)
 	{
+		Game = std::make_unique<TriviadorGame>();
 		Game->setNumberOfPlayers(4);
 		Game->show();
 		this->hide();
@@ -82,7 +85,6 @@ void lobby::onCancelButtonClicked()
 	QPushButton* button = ui.twoPlayersButton;
 	button->setEnabled(true);
 	button->show();
-	m_stopLoop = true;
 	if (m_routes.leaveLobby())
 	{
 		QMessageBox::information(this, "queue", "You left the queue");

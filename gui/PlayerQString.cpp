@@ -30,6 +30,7 @@ PlayerQString::PlayerQString(PlayerQString&& other)
 PlayerQString& PlayerQString::operator=(const PlayerQString& other)
 {
 	this->m_color = other.m_color;
+	this->m_score = other.m_score;
 	this->m_name = other.m_name;
 
 	return *this;
@@ -38,6 +39,7 @@ PlayerQString& PlayerQString::operator=(const PlayerQString& other)
 PlayerQString& PlayerQString::operator=(PlayerQString&& other)
 {
 	this->m_color = other.m_color;
+	this->m_score = other.m_score;
 	this->m_name = other.m_name;
 
 	new(&other) PlayerQString;

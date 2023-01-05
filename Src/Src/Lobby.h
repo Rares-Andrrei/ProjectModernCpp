@@ -1,7 +1,7 @@
 #pragma once
 #include <unordered_map>
 #include <memory>
-#include "../../Player/Player/Player.h"
+#include "Player.h"
 #include"../../Color/Color/Color.h"
 #include <crow.h>
 #include <stack>

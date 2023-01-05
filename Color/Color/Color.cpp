@@ -17,21 +17,21 @@ std::string Color::ColorToString(const Color::ColorEnum& color)
 	}
 }
 
-Color::ColorEnum Color::stringToColor(const std::string& string)
+Color::ColorEnum Color::stringToColor(const char* const string)
 {
-	if (string == "red")
+	if (strcmp(string, "red"))
 	{
 		return Color::ColorEnum::Red;
 	}
-	else if (string == "green")
+	else if (strcmp(string, "green"))
 	{
 		return Color::ColorEnum::Green;
 	}
-	else if (string == "blue")
+	else if (strcmp(string, "blue"))
 	{
 		return Color::ColorEnum::Blue;
 	}
-	else if (string == "yellow")
+	else if (strcmp(string, "yellow"))
 	{
 		return Color::ColorEnum::Yellow;
 	}
