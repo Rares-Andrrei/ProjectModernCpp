@@ -66,7 +66,7 @@ void Route::enterLobbyRoute()
 		if (lobby->existInLobby(sessionKeyIter->second))
 		{
 			addActiveGame(lobby);
-			m_waitingList->deleteLobby(lobby);
+			//m_waitingList->deleteLobby(lobby);
 			crow::json::wvalue json = lobby->getPlayersData();
 			return crow::response(json);
 		}

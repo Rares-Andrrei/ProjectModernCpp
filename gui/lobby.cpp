@@ -80,7 +80,9 @@ void lobby::onTwoPlayersButtonClicked()
 	m_routes.enterLobby(2, m_players);
 	if (m_players.size() > 0)
 	{
+		Game.reset(new TriviadorGame());
 		Game->setNumberOfPlayers(2);
+		Game->setPlayer(m_Player);
 		Game->show();
 		this->hide();
 	}
