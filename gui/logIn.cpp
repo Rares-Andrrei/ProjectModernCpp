@@ -62,7 +62,7 @@ void logIn::onEnterButtonClicked()
 		//QMessageBox::information(this, "Success", "Account was found");
 		QApplication::closeAllWindows();
 		lobbyWindow.reset(new lobby(m_routes));
-		lobbyWindow->setPlayer(std::make_shared<PlayerQString>(username));
+		lobbyWindow->setPlayer(username);
 		lobbyWindow->show();
 		break;
 	default:

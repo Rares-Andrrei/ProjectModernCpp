@@ -68,9 +68,7 @@ void Route::enterLobby(int type, std::vector<std::shared_ptr<PlayerQString>>& pl
 			int score = resData["playerScore" + std::to_string(i)].i();
 			std::shared_ptr<PlayerQString> player = std::make_shared<PlayerQString>(QString::fromLocal8Bit(name));
 			auto colorr = Color::getColor(color);
-			player.setColor(colorr);
-			player.setScore(score);
-			players.push_back(player);
+			player->setColor(colorr);
 			players.emplace_back(std::move(player));
 		}
 	}

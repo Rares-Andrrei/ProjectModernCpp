@@ -22,12 +22,13 @@ class lobby : public QMainWindow
 
 public:
 	lobby(Route& route, QWidget* parent = nullptr);
-	void setPlayer(const std::shared_ptr<PlayerQString>& player);
+	void setPlayer(const QString& player);
 	~lobby();
 
 
 
 private:
+	QString m_PlayerName;
 	std::shared_ptr<PlayerQString> m_Player;
 
 	std::vector<std::shared_ptr<PlayerQString>> m_players;

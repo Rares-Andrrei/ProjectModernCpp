@@ -21,9 +21,9 @@ lobby::lobby(Route& route, QWidget* parent)
 	connect(ui.cancelButton, SIGNAL(clicked()), SLOT(onCancelButtonClicked()));
 }
 
-void lobby::setPlayer(const std::shared_ptr<PlayerQString>& player)
+void lobby::setPlayer(const QString& playerName)
 {
-	this->m_Player = player;
+	this->m_PlayerName = playerName;
 }
 
 lobby::~lobby()
@@ -42,6 +42,14 @@ void lobby::onTwoPlayersButtonClicked()
 {
 	ui.lobbyGameModes->setCurrentIndex(1);
 	m_routes.enterLobby(2, m_players);
+	for (auto& player : m_players)
+	{
+		if (player->getName() == m_PlayerName)
+		{
+			m_Player = player;
+			break;
+		}
+	}
 	if (m_players.size() > 0)
 	{
 		Game.reset(new TriviadorGame());
