@@ -7,7 +7,7 @@ class  PlayerQString
 private:
 	QString m_name;
 	int m_score;
-	Color::ColorEnum m_color : 3;
+	Color::ColorEnum m_color : 4;
 
 public:
 

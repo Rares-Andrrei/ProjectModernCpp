@@ -78,7 +78,7 @@ crow::json::wvalue Lobby::getPlayersData()
 	for (const auto& p : m_players)
 	{
 		json["playerName" + std::to_string(playerNr)] = p.second->getName();
-		json["playerColor" + std::to_string(playerNr)] = Color::ColorToString(p.second->getColor());
+		json["playerColor" + std::to_string(playerNr)] = Color::ColorToInt(p.second->getColor());
 		json["playerScore" + std::to_string(playerNr)] = p.second->getScore();
 		playerNr++;
 	}

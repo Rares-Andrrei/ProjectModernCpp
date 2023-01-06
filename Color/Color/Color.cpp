@@ -17,7 +17,7 @@ std::string Color::ColorToString(const Color::ColorEnum& color)
 	}
 }
 
-Color::ColorEnum Color::getColor(const int& index)
+Color::ColorEnum Color::getColor(int index)
 {
 	switch (index)
 	{
@@ -64,5 +64,22 @@ Color::ColorEnum Color::StringToColor(const std::string& color)
 	else
 	{
 		return Color::ColorEnum::None;
+	}
+}
+
+int Color::ColorToInt(const ColorEnum& color)
+{
+	switch (color)
+	{
+	case Color::ColorEnum::Red:
+		return 1;
+	case Color::ColorEnum::Green:
+		return 2;
+	case Color::ColorEnum::Blue:
+		return 3;
+	case Color::ColorEnum::Yellow:
+		return 4;
+	default:
+		return 0;
 	}
 }

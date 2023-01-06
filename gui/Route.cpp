@@ -63,11 +63,17 @@ void Route::enterLobby(int type, std::vector<PlayerQString>& players)
 		m_gameId = resData["lobbyID"].i();
 		for (int i = 1; i <= 2; i++)
 		{
-			PlayerQString p;
-			p.setColor(Color::StringToColor(resData["playerColor" + std::to_string(i)].s()));
-			p.setName(QString::fromStdString(resData["playerName" + std::to_string(i)].s()));
-			p.setScore(resData["playerScore" + std::to_string(i)].i());
-			players.push_back(p);
+			int color = resData["playerColor" + std::to_string(i)].i();
+			std::string name = resData["playerName" + std::to_string(i)].s();
+			int score = resData["playerScore" + std::to_string(i)].i();
+			PlayerQString player(QString::fromLocal8Bit(name));
+			auto colorr = Color::getColor(color);
+			player.setColor(colorr);
+			player.setScore(i);
+			//p.setColor(Color::StringToColor(resData["playerColor" + std::to_string(i)].s()));
+			//p.setName(QString::fromStdString(resData["playerName" + std::to_string(i)].s()));
+			//p.setScore(resData["playerScore" + std::to_string(i)].i());
+			players.push_back(player);
 		}
 	}
 }

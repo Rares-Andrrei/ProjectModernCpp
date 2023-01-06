@@ -20,7 +20,8 @@ public:
 
 public:
 	static std::string ColorToString(const ColorEnum& color);
-	static ColorEnum getColor(const int& index);
+	static ColorEnum getColor(int index);
 	static ColorEnum getDefaultColor();
 	static ColorEnum StringToColor(const std::string& color);
+	static int ColorToInt(const ColorEnum& color);
 };
