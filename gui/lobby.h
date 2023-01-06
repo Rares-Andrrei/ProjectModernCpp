@@ -29,7 +29,6 @@ public:
 
 private:
 	std::shared_ptr<PlayerQString> m_Player;
-	bool m_stopLoop;
 
 	std::vector<PlayerQString> m_players;
 	Route& m_routes;

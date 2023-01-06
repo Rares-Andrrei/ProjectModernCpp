@@ -69,10 +69,7 @@ void Route::enterLobby(int type, std::vector<PlayerQString>& players)
 			PlayerQString player(QString::fromLocal8Bit(name));
 			auto colorr = Color::getColor(color);
 			player.setColor(colorr);
-			player.setScore(i);
-			//p.setColor(Color::StringToColor(resData["playerColor" + std::to_string(i)].s()));
-			//p.setName(QString::fromStdString(resData["playerName" + std::to_string(i)].s()));
-			//p.setScore(resData["playerScore" + std::to_string(i)].i());
+			player.setScore(score);
 			players.push_back(player);
 		}
 	}

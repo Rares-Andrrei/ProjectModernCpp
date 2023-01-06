@@ -128,5 +128,5 @@ bool GameLogic::checkIfPlayerWasEliminated(std::shared_ptr<PlayerBase>& playerBa
 
 void GameLogic::addPlayer(std::shared_ptr<Player> player)
 {
-	m_players.emplace_back(player);
+	m_players.push_back(player);
 }

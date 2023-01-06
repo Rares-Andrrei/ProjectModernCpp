@@ -1,5 +1,6 @@
 #include "Route.h"
 #include "utils.h"
+#include <thread>
 #include<string>
 
 void Route::addActiveGame(std::shared_ptr<Lobby> lobby)
@@ -60,14 +61,15 @@ void Route::enterLobbyRoute()
 		std::shared_ptr<Lobby> lobby = m_waitingList->addPlayerToLobby(sessionKeyIter->second, lobbyType);
 		while (lobby->playersInLobby() < static_cast<int>(lobbyType) && lobby->existInLobby(sessionKeyIter->second))
 		{
+			std::this_thread::sleep_for(std::chrono::seconds(1));
 			//wait
 		}
 		crow::response resp;
 		if (lobby->existInLobby(sessionKeyIter->second))
 		{
 			addActiveGame(lobby);
-			//m_waitingList->deleteLobby(lobby);
 			crow::json::wvalue json = lobby->getPlayersData();
+			m_waitingList->deleteLobby(lobby);
 			return crow::response(json);
 		}
 		return crow::response(201);
