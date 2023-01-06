@@ -3,17 +3,17 @@
 
 
 Player::Player()
-	:m_color{ Color::getDefaultColor() }, m_name{ }
+	:m_color{ Color::getDefaultColor() }, m_name{ } , m_score{300}
 {
 }
 
 Player::Player( const std::string& name)
-	:m_name{ name }, m_color{ Color::getDefaultColor() }
+	:m_name{ name }, m_color{ Color::getDefaultColor() }, m_score{ 300 }
 {
 }
 
 Player::Player( const std::string& name, const Color::ColorEnum& color)
-	:m_name{ name }, m_color{ color }
+	:m_name{ name }, m_color{ color }, m_score{ 300 }
 {
 }
 
@@ -31,6 +31,7 @@ Player& Player::operator=(const Player& other)
 {
 	this->m_color = other.m_color;
 	this->m_name = other.m_name;
+	this->m_score = other.m_score;
 
 	return *this;
 }
@@ -39,6 +40,7 @@ Player& Player::operator=(Player&& other)
 {
 	this->m_color = other.m_color;
 	this->m_name = other.m_name;
+	this->m_score = other.m_score;
 
 	new(&other) Player;
 
