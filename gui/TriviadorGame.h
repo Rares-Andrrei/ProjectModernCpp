@@ -41,6 +41,7 @@ public:
 	void StartGame();
 
 	void setPlayer(const std::shared_ptr<PlayerQString>& player);
+	void setPlayers(const std::vector<std::shared_ptr<PlayerQString>>& players);
 protected:
 	void showEvent(QShowEvent* event) override;
 
@@ -66,25 +67,27 @@ private:
 private:
 	uint16_t m_numberOfPlayers;
 	std::shared_ptr<PlayerQString>m_player;
+	std::vector<std::shared_ptr<PlayerQString>>m_players;
 
 	GamePhase m_gamePhase : 3 = GamePhase::None;
 	DuelStatus m_duelStatus : 3 = DuelStatus::None;
-	
+
+	bool serverAproveStatus = false;
 	bool changePhase = true;
 	bool m_MapWindowClosed = false;
 	bool m_VariantsWindowClosed = false;
 	bool duelFinished = false;
-	
+
 	int m_numberOfDuels = 0;
 	int m_MaxNumberOfDuels = 0;
-	
+
 	std::unique_ptr<QTimer> t_MapWindowTimer;
 	std::unique_ptr<QTimer> t_NumericWindowTimer;
 	std::unique_ptr<QTimer> t_VariantsWindowTimer;
 	std::unique_ptr<QTimer> t_checkCurrentPhase;
-	
+
 	Ui::TriviadorGameClass ui;
-	
+
 	std::shared_ptr<QTypeNumericWindow> m_QTypeNumericWindow;
 	std::shared_ptr<QTypeVariantsWindow> m_QTypeVariantsWindow;
 	std::unique_ptr<Map> MapWindow;

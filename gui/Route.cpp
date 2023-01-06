@@ -37,7 +37,7 @@ bool Route::leaveLobby()
 //	}
 //}
 
-void Route::enterLobby(int type, std::vector<PlayerQString>& players)
+void Route::enterLobby(int type, std::vector<std::shared_ptr<PlayerQString>>& players)
 {
 	cpr::Url url{ "http://localhost:18080/enterLobby" };
 
@@ -66,11 +66,12 @@ void Route::enterLobby(int type, std::vector<PlayerQString>& players)
 			int color = resData["playerColor" + std::to_string(i)].i();
 			std::string name = resData["playerName" + std::to_string(i)].s();
 			int score = resData["playerScore" + std::to_string(i)].i();
-			PlayerQString player(QString::fromLocal8Bit(name));
+			std::shared_ptr<PlayerQString> player = std::make_shared<PlayerQString>(QString::fromLocal8Bit(name));
 			auto colorr = Color::getColor(color);
 			player.setColor(colorr);
 			player.setScore(score);
 			players.push_back(player);
+			players.emplace_back(std::move(player));
 		}
 	}
 }

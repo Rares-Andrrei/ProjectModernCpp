@@ -11,7 +11,7 @@ public:
 	//std::string getQuestionTypeNuemrical();
 
 	bool leaveLobby();
-	void enterLobby(int type, std::vector<PlayerQString>& players);
+	void enterLobby(int type, std::vector<std::shared_ptr<PlayerQString>>& players);
 
 	CredentialErrors login(std::string username, std::string password);
 	std::string getSessionKey();

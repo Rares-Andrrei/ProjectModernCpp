@@ -73,8 +73,13 @@ void TriviadorGame::StartGame()
 
 void TriviadorGame::setPlayer(const std::shared_ptr<PlayerQString>& player)
 {
-	m_player = std::make_shared<PlayerQString>(player->getName());
+	m_player = player;
 	MapWindow->setPlayer(m_player);
+}
+
+void TriviadorGame::setPlayers(const std::vector<std::shared_ptr<PlayerQString>>& players)
+{
+	m_players = players;
 }
 
 void TriviadorGame::showEvent(QShowEvent* event)
@@ -163,7 +168,7 @@ void TriviadorGame::displayPodium()
 
 void TriviadorGame::checkNumericWindowClosed()
 {
-	if (changePhase == true) // daca o faza s-a terminat , asteptam sa trecem la urmatoarea
+	if (changePhase == true || serverAproveStatus == false) // daca o faza s-a terminat , asteptam sa trecem la urmatoarea
 	{
 		return;
 	}
@@ -213,7 +218,7 @@ void TriviadorGame::checkNumericWindowClosed()
 
 void TriviadorGame::checkMapWindowClosed()
 {
-	if (changePhase == true) // daca o faza s-a terminat , asteptam sa trecem la urmatoarea
+	if (changePhase == true || serverAproveStatus == false) // daca o faza s-a terminat , asteptam sa trecem la urmatoarea
 	{
 		return;
 	}
@@ -240,7 +245,7 @@ void TriviadorGame::checkMapWindowClosed()
 
 void TriviadorGame::checkVariantsWindowClosed()
 {
-	if (m_VariantsWindowClosed == true && !m_QTypeVariantsWindow->isVisible() && !MapWindow->isVisible())
+	if (m_VariantsWindowClosed == true && !m_QTypeVariantsWindow->isVisible() && !MapWindow->isVisible() && serverAproveStatus == true)
 	{
 		m_VariantsWindowClosed = false;
 		m_duelStatus = DuelStatus::Draw; // statusul va fi primit de la server prin json sau prin response.status_code
@@ -268,7 +273,7 @@ void TriviadorGame::checkVariantsWindowClosed()
 
 void TriviadorGame::checkCurrentPhase()
 {
-	if (checkIfWindowsAreClosed() == false)
+	if (checkIfWindowsAreClosed() == false || serverAproveStatus == false)
 	{
 		return;
 	}

@@ -30,7 +30,7 @@ public:
 private:
 	std::shared_ptr<PlayerQString> m_Player;
 
-	std::vector<PlayerQString> m_players;
+	std::vector<std::shared_ptr<PlayerQString>> m_players;
 	Route& m_routes;
 	Ui::lobbyClass ui;
 	std::unique_ptr<TriviadorGame> Game;

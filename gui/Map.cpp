@@ -33,7 +33,7 @@ void Map::setNumberOfInterractions(int numberOfInterractions)
 
 void Map::setPlayer(const std::shared_ptr<PlayerQString>& player)
 {
-	m_player = std::make_shared<PlayerQString>(player->getName());
+	m_player = player;
 }
 
 QColor Map::getColor(const Color::ColorEnum& color)
