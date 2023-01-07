@@ -20,22 +20,46 @@ bool Route::leaveLobby()
 	return response.status_code == 200;
 }
 
-//std::string Route::getQuestionTypeNuemrical()
-//{
-//	auto response = cpr::Get(
-//		cpr::Url{ "http://localhost:18080/getQuestionTypeNumerical" },
-//		cpr::Payload{
-//			{}
-//		});
-//	if (response.status_code == 200)
-//	{
-//		return response.text;
-//	}
-//	else
-//	{
-//		return "";
-//	}
-//}
+std::string Route::getQuestionTypeNumerical()
+{
+	auto response = cpr::Get(
+		cpr::Url{ "http://localhost:18080/getQuestionTypeNumerical" },
+		cpr::Payload{
+			{ "gameID", std::to_string(m_gameId)}
+		});
+	if (response.status_code == 200)
+	{
+		return response.text;
+	}
+	else
+	{
+		return "";
+	}
+}
+
+std::array<std::string, 5> Route::getQuestionTypeVariants()
+{
+	std::array<std::string, 5> questionData;
+	auto response = cpr::Get(
+		cpr::Url{ "http://localhost:18080/getQuestionTypeVariants" },
+		cpr::Payload{
+			{ "gameID", std::to_string(m_gameId)}
+		});
+	if (response.status_code == 200)
+	{
+		crow::json::rvalue resData = crow::json::load(response.text);
+		questionData[0] = resData["question"].s();
+		questionData[1] = resData["var1"].s();
+		questionData[2] = resData["var2"].s();
+		questionData[3] = resData["var3"].s();
+		questionData[4] = resData["var4"].s();
+		return questionData;
+	}
+	else
+	{
+		return questionData = { "", "", "", "", "" };
+	}
+}
 
 void Route::enterLobby(int type, std::vector<std::shared_ptr<PlayerQString>>& players)
 {
@@ -87,10 +111,11 @@ CredentialErrors Route::login(std::string username, std::string password)
 			{ "password", password}
 		}
 	);
-	std::stringstream s(std::string(1, response.text[0]));
-	int resp;
-	s >> resp;
-
+	if (response.text == "")
+	{
+		return CredentialErrors::Other;
+	}
+	int resp = std::stoi(std::string(1, response.text[0]));
 	switch (resp)
 	{
 	case static_cast<int>(CredentialErrors::AlreadyConnected):
@@ -118,10 +143,11 @@ CredentialErrors Route::signUp(std::string username, std::string password, std::
 			{"name", name}
 		}
 	);
-	std::stringstream s(response.text);
-	int resp;
-	s >> resp;
-
+	if (response.text == "")
+	{
+		return CredentialErrors::Other;
+	}
+	int resp = std::stoi(response.text);
 	switch (resp)
 	{
 	case static_cast<int>(CredentialErrors::NameSize):

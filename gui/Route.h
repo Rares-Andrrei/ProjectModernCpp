@@ -8,7 +8,8 @@ class Route
 	std::string m_sessionKey;
 	long m_gameId;
 public:
-	//std::string getQuestionTypeNuemrical();
+	std::string getQuestionTypeNumerical();
+	std::array<std::string, 5> getQuestionTypeVariants();
 
 	bool leaveLobby();
 	void enterLobby(int type, std::vector<std::shared_ptr<PlayerQString>>& players);

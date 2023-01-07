@@ -7,7 +7,7 @@ void Route::addActiveGame(std::shared_ptr<Lobby> lobby)
 {
 	if (m_gamesActive.count(lobby->getId()) == 0)
 	{
-		m_gamesActive[lobby->getId()] = std::make_shared<GameLogic>(GameLogic(static_cast<int>(lobby->getType())));
+		m_gamesActive[lobby->getId()] = std::make_shared<GameLogic>(GameLogic(static_cast<int>(lobby->getType()), m_db));
 		std::vector<std::shared_ptr<Player>> players = lobby->getPlayers();
 		for (auto player : players)
 		{
@@ -16,8 +16,10 @@ void Route::addActiveGame(std::shared_ptr<Lobby> lobby)
 	}
 }
 
-Route::Route(Database& db, std::shared_ptr<PlayersQueue> players) : m_db{db}, m_waitingList{players}
+Route::Route()
 {
+	m_db = std::make_shared<Database>("file.db");
+	m_waitingList = std::make_shared<PlayersQueue>();
 
 }
 
@@ -32,7 +34,7 @@ void Route::loginRoute()
 		Account account;
 		account.setPassword(passwordIter->second);
 		account.setUsername(usernameIter->second);
-		CredentialErrors check = m_db.loginUser(account);
+		CredentialErrors check = m_db->loginUser(account);
 		std::string sessionKey;
 		if (check == CredentialErrors::Valid)
 		{
@@ -90,17 +92,57 @@ void Route::exitLobbyRoute()
 
 
 
-//void Route::getQuestionTypeNumericalRoute()
-//{
-//	auto& getQuestionTypeNumerical = CROW_ROUTE(m_app, "/getQuestionTypeNumerical")
-//		.methods(crow::HTTPMethod::Get);
-//	getQuestionTypeNumerical([this](const crow::request& req) {
-//	crow::response res;
-//	res.body = m_questionTypeNumerical.getQuestion();
-//	res.code = 200;
-//	return res;
-//		});
-//}
+void Route::getQuestionTypeNumericalRoute()
+{
+	auto& getQuestionTypeNumerical = CROW_ROUTE(m_app, "/getQuestionTypeNumerical")
+		.methods(crow::HTTPMethod::Get);
+	getQuestionTypeNumerical([this](const crow::request& req) {
+	auto bodyArgs = parseUrlArgs(req.body);
+	auto end = bodyArgs.end();
+	auto gameIdIter = bodyArgs.find("gameID");
+	long gameID = std::stoi( gameIdIter->second);
+	crow::response res;
+	if (m_gamesActive.count(gameID) > 0)
+	{
+		QTypeNumerical question = m_gamesActive[gameID]->getQuestionTypeNumerical();
+		res.body = question.getQuestion();
+		res.code = 200;
+	}
+	res.code = 404;
+	return res;
+		});
+}
+
+void Route::getQuestionTypeVariantsRoute()
+{
+	auto& getQuestionTypeVariants = CROW_ROUTE(m_app, "/getQuestionTypeVariants")
+		.methods(crow::HTTPMethod::Get);
+	getQuestionTypeVariants([this](const crow::request& req) {
+	auto bodyArgs = parseUrlArgs(req.body);
+	auto end = bodyArgs.end();
+	auto gameIdIter = bodyArgs.find("gameID");
+	long gameID = std::stoi(gameIdIter->second);
+	crow::response res;
+	if (m_gamesActive.count(gameID) > 0)
+	{
+		QTypeVariants question = m_gamesActive[gameID]->getQuestionTypeVariants();
+		crow::json::wvalue json;
+		json["question"] = question.getQuestion();
+		json["var1"] = question.getVariant<0>();
+		json["var2"] = question.getVariant<1>();
+		json["var3"] = question.getVariant<2>();
+		json["var4"] = question.getVariant<3>();
+		res.code = 200;
+		res = json;
+	}
+	else
+	{
+		res.code = 404;
+	}
+	return res;
+		});
+
+}
 
 void Route::signUpRoute()
 {
@@ -112,7 +154,7 @@ void Route::signUpRoute()
 	auto passwordIter = bodyArgs.find("password");
 	auto nameIter = bodyArgs.find("name");
 	Account account(usernameIter->second, passwordIter->second, nameIter->second);
-	CredentialErrors check = m_db.registerUser(account);
+	CredentialErrors check = m_db->registerUser(account);
 	crow::response res;
 	res.body = std::to_string(static_cast<int>(check));
 	res.code = 200;
