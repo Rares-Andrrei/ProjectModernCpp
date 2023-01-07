@@ -78,6 +78,49 @@ void Route::enterLobbyRoute()
 		});
 }
 
+void Route::sendResponseQTypeNumericalEt1()
+{
+	auto& sendResponse = CROW_ROUTE(m_app, "/sendNumericalResponseEt1").methods(crow::HTTPMethod::Post);
+	sendResponse([this](const crow::request& req) {
+		auto bodyArgs = parseUrlArgs(req.body);
+		auto end = bodyArgs.end();
+		auto sessionKeyIter = bodyArgs.find("sessionKey");
+		auto gameIdIter = bodyArgs.find("gameID");
+		auto colorIter = bodyArgs.find("color");
+		auto responseIter = bodyArgs.find("response");
+		auto timeIter = bodyArgs.find("time");
+		if (gameIdIter->second == "" || sessionKeyIter->second == "" || responseIter->second == "" || timeIter->second == "" || colorIter->second == "")
+		{
+			return crow::response(401);
+		}
+
+		int gameID = std::stoi(gameIdIter->second);
+
+		if (m_waitingList->isActive(sessionKeyIter->second) && m_gamesActive.count(gameID) > 0)
+		{
+			m_gamesActive[gameID]->setPlayerNumericalAnswer(std::stoi(timeIter->second), std::stoi(responseIter->second), Color::StringToColor(colorIter->second));
+			//functia din gamelogic
+			while (!m_gamesActive[gameID]->NumericalAnswersReady())
+			{
+				std::this_thread::sleep_for(std::chrono::seconds(1));
+				//asteapta pana cand e gata sa trimita rezultatele
+			}
+			//cand sunt gata formam vectorul de castigatori
+			std::vector<std::shared_ptr<Player>> rankingList = m_gamesActive[gameID]->getWinnerList();
+			crow::json::wvalue playesData = GameLogic::playersToJson(rankingList);
+			crow::response resp = playesData;
+			resp.code = 200;
+			return resp;
+		}
+		else
+		{
+			return crow::response(400);
+		}
+		return crow::response(402);
+	});
+}
+
+
 void Route::exitLobbyRoute()
 {
 	auto& exitQueue = CROW_ROUTE(m_app, "/eliminatePlayerFromQueue").methods(crow::HTTPMethod::PUT);

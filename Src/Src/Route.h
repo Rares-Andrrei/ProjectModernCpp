@@ -21,6 +21,7 @@ public:
 
 	void getQuestionTypeNumericalRoute();
 	void getQuestionTypeVariantsRoute();
+	void sendResponseQTypeNumericalEt1();
 
 
 	void loginRoute();

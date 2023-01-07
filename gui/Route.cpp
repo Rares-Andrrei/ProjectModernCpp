@@ -63,6 +63,41 @@ std::array<std::string, 5> Route::getQuestionTypeVariants()
 	}
 }
 
+std::vector<std::pair<Color::ColorEnum, int>> Route::sendResponseNumericalEt1(int resp, int time, Color::ColorEnum color)
+{
+	std::vector<std::pair<Color::ColorEnum, int>> players;
+	cpr::Url url{ "http://localhost:18080/sendNumericalResponseEt1" };
+	cpr::Payload payload{
+			{ "sessionKey", m_sessionKey},
+			{ "gameID", std::to_string(m_gameId)},
+			{ "color", Color::ColorToString(color)},
+			{ "response", std::to_string(resp)},
+			{ "time", std::to_string(time)}
+	};
+	auto lambda = [](cpr::Response response) {
+		return response.text;
+	};
+
+	auto future_text = cpr::PostCallback(lambda, url, payload);
+
+	while (future_text.wait_for(std::chrono::seconds(0)) != std::future_status::ready)
+	{
+		QCoreApplication::processEvents();
+	}
+	auto aux = future_text.get();
+	if (aux != "")
+	{
+		crow::json::rvalue resData = crow::json::load(aux);
+		for (int i = 1; i <= resData["playerNr"].i(); i++)
+		{
+			Color::ColorEnum c = Color::StringToColor(resData["playerColor" + std::to_string(i)].s());
+			int s = resData["playerScore" + std::to_string(i)].i();
+			players.push_back({ c, s });
+		}
+	}
+	return players; //logica de pe gui va decide de cate ori se va apela fucntia de alegere teritoriu, daca playerul curent trebuie a aaleaga va trimite culoarea si teritoriul ales daca nu se va trimite un string gol, ca raspuns la ruta de alegere teritoriu se va returna harta actualizata.
+}
+
 void Route::enterLobby(int type, std::vector<std::shared_ptr<PlayerQString>>& players)
 {
 	cpr::Url url{ "http://localhost:18080/enterLobby" };

@@ -24,6 +24,21 @@ GameLogic::GameLogic(const uint16_t& numberOfPlayers, std::shared_ptr<Database> 
 	randomQTypeVariants();
 }
 
+crow::json::wvalue GameLogic::playersToJson(std::vector<std::shared_ptr<Player>> players)
+{
+	crow::json::wvalue json;
+	int playerNr = 1;
+	json["playerNr"] = players.size();
+	for (const auto& p : players)
+	{
+		json["playerName" + std::to_string(playerNr)] = p->getName();
+		json["playerColor" + std::to_string(playerNr)] = Color::ColorToInt(p->getColor());
+		json["playerScore" + std::to_string(playerNr)] = p->getScore();
+		playerNr++;
+	}
+	return json;
+}
+
 QTypeNumerical GameLogic::getQuestionTypeNumerical()
 {
 	return m_questionTypeNumerical;
@@ -32,6 +47,25 @@ QTypeNumerical GameLogic::getQuestionTypeNumerical()
 QTypeVariants GameLogic::getQuestionTypeVariants()
 {
 	return m_questionTypeVariants;
+}
+
+void GameLogic::setPlayerNumericalAnswer(int time, int response, Color::ColorEnum color)
+{
+	//setezi raspunsul pe care l-a dat playerul
+
+}
+
+bool GameLogic::NumericalAnswersReady()
+{
+	//verifica daca toti playerii au trimis raspunsul
+	return false;
+}
+
+std::vector<std::shared_ptr<Player>> GameLogic::getWinnerList()
+{
+
+	//returnezi vectorul cu playerii in ordine pe locurile pe care au iesit
+	return std::vector<std::shared_ptr<Player>>();
 }
 
 void GameLogic::StartGame()
