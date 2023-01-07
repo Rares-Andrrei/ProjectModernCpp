@@ -107,6 +107,7 @@ void Route::getQuestionTypeNumericalRoute()
 		QTypeNumerical question = m_gamesActive[gameID]->getQuestionTypeNumerical();
 		res.body = question.getQuestion();
 		res.code = 200;
+		return res;
 	}
 	res.code = 404;
 	return res;
@@ -134,6 +135,7 @@ void Route::getQuestionTypeVariantsRoute()
 		json["var4"] = question.getVariant<3>();
 		res.code = 200;
 		res = json;
+		return res;
 	}
 	else
 	{

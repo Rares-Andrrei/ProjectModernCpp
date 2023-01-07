@@ -29,6 +29,8 @@ std::string Route::getQuestionTypeNumerical()
 		});
 	if (response.status_code == 200)
 	{
+		/*auto  resp= response.text;
+		return QString::fromStdString(resp);*/
 		return response.text;
 	}
 	else

@@ -42,7 +42,6 @@ QTypeNumericWindow::QTypeNumericWindow(QWidget* parent)
 		"  image: url(:/images/handle.png);"
 		"}"
 		"QSlider::groove:horizontal { background: green; }");
-	requestQuestion();
 
 	//TD:  Clasa custom pentru button , pentru a simplifica codul
 	ui.Number0->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -64,8 +63,9 @@ QTypeNumericWindow::~QTypeNumericWindow()
 
 void QTypeNumericWindow::requestQuestion()
 {
+	QString question = QString::fromLocal8Bit(m_GameInstance->getQuestionTypeNumerical());
 	ui.Question->setWordWrap(true);
-	ui.Question->setText("This is a long message that will be displayed in a scrollable text edit widget.This is a long message that will be displayed in a scrollable text edit widget.");
+	ui.Question->setText(question);
 	ui.Question->setFont(QFont("Arial", 25));
 	ui.Question->setAlignment(Qt::AlignCenter);
 	// Request :: ask the server fro a random question 

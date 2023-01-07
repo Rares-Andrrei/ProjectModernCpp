@@ -1,5 +1,6 @@
 #include "QTypeVariantsWindow.h"
 #include "Route.h"
+#include <array>
 
 QTypeVariantsWindow::QTypeVariantsWindow(QWidget* parent)
 	: QMainWindow(parent)
@@ -59,8 +60,6 @@ void QTypeVariantsWindow::createAnswerVariants()
 	ui.VariantB->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	ui.VariantC->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	ui.VariantD->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-	requestQuestion();
 }
 
 void QTypeVariantsWindow::advantageButtonEnabled()
@@ -80,17 +79,18 @@ QTypeVariantsWindow::~QTypeVariantsWindow()
 
 void QTypeVariantsWindow::requestQuestion()
 {
+	std::array<std::string, 5> question = m_GameInstance->getQuestionTypeVariants();
 	ui.Question->setWordWrap(true);
 
 	ui.Question->setFont(QFont("Arial", 25));
 	ui.Question->setAlignment(Qt::AlignCenter);
 	// Request :: ask the server for a random question and the 4 variants
-	ui.Question->setText("This is a long message that will be displayed in a scrollable text edit widget.This is a long message that will be displayed in a scrollable text edit widget.");
+	ui.Question->setText(QString::fromLocal8Bit(question[0]));
 
-	ui.VariantA->setText("A");
-	ui.VariantB->setText("B");
-	ui.VariantC->setText("C");
-	ui.VariantD->setText("D");
+	ui.VariantA->setText(QString::fromLocal8Bit(question[1]));
+	ui.VariantB->setText(QString::fromLocal8Bit(question[2]));
+	ui.VariantC->setText(QString::fromLocal8Bit(question[3]));
+	ui.VariantD->setText(QString::fromLocal8Bit(question[4]));
 }
 
 void QTypeVariantsWindow::setPlayer(const std::shared_ptr<PlayerQString>& player)

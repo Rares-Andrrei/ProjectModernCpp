@@ -103,6 +103,7 @@ void TriviadorGame::chooseBasePhase()
 	m_QTypeNumericWindow.reset(new QTypeNumericWindow(this));
 	m_QTypeNumericWindow->setPlayer(m_player);
 	m_QTypeNumericWindow->setGameInstance(m_GameInstance);
+	m_QTypeNumericWindow->requestQuestion();
 	m_QTypeNumericWindow->show();
 }
 
@@ -115,6 +116,7 @@ void TriviadorGame::chooseRegionsPhase()
 	m_QTypeNumericWindow.reset(new QTypeNumericWindow(this));
 	m_QTypeNumericWindow->setPlayer(m_player);
 	m_QTypeNumericWindow->setGameInstance(m_GameInstance);
+	m_QTypeNumericWindow->requestQuestion();
 	m_QTypeNumericWindow->show();
 }
 
@@ -198,6 +200,7 @@ void TriviadorGame::checkNumericWindowClosed()
 			m_QTypeNumericWindow.reset(new QTypeNumericWindow(this));
 			m_QTypeNumericWindow->setPlayer(m_player);
 			m_QTypeNumericWindow->setGameInstance(m_GameInstance);
+			m_QTypeNumericWindow->requestQuestion();
 			MapWindow->setNumberOfInterractions(m_numberOfPlayers * 3 + 1);
 			MapWindow->show();
 			m_MapWindowClosed = true;
@@ -247,6 +250,7 @@ void TriviadorGame::checkMapWindowClosed()
 		m_QTypeVariantsWindow.reset(new QTypeVariantsWindow(this));
 		m_QTypeVariantsWindow->setPlayer(m_player);
 		m_QTypeVariantsWindow->setGameInstance(m_GameInstance);
+		m_QTypeVariantsWindow->requestQuestion();
 		m_QTypeVariantsWindow->show();
 		m_VariantsWindowClosed = true;
 		m_MapWindowClosed = true;
@@ -276,6 +280,7 @@ void TriviadorGame::checkVariantsWindowClosed()
 			m_QTypeNumericWindow.reset(new QTypeNumericWindow(this));
 			m_QTypeNumericWindow->setPlayer(m_player);
 			m_QTypeNumericWindow->setGameInstance(m_GameInstance);
+			m_QTypeNumericWindow->requestQuestion();
 			m_QTypeNumericWindow->show();
 			// GUI :: deschidere fereastra cu intrebarea numerica => creare ordine si restabilirea  la duelStatus
 		}
