@@ -1,11 +1,5 @@
 #include "PlayersQueue.h"
 
-
-PlayersQueue::PlayersQueue()
-{
-
-}
-
 void PlayersQueue::deleteLobby(std::shared_ptr<Lobby> lobby)
 {
     Lobby::LobbyType lType = lobby->getType();

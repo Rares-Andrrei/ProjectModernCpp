@@ -20,12 +20,12 @@
 long Lobby::currentCount = 0;
 void useRoutes()
 {
-	Database db("file.db");
-	std::shared_ptr<PlayersQueue> playerList = std::make_shared<PlayersQueue>();
-	Route r(db, playerList);
+	Route r;
 	r.loginRoute();
 	r.signUpRoute();
 	r.enterLobbyRoute();
+	r.getQuestionTypeVariantsRoute();
+	r.getQuestionTypeNumericalRoute();
 	r.exitLobbyRoute();
 	r.logOutRoute();
 	r.startApp();

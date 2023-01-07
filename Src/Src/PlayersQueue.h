@@ -13,7 +13,7 @@ class PlayersQueue
 	std::unordered_map<Lobby::LobbyType, std::shared_ptr<Lobby>> m_lobbies;
 
 public:
-	PlayersQueue();
+	PlayersQueue() = default;
 	void deleteLobby(std::shared_ptr<Lobby> lobby);
 	std::shared_ptr<Lobby> addPlayerToLobby(std::string sessionKey, Lobby::LobbyType lobby);
 	void kickPlayerFromLobby(const std::string& sessionKey);

@@ -1,14 +1,37 @@
 #include "GameLogic.h"
 
 
+void GameLogic::randomQTypeNumerical()
+{
+
+	m_questionTypeNumerical = m_db->randQTypeNumerical();
+}
+
+void GameLogic::randomQTypeVariants()
+{
+	m_questionTypeVariants = m_db->randQTypeVariants();
+}
+
 GameLogic::GameLogic()
 	:k_numberOfPlayers{ 2 }
 {
 }
 
-GameLogic::GameLogic(const uint16_t& numberOfPlayers)
-	: k_numberOfPlayers(numberOfPlayers)
+GameLogic::GameLogic(const uint16_t& numberOfPlayers, std::shared_ptr<Database> db)
+	: k_numberOfPlayers(numberOfPlayers), m_db{db}
 {
+	randomQTypeNumerical();
+	randomQTypeVariants();
+}
+
+QTypeNumerical GameLogic::getQuestionTypeNumerical()
+{
+	return m_questionTypeNumerical;
+}
+
+QTypeVariants GameLogic::getQuestionTypeVariants()
+{
+	return m_questionTypeVariants;
 }
 
 void GameLogic::StartGame()

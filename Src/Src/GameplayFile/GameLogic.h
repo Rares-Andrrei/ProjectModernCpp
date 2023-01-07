@@ -9,19 +9,33 @@
 class GameLogic
 {
 	Board m_board;
+	
 	QuestionManager m_questions;
+
+	QTypeNumerical m_questionTypeNumerical;
+	QTypeVariants m_questionTypeVariants;
+
 	const uint16_t k_numberOfPlayers;
 	std::vector<std::shared_ptr<Player>> m_players;
 	std::vector<std::shared_ptr<Player>> m_eliminatedPlayers;
 	//std::vector<std::shared_ptr<Advantages>> m_advantages; // de vazut unde sa fie folosit . 
 
+	std::shared_ptr<Database> m_db;
+	void randomQTypeNumerical();
+	void randomQTypeVariants();
+
 public:
 	GameLogic();
-	GameLogic(const uint16_t& numberOfPlayers);
+	GameLogic(const uint16_t& numberOfPlayers, std::shared_ptr<Database> db);
 	//GameLogic(const GameLogic&) = delete;
 	//GameLogic(GameLogic&&) = delete;
 	//GameLogic& operator=(const GameLogic&) = delete;
 	//GameLogic& operator=(GameLogic&&) = delete;
+
+	QTypeNumerical getQuestionTypeNumerical();
+	QTypeVariants getQuestionTypeVariants();
+
+
 
 	void StartGame();
 	void EndGame();
