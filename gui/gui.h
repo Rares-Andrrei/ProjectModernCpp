@@ -12,12 +12,12 @@ class gui : public QMainWindow
     Q_OBJECT
 
 public:
-    gui(Route& routes, QWidget* parent = Q_NULLPTR);
+    gui(QWidget* parent = Q_NULLPTR);
 
 private:
     Ui::guiClass ui;
 
-    Route& m_routes;
+    std::shared_ptr<Route> m_routes;
     std::shared_ptr<signUp> signUpWindow;
     std::shared_ptr<logIn> logInWindow;
 

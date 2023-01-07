@@ -3,8 +3,8 @@
 #include "Route.h"
 #include "CredentialErrors.h"
 
-signUp::signUp(Route& routes, QWidget* parent)
-	: m_routes{ routes }, QMainWindow(parent)
+signUp::signUp(std::shared_ptr<Route> routes, QWidget* parent)
+	: m_routes(routes), QMainWindow(parent)
 {
 	ui.setupUi(this);
 
@@ -70,7 +70,7 @@ void signUp::onEnterButtonClicked()
 		QMessageBox::about(this, "Sign up error", "Please fill in all the fields");
 		return;
 	}
-	CredentialErrors check = m_routes.signUp(usernameString, passwordString, nicknameString);
+	CredentialErrors check = m_routes->signUp(usernameString, passwordString, nicknameString);
 	switch(check)
 	{
 	case CredentialErrors::NameSize:

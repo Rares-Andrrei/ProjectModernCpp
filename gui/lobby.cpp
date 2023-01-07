@@ -1,7 +1,7 @@
 #include "lobby.h"
 #include <QMovie>
 
-lobby::lobby(Route& route, QWidget* parent)
+lobby::lobby(std::shared_ptr<Route> route, QWidget* parent)
 	: m_routes(route), QMainWindow(parent)
 {
 	ui.setupUi(this);
@@ -28,8 +28,8 @@ void lobby::setPlayer(const QString& playerName)
 
 lobby::~lobby()
 {
-	m_routes.leaveLobby();
-	if (m_routes.logOut())
+	m_routes->leaveLobby();
+	if (m_routes->logOut())
 	{
 		QMessageBox::information(this, "Logout", "U have been logged out");
 		QApplication::closeAllWindows();
@@ -41,7 +41,7 @@ lobby::~lobby()
 void lobby::onTwoPlayersButtonClicked()
 {
 	ui.lobbyGameModes->setCurrentIndex(1);
-	m_routes.enterLobby(2, m_players);
+	m_routes->enterLobby(2, m_players);
 	for (auto& player : m_players)
 	{
 		if (player->getName() == m_PlayerName)
@@ -64,7 +64,7 @@ void lobby::onTwoPlayersButtonClicked()
 void lobby::onThreePlayersButtonClicked()
 {
 	ui.lobbyGameModes->setCurrentIndex(1);
-	m_routes.enterLobby(3, m_players);
+	m_routes->enterLobby(3, m_players);
 	if (m_players.size() > 0)
 	{
 		Game.reset(new TriviadorGame());
@@ -77,7 +77,7 @@ void lobby::onThreePlayersButtonClicked()
 void lobby::onFourPlayersButtonClicked()
 {
 	ui.lobbyGameModes->setCurrentIndex(1);
-	m_routes.enterLobby(4, m_players);
+	m_routes->enterLobby(4, m_players);
 	if (m_players.size() > 0)
 	{
 		Game.reset(new TriviadorGame());
@@ -94,7 +94,7 @@ void lobby::onCancelButtonClicked()
 	QPushButton* button = ui.twoPlayersButton;
 	button->setEnabled(true);
 	button->show();
-	if (m_routes.leaveLobby())
+	if (m_routes->leaveLobby())
 	{
 		QMessageBox::information(this, "queue", "You left the queue");
 	}

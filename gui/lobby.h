@@ -21,7 +21,7 @@ class lobby : public QMainWindow
 	Q_OBJECT
 
 public:
-	lobby(Route& route, QWidget* parent = nullptr);
+	lobby(std::shared_ptr<Route> route, QWidget* parent = nullptr);
 	void setPlayer(const QString& player);
 	~lobby();
 
@@ -32,7 +32,7 @@ private:
 	std::shared_ptr<PlayerQString> m_Player;
 
 	std::vector<std::shared_ptr<PlayerQString>> m_players;
-	Route& m_routes;
+	std::shared_ptr<Route> m_routes;
 	Ui::lobbyClass ui;
 	std::unique_ptr<TriviadorGame> Game;
 private slots:

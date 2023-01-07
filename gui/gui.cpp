@@ -1,8 +1,11 @@
 #include "gui.h"
 
-gui::gui(Route& routes, QWidget* parent)
-	: m_routes{ routes }, QMainWindow(parent)
+gui::gui(QWidget* parent)
+	: QMainWindow(parent)
 {
+
+	m_routes = std::make_shared<Route>();
+
 	ui.setupUi(this);
 
 	connect(ui.playButton, SIGNAL(clicked()), SLOT(onPlayButtonClicked()));

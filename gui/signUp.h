@@ -12,11 +12,11 @@ class signUp : public QMainWindow
 	Q_OBJECT
 
 public:
-	signUp(Route& routes, QWidget* parent = nullptr);
+	signUp(std::shared_ptr<Route> routes, QWidget* parent = nullptr);
 
 private:
 	Ui::signUpClass ui;
-	Route& m_routes;
+	std::shared_ptr<Route> m_routes;
 private slots:
 	void onEnterButtonClicked();
 	void onGoBackButtonClicked();

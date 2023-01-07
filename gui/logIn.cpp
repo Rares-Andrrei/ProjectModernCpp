@@ -1,7 +1,7 @@
 #include "logIn.h"
 
 
-logIn::logIn(Route& routes, QWidget* parent)
+logIn::logIn(std::shared_ptr<Route> routes, QWidget* parent)
 	: m_routes{ routes }, QMainWindow(parent)
 {
 	ui.setupUi(this);
@@ -46,7 +46,7 @@ void logIn::onEnterButtonClicked()
 		QMessageBox::about(this, "Log in error", "Please fill in all the fields");
 		return;
 	}
-	CredentialErrors check = m_routes.login(usernameString, passwordString);
+	CredentialErrors check = m_routes->login(usernameString, passwordString);
 	switch (check)
 	{
 	case CredentialErrors::AlreadyConnected:
