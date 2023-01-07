@@ -4,6 +4,7 @@
 #include "ui_QTypeNumericWindow.h"
 #include <memory>
 #include "PlayerQString.h"
+#include "Route.h"
 
 
 class QTypeNumericWindow : public QMainWindow
@@ -11,11 +12,13 @@ class QTypeNumericWindow : public QMainWindow
 	Q_OBJECT
 
 public:
-	QTypeNumericWindow(QWidget *parent = nullptr);
+	QTypeNumericWindow(QWidget* parent = nullptr);
 	~QTypeNumericWindow();
 
 	void requestQuestion();
 	void setPlayer(const std::shared_ptr<PlayerQString>& player);
+	void setGameInstance(const std::shared_ptr<Route>& GameInstance);
+
 
 protected:
 	void showEvent(QShowEvent* event) override;
@@ -41,6 +44,8 @@ private slots:
 
 private:
 	void disableAllButtons();
+
+	std::shared_ptr<Route> m_GameInstance;
 	QTimer* m_TimeRemaining;
 	QTimer* m_timer;
 	std::shared_ptr<PlayerQString> m_player;

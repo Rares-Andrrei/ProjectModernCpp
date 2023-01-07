@@ -82,6 +82,12 @@ void TriviadorGame::setPlayers(const std::vector<std::shared_ptr<PlayerQString>>
 	m_players = players;
 }
 
+void TriviadorGame::setGameInstance(const std::shared_ptr<Route>& GameInstance)
+{
+	m_GameInstance = GameInstance;
+	MapWindow->setGameInstance(m_GameInstance);
+}
+
 void TriviadorGame::showEvent(QShowEvent* event)
 {
 	t_checkCurrentPhase->start();
@@ -96,6 +102,7 @@ void TriviadorGame::chooseBasePhase()
 
 	m_QTypeNumericWindow.reset(new QTypeNumericWindow(this));
 	m_QTypeNumericWindow->setPlayer(m_player);
+	m_QTypeNumericWindow->setGameInstance(m_GameInstance);
 	m_QTypeNumericWindow->show();
 }
 
@@ -107,6 +114,7 @@ void TriviadorGame::chooseRegionsPhase()
 
 	m_QTypeNumericWindow.reset(new QTypeNumericWindow(this));
 	m_QTypeNumericWindow->setPlayer(m_player);
+	m_QTypeNumericWindow->setGameInstance(m_GameInstance);
 	m_QTypeNumericWindow->show();
 }
 
@@ -189,6 +197,7 @@ void TriviadorGame::checkNumericWindowClosed()
 		{
 			m_QTypeNumericWindow.reset(new QTypeNumericWindow(this));
 			m_QTypeNumericWindow->setPlayer(m_player);
+			m_QTypeNumericWindow->setGameInstance(m_GameInstance);
 			MapWindow->setNumberOfInterractions(m_numberOfPlayers * 3 + 1);
 			MapWindow->show();
 			m_MapWindowClosed = true;
@@ -237,6 +246,7 @@ void TriviadorGame::checkMapWindowClosed()
 	{
 		m_QTypeVariantsWindow.reset(new QTypeVariantsWindow(this));
 		m_QTypeVariantsWindow->setPlayer(m_player);
+		m_QTypeVariantsWindow->setGameInstance(m_GameInstance);
 		m_QTypeVariantsWindow->show();
 		m_VariantsWindowClosed = true;
 		m_MapWindowClosed = true;
@@ -265,6 +275,7 @@ void TriviadorGame::checkVariantsWindowClosed()
 		{
 			m_QTypeNumericWindow.reset(new QTypeNumericWindow(this));
 			m_QTypeNumericWindow->setPlayer(m_player);
+			m_QTypeNumericWindow->setGameInstance(m_GameInstance);
 			m_QTypeNumericWindow->show();
 			// GUI :: deschidere fereastra cu intrebarea numerica => creare ordine si restabilirea  la duelStatus
 		}

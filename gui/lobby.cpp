@@ -56,6 +56,7 @@ void lobby::onTwoPlayersButtonClicked()
 		Game->setNumberOfPlayers(2);
 		Game->setPlayer(m_Player);
 		Game->setPlayers(m_players);
+		Game->setGameInstance(m_routes);
 		Game->show();
 		this->hide();
 	}

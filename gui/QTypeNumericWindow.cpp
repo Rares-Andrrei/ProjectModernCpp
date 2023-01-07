@@ -76,6 +76,11 @@ void QTypeNumericWindow::setPlayer(const std::shared_ptr<PlayerQString>& player)
 	m_player = player;
 }
 
+void QTypeNumericWindow::setGameInstance(const std::shared_ptr<Route>& GameInstance)
+{
+	m_GameInstance = GameInstance;
+}
+
 void QTypeNumericWindow::showEvent(QShowEvent* event)
 {
 	m_TimeRemaining->start(10);

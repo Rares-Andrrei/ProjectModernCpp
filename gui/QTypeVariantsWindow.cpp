@@ -1,4 +1,16 @@
 #include "QTypeVariantsWindow.h"
+#include "Route.h"
+
+QTypeVariantsWindow::QTypeVariantsWindow(QWidget* parent)
+	: QMainWindow(parent)
+{
+	ui.setupUi(this);
+
+	buttonsConnections();
+	createTimeSlider();
+	createAnswerVariants();
+	advantageButtonEnabled();
+}
 
 void QTypeVariantsWindow::buttonsConnections()
 {
@@ -57,19 +69,10 @@ void QTypeVariantsWindow::advantageButtonEnabled()
 	/*if (1 == 1)
 		delete ui.fiftyFiftyAdvantajeButton;
 	else*/
-		ui.fiftyFiftyAdvantajeButton->setToolTip("50-50 : this advantage eliminates 2 variants");
+	ui.fiftyFiftyAdvantajeButton->setToolTip("50-50 : this advantage eliminates 2 variants");
 }
 
-QTypeVariantsWindow::QTypeVariantsWindow(QWidget* parent)
-	: QMainWindow(parent)
-{
-	ui.setupUi(this);
 
-	buttonsConnections();
-	createTimeSlider();
-	createAnswerVariants();
-	advantageButtonEnabled();
-}
 
 QTypeVariantsWindow::~QTypeVariantsWindow()
 {
@@ -93,6 +96,11 @@ void QTypeVariantsWindow::requestQuestion()
 void QTypeVariantsWindow::setPlayer(const std::shared_ptr<PlayerQString>& player)
 {
 	m_player = player;
+}
+
+void QTypeVariantsWindow::setGameInstance(const std::shared_ptr<Route>& GameInstance)
+{
+	m_GameInstance = GameInstance;
 }
 
 void QTypeVariantsWindow::showEvent(QShowEvent* event)

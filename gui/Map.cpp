@@ -36,6 +36,11 @@ void Map::setPlayer(const std::shared_ptr<PlayerQString>& player)
 	m_player = player;
 }
 
+void Map::setGameInstance(const std::shared_ptr<Route>& GameInstance)
+{
+	m_GameInstance = GameInstance;
+}
+
 QColor Map::getColor(const Color::ColorEnum& color)
 {
 	switch (color)

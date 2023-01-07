@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <Qtime>
 #include "PlayerQString.h"
+#include "Route.h"
 
 #include "Map.h"
 #include "QTypeNumericWindow.h"
@@ -42,6 +43,7 @@ public:
 
 	void setPlayer(const std::shared_ptr<PlayerQString>& player);
 	void setPlayers(const std::vector<std::shared_ptr<PlayerQString>>& players);
+	void setGameInstance(const std::shared_ptr<Route>& GameInstance);
 protected:
 	void showEvent(QShowEvent* event) override;
 
@@ -65,6 +67,7 @@ private:
 	bool checkIfWindowsAreClosed();
 
 private:
+	std::shared_ptr<Route> m_GameInstance;
 	uint16_t m_numberOfPlayers;
 	std::shared_ptr<PlayerQString>m_player;
 	std::vector<std::shared_ptr<PlayerQString>>m_players;
@@ -72,7 +75,7 @@ private:
 	GamePhase m_gamePhase : 3 = GamePhase::None;
 	DuelStatus m_duelStatus : 3 = DuelStatus::None;
 
-	bool serverAproveStatus = false;
+	bool serverAproveStatus = true;
 	bool changePhase = true;
 	bool m_MapWindowClosed = false;
 	bool m_VariantsWindowClosed = false;

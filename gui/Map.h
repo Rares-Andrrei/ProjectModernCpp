@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include "ui_Map.h"
 #include"Battle.h"
+#include "Route.h"
 
 #include <qstring.h>
 #include <qmessagebox.h>
@@ -19,6 +20,7 @@ public:
 
 	void setNumberOfInterractions(int numberOfInterractions);
 	void setPlayer(const std::shared_ptr<PlayerQString>& player);
+	void setGameInstance(const std::shared_ptr<Route>& GameInstance);
 	QColor getColor(const Color::ColorEnum& color);
 
 protected:
@@ -27,6 +29,7 @@ protected:
 private:
 	Ui::MapClass ui;
 
+	std::shared_ptr<Route> m_GameInstance;
 	std::unique_ptr<QTimer> t_checkFinishState;
 	int m_numberOfInterractions;
 	bool m_validateMove = true;
