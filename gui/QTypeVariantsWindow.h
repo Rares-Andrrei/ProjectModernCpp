@@ -2,8 +2,10 @@
 
 #include <QMainWindow>
 #include "ui_QTypeVariantsWindow.h"
+#include "PlayerQString.h"
 #include <string>
 #include <QTimer>
+#include <memory>
 
 class QTypeVariantsWindow : public QMainWindow
 {
@@ -13,7 +15,7 @@ public:
 	QTypeVariantsWindow(QWidget* parent = nullptr);
 	~QTypeVariantsWindow();
 	void requestQuestion();
-
+	void setPlayer(const std::shared_ptr<PlayerQString>& player);
 protected:
 	void showEvent(QShowEvent* event) override;
 
@@ -26,11 +28,19 @@ private slots:
 	void on_Enter_clicked();
 	void on_TimeRemaining_Timeout();
 
-private:
-	void disableAllButtons();
+	void onFiftyFiftyButtonClicked();
 
+private:
+	void buttonsConnections();
+	void createTimeSlider();
+	void createAnswerVariants();
+	void advantageButtonEnabled();
+
+	void disableAllButtons();
+	
 	QPushButton* m_Variant = nullptr;
 	QTimer* m_timeRemaining;
 	QString variant = "";
+	std::shared_ptr<PlayerQString> m_player;
 	Ui::QTypeVariantsWindowClass ui;
 };

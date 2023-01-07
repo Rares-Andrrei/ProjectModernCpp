@@ -1,15 +1,10 @@
 #include "logIn.h"
-#include <cpr/cpr.h>
-#include <crow.h>
-#include "CredentialErrors.h"
-#include "Route.h"
-#include <string>
+
 
 logIn::logIn(Route& routes, QWidget* parent)
 	: m_routes{ routes }, QMainWindow(parent)
 {
 	ui.setupUi(this);
-	lobbyWindow.reset(new lobby(m_routes));
 
 	ui.l_password->setEchoMode(QLineEdit::Password);
 
@@ -36,8 +31,7 @@ void logIn::onShowPasswordButtonChecked()
 	else
 		ui.l_password->setEchoMode(QLineEdit::Password);
 }
-#include "QTypeNumericWindow.h"
-#include "QTypeVariantsWindow.h"
+
 void logIn::onEnterButtonClicked()
 {
 	QString username = ui.l_username->text();
@@ -55,6 +49,9 @@ void logIn::onEnterButtonClicked()
 	CredentialErrors check = m_routes.login(usernameString, passwordString);
 	switch (check)
 	{
+	case CredentialErrors::AlreadyConnected:
+		QMessageBox::information(this, "Failure", "The account is already connected");
+		return;
 	case CredentialErrors::IncorrectAccount:
 		QMessageBox::information(this, "Failure", "Account was not found");
 		return;
@@ -62,8 +59,10 @@ void logIn::onEnterButtonClicked()
 		QMessageBox::information(this, "Failure", "Incorrect password");
 		return;
 	case CredentialErrors::Valid:
-		QMessageBox::information(this, "Success", "Account was found");
+		//QMessageBox::information(this, "Success", "Account was found");
 		QApplication::closeAllWindows();
+		lobbyWindow.reset(new lobby(m_routes));
+		lobbyWindow->setPlayer(username);
 		lobbyWindow->show();
 		break;
 	default:

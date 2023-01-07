@@ -6,6 +6,7 @@
 #include "Account.h"
 #include "QTypeVariants.h"
 #include "QTypeNumerical.h"
+
 namespace sql = sqlite_orm;
 
 inline auto createStorage(const std::string& filename)

@@ -1,16 +1,20 @@
 #include "QTypeVariantsWindow.h"
 
-QTypeVariantsWindow::QTypeVariantsWindow(QWidget* parent)
-	: QMainWindow(parent)
+void QTypeVariantsWindow::buttonsConnections()
 {
-	ui.setupUi(this);
 	m_timeRemaining = new QTimer(this);
+
 	connect(m_timeRemaining, &QTimer::timeout, this, &QTypeVariantsWindow::on_TimeRemaining_Timeout);
 	connect(ui.VariantA, &QPushButton::clicked, this, &QTypeVariantsWindow::on_Variant1_clicked);
 	connect(ui.VariantB, &QPushButton::clicked, this, &QTypeVariantsWindow::on_Variant2_clicked);
 	connect(ui.VariantC, &QPushButton::clicked, this, &QTypeVariantsWindow::on_Variant3_clicked);
 	connect(ui.VariantD, &QPushButton::clicked, this, &QTypeVariantsWindow::on_Variant4_clicked);
 
+	connect(ui.fiftyFiftyAdvantajeButton, SIGNAL(clicked()), SLOT(onFiftyFiftyButtonClicked()));
+}
+
+void QTypeVariantsWindow::createTimeSlider()
+{
 	ui.TimeSlider->setRange(0, 3000);
 	ui.TimeSlider->setValue(0);
 	ui.TimeSlider->setStyleSheet("QSlider {"
@@ -34,14 +38,37 @@ QTypeVariantsWindow::QTypeVariantsWindow(QWidget* parent)
 		"  border-radius: 10px;"
 		"  image: url(:/images/handle.png);"
 		"}"
-		"QSlider::groove:horizontal { background: green; }");
+		"QSlider::groove:horizontal { background-color: rgb(42, 103, 174); }");
+}
 
+void QTypeVariantsWindow::createAnswerVariants()
+{
 	ui.VariantA->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	ui.VariantB->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	ui.VariantC->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	ui.VariantD->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 	requestQuestion();
+}
+
+void QTypeVariantsWindow::advantageButtonEnabled()
+{
+	//daca avantajul a fost deja apasat o data sa dispara
+	/*if (1 == 1)
+		delete ui.fiftyFiftyAdvantajeButton;
+	else*/
+		ui.fiftyFiftyAdvantajeButton->setToolTip("50-50 : this advantage eliminates 2 variants");
+}
+
+QTypeVariantsWindow::QTypeVariantsWindow(QWidget* parent)
+	: QMainWindow(parent)
+{
+	ui.setupUi(this);
+
+	buttonsConnections();
+	createTimeSlider();
+	createAnswerVariants();
+	advantageButtonEnabled();
 }
 
 QTypeVariantsWindow::~QTypeVariantsWindow()
@@ -61,6 +88,11 @@ void QTypeVariantsWindow::requestQuestion()
 	ui.VariantB->setText("B");
 	ui.VariantC->setText("C");
 	ui.VariantD->setText("D");
+}
+
+void QTypeVariantsWindow::setPlayer(const std::shared_ptr<PlayerQString>& player)
+{
+	m_player = player;
 }
 
 void QTypeVariantsWindow::showEvent(QShowEvent* event)
@@ -114,6 +146,7 @@ void QTypeVariantsWindow::on_Enter_clicked()
 	if (variant == "")
 		variant = "NULL"; // daca nu a ales un raspuns in timp util , este declarat ca fiind gresit
 	// REQUEST :: send the response  provided to the server + the time 
+	this->close();
 }
 
 void QTypeVariantsWindow::on_TimeRemaining_Timeout()
@@ -128,6 +161,23 @@ void QTypeVariantsWindow::on_TimeRemaining_Timeout()
 		on_Enter_clicked();
 	}
 }
+
+void QTypeVariantsWindow::onFiftyFiftyButtonClicked()
+{
+	//trebuie vazut daca avantajul poate fi folosit
+	   //- daca jucatorul are destule puncte pentru a lua avantajul
+	   //- daca avantajul a mai fost sau nu folosit
+
+	delete ui.VariantC;
+	delete ui.VariantD;
+
+	ui.VariantA->setFixedSize(470, 170);
+	ui.VariantB->setFixedSize(470, 170);
+
+	//dupa ce a fost folosit avantajul sa dispara
+	delete ui.fiftyFiftyAdvantajeButton;
+}
+
 
 void QTypeVariantsWindow::disableAllButtons()
 {

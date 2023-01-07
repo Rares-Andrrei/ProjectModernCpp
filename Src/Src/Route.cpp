@@ -1,8 +1,22 @@
 #include "Route.h"
 #include "utils.h"
+#include <thread>
 #include<string>
 
-Route::Route(Database& db, std::shared_ptr<Players> players) : m_db{db}, m_players{players}
+void Route::addActiveGame(std::shared_ptr<Lobby> lobby)
+{
+	if (m_gamesActive.count(lobby->getId()) == 0)
+	{
+		m_gamesActive[lobby->getId()] = std::make_shared<GameLogic>(GameLogic(static_cast<int>(lobby->getType())));
+		std::vector<std::shared_ptr<Player>> players = lobby->getPlayers();
+		for (auto player : players)
+		{
+			m_gamesActive[lobby->getId()]->addPlayer(player);
+		}
+	}
+}
+
+Route::Route(Database& db, std::shared_ptr<PlayersQueue> players) : m_db{db}, m_waitingList{players}
 {
 
 }
@@ -22,7 +36,11 @@ void Route::loginRoute()
 		std::string sessionKey;
 		if (check == CredentialErrors::Valid)
 		{
-			sessionKey = m_players->addActivePlayer(account);
+			sessionKey = m_waitingList->addActivePlayer(account);
+			if (sessionKey == "NULL")
+			{
+				check = CredentialErrors::AlreadyConnected;
+			}
 		}
 		crow::response res;
 		res.body = std::to_string(static_cast<int>(check)) + sessionKey;
@@ -31,55 +49,58 @@ void Route::loginRoute()
 		});
 }
 
-void Route::enterTwoPlayersLobby()
+void Route::enterLobbyRoute()
 {
-
-	auto& queueTwoPlayers = CROW_ROUTE(m_app, "/queueTwoPlayerGame").methods(crow::HTTPMethod::Put);
-	queueTwoPlayers([this](const crow::request& req) {
-
+	auto& enterLobbyRoute = CROW_ROUTE(m_app, "/enterLobby").methods(crow::HTTPMethod::Post);
+	enterLobbyRoute([this](const crow::request& req) {
 		auto bodyArgs = parseUrlArgs(req.body);
-	auto end = bodyArgs.end();
-	auto sessionKeyIter = bodyArgs.find("sessionKey");
-	if (m_players->isActive(sessionKeyIter->second) && playersInGame.count(sessionKeyIter->second) == 0)
-	{
-		std::string key = sessionKeyIter->second;
-		twoPlayers.push_back(m_players->getPlayer(key));
-		playersInGame.insert(key);
-	}
-	if (twoPlayers.size() < 2)
-	{
-		std::this_thread::sleep_for(std::chrono::milliseconds(100));
-		return crow::response(201); // 201 means that the player is queued
-	}
-	else
-	{
-		std::this_thread::sleep_for(std::chrono::milliseconds(100));
-		return crow::response(200); // the game stars when there are two players in the queue
-	}
+		auto end = bodyArgs.end();
+		auto sessionKeyIter = bodyArgs.find("sessionKey");
+		auto lobbyTypeIter = bodyArgs.find("lobbyType");
+		Lobby::LobbyType lobbyType = Lobby::stringToLobbyType(lobbyTypeIter->second);
+		std::shared_ptr<Lobby> lobby = m_waitingList->addPlayerToLobby(sessionKeyIter->second, lobbyType);
+		while (lobby->playersInLobby() < static_cast<int>(lobbyType) && lobby->existInLobby(sessionKeyIter->second))
+		{
+			std::this_thread::sleep_for(std::chrono::seconds(1));
+			//wait
+		}
+		crow::response resp;
+		if (lobby->existInLobby(sessionKeyIter->second))
+		{
+			addActiveGame(lobby);
+			crow::json::wvalue json = lobby->getPlayersData();
+			m_waitingList->deleteLobby(lobby);
+			return crow::response(json);
+		}
+		return crow::response(201);
 		});
 }
 
-void Route::exitTwoPlayersLobby()
+void Route::exitLobbyRoute()
 {
 	auto& exitQueue = CROW_ROUTE(m_app, "/eliminatePlayerFromQueue").methods(crow::HTTPMethod::PUT);
-	exitQueue([this](const crow::request& req) {
-		auto bodyArgs = parseUrlArgs(req.body);
-	auto end = bodyArgs.end();
-	auto sessionKeyIter = bodyArgs.find("sessionKey");
-	std::string playerName = m_players->getPlayer(sessionKeyIter->second)->getName();
-	for (auto& it : twoPlayers)
-	{
-		if (it->getName() == playerName)
-		{
-			twoPlayers.remove(it);
-			playersInGame.erase(sessionKeyIter->second);
-			return crow::response(200);
-		}
-	}
-	return crow::response(200);
-		});
+		exitQueue([this](const crow::request& req) {
+			auto bodyArgs = parseUrlArgs(req.body);
+		auto end = bodyArgs.end();
+		auto sessionKeyIter = bodyArgs.find("sessionKey");
+		m_waitingList->kickPlayerFromLobby(sessionKeyIter->second);
+		return crow::response(200);
+	});
 }
 
+
+
+//void Route::getQuestionTypeNumericalRoute()
+//{
+//	auto& getQuestionTypeNumerical = CROW_ROUTE(m_app, "/getQuestionTypeNumerical")
+//		.methods(crow::HTTPMethod::Get);
+//	getQuestionTypeNumerical([this](const crow::request& req) {
+//	crow::response res;
+//	res.body = m_questionTypeNumerical.getQuestion();
+//	res.code = 200;
+//	return res;
+//		});
+//}
 
 void Route::signUpRoute()
 {
@@ -106,7 +127,7 @@ void Route::logOutRoute()
 	logOut([this](const crow::request& req) {
 		auto bodyArgs = parseUrlArgs(req.body);
 	auto sessionKey = bodyArgs.find("sessionKey");
-	m_players->logOutPlayer(sessionKey->second);
+	m_waitingList->logOutPlayer(sessionKey->second);
 	crow::response res;
 	res.code = 200;
 	return res;

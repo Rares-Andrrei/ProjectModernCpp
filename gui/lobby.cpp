@@ -5,7 +5,6 @@ lobby::lobby(Route& route, QWidget* parent)
 	: m_routes(route), QMainWindow(parent)
 {
 	ui.setupUi(this);
-	Game.reset(new TriviadorGame(this));
 
 	ui.twoPlayersButton->setStyleSheet("QPushButton { background-image:url(:/gui/twoPlayers.png); text-align: left, up; border-radius: 5px; }");
 	ui.threePlayersButton->setStyleSheet("QPushButton { background-image:url(:/gui/threePlayers.png); text-align: left, up; border-radius: 5px; }");
@@ -15,7 +14,6 @@ lobby::lobby(Route& route, QWidget* parent)
 	ui.loadingLabel->setMovie(movie);
 	ui.loadingLabel->show();
 	movie->start();
-
 	connect(ui.twoPlayersButton, SIGNAL(clicked()), SLOT(onTwoPlayersButtonClicked()));
 	connect(ui.threePlayersButton, SIGNAL(clicked()), SLOT(onThreePlayersButtonClicked()));
 	connect(ui.fourPlayersButton, SIGNAL(clicked()), SLOT(onFourPlayersButtonClicked()));
@@ -23,9 +21,9 @@ lobby::lobby(Route& route, QWidget* parent)
 	connect(ui.cancelButton, SIGNAL(clicked()), SLOT(onCancelButtonClicked()));
 }
 
-void lobby::setPlayer(PlayerInstance player)
+void lobby::setPlayer(const QString& playerName)
 {
-	this->Player = player;
+	this->m_PlayerName = playerName;
 }
 
 lobby::~lobby()
@@ -36,60 +34,57 @@ lobby::~lobby()
 		QMessageBox::information(this, "Logout", "U have been logged out");
 		QApplication::closeAllWindows();
 	}
-	else{
+	else {
 		QMessageBox::information(this, "Failure", "The logout failed");
 	}
 }
 void lobby::onTwoPlayersButtonClicked()
 {
-	QTimer timer;
-	m_stopLoop = false;
-	QPushButton* button = ui.twoPlayersButton;
-	button->setEnabled(false);
-
-	QObject::connect(&timer, &QTimer::timeout, [&]()
+	ui.lobbyGameModes->setCurrentIndex(1);
+	m_routes.enterLobby(2, m_players);
+	for (auto& player : m_players)
+	{
+		if (player->getName() == m_PlayerName)
 		{
-			int resp = m_routes.enterTwoPlayersLobby();
-
-	if (resp == 201)
-	{
-		//Queue message 
-		ui.lobbyGameModes->setCurrentIndex(1);
+			m_Player = player;
+			break;
+		}
 	}
-	else if (resp == 200)
+	if (m_players.size() > 0)
 	{
-		// Game found message
-		m_stopLoop = true;
+		Game.reset(new TriviadorGame());
 		Game->setNumberOfPlayers(2);
+		Game->setPlayer(m_Player);
+		Game->setPlayers(m_players);
 		Game->show();
 		this->hide();
 	}
-	else
-	{
-		QMessageBox::information(this, "queue", "The queue failed");
-		m_stopLoop = true;
-	}
-		});
-
-	timer.start(3000);
-
-	while (!m_stopLoop)
-	{
-		QCoreApplication::processEvents();
-		QThread::msleep(100);
-	}
-	QThread::msleep(5000);
 }
 
 void lobby::onThreePlayersButtonClicked()
 {
 	ui.lobbyGameModes->setCurrentIndex(1);
-
+	m_routes.enterLobby(3, m_players);
+	if (m_players.size() > 0)
+	{
+		Game.reset(new TriviadorGame());
+		Game->setNumberOfPlayers(3);
+		Game->show();
+		this->hide();
+	}
 }
 
 void lobby::onFourPlayersButtonClicked()
 {
 	ui.lobbyGameModes->setCurrentIndex(1);
+	m_routes.enterLobby(4, m_players);
+	if (m_players.size() > 0)
+	{
+		Game.reset(new TriviadorGame());
+		Game->setNumberOfPlayers(4);
+		Game->show();
+		this->hide();
+	}
 
 }
 
@@ -99,7 +94,6 @@ void lobby::onCancelButtonClicked()
 	QPushButton* button = ui.twoPlayersButton;
 	button->setEnabled(true);
 	button->show();
-	m_stopLoop = true;
 	if (m_routes.leaveLobby())
 	{
 		QMessageBox::information(this, "queue", "You left the queue");

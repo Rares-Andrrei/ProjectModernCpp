@@ -1,7 +1,9 @@
 #include "Route.h"
 #include <cpr/cpr.h>
+#include <crow.h>
 #include <iostream>
 #include <sstream>
+#include <QCoreApplication>
 
 std::string Route::getSessionKey()
 {
@@ -18,15 +20,63 @@ bool Route::leaveLobby()
 	return response.status_code == 200;
 }
 
-int Route::enterTwoPlayersLobby()
+//std::string Route::getQuestionTypeNuemrical()
+//{
+//	auto response = cpr::Get(
+//		cpr::Url{ "http://localhost:18080/getQuestionTypeNumerical" },
+//		cpr::Payload{
+//			{}
+//		});
+//	if (response.status_code == 200)
+//	{
+//		return response.text;
+//	}
+//	else
+//	{
+//		return "";
+//	}
+//}
+
+void Route::enterLobby(int type, std::vector<std::shared_ptr<PlayerQString>>& players)
 {
-	auto response = cpr::Put(
-		cpr::Url{ "http://localhost:18080/queueTwoPlayerGame" },
-		cpr::Payload{
-			{ "sessionKey", m_sessionKey}
-		});
-	return response.status_code;
+	cpr::Url url{ "http://localhost:18080/enterLobby" };
+
+	cpr::Payload payload{
+			{ "sessionKey", m_sessionKey},
+			{ "lobbyType", std::to_string(type)}
+	};
+
+	auto lambda = [](cpr::Response response) {
+		return response.text;
+	};
+
+	auto future_text = cpr::PostCallback(lambda, url, payload);
+
+	while (future_text.wait_for(std::chrono::seconds(0)) != std::future_status::ready)
+	{
+		QCoreApplication::processEvents();
+	}
+	auto aux = future_text.get();
+	if (aux != "")
+	{
+		crow::json::rvalue resData = crow::json::load(aux);
+		m_gameId = resData["lobbyID"].i();
+		for (int i = 1; i <= 2; i++)
+		{
+			int color = resData["playerColor" + std::to_string(i)].i();
+			std::string name = resData["playerName" + std::to_string(i)].s();
+			int score = resData["playerScore" + std::to_string(i)].i();
+			std::shared_ptr<PlayerQString> player = std::make_shared<PlayerQString>(QString::fromLocal8Bit(name));
+			auto colorr = Color::getColor(color);
+			player->setColor(colorr);
+			players.emplace_back(std::move(player));
+		}
+	}
 }
+
+
+
+
 
 CredentialErrors Route::login(std::string username, std::string password)
 {
@@ -43,6 +93,8 @@ CredentialErrors Route::login(std::string username, std::string password)
 
 	switch (resp)
 	{
+	case static_cast<int>(CredentialErrors::AlreadyConnected):
+		return CredentialErrors::AlreadyConnected;
 	case static_cast<int>(CredentialErrors::IncorrectAccount):
 		return CredentialErrors::IncorrectAccount;
 	case static_cast<int>(CredentialErrors::IncorrectPassword):

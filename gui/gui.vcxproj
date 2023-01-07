@@ -91,10 +91,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Battle.cpp" />
-    <ClCompile Include="ColorEnum.cpp" />
     <ClCompile Include="lobby.cpp" />
     <ClCompile Include="Map.cpp" />
-    <ClCompile Include="PlayersInstance.cpp" />
+    <ClCompile Include="PlayerQString.cpp" />
     <ClCompile Include="QTypeNumericWindow.cpp" />
     <ClCompile Include="QTypeVariantsWindow.cpp" />
     <ClCompile Include="Route.cpp" />
@@ -131,11 +130,13 @@
     <QtMoc Include="Battle.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ColorEnum.h" />
+    <ProjectReference Include="..\Color\Color\Color.vcxproj">
+      <Project>{375b82c3-f193-4085-89a2-fd9ffb4b97aa}</Project>
+    </ProjectReference>
     <ClInclude Include="CredentialErrors.h" />
-    <ClInclude Include="PlayersInstance.h" />
     <QtMoc Include="QTypeNumericWindow.h" />
     <QtMoc Include="QTypeVariantsWindow.h" />
+    <ClInclude Include="PlayerQString.h" />
     <ClInclude Include="Route.h" />
     <QtMoc Include="TriviadorGame.h" />
   </ItemGroup>

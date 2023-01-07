@@ -8,6 +8,11 @@
         <file>fourPlayers.png</file>
         <file>threePlayers.png</file>
         <file>twoPlayers.png</file>
+        <file>fourPlayers.png</file>
+        <file>backgroundQuestions.png</file>
+        <file>fiftyFifty.png</file>
+        <file>generateAnAnswer.png</file>
+        <file>generateFourAnswers.png</file>
         <file>32x32.gif</file>
     </qresource>
 </RCC>

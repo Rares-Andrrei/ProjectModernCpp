@@ -69,9 +69,6 @@
     <ClCompile Include="GameplayFile\Duel.cpp">
       <Filter>GamePlayFiles\Cpp</Filter>
     </ClCompile>
-    <ClCompile Include="GameplayFile\Player.cpp">
-      <Filter>GamePlayFiles\Cpp</Filter>
-    </ClCompile>
     <ClCompile Include="GameplayFile\PlayerBase.cpp">
       <Filter>GamePlayFiles\Cpp</Filter>
     </ClCompile>
@@ -108,7 +105,7 @@
     <ClCompile Include="GameplayFile\GameLogic.cpp" />
     <ClCompile Include="ManualTests.cpp" />
     <ClCompile Include="Route.cpp" />
-    <ClCompile Include="Players.cpp" />
+    <ClCompile Include="PlayersQueue.cpp" />
     <ClCompile Include="Lobby.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -131,9 +128,6 @@
       <Filter>GamePlayFiles\Header</Filter>
     </ClInclude>
     <ClInclude Include="GameplayFile\Duel.h">
-      <Filter>GamePlayFiles\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="GameplayFile\Player.h">
       <Filter>GamePlayFiles\Header</Filter>
     </ClInclude>
     <ClInclude Include="GameplayFile\PlayerBase.h">
@@ -172,7 +166,7 @@
       <Filter>DatabaseFiles\Header</Filter>
     </ClInclude>
     <ClInclude Include="Route.h" />
-    <ClInclude Include="Players.h" />
+    <ClInclude Include="PlayersQueue.h" />
     <ClInclude Include="Lobby.h" />
   </ItemGroup>
   <ItemGroup>

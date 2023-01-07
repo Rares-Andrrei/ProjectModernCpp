@@ -5,6 +5,7 @@
 #include <vector>
 #include <memory>
 
+#include <iostream>
 class Board
 {
 	uint8_t m_NumberOfPlayers; // Numarul maxim de jucatori este 4
@@ -27,7 +28,7 @@ public:
 	int getTotalScore();
 	uint8_t getNumberOfPlayers();
 	bool CheckIfBoardIsFull();
-	void eliminatePlayer(const Player::Color& elimated, const Player::Color& newOwner);
+	void eliminatePlayer(const Color::ColorEnum& elimated, const Color::ColorEnum& newOwner);
 
 private:
 	void ChangeBoardDimensions();

@@ -71,6 +71,11 @@ void QTypeNumericWindow::requestQuestion()
 	// Request :: ask the server fro a random question 
 }
 
+void QTypeNumericWindow::setPlayer(const std::shared_ptr<PlayerQString>& player)
+{
+	m_player = player;
+}
+
 void QTypeNumericWindow::showEvent(QShowEvent* event)
 {
 	m_TimeRemaining->start(10);
@@ -128,6 +133,7 @@ void QTypeNumericWindow::on_Enter_clicked()
 	ui.TimeRemaining->setEnabled(false);
 	int value = ui.TimeRemaining->value();
 	// Request :: send the response  provided to the server
+	this->close();
 }
 
 void QTypeNumericWindow::on_Delete_pressed()
@@ -157,6 +163,7 @@ void QTypeNumericWindow::on_TimeRemaining_Timeout()
 	}
 	else {
 		m_TimeRemaining->stop();
+		on_Enter_clicked();
 		// REQUEST :: send the response  provided to the server
 	}
 }

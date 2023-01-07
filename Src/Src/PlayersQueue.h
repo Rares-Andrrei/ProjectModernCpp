@@ -5,15 +5,18 @@
 #include <unordered_set>
 #include <array>
 #include <memory>
-#include "Player.h"
+#include "../../Player/Player/Player.h"
 
-class Players
+class PlayersQueue
 {
 	std::unordered_map<std::string, std::shared_ptr<Player>> m_players;
-
+	std::unordered_map<Lobby::LobbyType, std::shared_ptr<Lobby>> m_lobbies;
 
 public:
-	//std::weak_ptr<Lobby> addPlayerToLobby(std::string sessionKey, Lobby::LobbyType lobby);
+	PlayersQueue();
+	void deleteLobby(std::shared_ptr<Lobby> lobby);
+	std::shared_ptr<Lobby> addPlayerToLobby(std::string sessionKey, Lobby::LobbyType lobby);
+	void kickPlayerFromLobby(const std::string& sessionKey);
 
 	std::shared_ptr<Player> getPlayer(const std::string& sessionKey);
 

@@ -53,11 +53,11 @@ void testDatabase()
 
 void testMatch(const int& numberOfPlayers)
 {
-	GameLogic game(numberOfPlayers);
+	/*GameLogic game(numberOfPlayers);
 	game.addPlayer("Rares");
 	game.addPlayer("Alex");
 	game.StartGame();
-	game.EndGame();
+	game.EndGame();*/
 }
 
 void testQuest()

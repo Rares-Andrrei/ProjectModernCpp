@@ -5,10 +5,14 @@
 #include "TriviadorGame.h"
 #include "Route.h"
 #include <qmessagebox.h>
-
-#include "PlayersInstance.h"
 #include <cpr/cpr.h>
-
+#include <crow.h>
+#include "CredentialErrors.h"
+#include <string>
+#include "PlayerQString.h"
+#include <cpr/cpr.h>
+#include <memory>
+#include <crow.h>
 #include <qtimer.h>
 #include <qthread.h>
 
@@ -18,14 +22,16 @@ class lobby : public QMainWindow
 
 public:
 	lobby(Route& route, QWidget* parent = nullptr);
-	void setPlayer(PlayerInstance player);
+	void setPlayer(const QString& player);
 	~lobby();
 
 
 
 private:
-	PlayerInstance Player;
-	bool m_stopLoop;
+	QString m_PlayerName;
+	std::shared_ptr<PlayerQString> m_Player;
+
+	std::vector<std::shared_ptr<PlayerQString>> m_players;
 	Route& m_routes;
 	Ui::lobbyClass ui;
 	std::unique_ptr<TriviadorGame> Game;
@@ -33,7 +39,6 @@ private slots:
 	void onTwoPlayersButtonClicked();
 	void onThreePlayersButtonClicked();
 	void onFourPlayersButtonClicked();
-
 	void onCancelButtonClicked();
 };
 // broadcast

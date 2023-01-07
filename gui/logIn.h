@@ -5,10 +5,11 @@
 
 #include <QString>
 #include <QMessageBox>
+#include <memory>
 #include "Route.h"
 #include "lobby.h"
 
-#include "PlayersInstance.h"
+
 
 class logIn : public QMainWindow
 {

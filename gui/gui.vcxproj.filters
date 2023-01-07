@@ -55,12 +55,6 @@
     <ClCompile Include="Battle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ColorEnum.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayersInstance.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Route.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -71,6 +65,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="QTypeVariantsWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerQString.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -133,10 +130,16 @@
     <ClInclude Include="PlayersInstance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CredentialErrors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Route.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CredentialErrors.h">
+    <ClInclude Include="PlayerQString.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerQString.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
