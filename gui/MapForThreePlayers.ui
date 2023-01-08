@@ -20,6 +20,9 @@
    <string>MapForThreePlayers</string>
   </property>
   <widget class="QWidget" name="centralWidget">
+   <property name="styleSheet">
+    <string notr="true">background-image:url(:/gui/mapBackground.png)</string>
+   </property>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
@@ -40,6 +43,10 @@
       <width>1920</width>
       <height>1080</height>
      </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: transparent
+</string>
     </property>
     <property name="text">
      <string/>
@@ -202,7 +209,7 @@
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="zona1">
     <property name="geometry">
      <rect>
       <x>538</x>
@@ -218,7 +225,7 @@
      <string>zona1</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="zona2">
     <property name="geometry">
      <rect>
       <x>810</x>
@@ -234,7 +241,7 @@
      <string>zona2</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="zona3">
     <property name="geometry">
      <rect>
       <x>1053</x>
@@ -250,7 +257,7 @@
      <string>zona3</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="zona4">
     <property name="geometry">
      <rect>
       <x>430</x>
@@ -266,7 +273,7 @@
      <string>zona4</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_5">
+   <widget class="QPushButton" name="zona5">
     <property name="geometry">
      <rect>
       <x>810</x>
@@ -282,7 +289,7 @@
      <string>zona5</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_6">
+   <widget class="QPushButton" name="zona6">
     <property name="geometry">
      <rect>
       <x>1053</x>
@@ -298,7 +305,7 @@
      <string>zona6</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_7">
+   <widget class="QPushButton" name="zona7">
     <property name="geometry">
      <rect>
       <x>310</x>
@@ -314,7 +321,7 @@
      <string>zona7</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_8">
+   <widget class="QPushButton" name="zona8">
     <property name="geometry">
      <rect>
       <x>802</x>
@@ -337,7 +344,7 @@
      <string>zona8</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_9">
+   <widget class="QPushButton" name="zona9">
     <property name="geometry">
      <rect>
       <x>1053</x>
@@ -353,13 +360,13 @@
      <string>zona9</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_10">
+   <widget class="QPushButton" name="zona10">
     <property name="geometry">
      <rect>
       <x>450</x>
       <y>680</y>
       <width>361</width>
-      <height>161</height>
+      <height>158</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -369,13 +376,13 @@
      <string>zona10</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_11">
+   <widget class="QPushButton" name="zona11">
     <property name="geometry">
      <rect>
-      <x>804</x>
-      <y>680</y>
-      <width>251</width>
-      <height>161</height>
+      <x>810</x>
+      <y>681</y>
+      <width>243</width>
+      <height>157</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -385,7 +392,7 @@
      <string>zona11</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_12">
+   <widget class="QPushButton" name="zona12">
     <property name="geometry">
      <rect>
       <x>1054</x>
@@ -401,13 +408,13 @@
      <string>zona12</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_13">
+   <widget class="QPushButton" name="zona13">
     <property name="geometry">
      <rect>
       <x>600</x>
-      <y>833</y>
-      <width>211</width>
-      <height>131</height>
+      <y>838</y>
+      <width>210</width>
+      <height>123</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -417,13 +424,13 @@
      <string>zona13</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_14">
+   <widget class="QPushButton" name="zona14">
     <property name="geometry">
      <rect>
       <x>810</x>
-      <y>830</y>
-      <width>251</width>
-      <height>171</height>
+      <y>838</y>
+      <width>243</width>
+      <height>153</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -433,13 +440,13 @@
      <string>zona14</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_15">
+   <widget class="QPushButton" name="zona15">
     <property name="geometry">
      <rect>
-      <x>1050</x>
-      <y>830</y>
+      <x>1053</x>
+      <y>838</y>
       <width>451</width>
-      <height>151</height>
+      <height>139</height>
      </rect>
     </property>
     <property name="styleSheet">

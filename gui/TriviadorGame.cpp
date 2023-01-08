@@ -4,7 +4,8 @@ TriviadorGame::TriviadorGame(QWidget* parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
-	MapWindow.reset(new Map(this));
+	/*MapWindow.reset(new Map(this));*/
+	MapWindow.reset(new MapForThreePlayers(this));
 
 	t_NumericWindowTimer = std::make_unique<QTimer>();
 	t_NumericWindowTimer->setInterval(500);
@@ -32,6 +33,7 @@ void TriviadorGame::setNumberOfPlayers(const uint16_t& numberOfPlayers)
 	if (m_numberOfPlayers <= 2)
 		m_MaxNumberOfDuels = 4 * m_numberOfPlayers;
 	else m_MaxNumberOfDuels = 5 * m_numberOfPlayers;
+	
 
 }
 

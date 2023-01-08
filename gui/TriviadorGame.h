@@ -7,7 +7,7 @@
 #include <Qtime>
 #include "PlayerQString.h"
 #include "Route.h"
-
+#include"MapForThreePlayers.h"
 #include "Map.h"
 #include "QTypeNumericWindow.h"
 #include "QTypeVariantsWindow.h"
@@ -93,5 +93,6 @@ private:
 
 	std::shared_ptr<QTypeNumericWindow> m_QTypeNumericWindow;
 	std::shared_ptr<QTypeVariantsWindow> m_QTypeVariantsWindow;
-	std::unique_ptr<Map> MapWindow;
+	//std::unique_ptr<Map> MapWindow;
+	std::unique_ptr<MapForThreePlayers> MapWindow;
 };
