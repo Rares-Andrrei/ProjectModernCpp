@@ -84,7 +84,7 @@ void QTypeVariantsWindow::requestQuestion()
 
 	ui.Question->setFont(QFont("Arial", 25));
 	ui.Question->setAlignment(Qt::AlignCenter);
-	// Request :: ask the server for a random question and the 4 variants
+
 	ui.Question->setText(QString::fromLocal8Bit(question[0]));
 
 	ui.VariantA->setText(QString::fromLocal8Bit(question[1]));
@@ -153,7 +153,6 @@ void QTypeVariantsWindow::on_Enter_clicked()
 	int value = ui.TimeSlider->value();
 	if (variant == "")
 		variant = "NULL"; // daca nu a ales un raspuns in timp util , este declarat ca fiind gresit
-	// REQUEST :: send the response  provided to the server + the time 
 	this->close();
 }
 
@@ -185,7 +184,6 @@ void QTypeVariantsWindow::onFiftyFiftyButtonClicked()
 	//dupa ce a fost folosit avantajul sa dispara
 	delete ui.fiftyFiftyAdvantajeButton;
 }
-
 
 void QTypeVariantsWindow::disableAllButtons()
 {

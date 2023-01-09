@@ -10,7 +10,7 @@ class Route
 public:
 	std::string getQuestionTypeNumerical();
 	std::array<std::string, 5> getQuestionTypeVariants();
-	std::vector<std::pair<Color::ColorEnum, int>> sendResponseNumericalEt1(int resp, int time, Color::ColorEnum color);
+	std::vector<std::pair<Color::ColorEnum, int>> sendResponseNumericalEt1(std::string resp, int time, Color::ColorEnum color);
 
 
 	bool leaveLobby();

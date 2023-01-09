@@ -138,6 +138,7 @@ void QTypeNumericWindow::on_Enter_clicked()
 	ui.TimeRemaining->setEnabled(false);
 	int value = ui.TimeRemaining->value();
 	// Request :: send the response  provided to the server
+	emit sendOrderToParent(m_GameInstance->sendResponseNumericalEt1(ui.Answer->text().toLocal8Bit().constData(), value, m_player->getColor()));
 	this->close();
 }
 
@@ -179,4 +180,9 @@ void QTypeNumericWindow::disableAllButtons()
 	{
 		button->setEnabled(false);
 	}
+}
+
+void sendOrderToParent(const std::vector<std::pair<Color::ColorEnum, int>>& playerOrder)
+{
+
 }

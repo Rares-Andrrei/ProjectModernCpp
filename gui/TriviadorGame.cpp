@@ -88,6 +88,11 @@ void TriviadorGame::setGameInstance(const std::shared_ptr<Route>& GameInstance)
 	MapWindow->setGameInstance(m_GameInstance);
 }
 
+void TriviadorGame::setPlayerOrder(const std::vector<std::pair<Color::ColorEnum, int>>& playerOrder)
+{
+	m_playerOrder = playerOrder;
+}
+
 void TriviadorGame::showEvent(QShowEvent* event)
 {
 	t_checkCurrentPhase->start();
@@ -101,6 +106,7 @@ void TriviadorGame::chooseBasePhase()
 	m_gamePhase = GamePhase::ChooseBase;
 
 	m_QTypeNumericWindow.reset(new QTypeNumericWindow(this));
+	connect(m_QTypeNumericWindow.get(), &QTypeNumericWindow::sendOrderToParent, this, &TriviadorGame::onSendOrderToParent);
 	m_QTypeNumericWindow->setPlayer(m_player);
 	m_QTypeNumericWindow->setGameInstance(m_GameInstance);
 	m_QTypeNumericWindow->requestQuestion();
@@ -188,6 +194,7 @@ void TriviadorGame::checkNumericWindowClosed()
 		if (!MapWindow->isVisible() && !m_QTypeNumericWindow->isVisible())
 		{
 			m_QTypeNumericWindow.reset(new QTypeNumericWindow(this));
+			m_QTypeNumericWindow->setParent(this);
 			MapWindow->setNumberOfInterractions(m_numberOfPlayers);
 			//if (/*m_player*/)
 			//{
@@ -337,3 +344,9 @@ bool TriviadorGame::checkIfWindowsAreClosed()
 	}
 	return true;
 }
+
+void TriviadorGame::onSendOrderToParent(const std::vector<std::pair<Color::ColorEnum, int>>& playerOrder)
+{
+	m_playerOrder = playerOrder;
+}
+

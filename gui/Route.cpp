@@ -61,7 +61,7 @@ std::array<std::string, 5> Route::getQuestionTypeVariants()
 	}
 }
 
-std::vector<std::pair<Color::ColorEnum, int>> Route::sendResponseNumericalEt1(int resp, int time, Color::ColorEnum color)
+std::vector<std::pair<Color::ColorEnum, int>> Route::sendResponseNumericalEt1(std::string resp, int time, Color::ColorEnum color)
 {
 	std::vector<std::pair<Color::ColorEnum, int>> players;
 	cpr::Url url{ "http://localhost:18080/sendNumericalResponseEt1" };
@@ -69,7 +69,7 @@ std::vector<std::pair<Color::ColorEnum, int>> Route::sendResponseNumericalEt1(in
 			{ "sessionKey", m_sessionKey},
 			{ "gameID", std::to_string(m_gameId)},
 			{ "color", Color::ColorToString(color)},
-			{ "response", std::to_string(resp)},
+			{ "response", resp},
 			{ "time", std::to_string(time)}
 	};
 	auto lambda = [](cpr::Response response) {

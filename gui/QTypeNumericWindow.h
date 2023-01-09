@@ -23,6 +23,12 @@ public:
 protected:
 	void showEvent(QShowEvent* event) override;
 
+
+
+signals:
+	void sendOrderToParent(const std::vector<std::pair<Color::ColorEnum, int>>& playerOrder);
+
+
 private slots:
 	void on_Number0_clicked();
 	void on_Number1_clicked();
