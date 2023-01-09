@@ -98,14 +98,10 @@ void Route::sendResponseQTypeNumericalEt1()
 	if (m_waitingList->isActive(sessionKeyIter->second) && m_gamesActive.count(gameID) > 0)
 	{
 		m_gamesActive[gameID]->setPlayerNumericalAnswer(std::stoi(timeIter->second), std::stoi(responseIter->second), Color::StringToColor(colorIter->second));
-		//functia din gamelogic
 		while (!m_gamesActive[gameID]->NumericalAnswersReady())
 		{
 			std::this_thread::sleep_for(std::chrono::seconds(1));
-			//asteapta pana cand e gata sa trimita rezultatele
-		}
-		//cand sunt gata formam vectorul de castigatori
-		
+		}		
 		std::vector<std::shared_ptr<Player>> rankingList = m_gamesActive[gameID]->getWinnerList();
 		crow::json::wvalue playesData = GameLogic::playersToJson(rankingList);
 		crow::response resp = playesData;

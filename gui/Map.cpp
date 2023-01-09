@@ -66,6 +66,10 @@ QColor Map::getColor(const Color::ColorEnum& color)
 	}
 }
 
+void Map::Send_Response_To_Server()
+{
+}
+
 void Map::showEvent(QShowEvent* event)
 {
 	t_checkFinishState->start();

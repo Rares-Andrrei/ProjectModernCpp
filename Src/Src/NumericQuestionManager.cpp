@@ -30,4 +30,5 @@ std::vector<Color::ColorEnum> NumericQuestionManager::getPlayersOrder()
 		order.push_back(PlayerColor);
 		m_PlayerOrder.pop();
 	}
+	return order;
 }

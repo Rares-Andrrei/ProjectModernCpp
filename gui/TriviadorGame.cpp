@@ -212,7 +212,7 @@ void TriviadorGame::checkNumericWindowClosed()
 			//	{
 			//		select a region 
 			//	}
-			}
+			//}
 			m_QTypeNumericWindow->setGameInstance(m_GameInstance);
 			m_QTypeNumericWindow->requestQuestion();
 			MapWindow->setNumberOfInterractions(m_numberOfPlayers * 3 + 1);

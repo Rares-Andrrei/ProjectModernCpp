@@ -64,8 +64,8 @@ bool GameLogic::NumericalAnswersReady()
 std::vector<std::shared_ptr<Player>> GameLogic::getWinnerList()
 {
 	std::vector<Color::ColorEnum> order = m_numericQuestionManager.getPlayersOrder();
-	//returnezi vectorul cu playerii in ordine pe locurile pe care au iesit
 	std::vector<std::shared_ptr<Player>> orderedPlayers;
+	
 	for (const auto& c : order)
 	{
 		for (const auto& player : m_players)
