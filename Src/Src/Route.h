@@ -22,7 +22,7 @@ public:
 	void getQuestionTypeNumericalRoute();
 	void getQuestionTypeVariantsRoute();
 	void sendResponseQTypeNumericalEt1();
-
+	void chooseRegionRoute();
 
 	void loginRoute();
 

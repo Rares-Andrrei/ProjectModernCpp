@@ -120,6 +120,46 @@ void Route::sendResponseQTypeNumericalEt1()
 		});
 }
 
+void Route::chooseRegionRoute()
+{
+	auto& chooseRegion = CROW_ROUTE(m_app, "/chooseRegion").methods(crow::HTTPMethod::Post);
+	chooseRegion([this](const crow::request& req) {
+		auto bodyArgs = parseUrlArgs(req.body);
+		auto end = bodyArgs.end();
+		auto gameIdIter = bodyArgs.find("gameID");
+		auto colorIter = bodyArgs.find("color");
+		auto regionIdIter = bodyArgs.find("regionId");
+		long gameID = std::stoi(gameIdIter->second);
+		if (m_gamesActive.count(gameID) > 0)
+		{
+			int regionId = std::stoi(regionIdIter->second);
+			Color::ColorEnum color = Color::StringToColor(colorIter->second);
+			if (regionId == -1)
+			{
+				while (m_gamesActive[gameID]->checkZoneUpdates())
+				{
+					std::this_thread::sleep_for(std::chrono::seconds(1));
+				}
+			}
+			else
+			{
+				m_gamesActive[gameID]->updateZone(regionId, color);
+			}
+			std::pair<int, Color::ColorEnum> updatedRegion = m_gamesActive[gameID]->getUpdatedZone();
+			crow::json::wvalue json;
+			json["zoneId"] = updatedRegion.first;
+			json["zoneColor"] = Color::ColorToString(updatedRegion.second);
+			crow::response res;
+			res.code = 200;
+			res = json;
+			return res;
+		}
+		return crow::response(404);
+
+		});
+}
+
+
 void Route::exitLobbyRoute()
 {
 	auto& exitQueue = CROW_ROUTE(m_app, "/eliminatePlayerFromQueue").methods(crow::HTTPMethod::PUT);
