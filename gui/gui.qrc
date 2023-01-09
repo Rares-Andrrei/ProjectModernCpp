@@ -15,4 +15,14 @@
         <file>generateFourAnswers.png</file>
         <file>32x32.gif</file>
     </qresource>
+    <qresource prefix="/slideShowCats">
+        <file>cat1.png</file>
+        <file>cat2.png</file>
+        <file>cat3.png</file>
+        <file>cat4.png</file>
+        <file>cat5.png</file>
+        <file>cat6.png</file>
+        <file>cat7.png</file>
+        <file>cat8.png</file>
+    </qresource>
 </RCC>
