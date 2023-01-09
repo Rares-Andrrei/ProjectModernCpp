@@ -23,6 +23,8 @@ public:
 	void setGameInstance(const std::shared_ptr<Route>& GameInstance);
 	QColor getColor(const Color::ColorEnum& color);
 
+	void Send_Response_To_Server();
+
 protected:
 	void showEvent(QShowEvent* event) override;
 
@@ -48,4 +50,5 @@ private slots:
 	void onzona9Clicked();
 
 	void on_CheckFinishState_Timeout();
+
 };

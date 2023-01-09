@@ -29,8 +29,6 @@ std::string Route::getQuestionTypeNumerical()
 		});
 	if (response.status_code == 200)
 	{
-		/*auto  resp= response.text;
-		return QString::fromStdString(resp);*/
 		return response.text;
 	}
 	else
@@ -134,10 +132,6 @@ void Route::enterLobby(int type, std::vector<std::shared_ptr<PlayerQString>>& pl
 		}
 	}
 }
-
-
-
-
 
 CredentialErrors Route::login(std::string username, std::string password)
 {

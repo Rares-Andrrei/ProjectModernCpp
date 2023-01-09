@@ -189,6 +189,10 @@ void TriviadorGame::checkNumericWindowClosed()
 		{
 			m_QTypeNumericWindow.reset(new QTypeNumericWindow(this));
 			MapWindow->setNumberOfInterractions(m_numberOfPlayers);
+			//if (/*m_player*/)
+			//{
+			//	MapWindow->Send_Response_To_Server();
+			//}
 			MapWindow->show();
 			changePhase = true;
 		}
@@ -199,6 +203,16 @@ void TriviadorGame::checkNumericWindowClosed()
 		{
 			m_QTypeNumericWindow.reset(new QTypeNumericWindow(this));
 			m_QTypeNumericWindow->setPlayer(m_player);
+			//while (!que.empty)
+			//{
+			//	int cnt = que.size()-1;
+			//	if (k_numberOfPlayers == 2)
+			//		cnt + 1;
+			//	while (cnt != 0)
+			//	{
+			//		select a region 
+			//	}
+			}
 			m_QTypeNumericWindow->setGameInstance(m_GameInstance);
 			m_QTypeNumericWindow->requestQuestion();
 			MapWindow->setNumberOfInterractions(m_numberOfPlayers * 3 + 1);

@@ -79,6 +79,7 @@ void Map::onzona1Clicked()
 		ui.zona1->setAutoFillBackground(true);
 		QPalette pal = QPalette(getColor(m_player->getColor()));
 		ui.zona1->setPalette(pal);
+		Send_Response_To_Server();
 	}
 	else {
 		QMessageBox::information(this, "Error", "You can't move here");
