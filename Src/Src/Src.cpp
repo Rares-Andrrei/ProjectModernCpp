@@ -24,6 +24,7 @@ void useRoutes()
 	r.loginRoute();
 	r.signUpRoute();
 	r.enterLobbyRoute();
+	r.chooseRegionRoute();
 	r.getQuestionTypeVariantsRoute();
 	r.sendResponseQTypeNumericalEt1();
 	r.getQuestionTypeNumericalRoute();

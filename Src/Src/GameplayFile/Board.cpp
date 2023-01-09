@@ -54,6 +54,7 @@ const std::shared_ptr<Zone>& Board::operator[](const Position& indices) const
 	return m_board[row * m_BoardWidth + column];
 }
 
+
 std::shared_ptr<Zone>& Board::operator[](const Position& indices)
 {
 	const auto& [row, column] = indices;
@@ -62,6 +63,22 @@ std::shared_ptr<Zone>& Board::operator[](const Position& indices)
 		return m_board[m_BoardHeight * m_BoardWidth];
 	}
 	return m_board[row * m_BoardWidth + column];
+}
+
+std::shared_ptr<Zone>& Board::operator[](int id)
+{
+	if (id > m_board.size() - 1)
+	{
+		return m_board[m_board.size() - 1];
+	}
+	else if ( id < 0 )
+	{
+		return m_board[m_board.size() - 1];
+	}
+	else
+	{
+		return m_board[id];
+	}
 }
 
 void Board::ObtainTotalScore()

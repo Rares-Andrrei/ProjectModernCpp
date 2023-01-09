@@ -3,8 +3,7 @@
 
 void GameLogic::randomQTypeNumerical()
 {
-
-	m_questionTypeNumerical = m_db->randQTypeNumerical();
+	m_numericQuestionManager.setQuestion(m_db->randQTypeNumerical());
 }
 
 void GameLogic::randomQTypeVariants()
@@ -24,6 +23,45 @@ GameLogic::GameLogic(const uint16_t& numberOfPlayers, std::shared_ptr<Database> 
 	randomQTypeVariants();
 }
 
+bool GameLogic::checkZoneUpdates()
+{
+	if (m_updatedZone.has_value())
+	{
+		return true;
+	}
+	return false;
+}
+
+std::pair<int, Color::ColorEnum> GameLogic::getUpdatedZone()
+{
+	if (m_updatedZone.has_value())
+	{
+		return m_updatedZone.value();
+	}
+	else
+	{
+		return { -1, Color::ColorEnum::None };
+	}
+}
+
+void GameLogic::updateZone(int zoneId, Color::ColorEnum zoneColor)
+{
+	if (m_board[zoneId] != m_board.end())
+	{
+		std::shared_ptr<Zone> newZone = std::make_shared<Zone>(zoneColor);
+		m_board[zoneId] = newZone;
+		m_updatedZone = { zoneId, zoneColor };
+	}
+}
+
+void GameLogic::eraseUpdatedZone()
+{
+	if (m_updatedZone.has_value())
+	{
+		m_updatedZone.reset();
+	}
+}
+
 crow::json::wvalue GameLogic::playersToJson(std::vector<std::shared_ptr<Player>> players)
 {
 	crow::json::wvalue json;
@@ -41,7 +79,7 @@ crow::json::wvalue GameLogic::playersToJson(std::vector<std::shared_ptr<Player>>
 
 QTypeNumerical GameLogic::getQuestionTypeNumerical()
 {
-	return m_questionTypeNumerical;
+	return m_numericQuestionManager.getQuestion();
 }
 
 QTypeVariants GameLogic::getQuestionTypeVariants()
@@ -76,7 +114,8 @@ std::vector<std::shared_ptr<Player>> GameLogic::getWinnerList()
 			}
 		}
 	}
-	
+	randomQTypeNumerical();
+	eraseUpdatedZone();
 	return orderedPlayers;
 }
 
