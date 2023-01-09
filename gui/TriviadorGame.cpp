@@ -5,7 +5,7 @@ TriviadorGame::TriviadorGame(QWidget* parent)
 {
 	ui.setupUi(this);
 	/*MapWindow.reset(new Map(this));*/
-	MapWindow.reset(new MapForThreePlayers(this));
+	MapWindow.reset(new Map(this));
 
 	t_NumericWindowTimer = std::make_unique<QTimer>();
 	t_NumericWindowTimer->setInterval(500);

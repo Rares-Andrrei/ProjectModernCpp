@@ -93,6 +93,6 @@ private:
 
 	std::shared_ptr<QTypeNumericWindow> m_QTypeNumericWindow;
 	std::shared_ptr<QTypeVariantsWindow> m_QTypeVariantsWindow;
-	//std::unique_ptr<Map> MapWindow;
-	std::unique_ptr<MapForThreePlayers> MapWindow;
+	std::unique_ptr<Map> MapWindow;
+	//std::unique_ptr<MapForThreePlayers> MapWindow;
 };

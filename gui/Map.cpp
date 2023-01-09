@@ -8,6 +8,12 @@ Map::Map(QWidget* parent)
 
 	ui.setupUi(this);
 	BattleWindow.reset(new Battle());
+	for (const auto& button : findChildren<QAbstractButton*>())
+	{
+		button->setStyleSheet("background:transparent;"
+			"border:1px solid black;"
+			"border-radius: 15px;");
+	}
 	connect(ui.zona1, SIGNAL(clicked()), SLOT(onzona1Clicked()));
 	connect(ui.zona2, SIGNAL(clicked()), SLOT(onzona2Clicked()));
 	connect(ui.zona3, SIGNAL(clicked()), SLOT(onzona3Clicked()));
