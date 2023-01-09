@@ -6,15 +6,19 @@
 #include  "Advantages.h"
 #include "ChooseBase.h"
 #include "Duel.h"
+#include "NumericQuestionManager.h"
 
 class GameLogic
 {
 	Board m_board;
-	
+
 	QuestionManager m_questions;
 
 	QTypeNumerical m_questionTypeNumerical;
 	QTypeVariants m_questionTypeVariants;
+
+	NumericQuestionManager m_numericQuestionManager;
+
 	std::vector<std::shared_ptr<Player>> m_winners;
 
 	const uint16_t k_numberOfPlayers;
@@ -38,7 +42,7 @@ public:
 	static crow::json::wvalue playersToJson(std::vector < std::shared_ptr<Player>> players);
 	QTypeNumerical getQuestionTypeNumerical();
 	QTypeVariants getQuestionTypeVariants();
-	void setPlayerNumericalAnswer(int time, int response, Color::ColorEnum color);
+	void setPlayerNumericalAnswer(int time, int response, const Color::ColorEnum& color);
 	bool NumericalAnswersReady();
 	std::vector<std::shared_ptr<Player>> getWinnerList();
 

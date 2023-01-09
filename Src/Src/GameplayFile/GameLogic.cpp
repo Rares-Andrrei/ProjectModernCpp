@@ -18,7 +18,7 @@ GameLogic::GameLogic()
 }
 
 GameLogic::GameLogic(const uint16_t& numberOfPlayers, std::shared_ptr<Database> db)
-	: k_numberOfPlayers(numberOfPlayers), m_db{db}
+	: k_numberOfPlayers(numberOfPlayers), m_db{ db }
 {
 	randomQTypeNumerical();
 	randomQTypeVariants();
@@ -49,21 +49,21 @@ QTypeVariants GameLogic::getQuestionTypeVariants()
 	return m_questionTypeVariants;
 }
 
-void GameLogic::setPlayerNumericalAnswer(int time, int response, Color::ColorEnum color)
+void GameLogic::setPlayerNumericalAnswer(int time, int response, const Color::ColorEnum& color)
 {
-	//setezi raspunsul pe care l-a dat playerul
-
+	m_numericQuestionManager.addPlayerResponse(time, response, color);
 }
 
 bool GameLogic::NumericalAnswersReady()
 {
-	//verifica daca toti playerii au trimis raspunsul
+	if (m_numericQuestionManager.getNumberOfEntries() == m_players.size())
+		return true;
 	return false;
 }
 
 std::vector<std::shared_ptr<Player>> GameLogic::getWinnerList()
 {
-
+	std::vector<Color::ColorEnum> order = m_numericQuestionManager.getPlayersOrder();
 	//returnezi vectorul cu playerii in ordine pe locurile pe care au iesit
 	return std::vector<std::shared_ptr<Player>>();
 }
