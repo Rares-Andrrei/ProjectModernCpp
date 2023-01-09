@@ -109,6 +109,11 @@ void Board::eliminatePlayer(const Color::ColorEnum& elimated, const Color::Color
 	}
 }
 
+std::shared_ptr<Zone>& Board::end()
+{
+	return m_board[m_BoardHeight*m_BoardWidth];
+}
+
 std::ostream& operator<<(std::ostream& out, const Board& board)
 {
 	out << '\n';

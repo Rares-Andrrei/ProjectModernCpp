@@ -29,6 +29,7 @@ public:
 	uint8_t getNumberOfPlayers();
 	bool CheckIfBoardIsFull();
 	void eliminatePlayer(const Color::ColorEnum& elimated, const Color::ColorEnum& newOwner);
+	std::shared_ptr<Zone>& end();
 
 private:
 	void ChangeBoardDimensions();
