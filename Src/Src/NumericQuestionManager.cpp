@@ -58,7 +58,9 @@ std::vector<Color::ColorEnum> NumericQuestionManager::getPlayersOrder()
 QTypeNumerical NumericQuestionManager::getQuestion()
 {
 	if (m_PlayerOrder.size())
+	{
 		m_PlayerOrder.clear();
+	}
 	return	m_question;
 
 }

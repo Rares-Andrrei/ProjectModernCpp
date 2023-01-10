@@ -101,7 +101,7 @@ std::pair<int, Color::ColorEnum> Route::chooseRegion(int id, Color::ColorEnum co
 	cpr::Url url{ "http://localhost:18080/chooseRegion" };
 	cpr::Payload payload{
 			{ "gameID", std::to_string(m_gameId)},
-			{ "color", Color::ColorToString(color)},
+			{ "color", std::to_string(Color::ColorToInt(color))},
 			{ "regionId", std::to_string(id)}
 	};
 	auto lambda = [](cpr::Response response) {

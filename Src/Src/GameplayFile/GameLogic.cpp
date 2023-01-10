@@ -115,7 +115,6 @@ std::vector<std::shared_ptr<Player>> GameLogic::getWinnerList()
 		}
 	}
 	randomQTypeNumerical();
-	eraseUpdatedZone();
 	return orderedPlayers;
 }
 

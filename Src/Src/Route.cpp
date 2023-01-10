@@ -129,10 +129,11 @@ void Route::chooseRegionRoute()
 		if (m_gamesActive.count(gameID) > 0)
 		{
 			int regionId = std::stoi(regionIdIter->second);
-			Color::ColorEnum color = Color::StringToColor(colorIter->second);
+			Color::ColorEnum color = Color::getColor(std::stoi(colorIter->second));
 			if (regionId == -1)
 			{
-				while (m_gamesActive[gameID]->checkZoneUpdates())
+				m_gamesActive[gameID]->eraseUpdatedZone();
+				while (!m_gamesActive[gameID]->checkZoneUpdates())
 				{
 					std::this_thread::sleep_for(std::chrono::seconds(1));
 				}
