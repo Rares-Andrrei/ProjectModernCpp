@@ -29,6 +29,7 @@ public:
 
 	void setQuestion(const QTypeNumerical& question);
 	void addPlayerResponse(const int& responseTime, const int& playerAnswer, const Color::ColorEnum& player);
+	QTypeNumerical getQuestion();
 
 	int getNumberOfEntries()const;
 	std::vector<Color::ColorEnum> getPlayersOrder();

@@ -23,7 +23,9 @@ public:
 
 	const std::shared_ptr<Zone>& operator[](const Position& indices) const;
 	std::shared_ptr<Zone>& operator[](const Position& indices);
+	std::shared_ptr<Zone>& operator[](int id);
 
+	
 	void ObtainTotalScore();
 	int getTotalScore();
 	uint8_t getNumberOfPlayers();

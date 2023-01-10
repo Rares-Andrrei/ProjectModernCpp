@@ -12,6 +12,7 @@ public:
 	std::string getQuestionTypeNumerical();
 	std::array<std::string, 5> getQuestionTypeVariants();
 	std::queue<std::pair<Color::ColorEnum, int>> sendResponseNumericalEt1(int resp, int time, Color::ColorEnum color);
+	std::pair<int, Color::ColorEnum> chooseRegion(int id, Color::ColorEnum color);
 
 
 	bool leaveLobby();

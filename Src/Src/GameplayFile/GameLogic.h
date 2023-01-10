@@ -14,7 +14,6 @@ class GameLogic
 
 	QuestionManager m_questions;
 
-	QTypeNumerical m_questionTypeNumerical;
 	QTypeVariants m_questionTypeVariants;
 
 	NumericQuestionManager m_numericQuestionManager;
@@ -24,6 +23,7 @@ class GameLogic
 	const uint16_t k_numberOfPlayers;
 	std::vector<std::shared_ptr<Player>> m_players;
 	std::vector<std::shared_ptr<Player>> m_eliminatedPlayers;
+	std::optional<std::pair<int, Color::ColorEnum>> m_updatedZone; //sa se stearga de fiecare data cand se genereaza o noua intrebare
 	//std::vector<std::shared_ptr<Advantages>> m_advantages; // de vazut unde sa fie folosit . 
 
 	std::shared_ptr<Database> m_db;
@@ -37,6 +37,13 @@ public:
 	//GameLogic(GameLogic&&) = delete;
 	//GameLogic& operator=(const GameLogic&) = delete;
 	//GameLogic& operator=(GameLogic&&) = delete;
+
+	bool checkZoneUpdates();
+	std::pair<int, Color::ColorEnum> getUpdatedZone();
+	void updateZone(int zoneId, Color::ColorEnum zoneColor);
+private:
+	void eraseUpdatedZone(); //se apeleaza atuncic and se genereaza o noua intrebare (inseamna ca toti layerii au updatat zona si s-a trecut mai deprarte
+public:
 
 
 	static crow::json::wvalue playersToJson(std::vector < std::shared_ptr<Player>> players);

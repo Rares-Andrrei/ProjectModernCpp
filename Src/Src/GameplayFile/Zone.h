@@ -7,7 +7,6 @@ class Zone
 {
 protected:
 	uint16_t m_score;
-	bool m_captured;
 	Color::ColorEnum m_color;
 public:
 	Zone();

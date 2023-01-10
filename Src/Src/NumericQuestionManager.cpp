@@ -32,3 +32,8 @@ std::vector<Color::ColorEnum> NumericQuestionManager::getPlayersOrder()
 	}
 	return order;
 }
+
+QTypeNumerical NumericQuestionManager::getQuestion()
+{
+	return	m_question;
+}
