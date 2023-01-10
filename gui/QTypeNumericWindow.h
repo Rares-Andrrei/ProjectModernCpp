@@ -19,6 +19,8 @@ public:
 	void setPlayer(const std::shared_ptr<PlayerQString>& player);
 	void setGameInstance(const std::shared_ptr<Route>& GameInstance);
 
+	void disableAllButtons();
+	void enableAllButtons();
 
 protected:
 	void showEvent(QShowEvent* event) override;
@@ -49,7 +51,7 @@ private slots:
 	void on_TimeRemaining_Timeout();
 
 private:
-	void disableAllButtons();
+
 
 	std::shared_ptr<Route> m_GameInstance;
 	QTimer* m_TimeRemaining;

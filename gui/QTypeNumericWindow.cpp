@@ -187,6 +187,14 @@ void QTypeNumericWindow::disableAllButtons()
 	}
 }
 
+void QTypeNumericWindow::enableAllButtons()
+{
+	for (const auto& button : findChildren<QAbstractButton*>())
+	{
+		button->setEnabled(true);
+	}
+}
+
 void sendOrderToParent(const std::queue<std::pair<Color::ColorEnum, int>>& playerOrder)
 {
 

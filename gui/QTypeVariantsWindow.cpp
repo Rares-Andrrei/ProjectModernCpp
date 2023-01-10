@@ -192,3 +192,11 @@ void QTypeVariantsWindow::disableAllButtons()
 		button->setEnabled(false);
 	}
 }
+
+void QTypeVariantsWindow::enableAllButtons()
+{
+	for (const auto& button : findChildren<QAbstractButton*>())
+	{
+		button->setEnabled(true);
+	}
+}

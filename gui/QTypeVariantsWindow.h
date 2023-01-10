@@ -19,6 +19,9 @@ public:
 	void setPlayer(const std::shared_ptr<PlayerQString>& player);
 	void setGameInstance(const std::shared_ptr<Route>& GameInstance);
 
+	void disableAllButtons();
+	void enableAllButtons();
+
 protected:
 	void showEvent(QShowEvent* event) override;
 
@@ -39,7 +42,6 @@ private:
 	void createAnswerVariants();
 	void advantageButtonEnabled();
 
-	void disableAllButtons();
 
 	std::shared_ptr<Route> m_GameInstance;
 	QPushButton* m_Variant = nullptr;
