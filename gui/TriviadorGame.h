@@ -72,7 +72,7 @@ private:
 	GamePhase m_gamePhase : 3 = GamePhase::None;
 	DuelStatus m_duelStatus : 3 = DuelStatus::None;
 
-	bool serverAproveStatus = false;
+	bool serverAproveStatus = true;
 	bool changePhase = true;
 	bool m_MapWindowClosed = false;
 	bool m_VariantsWindowClosed = false;

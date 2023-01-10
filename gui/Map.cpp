@@ -19,6 +19,7 @@ Map::Map(QWidget* parent)
 	connect(ui.zona9, SIGNAL(clicked()), SLOT(onzona9Clicked()));
 
 	connect(t_checkFinishState.get(), SIGNAL(timeout()), SLOT(on_CheckFinishState_Timeout()));
+	playersAvatar();
 }
 
 Map::~Map()
@@ -78,6 +79,13 @@ void Map::onzona1Clicked()
 	else {
 		QMessageBox::information(this, "Error", "You can't move here");
 	}
+}
+
+void Map::playersAvatar()
+{
+	//ui.player1Avatar->setStyleSheet();
+	ui.player1Name->setText(m_players[0]->getName());
+	ui.player2Name->setText(m_players[1]->getName());
 }
 
 void Map::onzona2Clicked()

@@ -22,6 +22,7 @@ public:
 
 	void loginRoute();
 
+	void gamesHistoryRoute();
 	void enterLobbyRoute();
 	void exitLobbyRoute();
 

@@ -32,6 +32,9 @@ private:
 	bool m_validateMove = true;
 	std::shared_ptr<PlayerQString> m_player;
 	std::shared_ptr<Battle>BattleWindow;
+	std::vector<std::shared_ptr<PlayerQString>>m_players;
+
+	void playersAvatar();
 
 private slots:
 	void onzona1Clicked();
