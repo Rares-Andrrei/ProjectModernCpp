@@ -1,5 +1,17 @@
 #include "NumericQuestionManager.h"
 
+bool NumericQuestionManager::compareResponseAndTime(std::tuple<int, int, Color::ColorEnum> p1, std::tuple<int, int, Color::ColorEnum> p2)
+{
+	const auto& [DistFromCorrectAnswer, ResponseTime, Player] = p1;
+	const auto& [DistFromCorrectAnswer2, ResponseTime2, Player2] = p2;
+	if (DistFromCorrectAnswer < DistFromCorrectAnswer2)
+		return true;
+	if (DistFromCorrectAnswer == DistFromCorrectAnswer2 && ResponseTime < ResponseTime2)
+		return true;
+	return false;
+	//return DistFromCorrectAnswer < DistFromCorrectAnswer2 || (DistFromCorrectAnswer == DistFromCorrectAnswer2 && ResponseTime < ResponseTime2);
+}
+
 NumericQuestionManager::NumericQuestionManager(const QTypeNumerical& question)
 	: m_question{ question }
 {
@@ -10,10 +22,10 @@ void NumericQuestionManager::setQuestion(const QTypeNumerical& question)
 	m_question = question;
 }
 
-void NumericQuestionManager::addPlayerResponse(const int& responseTime, const int& playerAnswer, const Color::ColorEnum& player)
+void NumericQuestionManager::addPlayerResponse(int responseTime, int playerAnswer, const Color::ColorEnum& player)
 {
-	m_PlayerOrder.push({ playerAnswer , responseTime , player });
-	std::vector<int> v;
+	int value = abs(m_question.getAnswer() - playerAnswer);
+	m_PlayerOrder.push_back({ value , responseTime , player });
 }
 
 int NumericQuestionManager::getNumberOfEntries() const
@@ -24,16 +36,29 @@ int NumericQuestionManager::getNumberOfEntries() const
 std::vector<Color::ColorEnum> NumericQuestionManager::getPlayersOrder()
 {
 	std::vector<Color::ColorEnum> order;
-	while (!m_PlayerOrder.empty())
+	std::sort(m_PlayerOrder.begin(), m_PlayerOrder.end(), [this](std::tuple<int, int, Color::ColorEnum> p1, std::tuple<int, int, Color::ColorEnum> p2)
+		{
+			const auto& [DistFromCorrectAnswer, ResponseTime, Player] = p1;
+	const auto& [DistFromCorrectAnswer2, ResponseTime2, Player2] = p2;
+	if (DistFromCorrectAnswer < DistFromCorrectAnswer2)
+		return true;
+	if (DistFromCorrectAnswer == DistFromCorrectAnswer2 && ResponseTime < ResponseTime2)
+		return true;
+	return false;
+	//return DistFromCorrectAnswer < DistFromCorrectAnswer2 || (DistFromCorrectAnswer == DistFromCorrectAnswer2 && ResponseTime < ResponseTime2);
+		});
+	for (auto& player : m_PlayerOrder)
 	{
-		auto& [PlayerResponse, ResponseTime, PlayerColor] = m_PlayerOrder.top();
-		order.push_back(PlayerColor);
-		m_PlayerOrder.pop();
+		auto& [DistFromCorrectAnswer, ResponseTime, Player] = player;
+		order.push_back(Player);
 	}
 	return order;
 }
 
 QTypeNumerical NumericQuestionManager::getQuestion()
 {
+	if (m_PlayerOrder.size())
+		m_PlayerOrder.clear();
 	return	m_question;
+
 }

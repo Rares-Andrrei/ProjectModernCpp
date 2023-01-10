@@ -119,7 +119,7 @@ std::pair<int, Color::ColorEnum> Route::chooseRegion(int id, Color::ColorEnum co
 	{
 		crow::json::rvalue resData = crow::json::load(aux);
 		data.first = resData["zoneId"].i();
-		data.second = Color::StringToColor(resData["zoneColor"].s());
+		data.second = Color::getColor(resData["zoneColor"].i());
 	}
 	return data;
 }

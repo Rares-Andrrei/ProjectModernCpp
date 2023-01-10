@@ -144,7 +144,7 @@ void Route::chooseRegionRoute()
 			std::pair<int, Color::ColorEnum> updatedRegion = m_gamesActive[gameID]->getUpdatedZone();
 			crow::json::wvalue json;
 			json["zoneId"] = updatedRegion.first;
-			json["zoneColor"] = Color::ColorToString(updatedRegion.second);
+			json["zoneColor"] = Color::ColorToInt(updatedRegion.second);
 			crow::response res;
 			res.code = 200;
 			res = json;
