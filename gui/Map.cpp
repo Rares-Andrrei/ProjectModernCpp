@@ -3,9 +3,6 @@
 Map::Map(QWidget* parent)
 	: QMainWindow(parent)
 {
-	t_checkFinishState = std::make_unique<QTimer>();
-	t_checkFinishState->setInterval(500);
-
 	ui.setupUi(this);
 	BattleWindow.reset(new Battle());
 	connect(ui.zona1, SIGNAL(clicked()), SLOT(onzona1Clicked()));
@@ -17,8 +14,6 @@ Map::Map(QWidget* parent)
 	connect(ui.zona7, SIGNAL(clicked()), SLOT(onzona7Clicked()));
 	connect(ui.zona8, SIGNAL(clicked()), SLOT(onzona8Clicked()));
 	connect(ui.zona9, SIGNAL(clicked()), SLOT(onzona9Clicked()));
-
-	connect(t_checkFinishState.get(), SIGNAL(timeout()), SLOT(on_CheckFinishState_Timeout()));
 }
 
 Map::~Map()
@@ -71,6 +66,9 @@ void Map::Send_Response_To_Server(int ZoneId)
 	// Trimite raspuns la server cu zona selectata
 	if (this->isHidden())
 		this->show();
+
+	if (false)// cand se primeste raspuns pozitiv de la server , se va trece la urmatoarea faza 
+		this->hide();
 }
 
 void Map::disableAllButtons()
@@ -89,10 +87,6 @@ void Map::enableAllButtons()
 	}
 }
 
-void Map::showEvent(QShowEvent* event)
-{
-	t_checkFinishState->start();
-}
 void Map::onzona1Clicked()
 {
 	if (m_validateMove == true)
@@ -234,16 +228,6 @@ void Map::onzona9Clicked()
 	}
 	else {
 		QMessageBox::information(this, "Error", "You can't move here");
-	}
-}
-
-void Map::on_CheckFinishState_Timeout()
-{
-	if (m_numberOfInterractions == 0)// sau  server ul zice ca tabla e plina)
-	{
-		t_checkFinishState->stop();
-		this->hide();
-		//emit signal  sa se stie sa se treaca la urmatoarea faza 
 	}
 }
 

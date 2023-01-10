@@ -192,14 +192,30 @@ void TriviadorGame::checkNumericWindowClosed()
 		if (!MapWindow->isVisible() && !m_QTypeNumericWindow->isVisible())
 		{
 			m_QTypeNumericWindow.reset(new QTypeNumericWindow(this));
-			m_QTypeNumericWindow->setParent(this);
-			MapWindow->setNumberOfInterractions(m_numberOfPlayers);
-			//if (/*m_player*/)
-			//{
-			//	MapWindow->Send_Response_To_Server();
-			//}
-			MapWindow->show();
 			connect(m_QTypeNumericWindow.get(), &QTypeNumericWindow::sendOrderToParent, this, &TriviadorGame::onSendOrderToParent);
+			m_QTypeNumericWindow->setPlayer(m_player);
+			m_QTypeNumericWindow->setGameInstance(m_GameInstance);
+
+			while (!m_playerOrder.empty())
+			{
+				if(!MapWindow->isVisible())
+				{
+					// daca jucatorul curent nu e cel activ,  atunci doar va vedea harta
+					if (m_player->getColor() != m_playerOrder.front().first)
+					{
+						MapWindow->disableAllButtons();
+						MapWindow->Send_Response_To_Server(-1); // si va trimite catre server o zona invalida , ca sa stie cum sa identifice zona schibmata 
+					}
+					else
+					{
+						MapWindow->setNumberOfInterractions(1);
+						MapWindow->enableAllButtons();
+						MapWindow->show();
+					}
+
+					m_playerOrder.pop();
+				}
+			}
 			changePhase = true;
 		}
 	}
