@@ -89,7 +89,8 @@ void QTypeNumericWindow::showEvent(QShowEvent* event)
 
 void QTypeNumericWindow::on_Number0_clicked()
 {
-	ui.Answer->setText(ui.Answer->text() + "0");
+	if (ui.Answer->text().size() > 0)
+		ui.Answer->setText(ui.Answer->text() + "0");
 }
 void QTypeNumericWindow::on_Number1_clicked()
 {
@@ -137,8 +138,13 @@ void QTypeNumericWindow::on_Enter_clicked()
 	disableAllButtons();
 	ui.TimeRemaining->setEnabled(false);
 	int value = ui.TimeRemaining->value();
-	// Request :: send the response  provided to the server
-	emit sendOrderToParent(m_GameInstance->sendResponseNumericalEt1(ui.Answer->text().toLocal8Bit().constData(), value, m_player->getColor()));
+	int answer = ui.Answer->text().toInt();
+	if (ui.Answer->text().size() == 0)
+	{
+		answer = INT_MAX;
+	}
+	auto Ordervector = m_GameInstance->sendResponseNumericalEt1(answer, value, m_player->getColor());
+	emit sendOrderToParent(Ordervector);
 	this->close();
 }
 

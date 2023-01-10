@@ -97,7 +97,7 @@ void Route::sendResponseQTypeNumericalEt1()
 
 	if (m_waitingList->isActive(sessionKeyIter->second) && m_gamesActive.count(gameID) > 0)
 	{
-		m_gamesActive[gameID]->setPlayerNumericalAnswer(std::stoi(timeIter->second), std::stoi(responseIter->second), Color::StringToColor(colorIter->second));
+		m_gamesActive[gameID]->setPlayerNumericalAnswer(std::stoi(timeIter->second), std::stoi(responseIter->second), Color::getColor(std::stoi(colorIter->second)));
 		while (!m_gamesActive[gameID]->NumericalAnswersReady())
 		{
 			std::this_thread::sleep_for(std::chrono::seconds(1));
