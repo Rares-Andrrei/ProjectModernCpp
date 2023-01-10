@@ -145,7 +145,6 @@ void QTypeNumericWindow::on_Enter_clicked()
 	}
 	auto Ordervector = m_GameInstance->sendResponseNumericalEt1(answer, value, m_player->getColor());
 	emit sendOrderToParent(Ordervector);
-	this->close();
 }
 
 void QTypeNumericWindow::on_Delete_pressed()
