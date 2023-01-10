@@ -18,7 +18,8 @@
 
 #include <QMovie>
 #include <QStringList>
-#include <QKeyEvent>
+#include <QScrollArea>
+
 
 class lobby : public QMainWindow
 {
@@ -47,10 +48,14 @@ private:
 	void nextOrPrevious();
 
 private slots:
+
 	void onTwoPlayersButtonClicked();
 	void onThreePlayersButtonClicked();
 	void onFourPlayersButtonClicked();
 	void onCancelButtonClicked();
+
+	void on_gamesHistoryButton_clicked();
+	void on_backButton_clicked();
 
 	void on_nextButton_clicked();
 	void on_previousButton_clicked();

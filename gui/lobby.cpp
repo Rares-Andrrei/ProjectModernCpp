@@ -45,7 +45,6 @@ void lobby::nextOrPrevious()
 	}
 }
 
-
 lobby::lobby(Route& route, QWidget* parent)
 	: m_routes(route), QMainWindow(parent)
 {
@@ -154,3 +153,39 @@ void lobby::onCancelButtonClicked()
 	}
 }
 
+void lobby::on_gamesHistoryButton_clicked()
+{
+	ui.lobbyGameModes->setCurrentIndex(2);
+	ui.playerNameLabel->setText(m_PlayerName);
+	ui.playerNameLabel->setText(ui.playerNameLabel->text() + " you played ");
+	ui.playerNameLabel->setText(ui.playerNameLabel->text() + " games WOW");
+
+	//ui.tableMatchHystory->horizontalHeader()->setStyleSheet("QHeaderView::section { background-color: rgb(120, 159, 110); }");
+	ui.tableMatchHystory->setRowCount(100);
+	ui.tableMatchHystory->setColumnCount(2);
+	ui.tableMatchHystory->setColumnWidth(0, 150);
+	ui.tableMatchHystory->setColumnWidth(1, 150);
+
+	QStringList headers = { "Date", "Place" };
+
+	ui.tableMatchHystory->setHorizontalHeaderLabels(headers);
+
+	std::tuple<QString, QString> items("2015-10-23", "1");
+
+	for (int row = 0; row < 100; row++)
+	{
+		QTableWidgetItem* item1 = new QTableWidgetItem(QString(std::get<0>(items)));
+		ui.tableMatchHystory->setItem(row, 0, item1);
+
+		QTableWidgetItem* item2 = new QTableWidgetItem(QString(std::get<1>(items)));
+		ui.tableMatchHystory->setItem(row, 1, item2);
+	}
+
+	ui.tableMatchHystory->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+}
+
+void lobby::on_backButton_clicked()
+{
+	ui.lobbyGameModes->setCurrentIndex(0);
+}
