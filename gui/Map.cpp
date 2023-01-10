@@ -19,7 +19,6 @@ Map::Map(QWidget* parent)
 	connect(ui.zona9, SIGNAL(clicked()), SLOT(onzona9Clicked()));
 
 	connect(t_checkFinishState.get(), SIGNAL(timeout()), SLOT(on_CheckFinishState_Timeout()));
-	playersAvatar();
 }
 
 Map::~Map()
@@ -35,6 +34,11 @@ void Map::setNumberOfInterractions(int numberOfInterractions)
 void Map::setPlayer(const std::shared_ptr<PlayerQString>& player)
 {
 	m_player = player;
+}
+
+void Map::setPlayers(const std::vector<std::shared_ptr<PlayerQString>>& players)
+{
+	m_players = players;
 }
 
 QColor Map::getColor(const Color::ColorEnum& color)
@@ -65,7 +69,9 @@ QColor Map::getColor(const Color::ColorEnum& color)
 void Map::showEvent(QShowEvent* event)
 {
 	t_checkFinishState->start();
+	playersAvatar();
 }
+
 void Map::onzona1Clicked()
 {
 	if (m_validateMove == true)

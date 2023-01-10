@@ -19,6 +19,7 @@ public:
 
 	void setNumberOfInterractions(int numberOfInterractions);
 	void setPlayer(const std::shared_ptr<PlayerQString>& player);
+	void setPlayers(const std::vector<std::shared_ptr<PlayerQString>>& players);
 	QColor getColor(const Color::ColorEnum& color);
 
 protected:
@@ -31,8 +32,8 @@ private:
 	int m_numberOfInterractions;
 	bool m_validateMove = true;
 	std::shared_ptr<PlayerQString> m_player;
-	std::shared_ptr<Battle>BattleWindow;
 	std::vector<std::shared_ptr<PlayerQString>>m_players;
+	std::shared_ptr<Battle>BattleWindow;
 
 	void playersAvatar();
 
