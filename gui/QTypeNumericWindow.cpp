@@ -188,7 +188,7 @@ void QTypeNumericWindow::disableAllButtons()
 	}
 }
 
-void sendOrderToParent(const std::vector<std::pair<Color::ColorEnum, int>>& playerOrder)
+void sendOrderToParent(const std::queue<std::pair<Color::ColorEnum, int>>& playerOrder)
 {
 
 }

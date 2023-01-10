@@ -3,6 +3,7 @@
 #include <vector>
 #include "PlayerQString.h"
 #include "CredentialErrors.h"
+#include <queue>
 class Route
 {
 	std::string m_sessionKey;
@@ -10,7 +11,7 @@ class Route
 public:
 	std::string getQuestionTypeNumerical();
 	std::array<std::string, 5> getQuestionTypeVariants();
-	std::vector<std::pair<Color::ColorEnum, int>> sendResponseNumericalEt1(int resp, int time, Color::ColorEnum color);
+	std::queue<std::pair<Color::ColorEnum, int>> sendResponseNumericalEt1(int resp, int time, Color::ColorEnum color);
 
 
 	bool leaveLobby();

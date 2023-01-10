@@ -44,7 +44,6 @@ public:
 	void setPlayer(const std::shared_ptr<PlayerQString>& player);
 	void setPlayers(const std::vector<std::shared_ptr<PlayerQString>>& players);
 	void setGameInstance(const std::shared_ptr<Route>& GameInstance);
-	void setPlayerOrder(const std::vector<std::pair<Color::ColorEnum, int>>& playerOrder);
 protected:
 	void showEvent(QShowEvent* event) override;
 
@@ -68,10 +67,10 @@ private:
 	bool checkIfWindowsAreClosed();
 	
 public slots:
-	void onSendOrderToParent(const std::vector<std::pair<Color::ColorEnum, int>>& playerOrder);
+	void onSendOrderToParent(const std::queue<std::pair<Color::ColorEnum, int>>& playerOrder);
 
 private:
-	std::vector<std::pair<Color::ColorEnum, int>> m_playerOrder;
+	std::queue<std::pair<Color::ColorEnum, int>> m_playerOrder;
 	std::shared_ptr<Route> m_GameInstance;
 	uint16_t m_numberOfPlayers;
 	std::shared_ptr<PlayerQString>m_player;

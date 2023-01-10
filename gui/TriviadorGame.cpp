@@ -88,11 +88,6 @@ void TriviadorGame::setGameInstance(const std::shared_ptr<Route>& GameInstance)
 	MapWindow->setGameInstance(m_GameInstance);
 }
 
-void TriviadorGame::setPlayerOrder(const std::vector<std::pair<Color::ColorEnum, int>>& playerOrder)
-{
-	m_playerOrder = playerOrder;
-}
-
 void TriviadorGame::showEvent(QShowEvent* event)
 {
 	t_checkCurrentPhase->start();
@@ -109,6 +104,7 @@ void TriviadorGame::chooseBasePhase()
 	connect(m_QTypeNumericWindow.get(), &QTypeNumericWindow::sendOrderToParent, this, &TriviadorGame::onSendOrderToParent);
 	m_QTypeNumericWindow->setPlayer(m_player);
 	m_QTypeNumericWindow->setGameInstance(m_GameInstance);
+
 	m_QTypeNumericWindow->requestQuestion();
 	m_QTypeNumericWindow->show();
 }
@@ -120,7 +116,9 @@ void TriviadorGame::chooseRegionsPhase()
 	m_gamePhase = GamePhase::ChooseRegions;
 
 	m_QTypeNumericWindow.reset(new QTypeNumericWindow(this));
+	connect(m_QTypeNumericWindow.get(), &QTypeNumericWindow::sendOrderToParent, this, &TriviadorGame::onSendOrderToParent);
 	m_QTypeNumericWindow->setPlayer(m_player);
+
 	m_QTypeNumericWindow->setGameInstance(m_GameInstance);
 	m_QTypeNumericWindow->requestQuestion();
 	m_QTypeNumericWindow->show();
@@ -201,6 +199,7 @@ void TriviadorGame::checkNumericWindowClosed()
 			//	MapWindow->Send_Response_To_Server();
 			//}
 			MapWindow->show();
+			connect(m_QTypeNumericWindow.get(), &QTypeNumericWindow::sendOrderToParent, this, &TriviadorGame::onSendOrderToParent);
 			changePhase = true;
 		}
 	}
@@ -209,7 +208,9 @@ void TriviadorGame::checkNumericWindowClosed()
 		if (m_MapWindowClosed == false && !MapWindow->isVisible() && !m_QTypeNumericWindow->isVisible())
 		{
 			m_QTypeNumericWindow.reset(new QTypeNumericWindow(this));
+			connect(m_QTypeNumericWindow.get(), &QTypeNumericWindow::sendOrderToParent, this, &TriviadorGame::onSendOrderToParent);
 			m_QTypeNumericWindow->setPlayer(m_player);
+
 			//while (!que.empty)
 			//{
 			//	int cnt = que.size()-1;
@@ -299,8 +300,10 @@ void TriviadorGame::checkVariantsWindowClosed()
 		else if (m_duelStatus == DuelStatus::Draw)
 		{
 			m_QTypeNumericWindow.reset(new QTypeNumericWindow(this));
+			connect(m_QTypeNumericWindow.get(), &QTypeNumericWindow::sendOrderToParent, this, &TriviadorGame::onSendOrderToParent);
 			m_QTypeNumericWindow->setPlayer(m_player);
 			m_QTypeNumericWindow->setGameInstance(m_GameInstance);
+
 			m_QTypeNumericWindow->requestQuestion();
 			m_QTypeNumericWindow->show();
 			// GUI :: deschidere fereastra cu intrebarea numerica => creare ordine si restabilirea  la duelStatus
@@ -345,7 +348,7 @@ bool TriviadorGame::checkIfWindowsAreClosed()
 	return true;
 }
 
-void TriviadorGame::onSendOrderToParent(const std::vector<std::pair<Color::ColorEnum, int>>& playerOrder)
+void TriviadorGame::onSendOrderToParent(const std::queue<std::pair<Color::ColorEnum, int>>& playerOrder)
 {
 	m_playerOrder = playerOrder;
 }
