@@ -65,9 +65,10 @@ private:
 	void checkCurrentPhase();
 
 	bool checkIfWindowsAreClosed();
-	
+
 public slots:
 	void onSendOrderToParent(const std::queue<std::pair<Color::ColorEnum, int>>& playerOrder);
+	void nextPlayerInQueue(int& movesleft);
 
 private:
 	std::queue<std::pair<Color::ColorEnum, int>> m_playerOrder;

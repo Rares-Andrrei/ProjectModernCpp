@@ -106,6 +106,7 @@ void TriviadorGame::chooseBasePhase()
 	m_gamePhase = GamePhase::ChooseBase;
 
 	m_QTypeNumericWindow->requestQuestion();
+	m_QTypeNumericWindow->enableAllButtons();
 	m_QTypeNumericWindow->show();
 }
 
@@ -116,6 +117,7 @@ void TriviadorGame::chooseRegionsPhase()
 	m_gamePhase = GamePhase::ChooseRegions;
 
 	m_QTypeNumericWindow->requestQuestion();
+	m_QTypeNumericWindow->enableAllButtons();
 	m_QTypeNumericWindow->show();
 }
 
@@ -186,30 +188,8 @@ void TriviadorGame::checkNumericWindowClosed()
 	{
 		if (!MapWindow->isVisible() && !m_QTypeNumericWindow->isVisible())
 		{
-
-
-			while (!m_playerOrder.empty())
-			{
-				if (!MapWindow->isVisible())
-				{
-					// daca jucatorul curent nu e cel activ,  atunci doar va vedea harta
-					if (m_player->getColor() != m_playerOrder.front().first)
-					{
-						MapWindow->disableAllButtons();
-						MapWindow->Send_Response_To_Server(-1); // si va trimite catre server o zona invalida , ca sa stie cum sa identifice zona schibmata 
-					}
-					else
-					{
-						MapWindow->setNumberOfInterractions(1);
-						MapWindow->enableAllButtons();
-						MapWindow->show();
-					}
-
-					m_playerOrder.pop();
-				}
-			}
-			if(m_playerOrder.empty())
-				changePhase = true;
+			int movesLeft = 1;
+			nextPlayerInQueue( movesLeft);
 		}
 	}
 	else if (m_gamePhase == GamePhase::ChooseRegions)
@@ -229,6 +209,7 @@ void TriviadorGame::checkNumericWindowClosed()
 			//}
 
 			m_QTypeNumericWindow->requestQuestion();
+			m_QTypeNumericWindow->enableAllButtons();
 			MapWindow->setNumberOfInterractions(m_numberOfPlayers * 3 + 1);
 			MapWindow->show();
 			m_MapWindowClosed = true;
@@ -307,6 +288,7 @@ void TriviadorGame::checkVariantsWindowClosed()
 		{
 
 			m_QTypeNumericWindow->requestQuestion();
+			m_QTypeNumericWindow->enableAllButtons();
 			m_QTypeNumericWindow->show();
 			// GUI :: deschidere fereastra cu intrebarea numerica => creare ordine si restabilirea  la duelStatus
 		}
@@ -350,9 +332,33 @@ bool TriviadorGame::checkIfWindowsAreClosed()
 	return true;
 }
 
+void TriviadorGame::nextPlayerInQueue(int& movesleft)
+{
+	if (!MapWindow->isVisible())
+	{
+		// daca jucatorul curent nu e cel activ,  atunci doar va vedea harta
+		if (m_player->getColor() != m_playerOrder.front().first)
+		{
+			MapWindow->disableAllButtons();
+			MapWindow->Send_Response_To_Server(-1); // si va trimite catre server o zona invalida , ca sa stie cum sa identifice zona schibmata 
+		}
+		else
+		{
+			MapWindow->setNumberOfInterractions(1);
+			MapWindow->enableAllButtons();
+			MapWindow->show();
+		}
+		movesleft--;
+		if (movesleft == 0)
+			m_playerOrder.pop();
+	}
+	if (m_playerOrder.empty())
+		changePhase = true;
+}
+
 void TriviadorGame::onSendOrderToParent(const std::queue<std::pair<Color::ColorEnum, int>>& playerOrder)
 {
 	m_playerOrder = playerOrder;
-	m_QTypeNumericWindow->hide();
+	m_QTypeNumericWindow->close();
 }
 

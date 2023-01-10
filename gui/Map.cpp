@@ -67,8 +67,77 @@ void Map::Send_Response_To_Server(int ZoneId)
 	if (this->isHidden())
 		this->show();
 
-	if (false)// cand se primeste raspuns pozitiv de la server , se va trece la urmatoarea faza 
-		this->hide();
+	std::pair<int, Color::ColorEnum> colorZone = m_GameInstance->chooseRegion(ZoneId, m_player->getColor());
+
+	switch (colorZone.first)
+	{
+	case 1:
+	{
+		ui.zona1->setAutoFillBackground(true);
+		QPalette pal = QPalette(getColor(m_player->getColor()));
+		ui.zona1->setPalette(pal);
+		break;
+	}
+	case 2:
+	{
+		ui.zona2->setAutoFillBackground(true);
+		QPalette pal = QPalette(getColor(m_player->getColor()));
+		ui.zona2->setPalette(pal);
+		break;
+	}
+	case 3:
+	{
+		ui.zona3->setAutoFillBackground(true);
+		QPalette pal = QPalette(getColor(m_player->getColor()));
+		ui.zona3->setPalette(pal);
+		break;
+	}
+	case 4:
+	{
+		ui.zona4->setAutoFillBackground(true);
+		QPalette pal = QPalette(getColor(m_player->getColor()));
+		ui.zona4->setPalette(pal);
+		break;
+	}
+	case 5:
+	{
+		ui.zona5->setAutoFillBackground(true);
+		QPalette pal = QPalette(getColor(m_player->getColor()));
+		ui.zona5->setPalette(pal);
+		break;
+	}
+	case 6:
+	{
+		ui.zona6->setAutoFillBackground(true);
+		QPalette pal = QPalette(getColor(m_player->getColor()));
+		ui.zona6->setPalette(pal);
+		break;
+	}
+	case 7:
+	{
+		ui.zona7->setAutoFillBackground(true);
+		QPalette pal = QPalette(getColor(m_player->getColor()));
+		ui.zona7->setPalette(pal);
+		break;
+	}
+	case 8:
+	{
+		ui.zona8->setAutoFillBackground(true);
+		QPalette pal = QPalette(getColor(m_player->getColor()));
+		ui.zona8->setPalette(pal);
+		break;
+	}
+	case 9:
+	{
+		ui.zona9->setAutoFillBackground(true);
+		QPalette pal = QPalette(getColor(m_player->getColor()));
+		ui.zona9->setPalette(pal);
+		break;
+	}
+	default:
+		break;
+	}
+	this->hide();
 }
 
 void Map::disableAllButtons()

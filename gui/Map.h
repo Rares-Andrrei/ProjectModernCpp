@@ -28,6 +28,9 @@ public:
 	void disableAllButtons();
 	void enableAllButtons();
 
+signals:
+
+
 private:
 	Ui::MapClass ui;
 
