@@ -23,7 +23,10 @@ public:
 	void setGameInstance(const std::shared_ptr<Route>& GameInstance);
 	QColor getColor(const Color::ColorEnum& color);
 
-	void Send_Response_To_Server();
+	void Send_Response_To_Server(int ZoneId);
+
+	void disableAllButtons();
+	void enableAllButtons();
 
 protected:
 	void showEvent(QShowEvent* event) override;

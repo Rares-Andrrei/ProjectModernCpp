@@ -66,8 +66,27 @@ QColor Map::getColor(const Color::ColorEnum& color)
 	}
 }
 
-void Map::Send_Response_To_Server()
+void Map::Send_Response_To_Server(int ZoneId)
 {
+	// Trimite raspuns la server cu zona selectata
+	if (this->isHidden())
+		this->show();
+}
+
+void Map::disableAllButtons()
+{
+	for (const auto& button : findChildren<QAbstractButton*>())
+	{
+		button->setEnabled(false);
+	}
+}
+
+void Map::enableAllButtons()
+{
+	for (const auto& button : findChildren<QAbstractButton*>())
+	{
+		button->setEnabled(true);
+	}
 }
 
 void Map::showEvent(QShowEvent* event)
@@ -83,7 +102,7 @@ void Map::onzona1Clicked()
 		ui.zona1->setAutoFillBackground(true);
 		QPalette pal = QPalette(getColor(m_player->getColor()));
 		ui.zona1->setPalette(pal);
-		Send_Response_To_Server();
+		Send_Response_To_Server(1);
 	}
 	else {
 		QMessageBox::information(this, "Error", "You can't move here");
@@ -99,6 +118,7 @@ void Map::onzona2Clicked()
 		ui.zona2->setAutoFillBackground(true);
 		QPalette pal = QPalette(getColor(m_player->getColor()));
 		ui.zona2->setPalette(pal);
+		Send_Response_To_Server(2);
 	}
 	else {
 		QMessageBox::information(this, "Error", "You can't move here");
@@ -114,6 +134,7 @@ void Map::onzona3Clicked()
 		ui.zona3->setAutoFillBackground(true);
 		QPalette pal = QPalette(getColor(m_player->getColor()));
 		ui.zona3->setPalette(pal);
+		Send_Response_To_Server(3);
 	}
 	else {
 		QMessageBox::information(this, "Error", "You can't move here");
@@ -129,6 +150,7 @@ void Map::onzona4Clicked()
 		ui.zona4->setAutoFillBackground(true);
 		QPalette pal = QPalette(getColor(m_player->getColor()));
 		ui.zona4->setPalette(pal);
+		Send_Response_To_Server(4);
 	}
 	else {
 		QMessageBox::information(this, "Error", "You can't move here");
@@ -144,6 +166,7 @@ void Map::onzona5Clicked()
 		ui.zona5->setAutoFillBackground(true);
 		QPalette pal = QPalette(getColor(m_player->getColor()));
 		ui.zona5->setPalette(pal);
+		Send_Response_To_Server(5);
 	}
 	else {
 		QMessageBox::information(this, "Error", "You can't move here");
@@ -159,6 +182,7 @@ void Map::onzona6Clicked()
 		ui.zona6->setAutoFillBackground(true);
 		QPalette pal = QPalette(getColor(m_player->getColor()));
 		ui.zona6->setPalette(pal);
+		Send_Response_To_Server(6);
 	}
 	else {
 		QMessageBox::information(this, "Error", "You can't move here");
@@ -174,6 +198,7 @@ void Map::onzona7Clicked()
 		ui.zona7->setAutoFillBackground(true);
 		QPalette pal = QPalette(getColor(m_player->getColor()));
 		ui.zona7->setPalette(pal);
+		Send_Response_To_Server(7);
 	}
 	else {
 		QMessageBox::information(this, "Error", "You can't move here");
@@ -189,6 +214,7 @@ void Map::onzona8Clicked()
 		ui.zona8->setAutoFillBackground(true);
 		QPalette pal = QPalette(getColor(m_player->getColor()));
 		ui.zona8->setPalette(pal);
+		Send_Response_To_Server(8);
 	}
 	else {
 		QMessageBox::information(this, "Error", "You can't move here");
@@ -204,6 +230,7 @@ void Map::onzona9Clicked()
 		ui.zona9->setAutoFillBackground(true);
 		QPalette pal = QPalette(getColor(m_player->getColor()));
 		ui.zona9->setPalette(pal);
+		Send_Response_To_Server(9);
 	}
 	else {
 		QMessageBox::information(this, "Error", "You can't move here");
