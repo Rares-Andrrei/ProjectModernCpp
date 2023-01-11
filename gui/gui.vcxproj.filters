@@ -70,6 +70,9 @@
     <ClCompile Include="PlayerQString.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MapForThreePlayers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="logIn.ui">
@@ -94,6 +97,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="QTypeVariantsWindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="MapForThreePlayers.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -122,14 +128,11 @@
     <QtMoc Include="QTypeVariantsWindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="MapForThreePlayers.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ColorEnum.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayersInstance.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CredentialErrors.h">
       <Filter>Header Files</Filter>
     </ClInclude>

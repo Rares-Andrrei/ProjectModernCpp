@@ -4,6 +4,7 @@ TriviadorGame::TriviadorGame(QWidget* parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
+	/*MapWindow.reset(new Map(this));*/
 	MapWindow.reset(new Map(this));
 
 	m_QTypeNumericWindow.reset(new QTypeNumericWindow(this));
