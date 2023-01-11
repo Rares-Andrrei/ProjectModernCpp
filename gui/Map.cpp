@@ -21,11 +21,6 @@ Map::~Map()
 
 }
 
-void Map::setNumberOfInterractions(int numberOfInterractions)
-{
-	m_numberOfInterractions = numberOfInterractions;
-}
-
 void Map::setPlayer(const std::shared_ptr<PlayerQString>& player)
 {
 	m_player = player;
@@ -164,8 +159,14 @@ void Map::Send_Response_To_Server(int ZoneId)
 	}
 	}*/
 	QThread::msleep(100);
-
+	
+	emit emitMapUpdatedChooseRegionsPhase();
+	
 	this->hide();
+}
+void emitMapUpdatedChooseRegionsPhase()
+{
+	
 }
 
 void Map::disableAllButtons()
@@ -197,7 +198,6 @@ void Map::onzona1Clicked()
 	if (m_validateMove == true)
 	{
 		m_validateMove = true;
-		m_numberOfInterractions--;
 		ui.zona1->setAutoFillBackground(true);
 		QPalette pal = QPalette(getColor(m_player->getColor()));
 		ui.zona1->setPalette(pal);
@@ -220,7 +220,6 @@ void Map::onzona2Clicked()
 	if (m_validateMove == true)
 	{
 		m_validateMove = true;
-		m_numberOfInterractions--;
 		ui.zona2->setAutoFillBackground(true);
 		QPalette pal = QPalette(getColor(m_player->getColor()));
 		ui.zona2->setPalette(pal);
@@ -236,7 +235,6 @@ void Map::onzona3Clicked()
 	if (m_validateMove == true)
 	{
 		m_validateMove = true;
-		m_numberOfInterractions--;
 		ui.zona3->setAutoFillBackground(true);
 		QPalette pal = QPalette(getColor(m_player->getColor()));
 		ui.zona3->setPalette(pal);
@@ -252,7 +250,6 @@ void Map::onzona4Clicked()
 	if (m_validateMove == true)
 	{
 		m_validateMove = true;
-		m_numberOfInterractions--;
 		ui.zona4->setAutoFillBackground(true);
 		QPalette pal = QPalette(getColor(m_player->getColor()));
 		ui.zona4->setPalette(pal);
@@ -268,7 +265,6 @@ void Map::onzona5Clicked()
 	if (m_validateMove == true)
 	{
 		m_validateMove = true;
-		m_numberOfInterractions--;
 		ui.zona5->setAutoFillBackground(true);
 		QPalette pal = QPalette(getColor(m_player->getColor()));
 		ui.zona5->setPalette(pal);
@@ -284,7 +280,6 @@ void Map::onzona6Clicked()
 	if (m_validateMove == true)
 	{
 		m_validateMove = true;
-		m_numberOfInterractions--;
 		ui.zona6->setAutoFillBackground(true);
 		QPalette pal = QPalette(getColor(m_player->getColor()));
 		ui.zona6->setPalette(pal);
@@ -300,7 +295,6 @@ void Map::onzona7Clicked()
 	if (m_validateMove == true)
 	{
 		m_validateMove = true;
-		m_numberOfInterractions--;
 		ui.zona7->setAutoFillBackground(true);
 		QPalette pal = QPalette(getColor(m_player->getColor()));
 		ui.zona7->setPalette(pal);
@@ -316,7 +310,6 @@ void Map::onzona8Clicked()
 	if (m_validateMove == true)
 	{
 		m_validateMove = true;
-		m_numberOfInterractions--;
 		ui.zona8->setAutoFillBackground(true);
 		QPalette pal = QPalette(getColor(m_player->getColor()));
 		ui.zona8->setPalette(pal);
@@ -332,7 +325,6 @@ void Map::onzona9Clicked()
 	if (m_validateMove == true)
 	{
 		m_validateMove = true;
-		m_numberOfInterractions--;
 		ui.zona9->setAutoFillBackground(true);
 		QPalette pal = QPalette(getColor(m_player->getColor()));
 		ui.zona9->setPalette(pal);

@@ -24,6 +24,8 @@ TriviadorGame::TriviadorGame(QWidget* parent)
 	t_VariantsWindowTimer = std::make_unique<QTimer>();
 	t_VariantsWindowTimer->setInterval(500);
 	connect(t_VariantsWindowTimer.get(), &QTimer::timeout, this, &TriviadorGame::checkVariantsWindowClosed);
+
+	connect(MapWindow.get(), &Map::emitMapUpdatedChooseRegionsPhase, this, &TriviadorGame::updateTheQueueStatus);
 }
 
 TriviadorGame::~TriviadorGame()
@@ -103,7 +105,7 @@ void TriviadorGame::setGameInstance(const std::shared_ptr<Route>& GameInstance)
 void TriviadorGame::showEvent(QShowEvent* event)
 {
 	t_checkCurrentPhase->start();
-	this->hide();
+	this->close();
 }
 
 void TriviadorGame::chooseBasePhase()
@@ -147,7 +149,6 @@ void TriviadorGame::startDuel()
 		m_numberOfDuels++;
 		duelFinished = false;
 		m_MapWindowClosed = false;
-		MapWindow->setNumberOfInterractions(1);
 		MapWindow->show(); // de schibmat cu o functie prin care se alege o singura zona 
 	}
 	if (m_numberOfDuels >= m_MaxNumberOfDuels)
@@ -195,16 +196,23 @@ void TriviadorGame::checkNumericWindowClosed()
 	{
 		if (!MapWindow->isVisible() && !m_QTypeNumericWindow->isVisible())
 		{
-			int movesLeft = 1;
-			nextPlayerInQueue(movesLeft);
+			nextPlayerInQueue();
 		}
 	}
 	else if (m_gamePhase == GamePhase::ChooseRegions)
 	{
 		if (/*m_MapWindowClosed == false &&*/ !MapWindow->isVisible() && !m_QTypeNumericWindow->isVisible())
 		{
-			nextPlayerInQueue(m_numberOfInteractionsLeft);
-			//m_MapWindowClosed = true;
+			if (!m_playerOrder.empty())
+			{
+				int movesLeft = 1;
+				nextPlayerInQueue();
+			}
+			else
+			{
+				m_QTypeNumericWindow->requestQuestion();
+				m_QTypeNumericWindow->show();
+			}
 		}
 	}
 	else if (m_gamePhase == GamePhase::Duels && m_duelStatus == DuelStatus::Draw)
@@ -324,8 +332,14 @@ bool TriviadorGame::checkIfWindowsAreClosed()
 	return true;
 }
 
-void TriviadorGame::nextPlayerInQueue(int& movesleft)
+void TriviadorGame::nextPlayerInQueue()
 {
+	QThread::msleep(QRandomGenerator::global()->bounded(1, 10));
+	if (m_playerOrder.empty() && m_gamePhase == GamePhase::ChooseBase)
+	{
+		changePhase = true;
+		return;
+	}
 	if (!MapWindow->isVisible())
 	{
 		// daca jucatorul curent nu e cel activ,  atunci doar va vedea harta
@@ -336,29 +350,36 @@ void TriviadorGame::nextPlayerInQueue(int& movesleft)
 		}
 		else
 		{
-			MapWindow->setNumberOfInterractions(1);
 			MapWindow->enableAllButtons();
 			MapWindow->show();
 		}
-		movesleft--;
-		if (movesleft == 0)
+	}
+
+}
+
+void TriviadorGame::updateTheQueueStatus()
+{
+	if (m_gamePhase == GamePhase::ChooseBase)
+	{
+		m_playerOrder.pop();
+		return;
+	}
+	m_numberOfInteractionsLeft--;
+	if (m_numberOfInteractionsLeft == 0)
+	{
+		m_playerOrder.pop();
+		if (m_gamePhase == GamePhase::ChooseRegions)
 		{
-			m_playerOrder.pop();
-			if (m_gamePhase == GamePhase::ChooseRegions)
+			if (m_numberOfPlayers == 2)
 			{
-				if (m_numberOfPlayers == 2)
-				{
-					m_numberOfInteractionsLeft = m_playerOrder.size();
-				}
-				else
-				{
-					m_numberOfInteractionsLeft = m_playerOrder.size() - 1;
-				}
+				m_numberOfInteractionsLeft = m_playerOrder.size();
+			}
+			else
+			{
+				m_numberOfInteractionsLeft = m_playerOrder.size() - 1;
 			}
 		}
 	}
-	if (m_playerOrder.empty())
-		changePhase = true;
 }
 
 void TriviadorGame::onSendOrderToParent(const std::queue<std::pair<Color::ColorEnum, int>>& playerOrder)

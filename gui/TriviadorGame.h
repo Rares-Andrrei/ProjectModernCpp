@@ -11,6 +11,7 @@
 #include "Map.h"
 #include "QTypeNumericWindow.h"
 #include "QTypeVariantsWindow.h"
+#include <qrandom.h>
 
 class TriviadorGame : public QMainWindow
 {
@@ -68,7 +69,8 @@ private:
 
 public slots:
 	void onSendOrderToParent(const std::queue<std::pair<Color::ColorEnum, int>>& playerOrder);
-	void nextPlayerInQueue(int& movesleft);
+	void nextPlayerInQueue();
+	void updateTheQueueStatus();
 
 private:
 	std::queue<std::pair<Color::ColorEnum, int>> m_playerOrder;

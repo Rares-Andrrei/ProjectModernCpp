@@ -133,7 +133,7 @@ void Route::chooseRegionRoute()
 			if (regionId == -1)
 			{
 				m_gamesActive[gameID]->eraseUpdatedZone();
-				while (!m_gamesActive[gameID]->checkZoneUpdates())
+				while (!m_gamesActive[gameID]->checkZoneUpdates() && !m_gamesActive[gameID]->NumberOfRequestsReached())
 				{
 					std::this_thread::sleep_for(std::chrono::seconds(1));
 				}

@@ -19,7 +19,6 @@ public:
 	Map(QWidget* parent = nullptr);
 	~Map();
 
-	void setNumberOfInterractions(int numberOfInterractions);
 	void setPlayer(const std::shared_ptr<PlayerQString>& player);
 	void setPlayers(const std::vector<std::shared_ptr<PlayerQString>>& players);
 	void setGameInstance(const std::shared_ptr<Route>& GameInstance);
@@ -32,14 +31,13 @@ public:
 	void updateAZone(QAbstractButton* button, const Color::ColorEnum& color);
 
 signals:
-
+	void emitMapUpdatedChooseRegionsPhase();
 
 private:
 	Ui::MapClass ui;
 
 	std::shared_ptr<Route> m_GameInstance;
 
-	int m_numberOfInterractions;
 	bool m_validateMove = true;
 	std::shared_ptr<PlayerQString> m_player;
 	std::vector<std::shared_ptr<PlayerQString>>m_players;
