@@ -9,6 +9,7 @@
 #include <qmessagebox.h>
 #include "PlayerQString.h"
 #include <qtimer.h>
+#include <qthread.h>
 
 class Map : public QMainWindow
 {

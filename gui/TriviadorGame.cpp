@@ -33,8 +33,14 @@ void TriviadorGame::setNumberOfPlayers(const uint16_t& numberOfPlayers)
 {
 	m_numberOfPlayers = numberOfPlayers;
 	if (m_numberOfPlayers <= 2)
+	{
 		m_MaxNumberOfDuels = 4 * m_numberOfPlayers;
-	else m_MaxNumberOfDuels = 5 * m_numberOfPlayers;
+		m_numberOfInteractionsLeft = 2;
+	}
+	else {
+		m_MaxNumberOfDuels = 5 * m_numberOfPlayers;
+		m_numberOfInteractionsLeft = numberOfPlayers - 1;
+	}
 
 }
 
@@ -195,25 +201,10 @@ void TriviadorGame::checkNumericWindowClosed()
 	}
 	else if (m_gamePhase == GamePhase::ChooseRegions)
 	{
-		if (m_MapWindowClosed == false && !MapWindow->isVisible() && !m_QTypeNumericWindow->isVisible())
+		if (/*m_MapWindowClosed == false &&*/ !MapWindow->isVisible() && !m_QTypeNumericWindow->isVisible())
 		{
-
-			//while (!que.empty)
-			//{
-			//	int cnt = que.size()-1;
-			//	if (k_numberOfPlayers == 2)
-			//		cnt + 1;
-			//	while (cnt != 0)
-			//	{
-			//		select a region 
-			//	}
-			//}
-
-			m_QTypeNumericWindow->requestQuestion();
-
-			MapWindow->setNumberOfInterractions(m_numberOfPlayers * 3 + 1);
-			MapWindow->show();
-			m_MapWindowClosed = true;
+			nextPlayerInQueue(m_numberOfInteractionsLeft);
+			//m_MapWindowClosed = true;
 		}
 	}
 	else if (m_gamePhase == GamePhase::Duels && m_duelStatus == DuelStatus::Draw)
@@ -246,7 +237,7 @@ void TriviadorGame::checkMapWindowClosed()
 	}
 	if (m_gamePhase == GamePhase::ChooseRegions && m_MapWindowClosed == true && !MapWindow->isVisible())
 	{
-		if (true) // daca nu mai sunt zone libere , verificare de la server
+		if (true) // daca nu mai sunt zone libere , verificare de la server ?
 		{
 			changePhase = true;
 		}
@@ -351,7 +342,20 @@ void TriviadorGame::nextPlayerInQueue(int& movesleft)
 		}
 		movesleft--;
 		if (movesleft == 0)
+		{
 			m_playerOrder.pop();
+			if (m_gamePhase == GamePhase::ChooseRegions)
+			{
+				if (m_numberOfPlayers == 2)
+				{
+					m_numberOfInteractionsLeft = m_playerOrder.size();
+				}
+				else
+				{
+					m_numberOfInteractionsLeft = m_playerOrder.size() - 1;
+				}
+			}
+		}
 	}
 	if (m_playerOrder.empty())
 		changePhase = true;

@@ -73,7 +73,8 @@ void Map::Send_Response_To_Server(int ZoneId)
 		this->show();
 
 	std::pair<int, Color::ColorEnum> colorZone = m_GameInstance->chooseRegion(ZoneId, m_player->getColor());
-
+	QThread::msleep(1000);
+	disableAllButtons();
 	switch (colorZone.first)
 	{
 	case 1:
@@ -142,6 +143,8 @@ void Map::Send_Response_To_Server(int ZoneId)
 	default:
 		break;
 	}
+	QThread::msleep(100);
+
 	this->hide();
 }
 

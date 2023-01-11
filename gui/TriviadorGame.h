@@ -88,6 +88,8 @@ private:
 
 	int m_numberOfDuels = 0;
 	int m_MaxNumberOfDuels = 0;
+	
+	int m_numberOfInteractionsLeft;
 
 	std::unique_ptr<QTimer> t_MapWindowTimer;
 	std::unique_ptr<QTimer> t_NumericWindowTimer;
