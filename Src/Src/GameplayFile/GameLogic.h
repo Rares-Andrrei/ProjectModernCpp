@@ -45,6 +45,7 @@ public:
 	void eraseUpdatedZone(); //se apeleaza atuncic and se genereaza o noua intrebare (inseamna ca toti layerii au updatat zona si s-a trecut mai deprarte
 public:
 	bool NumberOfRequestsReached();
+	void increaseNumberOfRequest();
 
 	static crow::json::wvalue playersToJson(std::vector < std::shared_ptr<Player>> players);
 	QTypeNumerical getQuestionTypeNumerical();

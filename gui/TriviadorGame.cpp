@@ -125,6 +125,7 @@ void TriviadorGame::chooseRegionsPhase()
 	changePhase = false;
 	m_gamePhase = GamePhase::ChooseRegions;
 
+	QThread::msleep(1000);
 	m_QTypeNumericWindow->requestQuestion();
 
 	m_QTypeNumericWindow->show();
@@ -201,17 +202,15 @@ void TriviadorGame::checkNumericWindowClosed()
 	}
 	else if (m_gamePhase == GamePhase::ChooseRegions)
 	{
-		if (/*m_MapWindowClosed == false &&*/ !MapWindow->isVisible() && !m_QTypeNumericWindow->isVisible())
+		if (!MapWindow->isVisible() && !m_QTypeNumericWindow->isVisible())
 		{
 			if (!m_playerOrder.empty())
 			{
-				int movesLeft = 1;
 				nextPlayerInQueue();
 			}
 			else
 			{
-				m_QTypeNumericWindow->requestQuestion();
-				m_QTypeNumericWindow->show();
+				chooseRegionsPhase();
 			}
 		}
 	}
@@ -351,10 +350,10 @@ void TriviadorGame::nextPlayerInQueue()
 		else
 		{
 			MapWindow->enableAllButtons();
+			QThread::msleep(1000);
 			MapWindow->show();
 		}
 	}
-
 }
 
 void TriviadorGame::updateTheQueueStatus()
@@ -370,6 +369,15 @@ void TriviadorGame::updateTheQueueStatus()
 		m_playerOrder.pop();
 		if (m_gamePhase == GamePhase::ChooseRegions)
 		{
+			if (m_playerOrder.empty())
+			{
+				m_numberOfInteractionsLeft = m_players.size();
+				if (m_numberOfPlayers != 2)
+				{
+					m_numberOfInteractionsLeft--;
+				}
+				return;
+			}
 			if (m_numberOfPlayers == 2)
 			{
 				m_numberOfInteractionsLeft = m_playerOrder.size();

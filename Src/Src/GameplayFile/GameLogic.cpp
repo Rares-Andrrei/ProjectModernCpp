@@ -48,7 +48,6 @@ void GameLogic::updateZone(int zoneId, Color::ColorEnum zoneColor)
 {
 	if (m_board[zoneId] != m_board.end())
 	{
-		NumberOfRequests++;
 		std::shared_ptr<Zone> newZone = std::make_shared<Zone>(zoneColor);
 		m_board[zoneId] = newZone;
 		m_updatedZone = { zoneId, zoneColor };
@@ -57,7 +56,6 @@ void GameLogic::updateZone(int zoneId, Color::ColorEnum zoneColor)
 
 void GameLogic::eraseUpdatedZone()
 {
-	NumberOfRequests++;
 	if (m_updatedZone.has_value())
 	{
 		m_updatedZone.reset();
@@ -67,6 +65,11 @@ void GameLogic::eraseUpdatedZone()
 bool GameLogic::NumberOfRequestsReached()
 {
 	return (NumberOfRequests % k_numberOfPlayers) == 0;
+}
+
+void GameLogic::increaseNumberOfRequest()
+{
+	NumberOfRequests++;
 }
 
 crow::json::wvalue GameLogic::playersToJson(std::vector<std::shared_ptr<Player>> players)

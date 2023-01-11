@@ -78,7 +78,7 @@ std::queue<std::pair<Color::ColorEnum, int>> Route::sendResponseNumericalEt1(int
 
 	auto future_text = cpr::PostCallback(lambda, url, payload);
 
-	while (future_text.wait_for(std::chrono::seconds(0)) != std::future_status::ready)
+	while (future_text.wait_for(std::chrono::milliseconds(10)) != std::future_status::ready)
 	{
 		QCoreApplication::processEvents();
 	}
@@ -102,14 +102,14 @@ std::pair<int, Color::ColorEnum> Route::chooseRegion(int id, Color::ColorEnum co
 	cpr::Payload payload{
 			{ "gameID", std::to_string(m_gameId)},
 			{ "color", std::to_string(Color::ColorToInt(color))},
-			{ "regionId", std::to_string(id)}
+			{ "regionId", std::to_string(id - 1)}
 	};
 	auto lambda = [](cpr::Response response) {
 		return response.text;
 	};
 
 	auto future_text = cpr::PostCallback(lambda, url, payload);
-	while (future_text.wait_for(std::chrono::seconds(0)) != std::future_status::ready)
+	while (future_text.wait_for(std::chrono::microseconds(10)) != std::future_status::ready)
 	{
 		QCoreApplication::processEvents();
 	}
@@ -118,7 +118,7 @@ std::pair<int, Color::ColorEnum> Route::chooseRegion(int id, Color::ColorEnum co
 	if (aux != "")
 	{
 		crow::json::rvalue resData = crow::json::load(aux);
-		data.first = resData["zoneId"].i();
+		data.first = resData["zoneId"].i()+1;
 		data.second = Color::getColor(resData["zoneColor"].i());
 	}
 	return data;
@@ -139,7 +139,7 @@ void Route::enterLobby(int type, std::vector<std::shared_ptr<PlayerQString>>& pl
 
 	auto future_text = cpr::PostCallback(lambda, url, payload);
 
-	while (future_text.wait_for(std::chrono::seconds(0)) != std::future_status::ready)
+	while (future_text.wait_for(std::chrono::microseconds(10)) != std::future_status::ready)
 	{
 		QCoreApplication::processEvents();
 	}

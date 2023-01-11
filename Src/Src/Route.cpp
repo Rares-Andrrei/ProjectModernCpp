@@ -46,6 +46,7 @@ void Route::loginRoute()
 	crow::response res;
 	res.body = std::to_string(static_cast<int>(check)) + sessionKey;
 	res.code = 200;
+	
 	return res;
 		});
 }
@@ -62,8 +63,7 @@ void Route::enterLobbyRoute()
 	std::shared_ptr<Lobby> lobby = m_waitingList->addPlayerToLobby(sessionKeyIter->second, lobbyType);
 	while (lobby->playersInLobby() < static_cast<int>(lobbyType) && lobby->existInLobby(sessionKeyIter->second))
 	{
-		std::this_thread::sleep_for(std::chrono::seconds(1));
-		//wait
+		std::this_thread::sleep_for(std::chrono::microseconds(10));
 	}
 	crow::response resp;
 	if (lobby->existInLobby(sessionKeyIter->second))
@@ -100,12 +100,13 @@ void Route::sendResponseQTypeNumericalEt1()
 		m_gamesActive[gameID]->setPlayerNumericalAnswer(std::stoi(timeIter->second), std::stoi(responseIter->second), Color::getColor(std::stoi(colorIter->second)));
 		while (!m_gamesActive[gameID]->NumericalAnswersReady())
 		{
-			std::this_thread::sleep_for(std::chrono::seconds(1));
+			std::this_thread::sleep_for(std::chrono::milliseconds(10));
 		}		
 		std::vector<std::shared_ptr<Player>> rankingList = m_gamesActive[gameID]->getWinnerList();
 		crow::json::wvalue playesData = GameLogic::playersToJson(rankingList);
 		crow::response resp = playesData;
 		resp.code = 200;
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 		return resp;
 	}
 	else
@@ -128,19 +129,16 @@ void Route::chooseRegionRoute()
 		long gameID = std::stoi(gameIdIter->second);
 		if (m_gamesActive.count(gameID) > 0)
 		{
+			m_gamesActive[gameID]->increaseNumberOfRequest();
 			int regionId = std::stoi(regionIdIter->second);
 			Color::ColorEnum color = Color::getColor(std::stoi(colorIter->second));
-			if (regionId == -1)
-			{
-				m_gamesActive[gameID]->eraseUpdatedZone();
-				while (!m_gamesActive[gameID]->checkZoneUpdates() && !m_gamesActive[gameID]->NumberOfRequestsReached())
-				{
-					std::this_thread::sleep_for(std::chrono::seconds(1));
-				}
-			}
-			else
+			if (regionId != -1)
 			{
 				m_gamesActive[gameID]->updateZone(regionId, color);
+			}
+			while (!m_gamesActive[gameID]->checkZoneUpdates() || !m_gamesActive[gameID]->NumberOfRequestsReached())
+			{
+				std::this_thread::sleep_for(std::chrono::milliseconds(10));
 			}
 			std::pair<int, Color::ColorEnum> updatedRegion = m_gamesActive[gameID]->getUpdatedZone();
 			crow::json::wvalue json;
@@ -149,13 +147,13 @@ void Route::chooseRegionRoute()
 			crow::response res;
 			res.code = 200;
 			res = json;
+			std::this_thread::sleep_for(std::chrono::milliseconds(10));
 			return res;
 		}
 		return crow::response(404);
 
 		});
 }
-
 
 void Route::exitLobbyRoute()
 {
@@ -184,6 +182,8 @@ void Route::getQuestionTypeNumericalRoute()
 		QTypeNumerical question = m_gamesActive[gameID]->getQuestionTypeNumerical();
 		res.body = question.getQuestion();
 		res.code = 200;
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+
 		return res;
 	}
 	res.code = 404;
@@ -212,6 +212,8 @@ void Route::getQuestionTypeVariantsRoute()
 		json["var4"] = question.getVariant<3>();
 		res.code = 200;
 		res = json;
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+
 		return res;
 	}
 	else
@@ -231,9 +233,11 @@ void Route::signUpRoute()
 	auto usernameIter = bodyArgs.find("username");
 	auto passwordIter = bodyArgs.find("password");
 	auto nameIter = bodyArgs.find("name");
+
 	Account account(usernameIter->second, passwordIter->second, nameIter->second);
 	CredentialErrors check = m_db->registerUser(account);
 	crow::response res;
+
 	res.body = std::to_string(static_cast<int>(check));
 	res.code = 200;
 	return res;
@@ -258,5 +262,3 @@ void Route::startApp()
 {
 	m_app.port(18080).multithreaded().run();
 }
-
-
