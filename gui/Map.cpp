@@ -74,63 +74,63 @@ void Map::Send_Response_To_Server(int ZoneId)
 	case 1:
 	{
 		ui.zona1->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(m_player->getColor()));
+		QPalette pal = QPalette(getColor(colorZone.second));
 		ui.zona1->setPalette(pal);
 		break;
 	}
 	case 2:
 	{
 		ui.zona2->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(m_player->getColor()));
+		QPalette pal = QPalette(getColor(colorZone.second));
 		ui.zona2->setPalette(pal);
 		break;
 	}
 	case 3:
 	{
 		ui.zona3->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(m_player->getColor()));
+		QPalette pal = QPalette(getColor(colorZone.second));
 		ui.zona3->setPalette(pal);
 		break;
 	}
 	case 4:
 	{
 		ui.zona4->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(m_player->getColor()));
+		QPalette pal = QPalette(getColor(colorZone.second));
 		ui.zona4->setPalette(pal);
 		break;
 	}
 	case 5:
 	{
 		ui.zona5->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(m_player->getColor()));
+		QPalette pal = QPalette(getColor(colorZone.second));
 		ui.zona5->setPalette(pal);
 		break;
 	}
 	case 6:
 	{
 		ui.zona6->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(m_player->getColor()));
+		QPalette pal = QPalette(getColor(colorZone.second));
 		ui.zona6->setPalette(pal);
 		break;
 	}
 	case 7:
 	{
 		ui.zona7->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(m_player->getColor()));
+		QPalette pal = QPalette(getColor(colorZone.second));
 		ui.zona7->setPalette(pal);
 		break;
 	}
 	case 8:
 	{
 		ui.zona8->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(m_player->getColor()));
+		QPalette pal = QPalette(getColor(colorZone.second));
 		ui.zona8->setPalette(pal);
 		break;
 	}
 	case 9:
 	{
 		ui.zona9->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(m_player->getColor()));
+		QPalette pal = QPalette(getColor(colorZone.second));
 		ui.zona9->setPalette(pal);
 		break;
 	}

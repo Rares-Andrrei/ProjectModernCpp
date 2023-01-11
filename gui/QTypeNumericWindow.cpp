@@ -16,7 +16,7 @@ QTypeNumericWindow::QTypeNumericWindow(QWidget* parent)
 	ui.TimeRemaining->setValue(0);
 
 	// nu sunt sigur daca trebuie ?
-	ui.Answer->setClearButtonEnabled(true);
+	ui.Answer->setClearButtonEnabled(false);
 	ui.Answer->setEnabled(false);
 
 	// Use a stylesheet to customize the appearance of the slider
@@ -83,7 +83,7 @@ void QTypeNumericWindow::setGameInstance(const std::shared_ptr<Route>& GameInsta
 
 void QTypeNumericWindow::showEvent(QShowEvent* event)
 {
-	m_TimeRemaining->start(10);
+	resetTheWindow();
 	QWidget::showEvent(event);
 }
 
@@ -187,15 +187,15 @@ void QTypeNumericWindow::disableAllButtons()
 	}
 }
 
-void QTypeNumericWindow::enableAllButtons()
+void QTypeNumericWindow::resetTheWindow()
 {
 	for (const auto& button : findChildren<QAbstractButton*>())
 	{
 		button->setEnabled(true);
 	}
+	ui.Answer->clear();
+	ui.TimeRemaining->setValue(0);
+	m_TimeRemaining->start(10);
 }
 
-void sendOrderToParent(const std::queue<std::pair<Color::ColorEnum, int>>& playerOrder)
-{
-
-}
+void sendOrderToParent(const std::queue<std::pair<Color::ColorEnum, int>>& playerOrder) {}

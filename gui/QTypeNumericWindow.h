@@ -20,7 +20,7 @@ public:
 	void setGameInstance(const std::shared_ptr<Route>& GameInstance);
 
 	void disableAllButtons();
-	void enableAllButtons();
+	void resetTheWindow();
 
 protected:
 	void showEvent(QShowEvent* event) override;

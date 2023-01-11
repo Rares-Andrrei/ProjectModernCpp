@@ -106,7 +106,7 @@ void TriviadorGame::chooseBasePhase()
 	m_gamePhase = GamePhase::ChooseBase;
 
 	m_QTypeNumericWindow->requestQuestion();
-	m_QTypeNumericWindow->enableAllButtons();
+
 	m_QTypeNumericWindow->show();
 }
 
@@ -117,7 +117,7 @@ void TriviadorGame::chooseRegionsPhase()
 	m_gamePhase = GamePhase::ChooseRegions;
 
 	m_QTypeNumericWindow->requestQuestion();
-	m_QTypeNumericWindow->enableAllButtons();
+
 	m_QTypeNumericWindow->show();
 }
 
@@ -189,7 +189,7 @@ void TriviadorGame::checkNumericWindowClosed()
 		if (!MapWindow->isVisible() && !m_QTypeNumericWindow->isVisible())
 		{
 			int movesLeft = 1;
-			nextPlayerInQueue( movesLeft);
+			nextPlayerInQueue(movesLeft);
 		}
 	}
 	else if (m_gamePhase == GamePhase::ChooseRegions)
@@ -209,7 +209,7 @@ void TriviadorGame::checkNumericWindowClosed()
 			//}
 
 			m_QTypeNumericWindow->requestQuestion();
-			m_QTypeNumericWindow->enableAllButtons();
+
 			MapWindow->setNumberOfInterractions(m_numberOfPlayers * 3 + 1);
 			MapWindow->show();
 			m_MapWindowClosed = true;
@@ -288,7 +288,7 @@ void TriviadorGame::checkVariantsWindowClosed()
 		{
 
 			m_QTypeNumericWindow->requestQuestion();
-			m_QTypeNumericWindow->enableAllButtons();
+
 			m_QTypeNumericWindow->show();
 			// GUI :: deschidere fereastra cu intrebarea numerica => creare ordine si restabilirea  la duelStatus
 		}
