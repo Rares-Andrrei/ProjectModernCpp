@@ -26,7 +26,7 @@ class lobby : public QMainWindow
 	Q_OBJECT
 
 public:
-	lobby(std::shared_ptr<Route> route, QWidget* parent = nullptr);
+	lobby(const std::shared_ptr<Route>& route, QWidget* parent = nullptr);
 	void setPlayer(const QString& player);
 	~lobby();
 

@@ -45,7 +45,7 @@ void lobby::nextOrPrevious()
 	}
 }
 
-lobby::lobby(Route& route, QWidget* parent)
+lobby::lobby(const std::shared_ptr<Route>& route, QWidget* parent)
 	: m_routes(route), QMainWindow(parent)
 {
 	ui.setupUi(this);
