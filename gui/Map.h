@@ -20,6 +20,7 @@ public:
 
 	void setNumberOfInterractions(int numberOfInterractions);
 	void setPlayer(const std::shared_ptr<PlayerQString>& player);
+	void setPlayers(const std::vector<std::shared_ptr<PlayerQString>>& players);
 	void setGameInstance(const std::shared_ptr<Route>& GameInstance);
 	QColor getColor(const Color::ColorEnum& color);
 
@@ -39,7 +40,10 @@ private:
 	int m_numberOfInterractions;
 	bool m_validateMove = true;
 	std::shared_ptr<PlayerQString> m_player;
+	std::vector<std::shared_ptr<PlayerQString>>m_players;
 	std::shared_ptr<Battle>BattleWindow;
+
+	void playersAvatar();
 
 private slots:
 	void onzona1Clicked();

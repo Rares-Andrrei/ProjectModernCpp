@@ -84,6 +84,7 @@ void TriviadorGame::setPlayer(const std::shared_ptr<PlayerQString>& player)
 void TriviadorGame::setPlayers(const std::vector<std::shared_ptr<PlayerQString>>& players)
 {
 	m_players = players;
+	MapWindow->setPlayers(players);
 }
 
 void TriviadorGame::setGameInstance(const std::shared_ptr<Route>& GameInstance)

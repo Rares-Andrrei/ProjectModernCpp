@@ -16,6 +16,11 @@
 #include <qtimer.h>
 #include <qthread.h>
 
+#include <QMovie>
+#include <QStringList>
+#include <QScrollArea>
+
+
 class lobby : public QMainWindow
 {
 	Q_OBJECT
@@ -25,8 +30,6 @@ public:
 	void setPlayer(const QString& player);
 	~lobby();
 
-
-
 private:
 	QString m_PlayerName;
 	std::shared_ptr<PlayerQString> m_Player;
@@ -35,10 +38,26 @@ private:
 	std::shared_ptr<Route> m_routes;
 	Ui::lobbyClass ui;
 	std::unique_ptr<TriviadorGame> Game;
+
+	QStringList filenames;
+	int i = 0;
+
+	void stylingTheLobby();
+	void buttonsConnections();
+	void catPictures();
+	void nextOrPrevious();
+
 private slots:
+
 	void onTwoPlayersButtonClicked();
 	void onThreePlayersButtonClicked();
 	void onFourPlayersButtonClicked();
 	void onCancelButtonClicked();
+
+	void on_gamesHistoryButton_clicked();
+	void on_backButton_clicked();
+
+	void on_nextButton_clicked();
+	void on_previousButton_clicked();
 };
 // broadcast

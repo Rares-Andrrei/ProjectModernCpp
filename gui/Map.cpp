@@ -31,6 +31,11 @@ void Map::setPlayer(const std::shared_ptr<PlayerQString>& player)
 	m_player = player;
 }
 
+void Map::setPlayers(const std::vector<std::shared_ptr<PlayerQString>>& players)
+{
+	m_players = players;
+}
+
 void Map::setGameInstance(const std::shared_ptr<Route>& GameInstance)
 {
 	m_GameInstance = GameInstance;
@@ -154,6 +159,7 @@ void Map::enableAllButtons()
 	{
 		button->setEnabled(true);
 	}
+	playersAvatar();
 }
 
 void Map::onzona1Clicked()
@@ -170,6 +176,13 @@ void Map::onzona1Clicked()
 	else {
 		QMessageBox::information(this, "Error", "You can't move here");
 	}
+}
+
+void Map::playersAvatar()
+{
+	//ui.player1Avatar->setStyleSheet();
+	ui.player1Name->setText(m_players[0]->getName());
+	ui.player2Name->setText(m_players[1]->getName());
 }
 
 void Map::onzona2Clicked()

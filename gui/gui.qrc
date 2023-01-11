@@ -1,18 +1,31 @@
 <RCC>
     <qresource prefix="/gui">
+        <file>32x32.gif</file>
         <file>background.png</file>
-        <file>startMeniu.png</file>
         <file>backgroundLobby.png</file>
-        <file>mapBackground.png</file>
-        <file>Ro.png</file>
-        <file>fourPlayers.png</file>
-        <file>threePlayers.png</file>
-        <file>twoPlayers.png</file>
-        <file>fourPlayers.png</file>
         <file>backgroundQuestions.png</file>
+        <file>blue.png</file>
         <file>fiftyFifty.png</file>
+        <file>fourPlayers.png</file>
         <file>generateAnAnswer.png</file>
         <file>generateFourAnswers.png</file>
-        <file>32x32.gif</file>
+        <file>green.png</file>
+        <file>mapBackground.png</file>
+        <file>red.png</file>
+        <file>Ro.png</file>
+        <file>startMeniu.png</file>
+        <file>threePlayers.png</file>
+        <file>twoPlayers.png</file>
+        <file>yellow.png</file>
+    </qresource>
+    <qresource prefix="/slideShowCats">
+        <file>cat1.png</file>
+        <file>cat2.png</file>
+        <file>cat3.png</file>
+        <file>cat4.png</file>
+        <file>cat5.png</file>
+        <file>cat6.png</file>
+        <file>cat7.png</file>
+        <file>cat8.png</file>
     </qresource>
 </RCC>
