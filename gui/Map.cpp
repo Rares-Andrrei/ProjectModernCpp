@@ -73,10 +73,32 @@ void Map::Send_Response_To_Server(int ZoneId)
 		this->show();
 
 	std::pair<int, Color::ColorEnum> colorZone = m_GameInstance->chooseRegion(ZoneId, m_player->getColor());
-	QThread::msleep(1000);
+	//QThread::msleep(1000);
 	disableAllButtons();
-	switch (colorZone.first)
+	QAbstractButton* button = nullptr;
+	if(colorZone.first == 1)
+		button = ui.zona1;
+	else if (colorZone.first == 2)
+		button = ui.zona2;
+	else if (colorZone.first == 3)
+		button = ui.zona3;
+	else if (colorZone.first == 4)
+		button = ui.zona4;
+	else if (colorZone.first == 5)
+		button = ui.zona5;
+	else if (colorZone.first == 6)
+		button = ui.zona6;
+	else if (colorZone.first == 7)
+		button = ui.zona7;
+	else if (colorZone.first == 8)
+		button = ui.zona8;
+	else if (colorZone.first == 9)
+		button = ui.zona9;
+	updateAZone(button, colorZone.second);
+	/*switch (colorZone.first)
 	{
+	default:
+		QThread::msleep(500);
 	case 1:
 	{
 		ui.zona1->setAutoFillBackground(true);
@@ -140,9 +162,7 @@ void Map::Send_Response_To_Server(int ZoneId)
 		ui.zona9->setPalette(pal);
 		break;
 	}
-	default:
-		break;
-	}
+	}*/
 	QThread::msleep(100);
 
 	this->hide();
@@ -163,6 +183,13 @@ void Map::enableAllButtons()
 		button->setEnabled(true);
 	}
 	playersAvatar();
+}
+
+void Map::updateAZone(QAbstractButton* button, const Color::ColorEnum& color)
+{
+	button->setAutoFillBackground(true);
+	QPalette pal = QPalette(getColor(color));
+	button->setPalette(pal);
 }
 
 void Map::onzona1Clicked()

@@ -29,6 +29,7 @@ public:
 
 	void disableAllButtons();
 	void enableAllButtons();
+	void updateAZone(QAbstractButton* button, const Color::ColorEnum& color);
 
 signals:
 
