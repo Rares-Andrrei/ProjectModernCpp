@@ -44,7 +44,8 @@ void TriviadorGame::setNumberOfPlayers(const uint16_t& numberOfPlayers)
 		m_MaxNumberOfDuels = 5 * m_numberOfPlayers;
 		m_numberOfInteractionsLeft = numberOfPlayers - 1;
 	}
-
+	m_board.reset(new BoardInterpretation(m_numberOfPlayers));
+	MapWindow->setBoard(m_board);
 }
 
 void TriviadorGame::displayLoadingMessage(/*const QTimer& timer*/)
@@ -72,15 +73,6 @@ void TriviadorGame::StartGame()
 
 	displayLoadingMessage(/*timer*/); // de discutat timpul de incarcare necesar
 	chooseBasePhase();
-
-	//displayLoadingMessage(/*timer*/); // de discutat timpul de incarcare necesar
-	//chooseRegionsPhase();
-
-	//displayLoadingMessage(/*timer*/); // de discutat timpul de incarcare necesar
-	//duelsPhase();
-
-	//displayLoadingMessage(/*timer*/); // de discutat timpul de incarcare necesar
-	//EndGame();
 }
 
 void TriviadorGame::setPlayer(const std::shared_ptr<PlayerQString>& player)
@@ -304,18 +296,22 @@ void TriviadorGame::checkCurrentPhase()
 
 	if (m_gamePhase == GamePhase::None && changePhase == true)
 	{
+		MapWindow->setPhase(GamePhase::ChooseBase);
 		chooseBasePhase();
 	}
 	else if (m_gamePhase == GamePhase::ChooseBase && changePhase == true)
 	{
+		MapWindow->setPhase(GamePhase::ChooseRegions);
 		chooseRegionsPhase();
 	}
 	else if (m_gamePhase == GamePhase::ChooseRegions && changePhase == true)
 	{
+		MapWindow->setPhase(GamePhase::Duels);
 		duelsPhase();
 	}
 	else if (m_gamePhase == GamePhase::Duels && changePhase == true)
 	{
+		MapWindow->setPhase(GamePhase::End);
 		EndGame();
 	}
 }

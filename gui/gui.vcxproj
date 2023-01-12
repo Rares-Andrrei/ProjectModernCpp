@@ -141,6 +141,7 @@
     <QtMoc Include="QTypeNumericWindow.h" />
     <QtMoc Include="QTypeVariantsWindow.h" />
     <QtMoc Include="MapForThreePlayers.h" />
+    <ClInclude Include="GamePhaseEnum.h" />
     <ClInclude Include="PlayerQString.h" />
     <ClInclude Include="Route.h" />
     <QtMoc Include="TriviadorGame.h" />

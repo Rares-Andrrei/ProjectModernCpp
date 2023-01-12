@@ -12,6 +12,7 @@
 #include "QTypeNumericWindow.h"
 #include "QTypeVariantsWindow.h"
 #include <qrandom.h>
+#include "GamePhaseEnum.h"
 
 class TriviadorGame : public QMainWindow
 {
@@ -24,14 +25,6 @@ public:
 		Lose,
 		Win,
 		Draw
-	};
-	enum class GamePhase
-	{
-		None,
-		ChooseBase,
-		ChooseRegions,
-		Duels,
-		End
 	};
 	TriviadorGame(QWidget* parent = nullptr);
 	~TriviadorGame();
@@ -78,6 +71,7 @@ private:
 	uint16_t m_numberOfPlayers;
 	std::shared_ptr<PlayerQString>m_player;
 	std::vector<std::shared_ptr<PlayerQString>>m_players;
+	std::shared_ptr<BoardInterpretation> m_board;
 
 	GamePhase m_gamePhase : 3 = GamePhase::None;
 	DuelStatus m_duelStatus : 3 = DuelStatus::None;

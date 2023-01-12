@@ -102,7 +102,7 @@ std::pair<int, Color::ColorEnum> Route::chooseRegion(int id, Color::ColorEnum co
 	cpr::Payload payload{
 			{ "gameID", std::to_string(m_gameId)},
 			{ "color", std::to_string(Color::ColorToInt(color))},
-			{ "regionId", std::to_string(id - 1)}
+			{ "regionId", std::to_string(id)}
 	};
 	auto lambda = [](cpr::Response response) {
 		return response.text;
@@ -118,7 +118,7 @@ std::pair<int, Color::ColorEnum> Route::chooseRegion(int id, Color::ColorEnum co
 	if (aux != "")
 	{
 		crow::json::rvalue resData = crow::json::load(aux);
-		data.first = resData["zoneId"].i()+1;
+		data.first = resData["zoneId"].i();
 		data.second = Color::getColor(resData["zoneColor"].i());
 	}
 	return data;

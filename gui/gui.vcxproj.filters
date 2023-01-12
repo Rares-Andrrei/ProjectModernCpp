@@ -151,5 +151,8 @@
     <ClInclude Include="BoardInterpretation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GamePhaseEnum.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
