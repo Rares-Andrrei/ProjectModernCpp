@@ -63,7 +63,7 @@ void Route::enterLobbyRoute()
 	std::shared_ptr<Lobby> lobby = m_waitingList->addPlayerToLobby(sessionKeyIter->second, lobbyType);
 	while (lobby->playersInLobby() < static_cast<int>(lobbyType) && lobby->existInLobby(sessionKeyIter->second))
 	{
-		std::this_thread::sleep_for(std::chrono::seconds(1));
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	}
 	crow::response resp;
 	if (lobby->existInLobby(sessionKeyIter->second))
@@ -129,17 +129,20 @@ void Route::chooseRegionRoute()
 		long gameID = std::stoi(gameIdIter->second);
 		if (m_gamesActive.count(gameID) > 0)
 		{
-			m_gamesActive[gameID]->increaseNumberOfRequest();
 			int regionId = std::stoi(regionIdIter->second);
 			Color::ColorEnum color = Color::getColor(std::stoi(colorIter->second));
 			if (regionId != -1)
 			{
 				m_gamesActive[gameID]->updateZone(regionId, color);
 			}
-			while (!m_gamesActive[gameID]->checkZoneUpdates() || !m_gamesActive[gameID]->NumberOfRequestsReached())
+			m_gamesActive[gameID]->addWaitingRequest(color);
+			while (!m_gamesActive[gameID]->checkZoneUpdates() || !m_gamesActive[gameID]->allRequestsReady())
 			{
 				std::this_thread::sleep_for(std::chrono::milliseconds(10));
 			}
+			std::this_thread::sleep_for(std::chrono::milliseconds(16));
+			m_gamesActive[gameID]->deleteRequestsReady();
+
 			std::pair<int, Color::ColorEnum> updatedRegion = m_gamesActive[gameID]->getUpdatedZone();
 			crow::json::wvalue json;
 			json["zoneId"] = updatedRegion.first;

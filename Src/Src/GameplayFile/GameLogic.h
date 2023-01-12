@@ -30,8 +30,14 @@ class GameLogic
 	void randomQTypeNumerical();
 	void randomQTypeVariants();
 
-	int NumberOfRequests = 0;
+	std::unordered_map<Color::ColorEnum, bool> m_requests;
 public:
+	void addWaitingRequest(const Color::ColorEnum& sessionKey);
+	bool allRequestsReady();
+	void deleteRequestsReady();
+
+
+
 	GameLogic();
 	GameLogic(const uint16_t& numberOfPlayers, std::shared_ptr<Database> db);
 	//GameLogic(const GameLogic&) = delete;
@@ -44,8 +50,6 @@ public:
 	void updateZone(int zoneId, Color::ColorEnum zoneColor);
 	void eraseUpdatedZone(); //se apeleaza atuncic and se genereaza o noua intrebare (inseamna ca toti layerii au updatat zona si s-a trecut mai deprarte
 public:
-	bool NumberOfRequestsReached();
-	void increaseNumberOfRequest();
 
 	static crow::json::wvalue playersToJson(std::vector < std::shared_ptr<Player>> players);
 	QTypeNumerical getQuestionTypeNumerical();

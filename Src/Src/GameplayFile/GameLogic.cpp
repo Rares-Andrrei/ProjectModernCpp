@@ -11,6 +11,25 @@ void GameLogic::randomQTypeVariants()
 	m_questionTypeVariants = m_db->randQTypeVariants();
 }
 
+void GameLogic::addWaitingRequest(const Color::ColorEnum& color)
+{
+	m_requests[color] = true;
+}
+
+bool GameLogic::allRequestsReady()
+{
+	if (m_requests.size() == m_players.size())
+	{
+		return true;
+	}
+	return false;
+}
+
+void GameLogic::deleteRequestsReady()
+{
+	m_requests.clear();
+}
+
 GameLogic::GameLogic()
 	:k_numberOfPlayers{ 2 }
 {
@@ -62,15 +81,6 @@ void GameLogic::eraseUpdatedZone()
 	}
 }
 
-bool GameLogic::NumberOfRequestsReached()
-{
-	return (NumberOfRequests % k_numberOfPlayers) == 0;
-}
-
-void GameLogic::increaseNumberOfRequest()
-{
-	NumberOfRequests++;
-}
 
 crow::json::wvalue GameLogic::playersToJson(std::vector<std::shared_ptr<Player>> players)
 {
