@@ -73,6 +73,9 @@
     <ClCompile Include="MapForThreePlayers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BoardInterpretation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="logIn.ui">
@@ -143,6 +146,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PlayerQString.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BoardInterpretation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
