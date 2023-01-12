@@ -359,6 +359,7 @@ void TriviadorGame::nextPlayerInQueue()
 
 void TriviadorGame::updateTheQueueStatus()
 {
+	// verificare board plin 
 	if (m_gamePhase == GamePhase::ChooseBase)
 	{
 		m_playerOrder.pop();

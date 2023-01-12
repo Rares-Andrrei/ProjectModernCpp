@@ -63,7 +63,7 @@ void Route::enterLobbyRoute()
 	std::shared_ptr<Lobby> lobby = m_waitingList->addPlayerToLobby(sessionKeyIter->second, lobbyType);
 	while (lobby->playersInLobby() < static_cast<int>(lobbyType) && lobby->existInLobby(sessionKeyIter->second))
 	{
-		std::this_thread::sleep_for(std::chrono::microseconds(10));
+		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
 	crow::response resp;
 	if (lobby->existInLobby(sessionKeyIter->second))
