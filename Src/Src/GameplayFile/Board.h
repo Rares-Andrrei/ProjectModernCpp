@@ -13,6 +13,7 @@ class Board
 	uint8_t m_BoardHeight;
 	std::vector<std::shared_ptr<Zone>> m_board;
 	int m_totalScore;
+	int m_modifiedZones;
 
 public:
 	Board(const uint8_t& NumberOfPlayers = 2);
@@ -25,7 +26,8 @@ public:
 	std::shared_ptr<Zone>& operator[](const Position& indices);
 	std::shared_ptr<Zone>& operator[](int id);
 
-	
+	void incrementModifiedZones();
+	int getModifiedZones();
 	void ObtainTotalScore();
 	int getTotalScore();
 	uint8_t getNumberOfPlayers();

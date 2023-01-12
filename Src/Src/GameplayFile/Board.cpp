@@ -1,7 +1,7 @@
 #include "Board.h"
 
 Board::Board(const uint8_t& NumberOfPlayers)
-	:m_NumberOfPlayers{ NumberOfPlayers }
+	:m_NumberOfPlayers{ NumberOfPlayers }, m_modifiedZones{0}
 {
 	this->ChangeBoardDimensions();
 }
@@ -79,6 +79,16 @@ std::shared_ptr<Zone>& Board::operator[](int id)
 	{
 		return m_board[id];
 	}
+}
+
+void Board::incrementModifiedZones()
+{
+	m_modifiedZones++;
+}
+
+int Board::getModifiedZones()
+{
+	return m_modifiedZones;
 }
 
 void Board::ObtainTotalScore()

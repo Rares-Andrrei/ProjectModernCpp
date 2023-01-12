@@ -61,5 +61,5 @@ public:
 	CredentialErrors registerUser(const Account& account);
 
 	void insertMatch(const MatchInfo& match);
-	std::list<MatchInfo> getMatchHistory(const Account& account);
+	std::list<MatchInfo> getMatchHistory(const std::string& account);
 };

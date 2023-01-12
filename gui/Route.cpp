@@ -161,6 +161,35 @@ void Route::enterLobby(int type, std::vector<std::shared_ptr<PlayerQString>>& pl
 	}
 }
 
+std::list<std::array<std::string, 5>> Route::getMatchHistoryRoute()
+{
+	std::list<std::array<std::string, 5>> matches;
+	auto response = cpr::Get(
+		cpr::Url{ "http://localhost:18080/getMatchHistory" },
+		cpr::Payload{
+			{ "sessionKey", m_sessionKey}
+		});
+	if (response.status_code == 200)
+	{
+		crow::json::rvalue resData = crow::json::load(response.text);
+		int matchesNr = resData["MatchesNr"].i();
+		for (int i = 0; i < matchesNr; i++)
+		{
+			matches.push_back(std::array<std::string, 5>{
+					resData["Date" + std::to_string(i)].s(),
+					resData["Place1" + std::to_string(i)].s(),
+					resData["Place2" + std::to_string(i)].s(),
+					resData["Place3" + std::to_string(i)].s(),
+					resData["Place4" + std::to_string(i)].s()}
+			);
+		}
+	}
+	//atunci cand apelezi ruta returneaza o lista de array-uri de size 5 (stringuri) si in array-ul ala pe
+	//prima pozitie ai data meciului iar pe restul 4 sunt jucatorii in ordine (clasamentul) in cazul in care pe vreun camp e - (stringul "-") atunci inseamna ca nu a fost lobby de 4 jucatori adica daca apare "Rares" "Alex"  - "-" "-" inseamna ca doar noi doi am fost in meci si eu am iesit pe 1, Alex pe 2
+	//numarul de meciuri returnate poate fi variabil (este size-ul la lista) aici vezi ce inginerie faci cum sale afisezi poate dai acolo optiune la player sa iti afiseze mai multe mai putine etc.. ultimele 5 / 10 
+	return matches;
+}
+
 CredentialErrors Route::login(std::string username, std::string password)
 {
 	auto response = cpr::Post(

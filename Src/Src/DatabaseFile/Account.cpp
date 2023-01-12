@@ -37,7 +37,7 @@ CredentialErrors Account::checkAccount() const
 {
     if (m_nickName.has_value())
     {
-        if (m_nickName.value().size() < 6)
+        if (m_nickName.value().size() < 4)
         {
             return CredentialErrors::NameSize;
         }

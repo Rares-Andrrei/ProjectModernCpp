@@ -74,7 +74,7 @@ void signUp::onEnterButtonClicked()
 	switch(check)
 	{
 	case CredentialErrors::NameSize:
-		QMessageBox::about(this, "Name size error", "Your name must containt at least 6 caracters");
+		QMessageBox::about(this, "Name size error", "Your name must containt at least 4 caracters");
 		return;
 	case CredentialErrors::UsernameSize:
 		QMessageBox::about(this, "Username size error", "Your Username must containt at least 6 caracters");

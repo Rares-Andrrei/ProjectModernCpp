@@ -31,10 +31,9 @@ void Database::insertMatch(const MatchInfo& match)
 	m_storage.replace(match);
 }
 
-std::list<MatchInfo> Database::getMatchHistory(const Account& account)
+std::list<MatchInfo> Database::getMatchHistory(const std::string& nickname)
 {
 	using namespace sqlite_orm;
-	std::string nickname = account.getNickName();
 	auto list1 = m_storage.get_all<MatchInfo, std::list<MatchInfo>>(sql::where(sql::c(&MatchInfo::getFirstPlace) == nickname));
 	auto list2 = m_storage.get_all<MatchInfo, std::list<MatchInfo>>(sql::where(sql::c(&MatchInfo::getSecondPlace) == nickname));
 	auto list3 = m_storage.get_all<MatchInfo, std::list<MatchInfo>>(sql::where(sql::c(&MatchInfo::getThirdPlace) == nickname));

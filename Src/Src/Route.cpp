@@ -1,5 +1,6 @@
 #include "Route.h"
 #include "utils.h"
+#include "MatchInfo.h"
 #include <thread>
 #include<string>
 
@@ -49,6 +50,45 @@ void Route::loginRoute()
 	
 	return res;
 		});
+}
+
+void Route::gamesHistoryRoute()
+{
+	auto& getHistoryRoute = CROW_ROUTE(m_app, "/getMatchHistory")
+		.methods(crow::HTTPMethod::Get);
+	getHistoryRoute([this](const crow::request& req) {
+
+	auto bodyArgs = parseUrlArgs(req.body);
+	auto end = bodyArgs.end();
+	auto sessionKeyIter = bodyArgs.find("sessionKey");
+
+	if (m_waitingList->isActive(sessionKeyIter->second))
+	{
+		std::string playerName = m_waitingList->getPlayer(sessionKeyIter->second)->getName();
+		std::list<MatchInfo> matchList = m_db->getMatchHistory(playerName);
+		int matchesNr = 0;
+		crow::json::wvalue json;
+		for (const auto& match : matchList)
+		{
+			json["Date" + std::to_string(matchesNr)] = match.getDate();
+			json["Place1" + std::to_string(matchesNr)] = match.getFirstPlace();
+			json["Place2" + std::to_string(matchesNr)] = match.getSecondPlace();
+			json["Place3" + std::to_string(matchesNr)] = match.getThirdPlace();
+			json["Place4" + std::to_string(matchesNr)] = match.getFourthPlace();
+			matchesNr++;
+		}
+		json["MatchesNr"] = matchesNr;
+		crow::response res;
+		res.code = 200;
+		res = json;
+		return res;
+	}
+	else
+	{
+		return crow::response(404);
+	}
+		});
+
 }
 
 void Route::enterLobbyRoute()

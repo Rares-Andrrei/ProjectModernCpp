@@ -65,11 +65,21 @@ std::pair<int, Color::ColorEnum> GameLogic::getUpdatedZone()
 
 void GameLogic::updateZone(int zoneId, Color::ColorEnum zoneColor)
 {
-	if (m_board[zoneId] != m_board.end())
+	if (m_board[zoneId] == nullptr && m_board[zoneId] != m_board.end())
 	{
-		std::shared_ptr<Zone> newZone = std::make_shared<Zone>(zoneColor);
-		m_board[zoneId] = newZone;
-		m_updatedZone = { zoneId, zoneColor };
+		m_board.incrementModifiedZones();
+		if (m_board.getModifiedZones() > m_board.getNumberOfPlayers())
+		{
+			std::shared_ptr<Zone> newZone = std::make_shared<Zone>(zoneColor);
+			m_board[zoneId] = newZone;
+			m_updatedZone = { zoneId, zoneColor };
+		}
+		else
+		{
+			std::shared_ptr<PlayerBase> newBase = std::make_shared<PlayerBase>(zoneColor);
+			m_board[zoneId] = newBase;
+			m_updatedZone = { zoneId, zoneColor };
+		}
 	}
 }
 

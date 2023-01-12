@@ -30,6 +30,7 @@ void useRoutes()
 	r.getQuestionTypeNumericalRoute();
 	r.exitLobbyRoute();
 	r.logOutRoute();
+	r.gamesHistoryRoute();
 	r.startApp();
 }
 
