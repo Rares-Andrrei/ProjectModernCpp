@@ -11,7 +11,6 @@ class BoardInterpretation
 	std::vector<std::tuple<int,std::shared_ptr<Color::ColorEnum>,bool>> m_board;
 	int k_boardHeight;
 	int k_boardWidth;
-	int m_numberOfSpacesLeft;
 
 public:
 	BoardInterpretation(int NumberOfPlayers = 2);

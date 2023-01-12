@@ -79,7 +79,6 @@ QColor Map::getColor(const Color::ColorEnum& color)
 
 void Map::Send_Response_To_Server(int ZoneId)
 {
-	// Trimite raspuns la server cu zona selectata
 	if (this->isHidden())
 		this->show();
 
@@ -105,75 +104,7 @@ void Map::Send_Response_To_Server(int ZoneId)
 		button = ui.zona8;
 	else if (colorZone.first == 8)
 		button = ui.zona9;
-	updateAZone(button, colorZone.second);
-	/*switch (colorZone.first)
-	{
-	default:
-		QThread::msleep(500);
-	case 1:
-	{
-		ui.zona1->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(colorZone.second));
-		ui.zona1->setPalette(pal);
-		break;
-	}
-	case 2:
-	{
-		ui.zona2->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(colorZone.second));
-		ui.zona2->setPalette(pal);
-		break;
-	}
-	case 3:
-	{
-		ui.zona3->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(colorZone.second));
-		ui.zona3->setPalette(pal);
-		break;
-	}
-	case 4:
-	{
-		ui.zona4->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(colorZone.second));
-		ui.zona4->setPalette(pal);
-		break;
-	}
-	case 5:
-	{
-		ui.zona5->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(colorZone.second));
-		ui.zona5->setPalette(pal);
-		break;
-	}
-	case 6:
-	{
-		ui.zona6->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(colorZone.second));
-		ui.zona6->setPalette(pal);
-		break;
-	}
-	case 7:
-	{
-		ui.zona7->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(colorZone.second));
-		ui.zona7->setPalette(pal);
-		break;
-	}
-	case 8:
-	{
-		ui.zona8->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(colorZone.second));
-		ui.zona8->setPalette(pal);
-		break;
-	}
-	case 9:
-	{
-		ui.zona9->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(colorZone.second));
-		ui.zona9->setPalette(pal);
-		break;
-	}
-	}*/
+	updateAZone(button, colorZone.second, colorZone.first);
 	QThread::msleep(100);
 
 	emit emitMapUpdatedChooseRegionsPhase();
@@ -182,7 +113,6 @@ void Map::Send_Response_To_Server(int ZoneId)
 }
 void emitMapUpdatedChooseRegionsPhase()
 {
-
 }
 
 void Map::disableAllButtons()
@@ -202,8 +132,12 @@ void Map::enableAllButtons()
 	playersAvatar();
 }
 
-void Map::updateAZone(QAbstractButton* button, const Color::ColorEnum& color)
+void Map::updateAZone(QAbstractButton* button, const Color::ColorEnum& color,int ZoneId)
 {
+	if(m_gamePhase == GamePhase::ChooseBase)
+		m_board->AddZoneAsBase(ZoneId, color);
+	else if(m_gamePhase == GamePhase::ChooseRegions)
+		m_board->AddCloseZone(ZoneId, color);
 	button->setAutoFillBackground(true);
 	QPalette pal = QPalette(getColor(color));
 	button->setPalette(pal);
@@ -223,7 +157,7 @@ void Map::ButtonClicked(int ZoneId, QPushButton* button)
 	{
 		if (m_board->AddZoneAsBase(ZoneId, m_player->getColor()))
 		{
-			updateAZone(button, m_player->getColor());
+			updateAZone(button, m_player->getColor(),ZoneId);
 			Send_Response_To_Server(ZoneId);
 		}
 		else {
@@ -234,7 +168,7 @@ void Map::ButtonClicked(int ZoneId, QPushButton* button)
 	{
 		if (m_board->AddCloseZone(ZoneId, m_player->getColor()))
 		{
-			updateAZone(button, m_player->getColor());
+			updateAZone(button, m_player->getColor(),ZoneId);
 			Send_Response_To_Server(ZoneId);
 		}
 		else {

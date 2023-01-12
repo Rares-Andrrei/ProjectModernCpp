@@ -16,7 +16,6 @@ bool BoardInterpretation::AddZoneAsBase(int IdZone, const Color::ColorEnum& colo
 			return false;
 	}
 	m_board[IdZone] = { 300,std::make_shared<Color::ColorEnum>(color),true };
-	m_numberOfSpacesLeft--;
 	generateNeighbours();
 	return true;
 }
@@ -36,7 +35,6 @@ bool BoardInterpretation::AddCloseZone(int IdZone, const Color::ColorEnum& color
 			if (neighbour.second.get() != nullptr && *neighbour.second.get() == color)
 			{
 				m_board[IdZone] = { 100, std::make_shared<Color::ColorEnum>(color),false };
-				m_numberOfSpacesLeft--;
 				generateNeighbours();
 				return true;
 			}
@@ -45,7 +43,6 @@ bool BoardInterpretation::AddCloseZone(int IdZone, const Color::ColorEnum& color
 	else
 	{
 		m_board[IdZone] = { 100 ,std::make_shared<Color::ColorEnum>(color),false };
-		m_numberOfSpacesLeft--;
 		return true;
 	}
 	return false;
@@ -53,7 +50,10 @@ bool BoardInterpretation::AddCloseZone(int IdZone, const Color::ColorEnum& color
 
 bool BoardInterpretation::checkBoardFull()
 {
-	return m_numberOfSpacesLeft == 0;
+	for (auto& zone : m_board)
+		if (std::get<1>(zone) == nullptr)
+			return false;
+	return true;
 }
 
 void BoardInterpretation::generateBoard(int NumberOfPlayers)
@@ -72,7 +72,6 @@ void BoardInterpretation::generateBoard(int NumberOfPlayers)
 		k_boardHeight = 6;
 		k_boardWidth = 4;
 	}
-	m_numberOfSpacesLeft = k_boardHeight * k_boardWidth;
 	m_board.resize(k_boardHeight * k_boardWidth + 1);
 	m_board[k_boardHeight * k_boardWidth] = { 0,std::make_shared<Color::ColorEnum>(Color::getDefaultColor()),false };
 }

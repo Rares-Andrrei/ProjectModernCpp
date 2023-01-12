@@ -32,7 +32,7 @@ public:
 
 	void disableAllButtons();
 	void enableAllButtons();
-	void updateAZone(QAbstractButton* button, const Color::ColorEnum& color);
+	void updateAZone(QAbstractButton* button, const Color::ColorEnum& color ,int ZoneId);
 
 signals:
 	void emitMapUpdatedChooseRegionsPhase();
