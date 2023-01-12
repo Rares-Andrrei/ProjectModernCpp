@@ -209,32 +209,6 @@ void Map::updateAZone(QAbstractButton* button, const Color::ColorEnum& color)
 	button->setPalette(pal);
 }
 
-void Map::onzona1Clicked()
-{
-	int ZoneId = 0;
-	if (m_gamePhase == GamePhase::ChooseBase)
-	{
-		if (m_board->AddZoneAsBase(ZoneId, m_player->getColor()))
-		{
-			updateAZone(ui.zona1, m_player->getColor());
-			Send_Response_To_Server(ZoneId);
-		}
-		else {
-			QMessageBox::information(this, "Error", "You can't move here");
-		}
-	}
-	else if (m_gamePhase == GamePhase::ChooseRegions)
-	{
-		if (m_board->AddCloseZone(ZoneId, m_player->getColor()))
-		{
-			updateAZone(ui.zona1, m_player->getColor());
-			Send_Response_To_Server(ZoneId);
-		}
-		else {
-			QMessageBox::information(this, "Error", "You can't move here");
-		}
-	}
-}
 
 void Map::playersAvatar()
 {
@@ -243,15 +217,13 @@ void Map::playersAvatar()
 	ui.player2Name->setText(m_players[1]->getName());
 }
 
-
-void Map::onzona2Clicked()
+void Map::ButtonClicked(int ZoneId, QPushButton* button)
 {
-	int ZoneId = 1;
 	if (m_gamePhase == GamePhase::ChooseBase)
 	{
 		if (m_board->AddZoneAsBase(ZoneId, m_player->getColor()))
 		{
-			updateAZone(ui.zona2, m_player->getColor());
+			updateAZone(button, m_player->getColor());
 			Send_Response_To_Server(ZoneId);
 		}
 		else {
@@ -262,201 +234,66 @@ void Map::onzona2Clicked()
 	{
 		if (m_board->AddCloseZone(ZoneId, m_player->getColor()))
 		{
-			updateAZone(ui.zona2, m_player->getColor());
+			updateAZone(button, m_player->getColor());
 			Send_Response_To_Server(ZoneId);
 		}
 		else {
 			QMessageBox::information(this, "Error", "You can't move here");
 		}
 	}
+}
+
+void Map::onzona1Clicked()
+{
+	int ZoneId = 0;
+	ButtonClicked(ZoneId, ui.zona1);
+}
+
+void Map::onzona2Clicked()
+{
+	int ZoneId = 1;
+	ButtonClicked(ZoneId, ui.zona2);
 }
 
 void Map::onzona3Clicked()
 {
 	int ZoneId = 2;
-	if (m_gamePhase == GamePhase::ChooseBase)
-	{
-		if (m_board->AddZoneAsBase(ZoneId, m_player->getColor()))
-		{
-			updateAZone(ui.zona3, m_player->getColor());
-			Send_Response_To_Server(ZoneId);
-		}
-		else {
-			QMessageBox::information(this, "Error", "You can't move here");
-		}
-	}
-	else if (m_gamePhase == GamePhase::ChooseRegions)
-	{
-		if (m_board->AddCloseZone(ZoneId, m_player->getColor()))
-		{
-			updateAZone(ui.zona3, m_player->getColor());
-			Send_Response_To_Server(ZoneId);
-		}
-		else {
-			QMessageBox::information(this, "Error", "You can't move here");
-		}
-	}
+	ButtonClicked(ZoneId, ui.zona3);
 }
 
 void Map::onzona4Clicked()
 {
 	int ZoneId = 3;
-	if (m_gamePhase == GamePhase::ChooseBase)
-	{
-		if (m_board->AddZoneAsBase(ZoneId, m_player->getColor()))
-		{
-			updateAZone(ui.zona4, m_player->getColor());
-			Send_Response_To_Server(ZoneId);
-		}
-		else {
-			QMessageBox::information(this, "Error", "You can't move here");
-		}
-	}
-	else if (m_gamePhase == GamePhase::ChooseRegions)
-	{
-		if (m_board->AddCloseZone(ZoneId, m_player->getColor()))
-		{
-			updateAZone(ui.zona4, m_player->getColor());
-			Send_Response_To_Server(ZoneId);
-		}
-		else {
-			QMessageBox::information(this, "Error", "You can't move here");
-		}
-	}
+	ButtonClicked(ZoneId, ui.zona4);
 }
 
 void Map::onzona5Clicked()
 {
 	int ZoneId = 4;
-	if (m_gamePhase == GamePhase::ChooseBase)
-	{
-		if (m_board->AddZoneAsBase(ZoneId, m_player->getColor()))
-		{
-			updateAZone(ui.zona5, m_player->getColor());
-			Send_Response_To_Server(ZoneId);
-		}
-		else {
-			QMessageBox::information(this, "Error", "You can't move here");
-		}
-	}
-	else if (m_gamePhase == GamePhase::ChooseRegions)
-	{
-		if (m_board->AddCloseZone(ZoneId, m_player->getColor()))
-		{
-			updateAZone(ui.zona5, m_player->getColor());
-			Send_Response_To_Server(ZoneId);
-		}
-		else {
-			QMessageBox::information(this, "Error", "You can't move here");
-		}
-	}
+	ButtonClicked(ZoneId, ui.zona5);
 }
 
 void Map::onzona6Clicked()
 {
 	int ZoneId = 5;
-	if (m_gamePhase == GamePhase::ChooseBase)
-	{
-		if (m_board->AddZoneAsBase(ZoneId, m_player->getColor()))
-		{
-			updateAZone(ui.zona6, m_player->getColor());
-			Send_Response_To_Server(ZoneId);
-		}
-		else {
-			QMessageBox::information(this, "Error", "You can't move here");
-		}
-	}
-	else if (m_gamePhase == GamePhase::ChooseRegions)
-	{
-		if (m_board->AddCloseZone(ZoneId, m_player->getColor()))
-		{
-			updateAZone(ui.zona6, m_player->getColor());
-			Send_Response_To_Server(ZoneId);
-		}
-		else {
-			QMessageBox::information(this, "Error", "You can't move here");
-		}
-	}
+	ButtonClicked(ZoneId, ui.zona6);
 }
 
 void Map::onzona7Clicked()
 {
 	int ZoneId = 6;
-	if (m_gamePhase == GamePhase::ChooseBase)
-	{
-		if (m_board->AddZoneAsBase(ZoneId, m_player->getColor()))
-		{
-			updateAZone(ui.zona7, m_player->getColor());
-			Send_Response_To_Server(ZoneId);
-		}
-		else {
-			QMessageBox::information(this, "Error", "You can't move here");
-		}
-	}
-	else if (m_gamePhase == GamePhase::ChooseRegions)
-	{
-		if (m_board->AddCloseZone(ZoneId, m_player->getColor()))
-		{
-			updateAZone(ui.zona7, m_player->getColor());
-			Send_Response_To_Server(ZoneId);
-		}
-		else {
-			QMessageBox::information(this, "Error", "You can't move here");
-		}
-	}
+	ButtonClicked(ZoneId, ui.zona7);
 }
 
 void Map::onzona8Clicked()
 {
 	int ZoneId = 7;
-	if (m_gamePhase == GamePhase::ChooseBase)
-	{
-		if (m_board->AddZoneAsBase(ZoneId, m_player->getColor()))
-		{
-			updateAZone(ui.zona8, m_player->getColor());
-			Send_Response_To_Server(ZoneId);
-		}
-		else {
-			QMessageBox::information(this, "Error", "You can't move here");
-		}
-	}
-	else if (m_gamePhase == GamePhase::ChooseRegions)
-	{
-		if (m_board->AddCloseZone(ZoneId, m_player->getColor()))
-		{
-			updateAZone(ui.zona8, m_player->getColor());
-			Send_Response_To_Server(ZoneId);
-		}
-		else {
-			QMessageBox::information(this, "Error", "You can't move here");
-		}
-	}
+	ButtonClicked(ZoneId, ui.zona8);
 }
 
 void Map::onzona9Clicked()
 {
 	int ZoneId = 8;
-	if (m_gamePhase == GamePhase::ChooseBase)
-	{
-		if (m_board->AddZoneAsBase(ZoneId, m_player->getColor()))
-		{
-			updateAZone(ui.zona9, m_player->getColor());
-			Send_Response_To_Server(ZoneId);
-		}
-		else {
-			QMessageBox::information(this, "Error", "You can't move here");
-		}
-	}
-	else if (m_gamePhase == GamePhase::ChooseRegions)
-	{
-		if (m_board->AddCloseZone(ZoneId, m_player->getColor()))
-		{
-			updateAZone(ui.zona9, m_player->getColor());
-			Send_Response_To_Server(ZoneId);
-		}
-		else {
-			QMessageBox::information(this, "Error", "You can't move here");
-		}
-	}
+	ButtonClicked(ZoneId, ui.zona9);
 }
 

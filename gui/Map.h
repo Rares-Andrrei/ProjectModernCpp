@@ -49,6 +49,7 @@ private:
 	std::shared_ptr<Battle>BattleWindow;
 
 	void playersAvatar();
+	void ButtonClicked(int ZoneId, QPushButton* button);
 
 private slots:
 	void onzona1Clicked();
