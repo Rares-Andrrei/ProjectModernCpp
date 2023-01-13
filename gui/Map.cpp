@@ -132,11 +132,11 @@ void Map::enableAllButtons()
 	playersAvatar();
 }
 
-void Map::updateAZone(QAbstractButton* button, const Color::ColorEnum& color,int ZoneId)
+void Map::updateAZone(QAbstractButton* button, const Color::ColorEnum& color, int ZoneId)
 {
-	if(m_gamePhase == GamePhase::ChooseBase)
+	if (m_gamePhase == GamePhase::ChooseBase)
 		m_board->AddZoneAsBase(ZoneId, color);
-	else if(m_gamePhase == GamePhase::ChooseRegions)
+	else if (m_gamePhase == GamePhase::ChooseRegions)
 		m_board->AddCloseZone(ZoneId, color);
 	button->setAutoFillBackground(true);
 	QPalette pal = QPalette(getColor(color));
@@ -155,9 +155,12 @@ void Map::ButtonClicked(int ZoneId, QPushButton* button)
 {
 	if (m_gamePhase == GamePhase::ChooseBase)
 	{
+		// request :: check if the selected region is valid for a BASE
+		// response = yes -> update the zone + send the update to the server
+		// response = no -> show error message + let the player choose another zone
 		if (m_board->AddZoneAsBase(ZoneId, m_player->getColor()))
 		{
-			updateAZone(button, m_player->getColor(),ZoneId);
+			updateAZone(button, m_player->getColor(), ZoneId);
 			Send_Response_To_Server(ZoneId);
 		}
 		else {
@@ -166,14 +169,23 @@ void Map::ButtonClicked(int ZoneId, QPushButton* button)
 	}
 	else if (m_gamePhase == GamePhase::ChooseRegions)
 	{
+		// request :: check if the selected region is valid for a ZONE
+		// response = yes -> update the zone + send the update to the server
+		// response = no -> show error message + let the player choose another zone
 		if (m_board->AddCloseZone(ZoneId, m_player->getColor()))
 		{
-			updateAZone(button, m_player->getColor(),ZoneId);
+			updateAZone(button, m_player->getColor(), ZoneId);
 			Send_Response_To_Server(ZoneId);
 		}
 		else {
 			QMessageBox::information(this, "Error", "You can't move here");
 		}
+	}
+	else if (m_gamePhase == GamePhase::Duels)
+	{
+		// request :: check if the selected zone is valid to attack , 
+		//response = yes -> send the zone id +player data to the server
+		//response = no -> show error message + let user choose another zone
 	}
 }
 
