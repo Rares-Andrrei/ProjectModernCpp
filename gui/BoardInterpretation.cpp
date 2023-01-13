@@ -16,6 +16,7 @@ bool BoardInterpretation::AddZoneAsBase(int IdZone, const Color::ColorEnum& colo
 			return false;
 	}
 	m_board[IdZone] = { 300,std::make_shared<Color::ColorEnum>(color),true };
+	m_playerBaseLifes[IdZone] = 3;
 	generateNeighbours();
 	return true;
 }

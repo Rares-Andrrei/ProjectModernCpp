@@ -30,13 +30,28 @@ void GameLogic::deleteRequestsReady()
 	m_requests.clear();
 }
 
+bool GameLogic::ValidateBasePosition(int idZone)
+{
+	return m_board.ValidateBasePosition(idZone);
+}
+
+bool GameLogic::ValidateRegionPosition(int idZone, const Color::ColorEnum& color)
+{
+	return m_board.ValidateRegionPosition(idZone, color);
+}
+
+bool GameLogic::ValidateAttackMove(int idZone, const Color::ColorEnum& color)
+{
+	return m_board.ValidateAttackMove(idZone, color);
+}
+
 GameLogic::GameLogic()
-	:k_numberOfPlayers{ 2 }, m_numericQuestionManager{ NumericQuestionManager(k_numberOfPlayers)}
+	:k_numberOfPlayers{ 2 }, m_numericQuestionManager{ NumericQuestionManager(k_numberOfPlayers) }
 {
 }
 
 GameLogic::GameLogic(const uint16_t& numberOfPlayers, std::shared_ptr<Database> db)
-	: k_numberOfPlayers(numberOfPlayers), m_db{ db }, m_numericQuestionManager{ NumericQuestionManager(numberOfPlayers)}
+	: k_numberOfPlayers(numberOfPlayers), m_db{ db }, m_numericQuestionManager{ NumericQuestionManager(numberOfPlayers) }
 {
 	randomQTypeNumerical();
 	randomQTypeVariants();
@@ -80,6 +95,7 @@ void GameLogic::updateZone(int zoneId, Color::ColorEnum zoneColor)
 			m_board[zoneId] = newBase;
 			m_updatedZone = { zoneId, zoneColor };
 		}
+		m_board.generateNeighbours();
 	}
 }
 

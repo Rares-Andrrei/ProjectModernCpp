@@ -26,6 +26,10 @@ public:
 
 	void loginRoute();
 
+	void checkValidBasePosition();
+	void checkValidRegionPosition();
+	void checkValidAttackMove();
+
 	void gamesHistoryRoute();
 	void enterLobbyRoute();
 	void exitLobbyRoute();
@@ -33,4 +37,4 @@ public:
 	void signUpRoute();
 	void logOutRoute();
 	void startApp();
-}; 
+};

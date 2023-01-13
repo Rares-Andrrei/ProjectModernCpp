@@ -36,6 +36,9 @@ public:
 	bool allRequestsReady();
 	void deleteRequestsReady();
 
+	bool ValidateBasePosition(int idZone);
+	bool ValidateRegionPosition(int idZone, const Color::ColorEnum& color);
+	bool ValidateAttackMove(int idZone, const Color::ColorEnum& color);
 
 
 	GameLogic();
