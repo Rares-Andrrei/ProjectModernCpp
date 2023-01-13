@@ -47,8 +47,124 @@ void Route::loginRoute()
 	crow::response res;
 	res.body = std::to_string(static_cast<int>(check)) + sessionKey;
 	res.code = 200;
-	
+
 	return res;
+		});
+}
+
+void Route::checkValidBasePosition()
+{
+	auto& checkValidBasePosition = CROW_ROUTE(m_app, "/checkValidBasePosition")
+		.methods(crow::HTTPMethod::Get);
+	checkValidBasePosition([this](const crow::request& req) {
+		auto bodyArgs = parseUrlArgs(req.body);
+	auto gameIdIter = bodyArgs.find("gameID");
+	auto regionIdIter = bodyArgs.find("regionId");
+	auto end = bodyArgs.end();
+	long gameID = std::stoi(gameIdIter->second);
+
+	if (m_gamesActive.count(gameID) > 0)
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		int regionId = std::stoi(regionIdIter->second);
+		bool valid = m_gamesActive[gameID]->ValidateBasePosition(regionId);
+
+		crow::json::wvalue json;
+		if (valid == true)
+		{
+			json["valid"] = "true";
+		}
+		else
+		{
+			json["valid"] = "false";
+		}
+		crow::response res;
+		res.code = 200;
+		res = json;
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		return res;
+	}
+	std::this_thread::sleep_for(std::chrono::milliseconds(10));
+	return crow::response(404);
+
+		});
+}
+
+void Route::checkValidRegionPosition()
+{
+	auto& checkValidRegionPosition = CROW_ROUTE(m_app, "/checkValidRegionPosition")
+		.methods(crow::HTTPMethod::Get);
+	checkValidRegionPosition([this](const crow::request& req) {
+		auto bodyArgs = parseUrlArgs(req.body);
+	auto gameIdIter = bodyArgs.find("gameID");
+	auto colorIter = bodyArgs.find("color");
+	auto regionIdIter = bodyArgs.find("regionId");
+	auto end = bodyArgs.end();
+	long gameID = std::stoi(gameIdIter->second);
+
+	if (m_gamesActive.count(gameID) > 0)
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		int regionId = std::stoi(regionIdIter->second);
+		Color::ColorEnum color = Color::getColor(std::stoi(colorIter->second));
+		bool valid = m_gamesActive[gameID]->ValidateRegionPosition(regionId, color);
+
+		crow::json::wvalue json;
+		if (valid == true)
+		{
+			json["valid"] = "true";
+		}
+		else
+		{
+			json["valid"] = "false";
+		}
+		crow::response res;
+		res.code = 200;
+		res = json;
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		return res;
+	}
+	std::this_thread::sleep_for(std::chrono::milliseconds(10));
+	return crow::response(404);
+		});
+}
+
+void Route::checkValidAttackMove()
+{
+	auto& checkValidAttackMove = CROW_ROUTE(m_app, "/checkValidAttackMove")
+		.methods(crow::HTTPMethod::Get);
+	checkValidAttackMove([this](const crow::request& req) {
+		auto bodyArgs = parseUrlArgs(req.body);
+	auto gameIdIter = bodyArgs.find("gameID");
+	auto colorIter = bodyArgs.find("color");
+	auto regionIdIter = bodyArgs.find("regionId");
+	auto end = bodyArgs.end();
+	long gameID = std::stoi(gameIdIter->second);
+
+	if (m_gamesActive.count(gameID) > 0)
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		int regionId = std::stoi(regionIdIter->second);
+		Color::ColorEnum color = Color::getColor(std::stoi(colorIter->second));
+		bool valid = m_gamesActive[gameID]->ValidateAttackMove(regionId, color);
+
+		crow::json::wvalue json;
+		if (valid == true)
+		{
+			json["valid"] = "true";
+		}
+		else
+		{
+			json["valid"] = "false";
+		}
+		crow::response res;
+		res.code = 200;
+		res = json;
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		return res;
+	}
+	std::this_thread::sleep_for(std::chrono::milliseconds(10));
+	return crow::response(404);
 		});
 }
 
@@ -58,7 +174,7 @@ void Route::gamesHistoryRoute()
 		.methods(crow::HTTPMethod::Get);
 	getHistoryRoute([this](const crow::request& req) {
 
-	auto bodyArgs = parseUrlArgs(req.body);
+		auto bodyArgs = parseUrlArgs(req.body);
 	auto end = bodyArgs.end();
 	auto sessionKeyIter = bodyArgs.find("sessionKey");
 
@@ -141,7 +257,7 @@ void Route::sendResponseQTypeNumericalEt1()
 		while (!m_gamesActive[gameID]->NumericalAnswersReady())
 		{
 			std::this_thread::sleep_for(std::chrono::milliseconds(10));
-		}		
+		}
 		std::vector<std::shared_ptr<Player>> rankingList = m_gamesActive[gameID]->getWinnerList();
 		crow::json::wvalue playesData = GameLogic::playersToJson(rankingList);
 		crow::response resp = playesData;
@@ -162,38 +278,38 @@ void Route::chooseRegionRoute()
 	auto& chooseRegion = CROW_ROUTE(m_app, "/chooseRegion").methods(crow::HTTPMethod::Post);
 	chooseRegion([this](const crow::request& req) {
 		auto bodyArgs = parseUrlArgs(req.body);
-		auto end = bodyArgs.end();
-		auto gameIdIter = bodyArgs.find("gameID");
-		auto colorIter = bodyArgs.find("color");
-		auto regionIdIter = bodyArgs.find("regionId");
-		long gameID = std::stoi(gameIdIter->second);
-		if (m_gamesActive.count(gameID) > 0)
+	auto end = bodyArgs.end();
+	auto gameIdIter = bodyArgs.find("gameID");
+	auto colorIter = bodyArgs.find("color");
+	auto regionIdIter = bodyArgs.find("regionId");
+	long gameID = std::stoi(gameIdIter->second);
+	if (m_gamesActive.count(gameID) > 0)
+	{
+		int regionId = std::stoi(regionIdIter->second);
+		Color::ColorEnum color = Color::getColor(std::stoi(colorIter->second));
+		if (regionId != -1)
 		{
-			int regionId = std::stoi(regionIdIter->second);
-			Color::ColorEnum color = Color::getColor(std::stoi(colorIter->second));
-			if (regionId != -1)
-			{
-				m_gamesActive[gameID]->updateZone(regionId, color);
-			}
-			m_gamesActive[gameID]->addWaitingRequest(color);
-			while (!m_gamesActive[gameID]->checkZoneUpdates() || !m_gamesActive[gameID]->allRequestsReady())
-			{
-				std::this_thread::sleep_for(std::chrono::milliseconds(10));
-			}
-			std::this_thread::sleep_for(std::chrono::milliseconds(16));
-			m_gamesActive[gameID]->deleteRequestsReady();
-
-			std::pair<int, Color::ColorEnum> updatedRegion = m_gamesActive[gameID]->getUpdatedZone();
-			crow::json::wvalue json;
-			json["zoneId"] = updatedRegion.first;
-			json["zoneColor"] = Color::ColorToInt(updatedRegion.second);
-			crow::response res;
-			res.code = 200;
-			res = json;
-			std::this_thread::sleep_for(std::chrono::milliseconds(10));
-			return res;
+			m_gamesActive[gameID]->updateZone(regionId, color);
 		}
-		return crow::response(404);
+		m_gamesActive[gameID]->addWaitingRequest(color);
+		while (!m_gamesActive[gameID]->checkZoneUpdates() || !m_gamesActive[gameID]->allRequestsReady())
+		{
+			std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		}
+		std::this_thread::sleep_for(std::chrono::milliseconds(16));
+		m_gamesActive[gameID]->deleteRequestsReady();
+
+		std::pair<int, Color::ColorEnum> updatedRegion = m_gamesActive[gameID]->getUpdatedZone();
+		crow::json::wvalue json;
+		json["zoneId"] = updatedRegion.first;
+		json["zoneColor"] = Color::ColorToInt(updatedRegion.second);
+		crow::response res;
+		res.code = 200;
+		res = json;
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		return res;
+	}
+	return crow::response(404);
 
 		});
 }
