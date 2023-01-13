@@ -53,16 +53,25 @@ void board()
 	b.AddCloseZone(8, Color::ColorEnum::Red);
 	b.AddCloseZone(7, Color::ColorEnum::Red);
 	b.AddCloseZone(6, Color::ColorEnum::Blue);
-	if (b.ValidateAttackMove(1, Color::ColorEnum::Red))
+	if (b.ValidateAttackMove(1, Color::ColorEnum::Blue))
 	{
 		b[1]->changeOwner(Color::ColorEnum::Red);
+		std::cout << "da\n";
 	}
+	else std::cout << "nu\n";
+
+	if (b.ValidateAttackMove(3, Color::ColorEnum::Blue))
+	{
+		b[1]->changeOwner(Color::ColorEnum::Red);
+		std::cout << "da\n";
+	}
+	else std::cout << "nu\n";
 }
 
 int main()
 {
-	useRoutes();
-	//board();
+	//useRoutes();
+	board();
 	return 0;
 }
 

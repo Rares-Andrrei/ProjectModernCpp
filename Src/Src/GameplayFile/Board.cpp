@@ -1,7 +1,7 @@
 #include "Board.h"
 
 Board::Board(const uint8_t& NumberOfPlayers)
-	:m_NumberOfPlayers{ NumberOfPlayers }, m_modifiedZones{0}
+	:m_NumberOfPlayers{ NumberOfPlayers }, m_modifiedZones{ 0 }
 {
 	this->ChangeBoardDimensions();
 }
@@ -179,13 +179,22 @@ bool Board::AddCloseZone(int idZone, const Color::ColorEnum& color)
 
 bool Board::ValidateAttackMove(int idZone, const Color::ColorEnum& color)
 {
-	if (idZone >= m_BoardHeight * m_BoardWidth || idZone < 0 )
+	if (idZone >= m_BoardHeight * m_BoardWidth || idZone < 0)
 	{
 		return false;
 	}
 	if (CheckIfBoardIsFull() == true)
 	{
-		return m_board[idZone]->getColor() != color;
+		if (m_board[idZone]->getColor() != color)
+		{
+			for (auto& neighbour : m_zonesNeighbours[idZone])
+			{
+				if (neighbour.second->getColor() == color)
+				{
+					return true;
+				}
+			}
+		}
 	}
 	return false;
 }
