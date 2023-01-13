@@ -155,37 +155,27 @@ void Map::ButtonClicked(int ZoneId, QPushButton* button)
 {
 	if (m_gamePhase == GamePhase::ChooseBase)
 	{
-		// request :: check if the selected region is valid for a BASE
-		// response = yes -> update the zone + send the update to the server
-		// response = no -> show error message + let the player choose another zone
-		if (m_board->AddZoneAsBase(ZoneId, m_player->getColor()))
-		{
-			updateAZone(button, m_player->getColor(), ZoneId);
+		if (m_GameInstance->checkValidBasePosition(ZoneId))
 			Send_Response_To_Server(ZoneId);
-		}
-		else {
-			QMessageBox::information(this, "Error", "You can't move here");
-		}
+		else
+			QMessageBox::warning(this, "Error", "Invalid Base Position");
 	}
 	else if (m_gamePhase == GamePhase::ChooseRegions)
 	{
-		// request :: check if the selected region is valid for a ZONE
-		// response = yes -> update the zone + send the update to the server
-		// response = no -> show error message + let the player choose another zone
-		if (m_board->AddCloseZone(ZoneId, m_player->getColor()))
-		{
-			updateAZone(button, m_player->getColor(), ZoneId);
+		if (m_GameInstance->checkValidRegionPosition(ZoneId, m_player->getColor()))
 			Send_Response_To_Server(ZoneId);
-		}
-		else {
-			QMessageBox::information(this, "Error", "You can't move here");
-		}
+		else
+			QMessageBox::warning(this, "Error", "Invalid Region Position");
 	}
 	else if (m_gamePhase == GamePhase::Duels)
 	{
 		// request :: check if the selected zone is valid to attack , 
 		//response = yes -> send the zone id +player data to the server
 		//response = no -> show error message + let user choose another zone
+		if (m_GameInstance->checkValidAttackMove(ZoneId, m_player->getColor()))
+			Send_Response_To_Server(ZoneId);
+		else
+			QMessageBox::warning(this, "Error", "Invalid Attack Position");
 	}
 }
 
