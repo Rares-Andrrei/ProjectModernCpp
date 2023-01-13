@@ -10,6 +10,8 @@
 #include "PlayerQString.h"
 #include <qtimer.h>
 #include <qthread.h>
+#include "BoardInterpretation.h"
+#include "GamePhaseEnum.h"
 
 class Map : public QMainWindow
 {
@@ -22,28 +24,32 @@ public:
 	void setPlayer(const std::shared_ptr<PlayerQString>& player);
 	void setPlayers(const std::vector<std::shared_ptr<PlayerQString>>& players);
 	void setGameInstance(const std::shared_ptr<Route>& GameInstance);
+	void setBoard(const std::shared_ptr<BoardInterpretation>& board);
+	void setPhase(GamePhase gamePhase);
 	QColor getColor(const Color::ColorEnum& color);
 
 	void Send_Response_To_Server(int ZoneId);
 
 	void disableAllButtons();
 	void enableAllButtons();
-	void updateAZone(QAbstractButton* button, const Color::ColorEnum& color);
+	void updateAZone(QAbstractButton* button, const Color::ColorEnum& color ,int ZoneId);
 
 signals:
 	void emitMapUpdatedChooseRegionsPhase();
 
 private:
 	Ui::MapClass ui;
-
+	std::shared_ptr<BoardInterpretation> m_board;
 	std::shared_ptr<Route> m_GameInstance;
+	bool m_isBasePhase;
 
-	bool m_validateMove = true;
+	GamePhase m_gamePhase : 3 = GamePhase::None;
 	std::shared_ptr<PlayerQString> m_player;
 	std::vector<std::shared_ptr<PlayerQString>>m_players;
 	std::shared_ptr<Battle>BattleWindow;
 
 	void playersAvatar();
+	void ButtonClicked(int ZoneId, QPushButton* button);
 
 private slots:
 	void onzona1Clicked();

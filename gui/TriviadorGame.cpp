@@ -44,7 +44,8 @@ void TriviadorGame::setNumberOfPlayers(const uint16_t& numberOfPlayers)
 		m_MaxNumberOfDuels = 5 * m_numberOfPlayers;
 		m_numberOfInteractionsLeft = numberOfPlayers - 1;
 	}
-
+	m_board.reset(new BoardInterpretation(m_numberOfPlayers));
+	MapWindow->setBoard(m_board);
 }
 
 void TriviadorGame::displayLoadingMessage(/*const QTimer& timer*/)
@@ -72,15 +73,6 @@ void TriviadorGame::StartGame()
 
 	displayLoadingMessage(/*timer*/); // de discutat timpul de incarcare necesar
 	chooseBasePhase();
-
-	//displayLoadingMessage(/*timer*/); // de discutat timpul de incarcare necesar
-	//chooseRegionsPhase();
-
-	//displayLoadingMessage(/*timer*/); // de discutat timpul de incarcare necesar
-	//duelsPhase();
-
-	//displayLoadingMessage(/*timer*/); // de discutat timpul de incarcare necesar
-	//EndGame();
 }
 
 void TriviadorGame::setPlayer(const std::shared_ptr<PlayerQString>& player)
@@ -243,17 +235,17 @@ void TriviadorGame::checkMapWindowClosed()
 	{
 		return;
 	}
-	if (m_gamePhase == GamePhase::ChooseRegions && m_MapWindowClosed == true && !MapWindow->isVisible())
-	{
-		if (true) // daca nu mai sunt zone libere , verificare de la server ?
-		{
-			changePhase = true;
-		}
-		else
-		{
-			m_MapWindowClosed = false;
-		}
-	}
+	//if (m_gamePhase == GamePhase::ChooseRegions && m_MapWindowClosed == true && !MapWindow->isVisible())
+	//{
+	//	if (true) // daca nu mai sunt zone libere , verificare de la server ?
+	//	{
+	//		changePhase = true;
+	//	}
+	//	else
+	//	{
+	//		m_MapWindowClosed = false;
+	//	}
+	//}
 	else if (m_gamePhase == GamePhase::Duels && m_MapWindowClosed == false && m_duelStatus == DuelStatus::None && !MapWindow->isVisible())
 	{
 		m_QTypeVariantsWindow.reset(new QTypeVariantsWindow(this));
@@ -268,6 +260,10 @@ void TriviadorGame::checkMapWindowClosed()
 
 void TriviadorGame::checkVariantsWindowClosed()
 {
+	if (changePhase == true || serverAproveStatus == false) // daca o faza s-a terminat , asteptam sa trecem la urmatoarea
+	{
+		return;
+	}
 	if (m_VariantsWindowClosed == true && !m_QTypeVariantsWindow->isVisible() && !MapWindow->isVisible() && serverAproveStatus == true)
 	{
 		m_VariantsWindowClosed = false;
@@ -304,18 +300,22 @@ void TriviadorGame::checkCurrentPhase()
 
 	if (m_gamePhase == GamePhase::None && changePhase == true)
 	{
+		MapWindow->setPhase(GamePhase::ChooseBase);
 		chooseBasePhase();
 	}
 	else if (m_gamePhase == GamePhase::ChooseBase && changePhase == true)
 	{
+		MapWindow->setPhase(GamePhase::ChooseRegions);
 		chooseRegionsPhase();
 	}
 	else if (m_gamePhase == GamePhase::ChooseRegions && changePhase == true)
 	{
+		MapWindow->setPhase(GamePhase::Duels);
 		duelsPhase();
 	}
 	else if (m_gamePhase == GamePhase::Duels && changePhase == true)
 	{
+		MapWindow->setPhase(GamePhase::End);
 		EndGame();
 	}
 }
@@ -335,6 +335,10 @@ bool TriviadorGame::checkIfWindowsAreClosed()
 void TriviadorGame::nextPlayerInQueue()
 {
 	QThread::msleep(QRandomGenerator::global()->bounded(1, 10));
+	if (changePhase == true)
+	{
+		return;
+	}
 	if (m_playerOrder.empty() && m_gamePhase == GamePhase::ChooseBase)
 	{
 		changePhase = true;
@@ -359,7 +363,20 @@ void TriviadorGame::nextPlayerInQueue()
 
 void TriviadorGame::updateTheQueueStatus()
 {
-	// verificare board plin 
+	if(changePhase == true)
+	{
+		return;
+	}
+	if (m_board->checkBoardFull() == true)
+	{
+		changePhase = true;
+		MapWindow->close();
+		while (!m_playerOrder.empty())
+		{
+			m_playerOrder.pop();
+		}
+		return;
+	}
 	if (m_gamePhase == GamePhase::ChooseBase)
 	{
 		m_playerOrder.pop();

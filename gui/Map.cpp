@@ -42,6 +42,16 @@ void Map::setGameInstance(const std::shared_ptr<Route>& GameInstance)
 	m_GameInstance = GameInstance;
 }
 
+void Map::setBoard(const std::shared_ptr<BoardInterpretation>& board)
+{
+	m_board = board;
+}
+
+void Map::setPhase(GamePhase gamePhase)
+{
+	m_gamePhase = gamePhase;
+}
+
 QColor Map::getColor(const Color::ColorEnum& color)
 {
 	switch (color)
@@ -69,7 +79,6 @@ QColor Map::getColor(const Color::ColorEnum& color)
 
 void Map::Send_Response_To_Server(int ZoneId)
 {
-	// Trimite raspuns la server cu zona selectata
 	if (this->isHidden())
 		this->show();
 
@@ -77,102 +86,33 @@ void Map::Send_Response_To_Server(int ZoneId)
 	//QThread::msleep(1000);
 	disableAllButtons();
 	QAbstractButton* button = nullptr;
-	if(colorZone.first == 1)
+	if (colorZone.first == 0)
 		button = ui.zona1;
-	else if (colorZone.first == 2)
+	else if (colorZone.first == 1)
 		button = ui.zona2;
-	else if (colorZone.first == 3)
+	else if (colorZone.first == 2)
 		button = ui.zona3;
-	else if (colorZone.first == 4)
+	else if (colorZone.first == 3)
 		button = ui.zona4;
-	else if (colorZone.first == 5)
+	else if (colorZone.first == 4)
 		button = ui.zona5;
-	else if (colorZone.first == 6)
+	else if (colorZone.first == 5)
 		button = ui.zona6;
-	else if (colorZone.first == 7)
+	else if (colorZone.first == 6)
 		button = ui.zona7;
-	else if (colorZone.first == 8)
+	else if (colorZone.first == 7)
 		button = ui.zona8;
-	else if (colorZone.first == 9)
+	else if (colorZone.first == 8)
 		button = ui.zona9;
-	updateAZone(button, colorZone.second);
-	/*switch (colorZone.first)
-	{
-	default:
-		QThread::msleep(500);
-	case 1:
-	{
-		ui.zona1->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(colorZone.second));
-		ui.zona1->setPalette(pal);
-		break;
-	}
-	case 2:
-	{
-		ui.zona2->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(colorZone.second));
-		ui.zona2->setPalette(pal);
-		break;
-	}
-	case 3:
-	{
-		ui.zona3->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(colorZone.second));
-		ui.zona3->setPalette(pal);
-		break;
-	}
-	case 4:
-	{
-		ui.zona4->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(colorZone.second));
-		ui.zona4->setPalette(pal);
-		break;
-	}
-	case 5:
-	{
-		ui.zona5->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(colorZone.second));
-		ui.zona5->setPalette(pal);
-		break;
-	}
-	case 6:
-	{
-		ui.zona6->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(colorZone.second));
-		ui.zona6->setPalette(pal);
-		break;
-	}
-	case 7:
-	{
-		ui.zona7->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(colorZone.second));
-		ui.zona7->setPalette(pal);
-		break;
-	}
-	case 8:
-	{
-		ui.zona8->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(colorZone.second));
-		ui.zona8->setPalette(pal);
-		break;
-	}
-	case 9:
-	{
-		ui.zona9->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(colorZone.second));
-		ui.zona9->setPalette(pal);
-		break;
-	}
-	}*/
+	updateAZone(button, colorZone.second, colorZone.first);
 	QThread::msleep(100);
-	
+
 	emit emitMapUpdatedChooseRegionsPhase();
-	
+
 	this->hide();
 }
 void emitMapUpdatedChooseRegionsPhase()
 {
-	
 }
 
 void Map::disableAllButtons()
@@ -192,27 +132,17 @@ void Map::enableAllButtons()
 	playersAvatar();
 }
 
-void Map::updateAZone(QAbstractButton* button, const Color::ColorEnum& color)
+void Map::updateAZone(QAbstractButton* button, const Color::ColorEnum& color,int ZoneId)
 {
+	if(m_gamePhase == GamePhase::ChooseBase)
+		m_board->AddZoneAsBase(ZoneId, color);
+	else if(m_gamePhase == GamePhase::ChooseRegions)
+		m_board->AddCloseZone(ZoneId, color);
 	button->setAutoFillBackground(true);
 	QPalette pal = QPalette(getColor(color));
 	button->setPalette(pal);
 }
 
-void Map::onzona1Clicked()
-{
-	if (m_validateMove == true)
-	{
-		m_validateMove = true;
-		ui.zona1->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(m_player->getColor()));
-		ui.zona1->setPalette(pal);
-		Send_Response_To_Server(1);
-	}
-	else {
-		QMessageBox::information(this, "Error", "You can't move here");
-	}
-}
 
 void Map::playersAvatar()
 {
@@ -221,123 +151,83 @@ void Map::playersAvatar()
 	ui.player2Name->setText(m_players[1]->getName());
 }
 
+void Map::ButtonClicked(int ZoneId, QPushButton* button)
+{
+	if (m_gamePhase == GamePhase::ChooseBase)
+	{
+		if (m_board->AddZoneAsBase(ZoneId, m_player->getColor()))
+		{
+			updateAZone(button, m_player->getColor(),ZoneId);
+			Send_Response_To_Server(ZoneId);
+		}
+		else {
+			QMessageBox::information(this, "Error", "You can't move here");
+		}
+	}
+	else if (m_gamePhase == GamePhase::ChooseRegions)
+	{
+		if (m_board->AddCloseZone(ZoneId, m_player->getColor()))
+		{
+			updateAZone(button, m_player->getColor(),ZoneId);
+			Send_Response_To_Server(ZoneId);
+		}
+		else {
+			QMessageBox::information(this, "Error", "You can't move here");
+		}
+	}
+}
+
+void Map::onzona1Clicked()
+{
+	int ZoneId = 0;
+	ButtonClicked(ZoneId, ui.zona1);
+}
+
 void Map::onzona2Clicked()
 {
-	if (m_validateMove == true)
-	{
-		m_validateMove = true;
-		ui.zona2->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(m_player->getColor()));
-		ui.zona2->setPalette(pal);
-		Send_Response_To_Server(2);
-	}
-	else {
-		QMessageBox::information(this, "Error", "You can't move here");
-	}
+	int ZoneId = 1;
+	ButtonClicked(ZoneId, ui.zona2);
 }
 
 void Map::onzona3Clicked()
 {
-	if (m_validateMove == true)
-	{
-		m_validateMove = true;
-		ui.zona3->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(m_player->getColor()));
-		ui.zona3->setPalette(pal);
-		Send_Response_To_Server(3);
-	}
-	else {
-		QMessageBox::information(this, "Error", "You can't move here");
-	}
+	int ZoneId = 2;
+	ButtonClicked(ZoneId, ui.zona3);
 }
 
 void Map::onzona4Clicked()
 {
-	if (m_validateMove == true)
-	{
-		m_validateMove = true;
-		ui.zona4->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(m_player->getColor()));
-		ui.zona4->setPalette(pal);
-		Send_Response_To_Server(4);
-	}
-	else {
-		QMessageBox::information(this, "Error", "You can't move here");
-	}
+	int ZoneId = 3;
+	ButtonClicked(ZoneId, ui.zona4);
 }
 
 void Map::onzona5Clicked()
 {
-	if (m_validateMove == true)
-	{
-		m_validateMove = true;
-		ui.zona5->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(m_player->getColor()));
-		ui.zona5->setPalette(pal);
-		Send_Response_To_Server(5);
-	}
-	else {
-		QMessageBox::information(this, "Error", "You can't move here");
-	}
+	int ZoneId = 4;
+	ButtonClicked(ZoneId, ui.zona5);
 }
 
 void Map::onzona6Clicked()
 {
-	if (m_validateMove == true)
-	{
-		m_validateMove = true;
-		ui.zona6->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(m_player->getColor()));
-		ui.zona6->setPalette(pal);
-		Send_Response_To_Server(6);
-	}
-	else {
-		QMessageBox::information(this, "Error", "You can't move here");
-	}
+	int ZoneId = 5;
+	ButtonClicked(ZoneId, ui.zona6);
 }
 
 void Map::onzona7Clicked()
 {
-	if (m_validateMove == true)
-	{
-		m_validateMove = true;
-		ui.zona7->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(m_player->getColor()));
-		ui.zona7->setPalette(pal);
-		Send_Response_To_Server(7);
-	}
-	else {
-		QMessageBox::information(this, "Error", "You can't move here");
-	}
+	int ZoneId = 6;
+	ButtonClicked(ZoneId, ui.zona7);
 }
 
 void Map::onzona8Clicked()
 {
-	if (m_validateMove == true)
-	{
-		m_validateMove = true;
-		ui.zona8->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(m_player->getColor()));
-		ui.zona8->setPalette(pal);
-		Send_Response_To_Server(8);
-	}
-	else {
-		QMessageBox::information(this, "Error", "You can't move here");
-	}
+	int ZoneId = 7;
+	ButtonClicked(ZoneId, ui.zona8);
 }
 
 void Map::onzona9Clicked()
 {
-	if (m_validateMove == true)
-	{
-		m_validateMove = true;
-		ui.zona9->setAutoFillBackground(true);
-		QPalette pal = QPalette(getColor(m_player->getColor()));
-		ui.zona9->setPalette(pal);
-		Send_Response_To_Server(9);
-	}
-	else {
-		QMessageBox::information(this, "Error", "You can't move here");
-	}
+	int ZoneId = 8;
+	ButtonClicked(ZoneId, ui.zona9);
 }
 
