@@ -153,36 +153,48 @@ void lobby::onCancelButtonClicked()
 	}
 }
 
+
+///MATCH HISTORY
 void lobby::on_gamesHistoryButton_clicked()
 {
 	ui.lobbyGameModes->setCurrentIndex(2);
+
+	auto matchHistory = m_routes->getMatchHistoryRoute();
+
 	ui.playerNameLabel->setText(m_PlayerName);
 	ui.playerNameLabel->setText(ui.playerNameLabel->text() + " you played ");
+	ui.playerNameLabel->setText(ui.playerNameLabel->text() + QString::number(matchHistory.size()));
 	ui.playerNameLabel->setText(ui.playerNameLabel->text() + " games WOW");
 
-	//ui.tableMatchHystory->horizontalHeader()->setStyleSheet("QHeaderView::section { background-color: rgb(120, 159, 110); }");
-	ui.tableMatchHystory->setRowCount(100);
-	ui.tableMatchHystory->setColumnCount(2);
-	ui.tableMatchHystory->setColumnWidth(0, 150);
-	ui.tableMatchHystory->setColumnWidth(1, 150);
+	ui.tableMatchHistory->setRowCount(matchHistory.size());
+	ui.tableMatchHistory->setColumnCount(6);
+	ui.tableMatchHistory->setStyleSheet("background-color: rgb(229, 229, 229);");
+	ui.tableMatchHistory->horizontalHeader()->setFixedHeight(50);
+	ui.tableMatchHistory->horizontalHeader()->setStyleSheet("QHeaderView::section { background-color: rgb(120, 159, 110); }");
+	ui.tableMatchHistory->verticalHeader()->setVisible(false);
+	ui.tableMatchHistory->setToolTip("Sort the table by pressing on any of the headers");
 
-	QStringList headers = { "Date", "Place" };
+	ui.tableMatchHistory->setColumnWidth(0, 90);
+	for (int i = 1; i < 6; i++)
+		ui.tableMatchHistory->setColumnWidth(i, 81);
 
-	ui.tableMatchHystory->setHorizontalHeaderLabels(headers);
+	QStringList headers = { "Date", "Player 1", "Player 2", "Player 3", "Player 4", "Place"};
+	ui.tableMatchHistory->setHorizontalHeaderLabels(headers);
 
-	std::tuple<QString, QString> items("2015-10-23", "1");
+	int i = 0;
 
-	for (int row = 0; row < 100; row++)
+	for (auto& m : matchHistory)
 	{
-		QTableWidgetItem* item1 = new QTableWidgetItem(QString(std::get<0>(items)));
-		ui.tableMatchHystory->setItem(row, 0, item1);
-
-		QTableWidgetItem* item2 = new QTableWidgetItem(QString(std::get<1>(items)));
-		ui.tableMatchHystory->setItem(row, 1, item2);
+		auto toAdd = m;
+		for (int col = 0; col < 5; col++)
+		{
+			QTableWidgetItem* item = new QTableWidgetItem(QString(toAdd[col].c_str()));
+			ui.tableMatchHistory->setItem(i, col, item);
+		}
+		i++;
 	}
 
-	ui.tableMatchHystory->setEditTriggers(QAbstractItemView::NoEditTriggers);
-
+	ui.tableMatchHistory->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 
 void lobby::on_backButton_clicked()

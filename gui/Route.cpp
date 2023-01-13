@@ -184,9 +184,6 @@ std::list<std::array<std::string, 5>> Route::getMatchHistoryRoute()
 			);
 		}
 	}
-	//atunci cand apelezi ruta returneaza o lista de array-uri de size 5 (stringuri) si in array-ul ala pe
-	//prima pozitie ai data meciului iar pe restul 4 sunt jucatorii in ordine (clasamentul) in cazul in care pe vreun camp e - (stringul "-") atunci inseamna ca nu a fost lobby de 4 jucatori adica daca apare "Rares" "Alex"  - "-" "-" inseamna ca doar noi doi am fost in meci si eu am iesit pe 1, Alex pe 2
-	//numarul de meciuri returnate poate fi variabil (este size-ul la lista) aici vezi ce inginerie faci cum sale afisezi poate dai acolo optiune la player sa iti afiseze mai multe mai putine etc.. ultimele 5 / 10 
 	return matches;
 }
 
