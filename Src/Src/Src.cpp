@@ -31,6 +31,9 @@ void useRoutes()
 	r.exitLobbyRoute();
 	r.logOutRoute();
 	r.gamesHistoryRoute();
+	r.checkValidBasePosition();
+	r.checkValidRegionPosition();
+	r.checkValidAttackMove();
 	r.startApp();
 }
 
@@ -41,7 +44,7 @@ void board()
 	b.AddZonaAsBase(0, Color::ColorEnum::Red);
 	b.ValidateBasePosition(4);
 	b.AddZonaAsBase(4, Color::ColorEnum::Yellow);
-	
+
 	//
 	b.AddCloseZone(1, Color::ColorEnum::Yellow);
 	b.AddCloseZone(3, Color::ColorEnum::Yellow);
