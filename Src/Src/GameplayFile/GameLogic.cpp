@@ -31,12 +31,12 @@ void GameLogic::deleteRequestsReady()
 }
 
 GameLogic::GameLogic()
-	:k_numberOfPlayers{ 2 }
+	:k_numberOfPlayers{ 2 }, m_numericQuestionManager{ NumericQuestionManager(k_numberOfPlayers)}
 {
 }
 
 GameLogic::GameLogic(const uint16_t& numberOfPlayers, std::shared_ptr<Database> db)
-	: k_numberOfPlayers(numberOfPlayers), m_db{ db }
+	: k_numberOfPlayers(numberOfPlayers), m_db{ db }, m_numericQuestionManager{ NumericQuestionManager(numberOfPlayers)}
 {
 	randomQTypeNumerical();
 	randomQTypeVariants();

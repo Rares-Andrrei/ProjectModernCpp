@@ -130,7 +130,7 @@ void Route::sendResponseQTypeNumericalEt1()
 	auto timeIter = bodyArgs.find("time");
 	if (gameIdIter->second == "" || sessionKeyIter->second == "" || responseIter->second == "" || timeIter->second == "" || colorIter->second == "")
 	{
-		return crow::response(401);
+		return crow::response(404);
 	}
 
 	int gameID = std::stoi(gameIdIter->second);
@@ -151,9 +151,9 @@ void Route::sendResponseQTypeNumericalEt1()
 	}
 	else
 	{
-		return crow::response(400);
+		return crow::response(404);
 	}
-	return crow::response(402);
+	return crow::response(404);
 		});
 }
 

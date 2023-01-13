@@ -12,8 +12,12 @@ bool NumericQuestionManager::compareResponseAndTime(std::tuple<int, int, Color::
 	//return DistFromCorrectAnswer < DistFromCorrectAnswer2 || (DistFromCorrectAnswer == DistFromCorrectAnswer2 && ResponseTime < ResponseTime2);
 }
 
-NumericQuestionManager::NumericQuestionManager(const QTypeNumerical& question)
-	: m_question{ question }
+NumericQuestionManager::NumericQuestionManager(const uint16_t& playerNr) : m_playerNr{playerNr}
+{
+}
+
+NumericQuestionManager::NumericQuestionManager(const QTypeNumerical& question, const uint16_t& playerNr)
+	: m_question{ question }, m_playerNr{playerNr}
 {
 }
 
@@ -57,7 +61,7 @@ std::vector<Color::ColorEnum> NumericQuestionManager::getPlayersOrder()
 
 QTypeNumerical NumericQuestionManager::getQuestion()
 {
-	if (m_PlayerOrder.size())
+	if (m_PlayerOrder.size() == m_playerNr)
 	{
 		m_PlayerOrder.clear();
 	}

@@ -11,7 +11,7 @@
 class NumericQuestionManager
 {
 	QTypeNumerical m_question;
-
+	uint16_t m_playerNr;
 	//class CompareResponsesAndTime
 	//{
 	//public:
@@ -28,8 +28,9 @@ public:
 
 	bool compareResponseAndTime(std::tuple<int, int, Color::ColorEnum> p1, std::tuple<int, int, Color::ColorEnum> p2);
 
-	NumericQuestionManager() = default;
-	NumericQuestionManager(const QTypeNumerical& question);
+	//NumericQuestionManager() = default;
+	NumericQuestionManager(const uint16_t& playerNr);
+	NumericQuestionManager(const QTypeNumerical& question, const uint16_t& playerNr);
 	~NumericQuestionManager() = default;
 
 	void setQuestion(const QTypeNumerical& question);
