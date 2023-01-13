@@ -39,9 +39,10 @@ public:
 	bool CheckIfBoardIsFull();
 	void eliminatePlayer(const Color::ColorEnum& elimated, const Color::ColorEnum& newOwner);
 	std::shared_ptr<Zone>& end();
+	void generateNeighbours();
+
 
 private:
 	void ChangeBoardDimensions();
-	void generateNeighbours();
 	bool checkIfPlayerHasValidMoved(const Color::ColorEnum& color);
 };

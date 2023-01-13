@@ -32,6 +32,18 @@ class GameLogic
 
 	int NumberOfRequests = 0;
 public:
+<<<<<<< Updated upstream
+=======
+	void addWaitingRequest(const Color::ColorEnum& sessionKey);
+	bool allRequestsReady();
+	void deleteRequestsReady();
+
+	bool ValidateBasePosition(int idZone);
+	bool ValidateRegionPosition(int idZone, const Color::ColorEnum& color);
+	bool ValidateAttackMove(int idZone, const Color::ColorEnum& color);
+
+
+>>>>>>> Stashed changes
 	GameLogic();
 	GameLogic(const uint16_t& numberOfPlayers, std::shared_ptr<Database> db);
 	//GameLogic(const GameLogic&) = delete;

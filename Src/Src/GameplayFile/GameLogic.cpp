@@ -11,13 +11,56 @@ void GameLogic::randomQTypeVariants()
 	m_questionTypeVariants = m_db->randQTypeVariants();
 }
 
+<<<<<<< Updated upstream
 GameLogic::GameLogic()
 	:k_numberOfPlayers{ 2 }
+=======
+void GameLogic::addWaitingRequest(const Color::ColorEnum& color)
+{
+	m_requests[color] = true;
+}
+
+bool GameLogic::allRequestsReady()
+{
+	if (m_requests.size() == m_players.size())
+	{
+		return true;
+	}
+	return false;
+}
+
+void GameLogic::deleteRequestsReady()
+{
+	m_requests.clear();
+}
+
+bool GameLogic::ValidateBasePosition(int idZone)
+{
+	return m_board.ValidateBasePosition(idZone);
+}
+
+bool GameLogic::ValidateRegionPosition(int idZone, const Color::ColorEnum& color)
+{
+	return m_board.ValidateRegionPosition(idZone, color);
+}
+
+bool GameLogic::ValidateAttackMove(int idZone, const Color::ColorEnum& color)
+{
+	return m_board.ValidateAttackMove(idZone, color);
+}
+
+GameLogic::GameLogic()
+	:k_numberOfPlayers{ 2 }, m_numericQuestionManager{ NumericQuestionManager(k_numberOfPlayers) }
+>>>>>>> Stashed changes
 {
 }
 
 GameLogic::GameLogic(const uint16_t& numberOfPlayers, std::shared_ptr<Database> db)
+<<<<<<< Updated upstream
 	: k_numberOfPlayers(numberOfPlayers), m_db{ db }
+=======
+	: k_numberOfPlayers(numberOfPlayers), m_db{ db }, m_numericQuestionManager{ NumericQuestionManager(numberOfPlayers) }
+>>>>>>> Stashed changes
 {
 	randomQTypeNumerical();
 	randomQTypeVariants();
@@ -48,9 +91,26 @@ void GameLogic::updateZone(int zoneId, Color::ColorEnum zoneColor)
 {
 	if (m_board[zoneId] != m_board.end())
 	{
+<<<<<<< Updated upstream
 		std::shared_ptr<Zone> newZone = std::make_shared<Zone>(zoneColor);
 		m_board[zoneId] = newZone;
 		m_updatedZone = { zoneId, zoneColor };
+=======
+		m_board.incrementModifiedZones();
+		if (m_board.getModifiedZones() > m_board.getNumberOfPlayers())
+		{
+			std::shared_ptr<Zone> newZone = std::make_shared<Zone>(zoneColor);
+			m_board[zoneId] = newZone;
+			m_updatedZone = { zoneId, zoneColor };
+		}
+		else
+		{
+			std::shared_ptr<PlayerBase> newBase = std::make_shared<PlayerBase>(zoneColor);
+			m_board[zoneId] = newBase;
+			m_updatedZone = { zoneId, zoneColor };
+		}
+		m_board.generateNeighbours();
+>>>>>>> Stashed changes
 	}
 }
 

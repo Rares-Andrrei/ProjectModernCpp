@@ -396,9 +396,9 @@
      <widget class="QScrollArea" name="scrollArea">
       <property name="geometry">
        <rect>
-        <x>130</x>
+        <x>50</x>
         <y>100</y>
-        <width>350</width>
+        <width>500</width>
         <height>351</height>
        </rect>
       </property>
@@ -410,16 +410,16 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>348</width>
+         <width>498</width>
          <height>349</height>
         </rect>
        </property>
-       <widget class="QTableWidget" name="tableMatchHystory">
+       <widget class="QTableWidget" name="tableMatchHistory">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>350</width>
+          <width>500</width>
           <height>350</height>
          </rect>
         </property>

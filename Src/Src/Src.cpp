@@ -21,6 +21,18 @@ long Lobby::currentCount = 0;
 void useRoutes()
 {
 	Route r;
+<<<<<<< HEAD
+	//r.loginRoute();
+	//r.signUpRoute();
+	//r.enterLobbyRoute();
+	//r.chooseRegionRoute();
+	//r.getQuestionTypeVariantsRoute();
+	//r.sendResponseQTypeNumericalEt1();
+	//r.getQuestionTypeNumericalRoute();
+	//r.exitLobbyRoute();
+	//r.logOutRoute();
+	//r.gamesHistoryRoute();
+=======
 	r.loginRoute();
 	r.signUpRoute();
 	r.enterLobbyRoute();
@@ -30,6 +42,14 @@ void useRoutes()
 	r.getQuestionTypeNumericalRoute();
 	r.exitLobbyRoute();
 	r.logOutRoute();
+<<<<<<< Updated upstream
+=======
+	r.gamesHistoryRoute();
+	r.checkValidBasePosition();
+	r.checkValidRegionPosition();
+	r.checkValidAttackMove();
+>>>>>>> 5b611edeb4b3e40d99a4cfcb75fa5cc5422129bc
+>>>>>>> Stashed changes
 	r.startApp();
 }
 
@@ -40,7 +60,7 @@ void board()
 	b.AddZonaAsBase(0, Color::ColorEnum::Red);
 	b.ValidateBasePosition(4);
 	b.AddZonaAsBase(4, Color::ColorEnum::Yellow);
-	
+
 	//
 	b.AddCloseZone(1, Color::ColorEnum::Yellow);
 	b.AddCloseZone(3, Color::ColorEnum::Yellow);
@@ -49,10 +69,19 @@ void board()
 	b.AddCloseZone(8, Color::ColorEnum::Red);
 	b.AddCloseZone(7, Color::ColorEnum::Red);
 	b.AddCloseZone(6, Color::ColorEnum::Blue);
-	if (b.ValidateAttackMove(1, Color::ColorEnum::Red))
+	if (b.ValidateAttackMove(1, Color::ColorEnum::Blue))
 	{
 		b[1]->changeOwner(Color::ColorEnum::Red);
+		std::cout << "da\n";
 	}
+	else std::cout << "nu\n";
+
+	if (b.ValidateAttackMove(3, Color::ColorEnum::Blue))
+	{
+		b[1]->changeOwner(Color::ColorEnum::Red);
+		std::cout << "da\n";
+	}
+	else std::cout << "nu\n";
 }
 
 int main()

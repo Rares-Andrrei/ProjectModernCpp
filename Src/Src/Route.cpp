@@ -1,5 +1,6 @@
 #include "Route.h"
 #include "utils.h"
+#include "MatchInfo.h"
 #include <thread>
 #include<string>
 
@@ -20,7 +21,11 @@ Route::Route()
 {
 	m_db = std::make_shared<Database>("file.db");
 	m_waitingList = std::make_shared<PlayersQueue>();
+	m_logger.setMinimumLogLevel(Logger::Level::Info);
+	m_logger.log("Server started", Logger::Level::Info);
 }
+
+
 
 void Route::loginRoute()
 {
@@ -51,6 +56,45 @@ void Route::loginRoute()
 		});
 }
 
+void Route::gamesHistoryRoute()
+{
+	auto& getHistoryRoute = CROW_ROUTE(m_app, "/getMatchHistory")
+		.methods(crow::HTTPMethod::Get);
+	getHistoryRoute([this](const crow::request& req) {
+
+	auto bodyArgs = parseUrlArgs(req.body);
+	auto end = bodyArgs.end();
+	auto sessionKeyIter = bodyArgs.find("sessionKey");
+
+	if (m_waitingList->isActive(sessionKeyIter->second))
+	{
+		std::string playerName = m_waitingList->getPlayer(sessionKeyIter->second)->getName();
+		std::list<MatchInfo> matchList = m_db->getMatchHistory(playerName);
+		int matchesNr = 0;
+		crow::json::wvalue json;
+		for (const auto& match : matchList)
+		{
+			json["Date" + std::to_string(matchesNr)] = match.getDate();
+			json["Place1" + std::to_string(matchesNr)] = match.getFirstPlace();
+			json["Place2" + std::to_string(matchesNr)] = match.getSecondPlace();
+			json["Place3" + std::to_string(matchesNr)] = match.getThirdPlace();
+			json["Place4" + std::to_string(matchesNr)] = match.getFourthPlace();
+			matchesNr++;
+		}
+		json["MatchesNr"] = matchesNr;
+		crow::response res;
+		res.code = 200;
+		res = json;
+		return res;
+	}
+	else
+	{
+		return crow::response(404);
+	}
+		});
+
+}
+
 void Route::enterLobbyRoute()
 {
 	auto& enterLobbyRoute = CROW_ROUTE(m_app, "/enterLobby").methods(crow::HTTPMethod::Post);
@@ -63,7 +107,7 @@ void Route::enterLobbyRoute()
 	std::shared_ptr<Lobby> lobby = m_waitingList->addPlayerToLobby(sessionKeyIter->second, lobbyType);
 	while (lobby->playersInLobby() < static_cast<int>(lobbyType) && lobby->existInLobby(sessionKeyIter->second))
 	{
-		std::this_thread::sleep_for(std::chrono::seconds(1));
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	}
 	crow::response resp;
 	if (lobby->existInLobby(sessionKeyIter->second))
@@ -90,7 +134,7 @@ void Route::sendResponseQTypeNumericalEt1()
 	auto timeIter = bodyArgs.find("time");
 	if (gameIdIter->second == "" || sessionKeyIter->second == "" || responseIter->second == "" || timeIter->second == "" || colorIter->second == "")
 	{
-		return crow::response(401);
+		return crow::response(404);
 	}
 
 	int gameID = std::stoi(gameIdIter->second);
@@ -111,9 +155,9 @@ void Route::sendResponseQTypeNumericalEt1()
 	}
 	else
 	{
-		return crow::response(400);
+		return crow::response(404);
 	}
-	return crow::response(402);
+	return crow::response(404);
 		});
 }
 
@@ -129,17 +173,20 @@ void Route::chooseRegionRoute()
 		long gameID = std::stoi(gameIdIter->second);
 		if (m_gamesActive.count(gameID) > 0)
 		{
-			m_gamesActive[gameID]->increaseNumberOfRequest();
 			int regionId = std::stoi(regionIdIter->second);
 			Color::ColorEnum color = Color::getColor(std::stoi(colorIter->second));
 			if (regionId != -1)
 			{
 				m_gamesActive[gameID]->updateZone(regionId, color);
 			}
-			while (!m_gamesActive[gameID]->checkZoneUpdates() || !m_gamesActive[gameID]->NumberOfRequestsReached())
+			m_gamesActive[gameID]->addWaitingRequest(color);
+			while (!m_gamesActive[gameID]->checkZoneUpdates() || !m_gamesActive[gameID]->allRequestsReady())
 			{
 				std::this_thread::sleep_for(std::chrono::milliseconds(10));
 			}
+			std::this_thread::sleep_for(std::chrono::milliseconds(16));
+			m_gamesActive[gameID]->deleteRequestsReady();
+
 			std::pair<int, Color::ColorEnum> updatedRegion = m_gamesActive[gameID]->getUpdatedZone();
 			crow::json::wvalue json;
 			json["zoneId"] = updatedRegion.first;
@@ -261,4 +308,5 @@ void Route::logOutRoute()
 void Route::startApp()
 {
 	m_app.port(18080).multithreaded().run();
+	m_logger.log("Server started", Logger::Level::Info);
 }

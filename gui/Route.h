@@ -14,6 +14,12 @@ public:
 	std::queue<std::pair<Color::ColorEnum, int>> sendResponseNumericalEt1(int resp, int time, Color::ColorEnum color);
 	std::pair<int, Color::ColorEnum> chooseRegion(int id, Color::ColorEnum color);
 
+<<<<<<< Updated upstream
+=======
+	bool checkValidBasePosition(int ZoneId);
+	bool checkValidRegionPosition(int ZoneId, const Color::ColorEnum& color);
+	bool checkValidAttackMove(int ZoneId, const Color::ColorEnum& color);
+>>>>>>> Stashed changes
 
 	bool leaveLobby();
 	void enterLobby(int type, std::vector<std::shared_ptr<PlayerQString>>& players);

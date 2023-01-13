@@ -124,6 +124,68 @@ std::pair<int, Color::ColorEnum> Route::chooseRegion(int id, Color::ColorEnum co
 	return data;
 }
 
+bool Route::checkValidBasePosition(int ZoneId)
+{
+	auto response = cpr::Get(
+		cpr::Url{ "http://localhost:18080/checkValidBasePosition" },
+		cpr::Payload{
+			{ "gameID", std::to_string(m_gameId)},
+			{ "regionId", std::to_string(ZoneId)}
+		});
+	if (response.status_code == 200)
+	{
+		crow::json::rvalue resData = crow::json::load(response.text);
+		std::string value = resData["valid"].s();
+		return value == "true";
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool Route::checkValidRegionPosition(int ZoneId, const Color::ColorEnum& color)
+{
+	auto response = cpr::Get(
+		cpr::Url{ "http://localhost:18080/checkValidRegionPosition" },
+		cpr::Payload{
+			{ "gameID", std::to_string(m_gameId)},
+			{ "color", std::to_string(Color::ColorToInt(color))},
+			{ "regionId", std::to_string(ZoneId)}
+		});
+	if (response.status_code == 200)
+	{
+		crow::json::rvalue resData = crow::json::load(response.text);
+		std::string value = resData["valid"].s();
+		return value == "true";
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool Route::checkValidAttackMove(int ZoneId, const Color::ColorEnum& color)
+{
+	auto response = cpr::Get(
+		cpr::Url{ "http://localhost:18080/checkValidAttackMove" },
+		cpr::Payload{
+			{ "gameID", std::to_string(m_gameId)},
+			{ "color", std::to_string(Color::ColorToInt(color))},
+			{ "regionId", std::to_string(ZoneId)}
+		});
+	if (response.status_code == 200)
+	{
+		crow::json::rvalue resData = crow::json::load(response.text);
+		std::string value = resData["valid"].s();
+		return value == "true";
+	}
+	else
+	{
+		return false;
+	}
+}
+
 void Route::enterLobby(int type, std::vector<std::shared_ptr<PlayerQString>>& players)
 {
 	cpr::Url url{ "http://localhost:18080/enterLobby" };
@@ -161,6 +223,35 @@ void Route::enterLobby(int type, std::vector<std::shared_ptr<PlayerQString>>& pl
 	}
 }
 
+<<<<<<< Updated upstream
+=======
+std::list<std::array<std::string, 5>> Route::getMatchHistoryRoute()
+{
+	std::list<std::array<std::string, 5>> matches;
+	auto response = cpr::Get(
+		cpr::Url{ "http://localhost:18080/getMatchHistory" },
+		cpr::Payload{
+			{ "sessionKey", m_sessionKey}
+		});
+	if (response.status_code == 200)
+	{
+		crow::json::rvalue resData = crow::json::load(response.text);
+		int matchesNr = resData["MatchesNr"].i();
+		for (int i = 0; i < matchesNr; i++)
+		{
+			matches.push_back(std::array<std::string, 5>{
+				resData["Date" + std::to_string(i)].s(),
+					resData["Place1" + std::to_string(i)].s(),
+					resData["Place2" + std::to_string(i)].s(),
+					resData["Place3" + std::to_string(i)].s(),
+					resData["Place4" + std::to_string(i)].s()}
+			);
+		}
+	}
+	return matches;
+}
+
+>>>>>>> Stashed changes
 CredentialErrors Route::login(std::string username, std::string password)
 {
 	auto response = cpr::Post(
