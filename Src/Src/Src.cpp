@@ -70,8 +70,8 @@ void board()
 
 int main()
 {
-	//useRoutes();
-	board();
+	useRoutes();
+	//board();
 	return 0;
 }
 
