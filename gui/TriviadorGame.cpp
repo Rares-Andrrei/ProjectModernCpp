@@ -367,7 +367,7 @@ void TriviadorGame::updateTheQueueStatus()
 	{
 		return;
 	}
-	if (m_board->checkBoardFull() == true)
+	if (m_GameInstance->checkIfBoardIsFull() == true)
 	{
 		changePhase = true;
 		MapWindow->enableAllButtons();

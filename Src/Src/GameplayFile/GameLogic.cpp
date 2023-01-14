@@ -66,6 +66,11 @@ bool GameLogic::checkZoneUpdates()
 	return false;
 }
 
+bool GameLogic::CheckIfBoardIsFull()
+{
+	return m_board.CheckIfBoardIsFull();
+}
+
 std::pair<int, Color::ColorEnum> GameLogic::getUpdatedZone()
 {
 	if (m_updatedZone.has_value())
