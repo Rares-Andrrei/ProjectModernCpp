@@ -117,8 +117,15 @@ void Map::Send_Response_To_Server(int ZoneId)
 	std::pair<int, Color::ColorEnum> colorZone = m_GameInstance->chooseRegion(ZoneId, m_player->getColor());
 	disableAllButtons();
 	m_gridButtons->setButtonColor(colorZone.first, colorZone.second);
-	m_gridButtons->setCustomName(colorZone.first, "Zona " + QString::number(colorZone.first), 100, 0);
-	// 100 trebuie modificat cu ce exista pe server ( ruta ), la fel si pentru 0
+	QThread::msleep(QRandomGenerator::global()->bounded(1, 10));
+	auto zoneInfo = m_GameInstance->updateZoneInfo(colorZone.first);
+	auto& [zoneId, zoneColor, zoneScore, zoneLifes] = zoneInfo;
+
+	if (zoneColor != Color::ColorEnum::None)
+	{
+		m_gridButtons->setButtonColor(zoneId, zoneColor);
+		m_gridButtons->setCustomName(zoneId, "Zona " + QString::number(zoneId) , zoneScore , zoneLifes);
+	}
 
 	QThread::msleep(10);
 

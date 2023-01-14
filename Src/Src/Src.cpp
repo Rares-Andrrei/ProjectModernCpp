@@ -36,6 +36,7 @@ void useRoutes()
 	r.checkValidAttackMove();
 	r.checkIfBoardIsFull();
 	r.requestDuelTurn();
+	r.updateZoneInfo();
 	r.startApp();
 }
 
