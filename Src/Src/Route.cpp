@@ -18,8 +18,6 @@ void Route::addActiveGame(std::shared_ptr<Lobby> lobby)
 	}
 }
 
-
-
 Route::Route()
 {
 	m_db = std::make_shared<Database>("file.db");
@@ -265,6 +263,43 @@ void Route::updateZoneInfo()
 		json["zoneScore"] = std::to_string(zoneScore);
 		json["zoneLifes"] = std::to_string(zoneLifes);
 		
+		res.code = 200;
+		res = json;
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		return res;
+	}
+	std::this_thread::sleep_for(std::chrono::milliseconds(10));
+	return crow::response(404);
+		});
+}
+
+void Route::checkIfPlayerCanUseAdvantages()
+{
+	auto& checkIfPlayerCanUseAdvantages = CROW_ROUTE(m_app, "/checkIfPlayerCanUseAdvantages")
+		.methods(crow::HTTPMethod::Get);
+	checkIfPlayerCanUseAdvantages([this](const crow::request& req) {
+		auto bodyArgs = parseUrlArgs(req.body);
+	auto gameIdIter = bodyArgs.find("gameID");
+	auto colorIter = bodyArgs.find("color");
+	auto end = bodyArgs.end();
+	long gameID = std::stoi(gameIdIter->second);
+
+	if (m_gamesActive.count(gameID) > 0)
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		Color::ColorEnum color = Color::getColor(std::stoi(colorIter->second));
+		bool valid = m_gamesActive[gameID]->checkIfPlayerCanUseAdvantages(color);
+
+		crow::json::wvalue json;
+		if (valid == true)
+		{
+			json["valid"] = "true";
+		}
+		else
+		{
+			json["valid"] = "false";
+		}
+		crow::response res;
 		res.code = 200;
 		res = json;
 		std::this_thread::sleep_for(std::chrono::milliseconds(10));

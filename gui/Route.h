@@ -20,6 +20,8 @@ public:
 	bool checkValidRegionPosition(int ZoneId, const Color::ColorEnum& color);
 	bool checkValidAttackMove(int ZoneId, const Color::ColorEnum& color);
 	bool checkIfBoardIsFull();
+	bool checkIfPlayerCanUseAdvantages(const Color::ColorEnum& color);
+
 	std::tuple<int, Color::ColorEnum, int, int> updateZoneInfo(int ZoneId);
 
 	bool leaveLobby();

@@ -34,6 +34,8 @@ public:
 	void checkIfBoardIsFull();
 	void updateZoneInfo();
 
+	void checkIfPlayerCanUseAdvantages();
+
 	void gamesHistoryRoute();
 	void enterLobbyRoute();
 	void exitLobbyRoute();

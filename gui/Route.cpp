@@ -230,6 +230,27 @@ bool Route::checkIfBoardIsFull()
 	}
 }
 
+bool Route::checkIfPlayerCanUseAdvantages(const Color::ColorEnum& color)
+{
+	auto response = cpr::Get(
+		cpr::Url{ "http://localhost:18080/checkIfBoardIsFull" },
+		cpr::Payload{
+			{ "gameID", std::to_string(m_gameId)},
+			{ "color", std::to_string(Color::ColorToInt(color))},
+
+		});
+	if (response.status_code == 200)
+	{
+		crow::json::rvalue resData = crow::json::load(response.text);
+		std::string value = resData["valid"].s();
+		return value == "true";
+	}
+	else
+	{
+		return false;
+	}
+}
+
 std::tuple<int, Color::ColorEnum, int, int> Route::updateZoneInfo(int ZoneId)
 {
 	auto response = cpr::Get(
@@ -247,7 +268,7 @@ std::tuple<int, Color::ColorEnum, int, int> Route::updateZoneInfo(int ZoneId)
 		zoneColor = Color::getColor(resData["zoneColor"].i());
 		zoneScore = resData["zoneScore"].i();
 		zoneLifes = resData["zoneLifes"].i();
-		
+
 		return zoneInfo;
 	}
 	else

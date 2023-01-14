@@ -37,6 +37,7 @@ void useRoutes()
 	r.checkIfBoardIsFull();
 	r.requestDuelTurn();
 	r.updateZoneInfo();
+	r.checkIfPlayerCanUseAdvantages();
 	r.startApp();
 }
 
