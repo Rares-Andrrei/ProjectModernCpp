@@ -46,7 +46,8 @@ void logIn::onEnterButtonClicked()
 		QMessageBox::about(this, "Log in error", "Please fill in all the fields");
 		return;
 	}
-	CredentialErrors check = m_routes->login(usernameString, passwordString);
+	QString nickname;
+	CredentialErrors check = m_routes->login(usernameString, passwordString, nickname);
 	switch (check)
 	{
 	case CredentialErrors::AlreadyConnected:
@@ -62,7 +63,7 @@ void logIn::onEnterButtonClicked()
 		//QMessageBox::information(this, "Success", "Account was found");
 		QApplication::closeAllWindows();
 		lobbyWindow.reset(new lobby(m_routes));
-		lobbyWindow->setPlayer(username);
+		lobbyWindow->setPlayer(nickname);
 		lobbyWindow->show();
 		break;
 	default:

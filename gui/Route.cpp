@@ -124,6 +124,31 @@ std::pair<int, Color::ColorEnum> Route::chooseRegion(int id, Color::ColorEnum co
 	return data;
 }
 
+Color::ColorEnum Route::getAttackerColor()
+{
+	cpr::Url url{ "http://localhost:18080/requestDuerlTurn" };
+	cpr::Payload payload{
+			{ "sessionKey", m_sessionKey},
+			{ "gameID", std::to_string(m_gameId)},
+	};
+	auto lambda = [](cpr::Response response) {
+		return response.text;
+	};
+
+	auto future_text = cpr::PostCallback(lambda, url, payload);
+	while (future_text.wait_for(std::chrono::microseconds(10)) != std::future_status::ready)
+	{
+		QCoreApplication::processEvents();
+	}
+	auto aux = future_text.get();
+	if (aux != "")
+	{
+		crow::json::rvalue resData = crow::json::load(aux);
+		return Color::getColor(resData["attackerColor"].i());
+	}
+	return Color::ColorEnum::None;
+}
+
 bool Route::checkValidBasePosition(int ZoneId)
 {
 	auto response = cpr::Get(
@@ -269,7 +294,7 @@ std::list<std::array<std::string, 5>> Route::getMatchHistoryRoute()
 	return matches;
 }
 
-CredentialErrors Route::login(std::string username, std::string password)
+CredentialErrors Route::login(std::string username, std::string password, QString& setNickname)
 {
 	auto response = cpr::Post(
 		cpr::Url{ "http://localhost:18080/login" },
@@ -278,11 +303,12 @@ CredentialErrors Route::login(std::string username, std::string password)
 			{ "password", password}
 		}
 	);
+	crow::json::rvalue resData = crow::json::load(response.text);
 	if (response.text == "")
 	{
 		return CredentialErrors::Other;
 	}
-	int resp = std::stoi(std::string(1, response.text[0]));
+	int resp = resData["error"].i();
 	switch (resp)
 	{
 	case static_cast<int>(CredentialErrors::AlreadyConnected):
@@ -292,8 +318,8 @@ CredentialErrors Route::login(std::string username, std::string password)
 	case static_cast<int>(CredentialErrors::IncorrectPassword):
 		return CredentialErrors::IncorrectPassword;
 	case static_cast<int>(CredentialErrors::Valid):
-		response.text.erase(response.text.begin());
-		m_sessionKey = response.text;
+		m_sessionKey = resData["sessionKey"].s();
+		setNickname = QString::fromLocal8Bit(std::string(resData["nickname"].s()));
 		return CredentialErrors::Valid;
 	default:
 		return CredentialErrors::Other;

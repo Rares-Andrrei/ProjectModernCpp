@@ -23,15 +23,25 @@ class GameLogic
 	const uint16_t k_numberOfPlayers;
 	std::vector<std::shared_ptr<Player>> m_players;
 	std::vector<std::shared_ptr<Player>> m_eliminatedPlayers;
-	std::optional<std::pair<int, Color::ColorEnum>> m_updatedZone; //sa se stearga dupa ce toti playerii au updatat zona
+
 	//std::vector<std::shared_ptr<Advantages>> m_advantages; // de vazut unde sa fie folosit . 
 
 	std::shared_ptr<Database> m_db;
 	void randomQTypeNumerical();
 	void randomQTypeVariants();
 
+	Color::ColorEnum m_colorToAttack;
+	std::queue<Color::ColorEnum> m_duelOrder;
+	//se apeleaza functia createDuelOrder dupa ce sunt adaugati toti jucatorii in meci si se creeaza  ordinea duelurilor
+	std::optional<std::pair<int, Color::ColorEnum>> m_updatedZone; //sa se stearga dupa ce toti playerii au updatat zona
 	std::unordered_map<Color::ColorEnum, bool> m_requests;
+
 public:
+	void createDuelOrder();
+	void setColorToAttack();
+	void deleteColorToAttack();
+	Color::ColorEnum getAttackerColor();
+
 	void addWaitingRequest(const Color::ColorEnum& sessionKey);
 	bool allRequestsReady();
 	void deleteRequestsReady();
