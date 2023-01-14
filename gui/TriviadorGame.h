@@ -47,20 +47,23 @@ private:
 	void chooseRegionsPhase();
 
 	void duelsPhase();
-	void startDuel();
+	//void startDuel();
 
 	void EndGame();
 
 	void displayPodium();
 
 	void checkNumericWindowClosed();
-	void checkMapWindowClosed();
+	//void checkMapWindowClosed();
 	void checkVariantsWindowClosed();
 	void checkCurrentPhase();
 
 	bool checkIfWindowsAreClosed();
 
 public slots:
+	void duelParticipants(const std::pair<Color::ColorEnum, Color::ColorEnum>& duelParticipants);
+	void tieBreakerRound(const std::pair<Color::ColorEnum, Color::ColorEnum>& duelParticipants);
+	void getTieBreakerResults(const std::vector<std::tuple<int, Color::ColorEnum, int, int>>& UpdatedZones, const std::vector<std::pair<int, Color::ColorEnum>>& updatedPlayers);
 	void onSendOrderToParent(const std::queue<std::pair<Color::ColorEnum, int>>& playerOrder);
 	void nextPlayerInQueue();
 	void updateTheQueueStatus();

@@ -9,7 +9,9 @@ TriviadorGame::TriviadorGame(QWidget* parent)
 
 	m_QTypeNumericWindow.reset(new QTypeNumericWindow(this));
 	connect(m_QTypeNumericWindow.get(), &QTypeNumericWindow::sendOrderToParent, this, &TriviadorGame::onSendOrderToParent);
-
+	
+	m_QTypeVariantsWindow.reset(new QTypeVariantsWindow(this));
+	
 	t_NumericWindowTimer = std::make_unique<QTimer>();
 	t_NumericWindowTimer->setInterval(500);
 	connect(t_NumericWindowTimer.get(), &QTimer::timeout, this, &TriviadorGame::checkNumericWindowClosed);
@@ -20,13 +22,17 @@ TriviadorGame::TriviadorGame(QWidget* parent)
 
 	t_MapWindowTimer = std::make_unique<QTimer>();
 	t_MapWindowTimer->setInterval(500);
-	connect(t_MapWindowTimer.get(), &QTimer::timeout, this, &TriviadorGame::checkMapWindowClosed);
+	//connect(t_MapWindowTimer.get(), &QTimer::timeout, this, &TriviadorGame::checkMapWindowClosed);
 
 	t_VariantsWindowTimer = std::make_unique<QTimer>();
 	t_VariantsWindowTimer->setInterval(500);
 	connect(t_VariantsWindowTimer.get(), &QTimer::timeout, this, &TriviadorGame::checkVariantsWindowClosed);
 
 	connect(MapWindow.get(), &Map::emitMapUpdatedChooseRegionsPhase, this, &TriviadorGame::updateTheQueueStatus);
+	connect(MapWindow.get(), &Map::emitDuelParticipants, this, &TriviadorGame::duelParticipants);
+	connect(m_QTypeNumericWindow.get(), &QTypeNumericWindow::emitTieBreakerResults, this, &TriviadorGame::getTieBreakerResults);
+	connect(m_QTypeVariantsWindow.get(), &QTypeVariantsWindow::emitTieBreakerParticipants, this, &TriviadorGame::tieBreakerRound);
+	
 }
 
 TriviadorGame::~TriviadorGame()
@@ -80,6 +86,7 @@ void TriviadorGame::setPlayer(const std::shared_ptr<PlayerQString>& player)
 	m_player = player;
 	MapWindow->setPlayer(m_player);
 	m_QTypeNumericWindow->setPlayer(m_player);
+	m_QTypeVariantsWindow->setPlayer(m_player);
 }
 
 void TriviadorGame::setPlayers(const std::vector<std::shared_ptr<PlayerQString>>& players)
@@ -93,6 +100,7 @@ void TriviadorGame::setGameInstance(const std::shared_ptr<Route>& GameInstance)
 	m_GameInstance = GameInstance;
 	MapWindow->setGameInstance(m_GameInstance);
 	m_QTypeNumericWindow->setGameInstance(m_GameInstance);
+	m_QTypeVariantsWindow->setGameInstance(m_GameInstance);
 }
 
 void TriviadorGame::showEvent(QShowEvent* event)
@@ -125,29 +133,22 @@ void TriviadorGame::chooseRegionsPhase()
 }
 
 void TriviadorGame::duelsPhase()
-{
-	m_MapWindowClosed = false;
-	changePhase = false;
-	t_VariantsWindowTimer->start();
-
-	m_gamePhase = GamePhase::Duels;
-	duelFinished = true;
-	startDuel();
-}
-
-void TriviadorGame::startDuel()
-{
-	if (m_gamePhase == GamePhase::Duels && m_numberOfDuels < m_MaxNumberOfDuels && duelFinished == true)
-	{
-		m_duelStatus = DuelStatus::None;
-		m_numberOfDuels++;
-		duelFinished = false;
-		m_MapWindowClosed = false;
-		MapWindow->show(); // de schibmat cu o functie prin care se alege o singura zona 
-	}
-	if (m_numberOfDuels >= m_MaxNumberOfDuels)
+{	
+	auto color = m_GameInstance->getAttackerColor();
+	if (color == Color::ColorEnum::None)
 	{
 		changePhase = true;
+		return;
+	}
+	QThread::msleep(QRandomGenerator::global()->bounded(1, 10));
+	if (m_player->getColor() == color)
+	{
+		MapWindow->enableAllButtons();
+		MapWindow->show();
+	}
+	else {
+		MapWindow->disableAllButtons();
+		MapWindow->send_Attacker_Response_To_Server(-1);
 	}
 }
 
@@ -207,55 +208,26 @@ void TriviadorGame::checkNumericWindowClosed()
 			}
 		}
 	}
-	else if (m_gamePhase == GamePhase::Duels && m_duelStatus == DuelStatus::Draw)
-	{
-		if (!m_QTypeNumericWindow->isVisible())
-		{
-			m_duelStatus = DuelStatus::Lose; // statusul va fi primit de la server prin json sau prin response.status_code , poate fi doar WIN sau LOSE , DRAW = LOSE
-			if (m_duelStatus == DuelStatus::Win)
-			{
-				// Request :: de modificat statusul la board  ??
-				// GUI :: deschidere fereastra cu harta pentru a se vedea cum zona a fost castigata , in cazul in care sunt indeplinite conditiile
-				MapWindow->show();
-				//mesaj de duel castigat ??
-			}
-			else if (m_duelStatus == DuelStatus::Lose)
-			{
-				// mesaj de duel pierdut ??
-			}
-			duelFinished = true;
-			startDuel();
-		}
-	}
-}
-
-void TriviadorGame::checkMapWindowClosed()
-{
-	if (changePhase == true || serverAproveStatus == false) // daca o faza s-a terminat , asteptam sa trecem la urmatoarea
-	{
-		return;
-	}
-	//if (m_gamePhase == GamePhase::ChooseRegions && m_MapWindowClosed == true && !MapWindow->isVisible())
+	//else if (m_gamePhase == GamePhase::Duels && m_duelStatus == DuelStatus::Draw)
 	//{
-	//	if (true) // daca nu mai sunt zone libere , verificare de la server ?
+	//	if (!m_QTypeNumericWindow->isVisible())
 	//	{
-	//		changePhase = true;
-	//	}
-	//	else
-	//	{
-	//		m_MapWindowClosed = false;
+	//		m_duelStatus = DuelStatus::Lose; // statusul va fi primit de la server prin json sau prin response.status_code , poate fi doar WIN sau LOSE , DRAW = LOSE
+	//		if (m_duelStatus == DuelStatus::Win)
+	//		{
+	//			// Request :: de modificat statusul la board  ??
+	//			// GUI :: deschidere fereastra cu harta pentru a se vedea cum zona a fost castigata , in cazul in care sunt indeplinite conditiile
+	//			MapWindow->show();
+	//			//mesaj de duel castigat ??
+	//		}
+	//		else if (m_duelStatus == DuelStatus::Lose)
+	//		{
+	//			// mesaj de duel pierdut ??
+	//		}
+	//		duelFinished = true;
+	//		//startDuel();
 	//	}
 	//}
-	else if (m_gamePhase == GamePhase::Duels && m_MapWindowClosed == false && m_duelStatus == DuelStatus::None && !MapWindow->isVisible())
-	{
-		m_QTypeVariantsWindow.reset(new QTypeVariantsWindow(this));
-		m_QTypeVariantsWindow->setPlayer(m_player);
-		m_QTypeVariantsWindow->setGameInstance(m_GameInstance);
-		m_QTypeVariantsWindow->requestQuestion();
-		m_QTypeVariantsWindow->show();
-		m_VariantsWindowClosed = true;
-		m_MapWindowClosed = true;
-	}
 }
 
 void TriviadorGame::checkVariantsWindowClosed()
@@ -274,7 +246,7 @@ void TriviadorGame::checkVariantsWindowClosed()
 
 			MapWindow->show(); // MapWindow->ShowWindowForXSeconds();
 			//mesaj de duel castigat ??
-			startDuel();
+			//startDuel();
 		}
 		else if (m_duelStatus == DuelStatus::Lose)
 		{
@@ -310,6 +282,8 @@ void TriviadorGame::checkCurrentPhase()
 	}
 	else if (m_gamePhase == GamePhase::ChooseRegions && changePhase == true)
 	{
+		changePhase = false;
+		m_gamePhase = GamePhase::Duels;
 		MapWindow->setPhase(GamePhase::Duels);
 		duelsPhase();
 	}
@@ -355,7 +329,7 @@ void TriviadorGame::nextPlayerInQueue()
 		else
 		{
 			MapWindow->enableAllButtons();
-			QThread::msleep(1000);
+			QThread::msleep(QRandomGenerator::global()->bounded(1, 10));
 			MapWindow->show();
 		}
 	}
@@ -363,21 +337,26 @@ void TriviadorGame::nextPlayerInQueue()
 
 void TriviadorGame::updateTheQueueStatus()
 {
-	if(changePhase == true)
+	if (changePhase == true)
 	{
 		return;
 	}
-	if (m_GameInstance->checkIfBoardIsFull() == true)
+	if (m_GameInstance->checkIfBoardIsFull() == true && m_gamePhase == GamePhase::ChooseRegions)
 	{
 		changePhase = true;
-		MapWindow->enableAllButtons();
-		MapWindow->close();
 		while (!m_playerOrder.empty())
 		{
 			m_playerOrder.pop();
 		}
+		duelsPhase();
 		return;
 	}
+	if (m_gamePhase == GamePhase::Duels)
+	{
+		duelsPhase();
+		return;
+	}
+
 	if (m_gamePhase == GamePhase::ChooseBase)
 	{
 		m_playerOrder.pop();
@@ -410,9 +389,54 @@ void TriviadorGame::updateTheQueueStatus()
 	}
 }
 
+void TriviadorGame::duelParticipants(const std::pair<Color::ColorEnum, Color::ColorEnum>& duelParticipants)
+{
+	m_QTypeVariantsWindow->requestQuestion();
+
+	if (m_player->getColor() == duelParticipants.first || m_player->getColor() == duelParticipants.second)
+	{
+		m_QTypeVariantsWindow->enableAllButtons();
+		m_QTypeVariantsWindow->show();
+	}
+	else
+	{
+		m_QTypeVariantsWindow->disableAllButtons();
+		m_QTypeVariantsWindow->sendResponseToServer("INVALID");
+	}
+}
+
+void TriviadorGame::tieBreakerRound(const std::pair<Color::ColorEnum, Color::ColorEnum>& duelParticipants)
+{
+	m_QTypeNumericWindow->requestQuestion();
+	if (m_player->getColor() == duelParticipants.first || m_player->getColor() == duelParticipants.second)
+	{
+		m_QTypeNumericWindow->enableAllButtons();
+		m_QTypeNumericWindow->show();
+	}
+	else
+	{
+		m_QTypeNumericWindow->disableAllButtons();
+		//m_QTypeNumericWindow->send response to server , invalid 
+	}
+}
+
+void TriviadorGame::getTieBreakerResults(const std::vector<std::tuple<int, Color::ColorEnum, int, int>>& UpdatedZones, const std::vector<std::pair<int, Color::ColorEnum>>& updatedPlayers)
+{
+	MapWindow->getUpdatedZones(UpdatedZones);
+	//for (auto& player : updatedPlayers)
+	//{
+	//	for (auto& playerInGame : m_players)
+	//	{
+	//		if (playerInGame->getColor() == player.second)
+	//		{
+	//			playerInGame->setScore(player.first);
+	//		}
+	//	}
+	//}
+}
+
 void TriviadorGame::onSendOrderToParent(const std::queue<std::pair<Color::ColorEnum, int>>& playerOrder)
 {
 	m_playerOrder = playerOrder;
 	m_QTypeNumericWindow->close();
 }
-

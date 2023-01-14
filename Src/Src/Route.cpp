@@ -29,7 +29,7 @@ Route::Route()
 void Route::requestDuelTurn()
 {
 	auto& requestDuerlTurn = CROW_ROUTE(m_app, "/requestDuerlTurn")
-		.methods(crow::HTTPMethod::Get);
+		.methods(crow::HTTPMethod::Post);
 	requestDuerlTurn([this](const crow::request& req) {
 	auto bodyArgs = parseUrlArgs(req.body);
 	auto gameIdIter = bodyArgs.find("gameID");
