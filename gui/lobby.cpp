@@ -114,10 +114,22 @@ void lobby::onThreePlayersButtonClicked()
 {
 	ui.lobbyGameModes->setCurrentIndex(1);
 	m_routes->enterLobby(3, m_players);
+	for (auto& player : m_players)
+	{
+		if (player->getName() == m_PlayerName)
+		{
+			m_Player = player;
+			break;
+		}
+	}
+	
 	if (m_players.size() > 0)
 	{
 		Game.reset(new TriviadorGame());
 		Game->setNumberOfPlayers(3);
+		Game->setPlayer(m_Player);
+		Game->setPlayers(m_players);
+		Game->setGameInstance(m_routes);
 		Game->show();
 		this->hide();
 	}
@@ -127,10 +139,22 @@ void lobby::onFourPlayersButtonClicked()
 {
 	ui.lobbyGameModes->setCurrentIndex(1);
 	m_routes->enterLobby(4, m_players);
+	for (auto& player : m_players)
+	{
+		if (player->getName() == m_PlayerName)
+		{
+			m_Player = player;
+			break;
+		}
+	}
+	
 	if (m_players.size() > 0)
 	{
 		Game.reset(new TriviadorGame());
 		Game->setNumberOfPlayers(4);
+		Game->setPlayer(m_Player);
+		Game->setPlayers(m_players);
+		Game->setGameInstance(m_routes);
 		Game->show();
 		this->hide();
 	}
