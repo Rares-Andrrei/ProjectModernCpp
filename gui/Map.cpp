@@ -149,31 +149,6 @@ void Map::playersAvatar()
 	ui.player2Name->setText(m_players[1]->getName());
 }
 
-//void Map::ButtonClicked(int ZoneId)
-//{
-//	if (m_gamePhase == GamePhase::ChooseBase)
-//	{
-//		if (m_GameInstance->checkValidBasePosition(ZoneId))
-//			Send_Response_To_Server(ZoneId);
-//		else
-//			QMessageBox::warning(this, "Error", "Invalid Base Position");
-//	}
-//	else if (m_gamePhase == GamePhase::ChooseRegions)
-//	{
-//		if (m_GameInstance->checkValidRegionPosition(ZoneId, m_player->getColor()))
-//			Send_Response_To_Server(ZoneId);
-//		else
-//			QMessageBox::warning(this, "Error", "Invalid Region Position");
-//	}
-//	else if (m_gamePhase == GamePhase::Duels)
-//	{
-//		if (m_GameInstance->checkValidAttackMove(ZoneId, m_player->getColor()))
-//			Send_Response_To_Server(ZoneId);
-//		else
-//			QMessageBox::warning(this, "Error", "Invalid Attack Position");
-//	}
-//}
-
 void Map::setupGridButtons()
 {
 	m_gridButtons->setSizeAndAlignment(70, 70);
@@ -184,58 +159,3 @@ void Map::setupGridButtons()
 	m_gridButtons->show();
 	connect(m_gridButtons, &GridButtons::sendButtonIndexClicked, this, &Map::onButtonClickedSignal);
 }
-//
-//void Map::onzona1Clicked()
-//{
-//	int ZoneId = 0;
-//	ButtonClicked(ZoneId, ui.zona1);
-//}
-//
-//void Map::onzona2Clicked()
-//{
-//	int ZoneId = 1;
-//	ButtonClicked(ZoneId, ui.zona2);
-//}
-//
-//void Map::onzona3Clicked()
-//{
-//	int ZoneId = 2;
-//	ButtonClicked(ZoneId, ui.zona3);
-//}
-//
-//void Map::onzona4Clicked()
-//{
-//	int ZoneId = 3;
-//	ButtonClicked(ZoneId, ui.zona4);
-//}
-//
-//void Map::onzona5Clicked()
-//{
-//	int ZoneId = 4;
-//	ButtonClicked(ZoneId, ui.zona5);
-//}
-//
-//void Map::onzona6Clicked()
-//{
-//	int ZoneId = 5;
-//	ButtonClicked(ZoneId, ui.zona6);
-//}
-//
-//void Map::onzona7Clicked()
-//{
-//	int ZoneId = 6;
-//	ButtonClicked(ZoneId, ui.zona7);
-//}
-//
-//void Map::onzona8Clicked()
-//{
-//	int ZoneId = 7;
-//	ButtonClicked(ZoneId, ui.zona8);
-//}
-//
-//void Map::onzona9Clicked()
-//{
-//	int ZoneId = 8;
-//	ButtonClicked(ZoneId, ui.zona9);
-//}
-//
