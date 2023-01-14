@@ -103,6 +103,18 @@ void QTypeVariantsWindow::setGameInstance(const std::shared_ptr<Route>& GameInst
 	m_GameInstance = GameInstance;
 }
 
+void QTypeVariantsWindow::sendResponseToServer(const QString& response)
+{
+	//REQUEST :: send responses to server , and determinate the duel status (W/L/Conqueror/Draw)
+
+	//RESPONSE :: get the duel status and the new score / board layout
+	if (true) // if it's a DRAW get the list of players which should participate 
+	{
+		std::pair<Color::ColorEnum, Color::ColorEnum> players = { Color::ColorEnum::Red, Color::ColorEnum::Yellow }; //for test 
+		emit emitTieBreakerParticipants(players);
+	}
+}
+
 void QTypeVariantsWindow::showEvent(QShowEvent* event)
 {
 	m_timeRemaining->start(10);
@@ -147,13 +159,7 @@ void QTypeVariantsWindow::on_Variant_clicked()
 
 void QTypeVariantsWindow::on_Enter_clicked()
 {
-	m_timeRemaining->stop();
-	ui.TimeSlider->setEnabled(false);
-	disableAllButtons();
-	int value = ui.TimeSlider->value();
-	if (variant == "")
-		variant = "NULL"; // daca nu a ales un raspuns in timp util , este declarat ca fiind gresit
-	this->close();
+	sendResponseToServer(variant);
 }
 
 void QTypeVariantsWindow::on_TimeRemaining_Timeout()

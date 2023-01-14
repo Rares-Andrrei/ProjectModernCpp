@@ -7,6 +7,7 @@
 #include <string>
 #include <QTimer>
 #include <memory>
+#include <qstring.h>
 
 class QTypeVariantsWindow : public QMainWindow
 {
@@ -19,8 +20,13 @@ public:
 	void setPlayer(const std::shared_ptr<PlayerQString>& player);
 	void setGameInstance(const std::shared_ptr<Route>& GameInstance);
 
+	void sendResponseToServer(const QString& response);
+
 	void disableAllButtons();
 	void enableAllButtons();
+
+signals:
+	void emitTieBreakerParticipants(const std::pair<Color::ColorEnum, Color::ColorEnum>& duelParticipants);
 
 protected:
 	void showEvent(QShowEvent* event) override;
