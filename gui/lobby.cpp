@@ -5,11 +5,7 @@ void lobby::stylingTheLobby()
 	ui.twoPlayersButton->setStyleSheet("QPushButton { background-image:url(:/gui/twoPlayers.png); text-align: left, up; border-radius: 5px; }");
 	ui.threePlayersButton->setStyleSheet("QPushButton { background-image:url(:/gui/threePlayers.png); text-align: left, up; border-radius: 5px; }");
 	ui.fourPlayersButton->setStyleSheet("QPushButton { background-image:url(:/gui/fourPlayers.png); text-align: left, up; border-radius: 5px; }");
-
-	QMovie* movie = new QMovie(":/gui/32x32.gif");
-	ui.loadingLabel->setMovie(movie);
-	ui.loadingLabel->show();
-	movie->start();
+	ui.loadingLabel->setMovie(m_waitingForPlayers.data());
 }
 
 void lobby::buttonsConnections()
@@ -88,6 +84,7 @@ lobby::~lobby()
 void lobby::onTwoPlayersButtonClicked()
 {
 	ui.lobbyGameModes->setCurrentIndex(1);
+	m_waitingForPlayers->start();
 	m_routes->enterLobby(2, m_players);
 	for (auto& player : m_players)
 	{
@@ -113,6 +110,7 @@ void lobby::onTwoPlayersButtonClicked()
 void lobby::onThreePlayersButtonClicked()
 {
 	ui.lobbyGameModes->setCurrentIndex(1);
+	m_waitingForPlayers->start();
 	m_routes->enterLobby(3, m_players);
 	for (auto& player : m_players)
 	{
@@ -122,7 +120,7 @@ void lobby::onThreePlayersButtonClicked()
 			break;
 		}
 	}
-	
+
 	if (m_players.size() > 0)
 	{
 		Game.reset(new TriviadorGame());
@@ -138,6 +136,7 @@ void lobby::onThreePlayersButtonClicked()
 void lobby::onFourPlayersButtonClicked()
 {
 	ui.lobbyGameModes->setCurrentIndex(1);
+	m_waitingForPlayers->start();
 	m_routes->enterLobby(4, m_players);
 	for (auto& player : m_players)
 	{
@@ -147,7 +146,7 @@ void lobby::onFourPlayersButtonClicked()
 			break;
 		}
 	}
-	
+
 	if (m_players.size() > 0)
 	{
 		Game.reset(new TriviadorGame());
@@ -169,11 +168,11 @@ void lobby::onCancelButtonClicked()
 	button->show();
 	if (m_routes->leaveLobby())
 	{
-		QMessageBox::information(this, "queue", "You left the queue");
+		QMessageBox::information(this, "queue", "You left the game");
 	}
 	else
 	{
-		QMessageBox::information(this, "queue", "Error leaving the queue");
+		QMessageBox::information(this, "queue", "Error leaving the game");
 	}
 }
 
@@ -196,29 +195,42 @@ void lobby::on_gamesHistoryButton_clicked()
 	ui.tableMatchHistory->horizontalHeader()->setFixedHeight(50);
 	ui.tableMatchHistory->horizontalHeader()->setStyleSheet("QHeaderView::section { background-color: rgb(120, 159, 110); }");
 	ui.tableMatchHistory->verticalHeader()->setVisible(false);
-	ui.tableMatchHistory->setToolTip("Sort the table by pressing on any of the headers");
+	ui.tableMatchHistory->setToolTip("Sort the table by pressing the headers");
 
 	ui.tableMatchHistory->setColumnWidth(0, 90);
 	for (int i = 1; i < 6; i++)
 		ui.tableMatchHistory->setColumnWidth(i, 81);
 
-	QStringList headers = { "Date", "Player 1", "Player 2", "Player 3", "Player 4", "Place"};
+	QStringList headers = { "Date", "Player 1", "Player 2", "Player 3", "Player 4", "Place" };
 	ui.tableMatchHistory->setHorizontalHeaderLabels(headers);
 
 	int i = 0;
+	std::string place;
 
 	for (auto& m : matchHistory)
 	{
 		auto toAdd = m;
 		for (int col = 0; col < 5; col++)
 		{
-			QTableWidgetItem* item = new QTableWidgetItem(QString(toAdd[col].c_str()));
-			ui.tableMatchHistory->setItem(i, col, item);
+			std::unique_ptr<QTableWidgetItem> item;
+			if (QString(m[col].c_str()) == m_PlayerName)
+			{
+				place = std::to_string(col);
+				item = std::make_unique<QTableWidgetItem>("you");
+			}
+			else
+			{
+				item = std::make_unique<QTableWidgetItem>(QString(toAdd[col].c_str()));
+			}
+			ui.tableMatchHistory->setItem(i, col, item.release());
 		}
+		std::unique_ptr<QTableWidgetItem> item = std::make_unique<QTableWidgetItem>(QString(place.c_str()));
+		ui.tableMatchHistory->setItem(i, 5, item.release());
 		i++;
 	}
 
 	ui.tableMatchHistory->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
 }
 
 void lobby::on_backButton_clicked()

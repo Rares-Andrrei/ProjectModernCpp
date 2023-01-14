@@ -33,6 +33,7 @@ public:
 private:
 	QString m_PlayerName;
 	std::shared_ptr<PlayerQString> m_Player;
+	QSharedPointer<QMovie> m_waitingForPlayers = QSharedPointer<QMovie>::create(":/gui/32x32.gif");
 
 	std::vector<std::shared_ptr<PlayerQString>> m_players;
 	std::shared_ptr<Route> m_routes;
