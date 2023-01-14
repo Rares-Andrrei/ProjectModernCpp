@@ -24,6 +24,8 @@ Route::Route()
 {
 	m_db = std::make_shared<Database>("file.db");
 	m_waitingList = std::make_shared<PlayersQueue>();
+	m_logger.setMinimumLogLevel(Logger::Level::Info);
+	m_logger.log( "Server started", Logger::Level::Info);
 }
 
 void Route::requestDuelTurn()
@@ -35,6 +37,7 @@ void Route::requestDuelTurn()
 	auto gameIdIter = bodyArgs.find("gameID");
 	auto sessionKeyIter = bodyArgs.find("sessionKey");
 	long gameID = std::stoi(gameIdIter->second);
+	
 	if (m_gamesActive.count(gameID) > 0 && m_waitingList->isActive(sessionKeyIter->second))
 	{
 
@@ -86,6 +89,9 @@ void Route::loginRoute()
 	json["error"] = static_cast<int>(check);
 	res = json;
 	res.code = 200;
+	m_logger.logg(Logger::Level::Info,"Request: ", req.url);
+	m_logger.logg(Logger::Level::Info,"Response: ", res.code,req.url);
+	
 	return res;
 		});
 }
