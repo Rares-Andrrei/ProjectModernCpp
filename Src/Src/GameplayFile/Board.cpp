@@ -199,6 +199,20 @@ bool Board::ValidateAttackMove(int idZone, const Color::ColorEnum& color)
 	return false;
 }
 
+std::tuple<int, Color::ColorEnum, int, int> Board::getZoneInfo(int idZone)
+{
+	if (idZone >= m_BoardHeight * m_BoardWidth || idZone < 0)
+	{
+		return std::make_tuple(0, Color::getDefaultColor(), 0, 0);
+	}
+	std::shared_ptr<PlayerBase> base_zone = std::dynamic_pointer_cast<PlayerBase>(m_board[idZone]);
+	if (base_zone != nullptr)
+	{
+		return std::make_tuple(idZone, base_zone->getColor(), base_zone->getScore(), base_zone->getNumberOfLifesLeft());
+	}
+	return std::make_tuple(idZone, m_board[idZone]->getColor(), m_board[idZone]->getScore(), 0);
+}
+
 void Board::ObtainTotalScore()
 {
 	m_totalScore = 0;

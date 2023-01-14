@@ -121,6 +121,11 @@ bool GameLogic::CheckIfBoardIsFull()
 	return m_board.CheckIfBoardIsFull();
 }
 
+std::tuple<int, Color::ColorEnum, int, int> GameLogic::getZoneInfo(int idZone)
+{
+	return m_board.getZoneInfo(idZone);
+}
+
 std::pair<int, Color::ColorEnum> GameLogic::getUpdatedZone()
 {
 	if (m_updatedZone.has_value())
