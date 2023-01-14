@@ -29,6 +29,7 @@ public:
 	void checkValidBasePosition();
 	void checkValidRegionPosition();
 	void checkValidAttackMove();
+	void checkIfBoardIsFull();
 
 	void gamesHistoryRoute();
 	void enterLobbyRoute();

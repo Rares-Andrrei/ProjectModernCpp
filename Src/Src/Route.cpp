@@ -168,6 +168,41 @@ void Route::checkValidAttackMove()
 		});
 }
 
+void Route::checkIfBoardIsFull()
+{
+	auto& checkIfBoardIsFull = CROW_ROUTE(m_app, "/checkIfBoardIsFull")
+		.methods(crow::HTTPMethod::Get);
+	checkIfBoardIsFull([this](const crow::request& req) {
+		auto bodyArgs = parseUrlArgs(req.body);
+	auto gameIdIter = bodyArgs.find("gameID");
+	auto end = bodyArgs.end();
+	long gameID = std::stoi(gameIdIter->second);
+
+	if (m_gamesActive.count(gameID) > 0)
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		bool valid = m_gamesActive[gameID]->CheckIfBoardIsFull();
+
+		crow::json::wvalue json;
+		if (valid == true)
+		{
+			json["valid"] = "true";
+		}
+		else
+		{
+			json["valid"] = "false";
+		}
+		crow::response res;
+		res.code = 200;
+		res = json;
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		return res;
+	}
+	std::this_thread::sleep_for(std::chrono::milliseconds(10));
+	return crow::response(404);
+		});
+}
+
 void Route::gamesHistoryRoute()
 {
 	auto& getHistoryRoute = CROW_ROUTE(m_app, "/getMatchHistory")

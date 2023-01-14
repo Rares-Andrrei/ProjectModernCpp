@@ -17,6 +17,7 @@ public:
 	bool checkValidBasePosition(int ZoneId);
 	bool checkValidRegionPosition(int ZoneId, const Color::ColorEnum& color);
 	bool checkValidAttackMove(int ZoneId, const Color::ColorEnum& color);
+	bool checkIfBoardIsFull();
 
 	bool leaveLobby();
 	void enterLobby(int type, std::vector<std::shared_ptr<PlayerQString>>& players);

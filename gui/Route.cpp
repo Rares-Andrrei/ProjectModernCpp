@@ -186,6 +186,25 @@ bool Route::checkValidAttackMove(int ZoneId, const Color::ColorEnum& color)
 	}
 }
 
+bool Route::checkIfBoardIsFull()
+{
+	auto response = cpr::Get(
+		cpr::Url{ "http://localhost:18080/checkIfBoardIsFull" },
+		cpr::Payload{
+			{ "gameID", std::to_string(m_gameId)},
+		});
+	if (response.status_code == 200)
+	{
+		crow::json::rvalue resData = crow::json::load(response.text);
+		std::string value = resData["valid"].s();
+		return value == "true";
+	}
+	else
+	{
+		return false;
+	}
+}
+
 void Route::enterLobby(int type, std::vector<std::shared_ptr<PlayerQString>>& players)
 {
 	cpr::Url url{ "http://localhost:18080/enterLobby" };
