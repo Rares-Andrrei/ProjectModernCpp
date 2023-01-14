@@ -1,5 +1,6 @@
 #include "GameLogic.h"
-
+#include <random>
+#include <algorithm>
 
 void GameLogic::randomQTypeNumerical()
 {
@@ -11,6 +12,45 @@ void GameLogic::randomQTypeVariants()
 	m_questionTypeVariants = m_db->randQTypeVariants();
 }
 
+void GameLogic::createDuelOrder()
+{
+	std::vector<Color::ColorEnum> playerOrder;
+	const uint8_t nrOfDuelsPerPlayer = 3;
+	for (auto player : m_players)
+	{
+		std::fill_n(std::back_inserter(playerOrder), nrOfDuelsPerPlayer, player->getColor());
+	}
+	std::random_device rd;
+	std::mt19937 g(rd());
+	std::shuffle(playerOrder.begin(), playerOrder.end(), g);
+	for (auto color : playerOrder)
+	{
+		m_duelOrder.push(color);
+	}
+}
+
+void GameLogic::setColorToAttack()
+{
+	if (m_duelOrder.size() != 0)
+	{
+		m_colorToAttack = m_duelOrder.front();
+	}
+	else
+	{
+		m_colorToAttack = Color::ColorEnum::None;
+	}
+}
+
+void GameLogic::deleteColorToAttack()
+{
+	m_duelOrder.pop();
+}
+
+Color::ColorEnum GameLogic::getAttackerColor()
+{
+	return m_duelOrder.front();
+}
+
 void GameLogic::addWaitingRequest(const Color::ColorEnum& color)
 {
 	m_requests[color] = true;
@@ -18,16 +58,24 @@ void GameLogic::addWaitingRequest(const Color::ColorEnum& color)
 
 bool GameLogic::allRequestsReady()
 {
-	if (m_requests.size() == m_players.size())
+	bool allReady = true;
+	for (auto request : m_requests)
 	{
-		return true;
+		if (!request.second)
+		{
+			allReady = false;
+			break;
+		}
 	}
-	return false;
+	return allReady;
 }
 
 void GameLogic::deleteRequestsReady()
 {
-	m_requests.clear();
+	for (auto request: m_requests)
+	{
+		m_requests[request.first] = false;
+	}
 }
 
 bool GameLogic::ValidateBasePosition(int idZone)
@@ -48,6 +96,8 @@ bool GameLogic::ValidateAttackMove(int idZone, const Color::ColorEnum& color)
 GameLogic::GameLogic()
 	:k_numberOfPlayers{ 2 }, m_numericQuestionManager{ NumericQuestionManager(k_numberOfPlayers) }
 {
+	randomQTypeNumerical();
+	randomQTypeVariants();
 }
 
 GameLogic::GameLogic(const uint16_t& numberOfPlayers, std::shared_ptr<Database> db)

@@ -14,13 +14,45 @@ void Route::addActiveGame(std::shared_ptr<Lobby> lobby)
 		{
 			m_gamesActive[lobby->getId()]->addPlayer(player);
 		}
+		m_gamesActive[lobby->getId()]->createDuelOrder();
 	}
 }
+
+
 
 Route::Route()
 {
 	m_db = std::make_shared<Database>("file.db");
 	m_waitingList = std::make_shared<PlayersQueue>();
+}
+
+void Route::requestDuelTurn()
+{
+	auto& requestDuerlTurn = CROW_ROUTE(m_app, "/requestDuerlTurn")
+		.methods(crow::HTTPMethod::Get);
+	requestDuerlTurn([this](const crow::request& req) {
+	auto bodyArgs = parseUrlArgs(req.body);
+	auto gameIdIter = bodyArgs.find("gameID");
+	auto sessionKeyIter = bodyArgs.find("sessionKey");
+	long gameID = std::stoi(gameIdIter->second);
+	if (m_gamesActive.count(gameID) > 0 && m_waitingList->isActive(sessionKeyIter->second))
+	{
+
+		m_gamesActive[gameID]->addWaitingRequest(m_waitingList->getPlayer(sessionKeyIter->second)->getColor());
+		m_gamesActive[gameID]->setColorToAttack();
+		while (!m_gamesActive[gameID]->allRequestsReady())
+		{
+			std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		}
+		crow::json::wvalue json;
+		json["attackerColor"] = Color::ColorToInt(m_gamesActive[gameID]->getAttackerColor());
+		std::this_thread::sleep_for(std::chrono::milliseconds(16));
+		m_gamesActive[gameID]->deleteRequestsReady();
+		m_gamesActive[gameID]->deleteColorToAttack();
+		return crow::response(json);
+	}
+	return crow::response(404);
+	});
 }
 
 void Route::loginRoute()
@@ -36,6 +68,8 @@ void Route::loginRoute()
 	account.setUsername(usernameIter->second);
 	CredentialErrors check = m_db->loginUser(account);
 	std::string sessionKey;
+	crow::response res;
+	crow::json::wvalue json;
 	if (check == CredentialErrors::Valid)
 	{
 		sessionKey = m_waitingList->addActivePlayer(account);
@@ -43,11 +77,15 @@ void Route::loginRoute()
 		{
 			check = CredentialErrors::AlreadyConnected;
 		}
+		else
+		{
+			json["sessionKey"] = sessionKey;
+			json["nickname"] = m_waitingList->getPlayer(sessionKey)->getName();
+		}
 	}
-	crow::response res;
-	res.body = std::to_string(static_cast<int>(check)) + sessionKey;
+	json["error"] = static_cast<int>(check);
+	res = json;
 	res.code = 200;
-
 	return res;
 		});
 }

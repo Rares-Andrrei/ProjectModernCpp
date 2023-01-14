@@ -35,6 +35,7 @@ void useRoutes()
 	r.checkValidRegionPosition();
 	r.checkValidAttackMove();
 	r.checkIfBoardIsFull();
+	r.requestDuelTurn();
 	r.startApp();
 }
 

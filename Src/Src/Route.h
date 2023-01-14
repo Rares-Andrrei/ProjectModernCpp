@@ -19,6 +19,8 @@ class Route
 public:
 	Route();
 
+	void requestDuelTurn();
+
 	void getQuestionTypeNumericalRoute();
 	void getQuestionTypeVariantsRoute();
 	void sendResponseQTypeNumericalEt1();
