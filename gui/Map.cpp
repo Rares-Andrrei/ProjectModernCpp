@@ -172,9 +172,23 @@ void Map::enableAllButtons()
 
 void Map::playersAvatar()
 {
-	//ui.player1Avatar->setStyleSheet();
-	ui.player1Name->setText(m_players[0]->getName());
-	ui.player2Name->setText(m_players[1]->getName());
+	//ui.player1Avatar->setScaledContents(true);
+	QStringList filenames; 
+	filenames.append(":/gui/red.png");
+	filenames.append(":/gui/blue.png");
+	filenames.append(":/gui/yellow.png");
+	filenames.append(":/gui/green.png");
+
+	ui.player1Avatar->setPixmap(filenames.at(0));
+	//int i = 0;
+	//ui.player1Avatar->setStyleSheet("QLabel{background-image:url(:/gui/red.png);}");
+	//ui.player1Avatar->setScaledContents(true);
+
+	for (auto& p : m_players)
+	{
+		ui.player1Name->setText(m_players[0]->getName());
+		ui.player2Name->setText(m_players[1]->getName());
+	}
 }
 
 void Map::setupGridButtons()
