@@ -230,6 +230,32 @@ bool Route::checkIfBoardIsFull()
 	}
 }
 
+std::tuple<int, Color::ColorEnum, int, int> Route::updateZoneInfo(int ZoneId)
+{
+	auto response = cpr::Get(
+		cpr::Url{ "http://localhost:18080/updateZoneInfo" },
+		cpr::Payload{
+			{ "gameID", std::to_string(m_gameId)},
+			{ "regionId", std::to_string(ZoneId)}
+		});
+	if (response.status_code == 200)
+	{
+		std::tuple<int, Color::ColorEnum, int, int> zoneInfo;
+		auto& [zoneId, zoneColor, zoneScore, zoneLifes] = zoneInfo;
+		crow::json::rvalue resData = crow::json::load(response.text);
+		zoneId = resData["zoneId"].i();
+		zoneColor = Color::getColor(resData["zoneColor"].i());
+		zoneScore = resData["zoneScore"].i();
+		zoneLifes = resData["zoneLifes"].i();
+		
+		return zoneInfo;
+	}
+	else
+	{
+		return std::make_tuple(0, Color::ColorEnum::None, 0, 0);
+	}
+}
+
 void Route::enterLobby(int type, std::vector<std::shared_ptr<PlayerQString>>& players)
 {
 	cpr::Url url{ "http://localhost:18080/enterLobby" };
