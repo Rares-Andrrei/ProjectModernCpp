@@ -229,7 +229,8 @@ void Route::enterLobby(int type, std::vector<std::shared_ptr<PlayerQString>>& pl
 	{
 		crow::json::rvalue resData = crow::json::load(aux);
 		m_gameId = resData["lobbyID"].i();
-		for (int i = 1; i <= 2; i++)
+		int playerNr = resData["playerNr"].i();
+		for (int i = 1; i < playerNr; i++)
 		{
 			int color = resData["playerColor" + std::to_string(i)].i();
 			std::string name = resData["playerName" + std::to_string(i)].s();
