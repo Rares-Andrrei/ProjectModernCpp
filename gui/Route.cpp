@@ -233,7 +233,7 @@ bool Route::checkIfBoardIsFull()
 bool Route::checkIfPlayerCanUseAdvantages(const Color::ColorEnum& color)
 {
 	auto response = cpr::Get(
-		cpr::Url{ "http://localhost:18080/checkIfBoardIsFull" },
+		cpr::Url{ "http://localhost:18080/checkIfPlayerCanUseAdvantages" },
 		cpr::Payload{
 			{ "gameID", std::to_string(m_gameId)},
 			{ "color", std::to_string(Color::ColorToInt(color))},
@@ -275,6 +275,29 @@ std::tuple<int, Color::ColorEnum, int, int> Route::updateZoneInfo(int ZoneId)
 	{
 		return std::make_tuple(0, Color::ColorEnum::None, 0, 0);
 	}
+}
+
+std::vector<std::pair<Color::ColorEnum, int>> Route::updatePlayersInfo()
+{
+	auto response = cpr::Get(
+		cpr::Url{ "http://localhost:18080/updatePlayerInfo" },
+		cpr::Payload{
+			{ "gameID", std::to_string(m_gameId)},
+		});
+	std::vector<std::pair<Color::ColorEnum, int>> playersInfo;
+	crow::json::rvalue resData = crow::json::load(response.text);
+
+	if (response.status_code == 200)
+	{
+		for (int i = 1; i <= resData["playerNr"].i(); i++)
+		{
+			Color::ColorEnum c = Color::getColor(resData["playerColor" + std::to_string(i)].i());
+			int s = resData["playerScore" + std::to_string(i)].i();
+			playersInfo.push_back(std::make_pair(c, s));
+		}
+	}
+	return playersInfo;
+
 }
 
 void Route::enterLobby(int type, std::vector<std::shared_ptr<PlayerQString>>& players)

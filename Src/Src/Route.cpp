@@ -29,7 +29,7 @@ void Route::requestDuelTurn()
 	auto& requestDuerlTurn = CROW_ROUTE(m_app, "/requestDuerlTurn")
 		.methods(crow::HTTPMethod::Post);
 	requestDuerlTurn([this](const crow::request& req) {
-	auto bodyArgs = parseUrlArgs(req.body);
+		auto bodyArgs = parseUrlArgs(req.body);
 	auto gameIdIter = bodyArgs.find("gameID");
 	auto sessionKeyIter = bodyArgs.find("sessionKey");
 	long gameID = std::stoi(gameIdIter->second);
@@ -50,7 +50,7 @@ void Route::requestDuelTurn()
 		return crow::response(json);
 	}
 	return crow::response(404);
-	});
+		});
 }
 
 void Route::loginRoute()
@@ -262,7 +262,7 @@ void Route::updateZoneInfo()
 		json["zoneColor"] = std::to_string(Color::ColorToInt(zoneColor));
 		json["zoneScore"] = std::to_string(zoneScore);
 		json["zoneLifes"] = std::to_string(zoneLifes);
-		
+
 		res.code = 200;
 		res = json;
 		std::this_thread::sleep_for(std::chrono::milliseconds(10));
@@ -300,6 +300,35 @@ void Route::checkIfPlayerCanUseAdvantages()
 			json["valid"] = "false";
 		}
 		crow::response res;
+		res.code = 200;
+		res = json;
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		return res;
+	}
+	std::this_thread::sleep_for(std::chrono::milliseconds(10));
+	return crow::response(404);
+		});
+}
+
+void Route::updatePlayerInfo()
+{
+	auto& updatePlayerInfo = CROW_ROUTE(m_app, "/updatePlayerInfo")
+		.methods(crow::HTTPMethod::Get);
+	updatePlayerInfo([this](const crow::request& req) {
+		auto bodyArgs = parseUrlArgs(req.body);
+	auto gameIdIter = bodyArgs.find("gameID");
+	auto end = bodyArgs.end();
+	long gameID = std::stoi(gameIdIter->second);
+
+	if (m_gamesActive.count(gameID) > 0)
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+
+
+		crow::json::wvalue json = GameLogic::playersToJson(m_gamesActive[gameID]->getPlayers());
+		crow::response res;
+
+
 		res.code = 200;
 		res = json;
 		std::this_thread::sleep_for(std::chrono::milliseconds(10));

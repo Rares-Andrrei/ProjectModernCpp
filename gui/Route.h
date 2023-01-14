@@ -23,6 +23,7 @@ public:
 	bool checkIfPlayerCanUseAdvantages(const Color::ColorEnum& color);
 
 	std::tuple<int, Color::ColorEnum, int, int> updateZoneInfo(int ZoneId);
+	std::vector<std::pair<Color::ColorEnum, int>> updatePlayersInfo();
 
 	bool leaveLobby();
 	void enterLobby(int type, std::vector<std::shared_ptr<PlayerQString>>& players);

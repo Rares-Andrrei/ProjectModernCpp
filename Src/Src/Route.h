@@ -36,6 +36,8 @@ public:
 
 	void checkIfPlayerCanUseAdvantages();
 
+	void updatePlayerInfo();
+
 	void gamesHistoryRoute();
 	void enterLobbyRoute();
 	void exitLobbyRoute();

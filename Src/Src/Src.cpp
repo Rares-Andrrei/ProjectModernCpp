@@ -38,6 +38,7 @@ void useRoutes()
 	r.requestDuelTurn();
 	r.updateZoneInfo();
 	r.checkIfPlayerCanUseAdvantages();
+	r.updatePlayerInfo();
 	r.startApp();
 }
 
