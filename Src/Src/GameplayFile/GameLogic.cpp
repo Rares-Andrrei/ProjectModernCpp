@@ -72,7 +72,7 @@ bool GameLogic::allRequestsReady()
 
 void GameLogic::deleteRequestsReady()
 {
-	for (auto request: m_requests)
+	for (auto request : m_requests)
 	{
 		m_requests[request.first] = false;
 	}
@@ -147,18 +147,29 @@ void GameLogic::updateZone(int zoneId, Color::ColorEnum zoneColor)
 {
 	if (m_board[zoneId] == nullptr && m_board[zoneId] != m_board.end())
 	{
-		m_board.incrementModifiedZones();
-		if (m_board.getModifiedZones() > m_board.getNumberOfPlayers())
+
+		for (auto& player : m_players)
 		{
-			std::shared_ptr<Zone> newZone = std::make_shared<Zone>(zoneColor);
-			m_board[zoneId] = newZone;
-			m_updatedZone = { zoneId, zoneColor };
-		}
-		else
-		{
-			std::shared_ptr<PlayerBase> newBase = std::make_shared<PlayerBase>(zoneColor);
-			m_board[zoneId] = newBase;
-			m_updatedZone = { zoneId, zoneColor };
+			if (player->getColor() != zoneColor)
+			{
+				continue;
+			}
+			m_board.incrementModifiedZones();
+			if (m_board.getModifiedZones() > m_board.getNumberOfPlayers())
+			{
+				std::shared_ptr<Zone> newZone = std::make_shared<Zone>(zoneColor);
+				player->setScore(player->getScore() + 100);
+				m_board[zoneId] = newZone;
+				m_updatedZone = { zoneId, zoneColor };
+			}
+			else
+			{
+				std::shared_ptr<PlayerBase> newBase = std::make_shared<PlayerBase>(zoneColor);
+				player->setScore(300);
+				m_board[zoneId] = newBase;
+				m_updatedZone = { zoneId, zoneColor };
+			}
+			break;
 		}
 		m_board.generateNeighbours();
 	}
@@ -227,6 +238,11 @@ std::vector<std::shared_ptr<Player>> GameLogic::getWinnerList()
 	}
 	randomQTypeNumerical();
 	return orderedPlayers;
+}
+
+std::vector<std::shared_ptr<Player>> GameLogic::getPlayers()
+{
+	return m_players;
 }
 
 void GameLogic::StartGame()
@@ -342,6 +358,14 @@ void GameLogic::duelsPhase()
 bool GameLogic::checkIfPlayerWasEliminated(std::shared_ptr<PlayerBase>& playerBase)
 {
 	return playerBase->getNumberOfLifesLeft() == 0;
+}
+
+void GameLogic::updatePlayersScores()
+{
+	for (auto& player : m_players)
+	{
+		player->setScore(m_board.getPlayerScore(player->getColor()));
+	}
 }
 
 void GameLogic::addPlayer(std::shared_ptr<Player> player)

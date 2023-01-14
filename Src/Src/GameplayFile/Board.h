@@ -48,6 +48,8 @@ public:
 	std::shared_ptr<Zone>& end();
 	void generateNeighbours();
 
+	int getPlayerScore(const Color::ColorEnum& color);
+
 
 private:
 	void ChangeBoardDimensions();

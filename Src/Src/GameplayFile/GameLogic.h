@@ -74,6 +74,7 @@ public:
 	void setPlayerNumericalAnswer(int time, int response, const Color::ColorEnum& color);
 	bool NumericalAnswersReady();
 	std::vector<std::shared_ptr<Player>> getWinnerList();
+	std::vector<std::shared_ptr<Player>> getPlayers();
 
 
 
@@ -89,5 +90,6 @@ private:
 	void chooseRegionsPhase();
 	void duelsPhase();
 	bool checkIfPlayerWasEliminated(std::shared_ptr<PlayerBase>& playerBase);
+	void updatePlayersScores();
 };
 

@@ -59,6 +59,19 @@ void Board::generateNeighbours()
 	}
 }
 
+int Board::getPlayerScore(const Color::ColorEnum& color)
+{
+	int score = 0;
+	for (auto& zone : m_board)
+	{
+		if (zone != nullptr && zone->getColor() == color)
+		{
+			score += zone->getScore();
+		}
+	}
+	return score;
+}
+
 bool Board::checkIfPlayerHasValidMoved(const Color::ColorEnum& color)
 {
 	for (int i = 0; i < m_BoardHeight * m_BoardWidth; i++)
