@@ -76,6 +76,9 @@
     <ClCompile Include="BoardInterpretation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GridButtons.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="logIn.ui">
@@ -105,6 +108,9 @@
     <QtUic Include="MapForThreePlayers.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+    <QtUic Include="GridButtons.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="logIn.h">
@@ -132,6 +138,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="MapForThreePlayers.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="GridButtons.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
