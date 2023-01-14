@@ -82,5 +82,6 @@ crow::json::wvalue Lobby::getPlayersData()
 		json["playerScore" + std::to_string(playerNr)] = p.second->getScore();
 		playerNr++;
 	}
+	json["playerNr"] = playerNr;
 	return json;
 }
