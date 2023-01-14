@@ -12,6 +12,7 @@
 #include <qthread.h>
 #include "BoardInterpretation.h"
 #include "GamePhaseEnum.h"
+#include "GridButtons.h"
 
 class Map : public QMainWindow
 {
@@ -32,34 +33,30 @@ public:
 
 	void disableAllButtons();
 	void enableAllButtons();
-	void updateAZone(QAbstractButton* button, const Color::ColorEnum& color ,int ZoneId);
 
 signals:
 	void emitMapUpdatedChooseRegionsPhase();
 
+public slots:
+	void onButtonClickedSignal(int index);
+
 private:
+	//int currentButtonIndex;
 	Ui::MapClass ui;
 	std::shared_ptr<BoardInterpretation> m_board;
 	std::shared_ptr<Route> m_GameInstance;
-	bool m_isBasePhase;
 
 	GamePhase m_gamePhase : 3 = GamePhase::None;
+
+	std::shared_ptr<QVBoxLayout> layout;
+	GridButtons* m_gridButtons;
+
 	std::shared_ptr<PlayerQString> m_player;
 	std::vector<std::shared_ptr<PlayerQString>>m_players;
 	std::shared_ptr<Battle>BattleWindow;
 
 	void playersAvatar();
-	void ButtonClicked(int ZoneId, QPushButton* button);
-
-private slots:
-	void onzona1Clicked();
-	void onzona2Clicked();
-	void onzona3Clicked();
-	void onzona4Clicked();
-	void onzona5Clicked();
-	void onzona6Clicked();
-	void onzona7Clicked();
-	void onzona8Clicked();
-	void onzona9Clicked();
+	//void ButtonClicked(int ZoneId);
+	void setupGridButtons();
 
 };
