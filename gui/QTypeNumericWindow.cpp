@@ -89,44 +89,55 @@ void QTypeNumericWindow::showEvent(QShowEvent* event)
 
 void QTypeNumericWindow::on_Number0_clicked()
 {
-	if (ui.Answer->text().size() > 0)
+	if (ui.Answer->text().size() == 0)
+		ui.Answer->setText(ui.Answer->text() + "0");
+	else if (ui.Answer->text().size() > 0 && ui.Answer->text()[0] != '0')
 		ui.Answer->setText(ui.Answer->text() + "0");
 }
 void QTypeNumericWindow::on_Number1_clicked()
 {
-	ui.Answer->setText(ui.Answer->text() + "1");
+	if (ui.Answer->text().size() == 0 || (ui.Answer->text().size() > 0 && ui.Answer->text()[0] != '0'))
+		ui.Answer->setText(ui.Answer->text() + "1");
 }
 void QTypeNumericWindow::on_Number2_clicked()
 {
-	ui.Answer->setText(ui.Answer->text() + "2");
+	if (ui.Answer->text().size() == 0 || (ui.Answer->text().size() > 0 && ui.Answer->text()[0] != '0'))
+		ui.Answer->setText(ui.Answer->text() + "2");
 }
 void QTypeNumericWindow::on_Number3_clicked()
 {
-	ui.Answer->setText(ui.Answer->text() + "3");
+	if (ui.Answer->text().size() == 0 || (ui.Answer->text().size() > 0 && ui.Answer->text()[0] != '0'))
+		ui.Answer->setText(ui.Answer->text() + "3");
 }
 void QTypeNumericWindow::on_Number4_clicked()
 {
-	ui.Answer->setText(ui.Answer->text() + "4");
+	if (ui.Answer->text().size() == 0 || (ui.Answer->text().size() > 0 && ui.Answer->text()[0] != '0'))
+		ui.Answer->setText(ui.Answer->text() + "4");
 }
 void QTypeNumericWindow::on_Number5_clicked()
 {
-	ui.Answer->setText(ui.Answer->text() + "5");
+	if (ui.Answer->text().size() == 0 || (ui.Answer->text().size() > 0 && ui.Answer->text()[0] != '0'))
+		ui.Answer->setText(ui.Answer->text() + "5");
 }
 void QTypeNumericWindow::on_Number6_clicked()
 {
-	ui.Answer->setText(ui.Answer->text() + "6");
+	if (ui.Answer->text().size() == 0 || (ui.Answer->text().size() > 0 && ui.Answer->text()[0] != '0'))
+		ui.Answer->setText(ui.Answer->text() + "6");
 }
 void QTypeNumericWindow::on_Number7_clicked()
 {
-	ui.Answer->setText(ui.Answer->text() + "7");
+	if (ui.Answer->text().size() == 0 || (ui.Answer->text().size() > 0 && ui.Answer->text()[0] != '0'))
+		ui.Answer->setText(ui.Answer->text() + "7");
 }
 void QTypeNumericWindow::on_Number8_clicked()
 {
-	ui.Answer->setText(ui.Answer->text() + "8");
+	if (ui.Answer->text().size() == 0 || (ui.Answer->text().size() > 0 && ui.Answer->text()[0] != '0'))
+		ui.Answer->setText(ui.Answer->text() + "8");
 }
 void QTypeNumericWindow::on_Number9_clicked()
 {
-	ui.Answer->setText(ui.Answer->text() + "9");
+	if (ui.Answer->text().size() == 0 || (ui.Answer->text().size() > 0 && ui.Answer->text()[0] != '0'))
+		ui.Answer->setText(ui.Answer->text() + "9");
 }
 void QTypeNumericWindow::on_Delete_clicked()
 {
