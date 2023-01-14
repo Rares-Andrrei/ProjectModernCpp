@@ -38,6 +38,8 @@ public:
 	void disableAllButtons();
 	void enableAllButtons();
 
+	void updatePlayersInfo();
+
 signals:
 	void emitMapUpdatedChooseRegionsPhase();
 	void emitDuelParticipants(const std::pair<Color::ColorEnum, Color::ColorEnum>& duelParticipants);

@@ -113,7 +113,8 @@ void Map::Send_Response_To_Server(int ZoneId)
 {
 	if (this->isHidden())
 		this->show();
-
+	updatePlayersInfo();
+	
 	std::pair<int, Color::ColorEnum> colorZone = m_GameInstance->chooseRegion(ZoneId, m_player->getColor());
 	disableAllButtons();
 	m_gridButtons->setButtonColor(colorZone.first, colorZone.second);
@@ -138,7 +139,8 @@ void Map::send_Attacker_Response_To_Server(int ZoneId)
 {
 	if (this->isHidden())
 		this->show();
-
+	updatePlayersInfo();
+	
 	std::pair<Color::ColorEnum, Color::ColorEnum> colors = { Color::ColorEnum::Red, Color::ColorEnum::Yellow };// varianta de test
 	//Ruta prin care se trimite jucatorul si ZoneId , daca ZoneId e valid  , el e atacatorul
 
@@ -175,6 +177,21 @@ void Map::enableAllButtons()
 		button->setEnabled(true);
 	}
 	playersAvatar();
+}
+
+void Map::updatePlayersInfo()
+{
+	auto playerInfo = m_GameInstance->updatePlayersInfo();
+	for (auto& player : m_players)
+	{
+		for (auto& info : playerInfo)
+		{
+			if (player->getColor() == info.first)
+			{
+				player->setScore(info.second);
+			}
+		}
+	}
 }
 
 void Map::playersAvatar()

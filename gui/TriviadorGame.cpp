@@ -416,7 +416,7 @@ void TriviadorGame::tieBreakerRound(const std::pair<Color::ColorEnum, Color::Col
 	else
 	{
 		m_QTypeNumericWindow->disableAllButtons();
-		//m_QTypeNumericWindow->send response to server , invalid 
+		m_QTypeNumericWindow->sendResponseToServerAndGetDuelStatus("INVALID");
 	}
 }
 

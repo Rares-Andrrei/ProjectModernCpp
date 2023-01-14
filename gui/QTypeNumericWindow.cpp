@@ -98,6 +98,7 @@ void QTypeNumericWindow::sendResponseToServerAndGetDuelStatus(const QString& res
 
 	emit emitTieBreakerResults(updatedZones, UpdatedPlayersScores);
 		
+	//TD
 }
 
 void QTypeNumericWindow::showEvent(QShowEvent* event)

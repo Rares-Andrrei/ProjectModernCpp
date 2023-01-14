@@ -113,6 +113,11 @@ void QTypeVariantsWindow::sendResponseToServer(const QString& response)
 		std::pair<Color::ColorEnum, Color::ColorEnum> players = { Color::ColorEnum::Red, Color::ColorEnum::Yellow }; //for test 
 		emit emitTieBreakerParticipants(players);
 	}
+	else
+	{
+		//get a list/vector of updated Zones & players 
+		// emit the signal to update the board & players
+	}
 }
 
 void QTypeVariantsWindow::showEvent(QShowEvent* event)
