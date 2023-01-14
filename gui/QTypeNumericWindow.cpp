@@ -81,6 +81,25 @@ void QTypeNumericWindow::setGameInstance(const std::shared_ptr<Route>& GameInsta
 	m_GameInstance = GameInstance;
 }
 
+void QTypeNumericWindow::setDuelPhase()
+{
+	m_gamePhase = GamePhase::Duels;
+}
+
+void QTypeNumericWindow::sendResponseToServerAndGetDuelStatus(const QString& response)
+{
+	// request :: send the response to the server and get the duel status W/L/Conqueror
+	// make the changes to the specified zones
+	std::vector<std::tuple<int, Color::ColorEnum, int, int>> updatedZones ;		// ZoneId , Color , score , NumberOfLives
+	updatedZones.push_back(std::make_tuple(1, Color::ColorEnum::Red,100, 1));
+	std::vector<std::pair<int, Color::ColorEnum>> UpdatedPlayersScores;		// Score , Color
+	UpdatedPlayersScores.push_back(std::make_pair(2100, Color::ColorEnum::Red));
+	UpdatedPlayersScores.push_back(std::make_pair(1900, Color::ColorEnum::Yellow));
+
+	emit emitTieBreakerResults(updatedZones, UpdatedPlayersScores);
+		
+}
+
 void QTypeNumericWindow::showEvent(QShowEvent* event)
 {
 	resetTheWindow();
@@ -154,8 +173,15 @@ void QTypeNumericWindow::on_Enter_clicked()
 	{
 		answer = INT_MAX;
 	}
-	auto Ordervector = m_GameInstance->sendResponseNumericalEt1(answer, value, m_player->getColor());
-	emit sendOrderToParent(Ordervector);
+	if(m_gamePhase != GamePhase::Duels)
+	{
+		auto Ordervector = m_GameInstance->sendResponseNumericalEt1(answer, value, m_player->getColor());
+		emit sendOrderToParent(Ordervector);
+	}
+	else
+	{
+		sendResponseToServerAndGetDuelStatus(ui.Answer->text());
+	}
 }
 
 void QTypeNumericWindow::on_Delete_pressed()
@@ -195,6 +221,14 @@ void QTypeNumericWindow::disableAllButtons()
 	for (const auto& button : findChildren<QAbstractButton*>())
 	{
 		button->setEnabled(false);
+	}
+}
+
+void QTypeNumericWindow::enableAllButtons()
+{
+	for (const auto& button : findChildren<QAbstractButton*>())
+	{
+		button->setEnabled(true);
 	}
 }
 

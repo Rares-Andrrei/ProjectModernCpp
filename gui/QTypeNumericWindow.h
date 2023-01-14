@@ -5,6 +5,7 @@
 #include <memory>
 #include "PlayerQString.h"
 #include "Route.h"
+#include "GamePhaseEnum.h"
 
 
 class QTypeNumericWindow : public QMainWindow
@@ -18,17 +19,21 @@ public:
 	void requestQuestion();
 	void setPlayer(const std::shared_ptr<PlayerQString>& player);
 	void setGameInstance(const std::shared_ptr<Route>& GameInstance);
+	void setDuelPhase();
+
+	void sendResponseToServerAndGetDuelStatus(const QString& response);
 
 	void disableAllButtons();
+	void enableAllButtons();
 	void resetTheWindow();
 
 protected:
 	void showEvent(QShowEvent* event) override;
 
 
-
 signals:
 	void sendOrderToParent(const std::queue<std::pair<Color::ColorEnum, int>>& playerOrder);
+	void emitTieBreakerResults(const std::vector<std::tuple<int, Color::ColorEnum, int, int>>& UpdatedZones , const std::vector<std::pair<int, Color::ColorEnum>>& updatedPlayers);
 
 
 private slots:
@@ -52,7 +57,7 @@ private slots:
 
 private:
 
-
+	GamePhase m_gamePhase = GamePhase::None;
 	std::shared_ptr<Route> m_GameInstance;
 	QTimer* m_TimeRemaining;
 	QTimer* m_timer;
