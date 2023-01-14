@@ -1,9 +1,9 @@
-#include "GridButtons.h"
+﻿#include "GridButtons.h"
 
 GridButtons::GridButtons(int rows, int columns, QWidget* parent)
 	: QWidget(parent)
 {
-	layout = new QGridLayout(this);
+	layout = std::make_shared<QGridLayout>(this);
 	buttons.resize(rows * columns);
 	numberOfColumns = columns;
 
@@ -12,9 +12,9 @@ GridButtons::GridButtons(int rows, int columns, QWidget* parent)
 		for (int j = 0; j < columns; j++)
 		{
 			int index = i * columns + j;
-			buttons[index] = new QPushButton("Zone " + QString::number(i * numberOfColumns + j), this);
-			layout->addWidget(buttons[index], i, j);
-			connect(buttons[index], &QPushButton::clicked, this, [this, i, j]() { handleButtonClick(i, j); });
+			buttons[index] = std::make_shared<QPushButton>("Zone " + QString::number(i * numberOfColumns + j), this);
+			layout->addWidget(buttons[index].get(), i, j);
+			connect(buttons[index].get(), &QPushButton::clicked, this, [this, i, j]() { handleButtonClick(i, j); });
 			buttons[index]->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 			buttons[index]->setStyleSheet("background:transparent ;"
 				"border:2px solid black;"
@@ -26,8 +26,6 @@ GridButtons::GridButtons(int rows, int columns, QWidget* parent)
 
 GridButtons::~GridButtons()
 {
-	qDeleteAll(buttons);
-	delete layout;
 }
 
 void GridButtons::setButtonColor(int index, const Color::ColorEnum& color)
@@ -35,6 +33,22 @@ void GridButtons::setButtonColor(int index, const Color::ColorEnum& color)
 	buttons[index]->setAutoFillBackground(true);
 	QPalette pal = QPalette(getColor(color));
 	buttons[index]->setPalette(pal);
+}
+void GridButtons::setSizeAndAlignment(int percentHeight, int percentWidth)
+{
+	int height = this->parentWidget()->height() * percentHeight / 100;
+	int width = this->parentWidget()->width() * percentWidth / 100;
+	setFixedSize(width, height);
+	layout->setAlignment(this, Qt::AlignVCenter | Qt::AlignHCenter);
+}
+void GridButtons::setCustomName(int index, QString name, int score, int numberOfLives)
+{
+	QString buttonText = name + "\n" + QString::number(score) + "\n";
+	for (int i = 0; i < numberOfLives; i++)
+	{
+		buttonText += "🏰";
+	}
+	buttons[index]->setText(buttonText);
 }
 void GridButtons::handleButtonClick(int row, int column)
 {

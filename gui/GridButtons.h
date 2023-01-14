@@ -19,7 +19,9 @@ public:
 	~GridButtons();
 
 	void setButtonColor(int index, const Color::ColorEnum& color);
-	
+	void setSizeAndAlignment(int percentHeight, int percentWidth);
+	void setCustomName(int index, QString name, int score, int numberOfLives = 0);
+
 signals:
 	void sendButtonIndexClicked(int index);
 
@@ -28,8 +30,8 @@ private slots:
 
 private:
 	int numberOfColumns;
-	QGridLayout* layout;
-	QVector<QPushButton*> buttons;
+	std::shared_ptr<QGridLayout> layout;
+	QVector<std::shared_ptr<QPushButton>> buttons;
 
 	QColor getColor(const Color::ColorEnum& color);
 };
