@@ -60,7 +60,9 @@ void Map::onButtonClickedSignal(int index)
 	else if (m_gamePhase == GamePhase::Duels)
 	{
 		if (m_GameInstance->checkValidAttackMove(index, m_player->getColor()))
-			Send_Response_To_Server(index);
+			// request to server :: cei doi participanti , in functie de jucatorul care ataca si zona selectata
+			// response :: 2 culori 
+			send_Attacker_Response_To_Server(index);
 		else
 			QMessageBox::warning(this, "Error", "Invalid Attack Position");
 	}
@@ -123,6 +125,32 @@ void Map::Send_Response_To_Server(int ZoneId)
 	emit emitMapUpdatedChooseRegionsPhase();
 
 	this->hide();
+}
+
+void Map::send_Attacker_Response_To_Server(int ZoneId)
+{
+	if (this->isHidden())
+		this->show();
+
+	std::pair<Color::ColorEnum, Color::ColorEnum> colors = { Color::ColorEnum::Red, Color::ColorEnum::Yellow };// varianta de test
+	//Ruta prin care se trimite jucatorul si ZoneId , daca ZoneId e valid  , el e atacatorul
+
+	disableAllButtons();
+	QThread::msleep(QRandomGenerator::global()->bounded(1, 10));
+
+	emit emitDuelParticipants(colors);
+
+	this->hide();
+}
+
+void Map::getUpdatedZones(const std::vector<std::tuple<int, Color::ColorEnum, int, int>>& UpdatedZones)
+{
+	for (const auto& zone : UpdatedZones)
+	{
+		auto& [index, color, score, nrOfLives] = zone;
+		m_gridButtons->setButtonColor(index, color);
+		m_gridButtons->setCustomName(index, "Zona " + QString::number(index), score, nrOfLives);
+	}
 }
 
 void Map::disableAllButtons()

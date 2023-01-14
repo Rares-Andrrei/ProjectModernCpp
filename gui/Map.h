@@ -13,6 +13,7 @@
 #include "BoardInterpretation.h"
 #include "GamePhaseEnum.h"
 #include "GridButtons.h"
+#include <qrandom.h>
 
 class Map : public QMainWindow
 {
@@ -30,12 +31,16 @@ public:
 	QColor getColor(const Color::ColorEnum& color);
 
 	void Send_Response_To_Server(int ZoneId);
+	void send_Attacker_Response_To_Server(int ZoneId);
+	void getUpdatedZones(const std::vector<std::tuple<int, Color::ColorEnum, int, int>>& UpdatedZones);
+
 
 	void disableAllButtons();
 	void enableAllButtons();
 
 signals:
 	void emitMapUpdatedChooseRegionsPhase();
+	void emitDuelParticipants(const std::pair<Color::ColorEnum, Color::ColorEnum>& duelParticipants);
 
 public slots:
 	void onButtonClickedSignal(int index);
