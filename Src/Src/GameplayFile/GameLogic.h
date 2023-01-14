@@ -50,6 +50,7 @@ public:
 	bool ValidateRegionPosition(int idZone, const Color::ColorEnum& color);
 	bool ValidateAttackMove(int idZone, const Color::ColorEnum& color);
 	bool CheckIfBoardIsFull();
+	bool checkIfPlayerCanUseAdvantages(const Color::ColorEnum& color);
 	std::tuple<int, Color::ColorEnum, int, int> getZoneInfo(int idZone);
 
 

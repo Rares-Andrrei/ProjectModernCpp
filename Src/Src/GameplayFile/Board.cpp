@@ -199,6 +199,18 @@ bool Board::ValidateAttackMove(int idZone, const Color::ColorEnum& color)
 	return false;
 }
 
+bool Board::checkIfPlayerCanUseAdvantages(const Color::ColorEnum& color)
+{
+	for (const auto& zone : m_board)
+	{
+		if (zone != nullptr && zone->getColor() == color && zone->getScore() >= 200)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 std::tuple<int, Color::ColorEnum, int, int> Board::getZoneInfo(int idZone)
 {
 	if (idZone >= m_BoardHeight * m_BoardWidth || idZone < 0)
