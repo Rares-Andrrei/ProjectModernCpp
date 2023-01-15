@@ -224,6 +224,16 @@ void Route::sendResponseEt2(Color::ColorEnum color, int response, int time)
 		}
 		else if (duelStatus == "Win")
 		{
+			std::vector<std::tuple<int, Color::ColorEnum, int>> zonesData;
+			// Id , color , score
+			int zoneNr = resData["ZoneNr"].i();
+			for (int i = 0; i < zoneNr; i++)
+			{
+				int score = resData["zoneScore" + std::to_string(i)].i();
+				int id = resData["zoneId" + std::to_string(i)].i();
+				Color::ColorEnum color = Color::getColor(resData["zoneColor" + std::to_string(i)].i());
+				zonesData.push_back(std::make_tuple(id, color, score));
+			}
 			//TODO
 		}
 
