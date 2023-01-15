@@ -189,7 +189,7 @@ GameLogic::GameLogic()
 }
 
 GameLogic::GameLogic(const uint16_t& numberOfPlayers, std::shared_ptr<Database> db)
-	: k_numberOfPlayers(numberOfPlayers), m_db{ db }, m_numericQuestionManager{ NumericQuestionManager(numberOfPlayers) }
+	: k_numberOfPlayers(numberOfPlayers), m_db{ db }, m_numericQuestionManager{ NumericQuestionManager(numberOfPlayers) } , m_board(numberOfPlayers)
 {
 	randomQTypeNumerical();
 }

@@ -491,9 +491,4 @@ void TriviadorGame::getTieBreakerDuelStatus(DuelManager& duelStatus)
 		auto updatedZones = duelStatus.getUpdatedZones();
 		getUpdatedZonesAfterWin(updatedZones);
 	}
-	else if (duelStatus.getDuelStatus() == DuelManager::duelStatus::Draw)
-	{
-		auto tieBreakterParticipants = duelStatus.getTieBreakerParticipants();
-		tieBreakerRound(tieBreakterParticipants);
-	}
 }

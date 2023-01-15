@@ -8,7 +8,7 @@ void Route::addActiveGame(std::shared_ptr<Lobby> lobby)
 {
 	if (m_gamesActive.count(lobby->getId()) == 0)
 	{
-		m_gamesActive[lobby->getId()] = std::make_shared<GameLogic>(GameLogic(static_cast<int>(lobby->getType()), m_db));
+		m_gamesActive[lobby->getId()] = std::make_shared<GameLogic>(static_cast<int>(lobby->getType()), m_db);
 		std::vector<std::shared_ptr<Player>> players = lobby->getPlayers();
 		for (auto player : players)
 		{
@@ -23,7 +23,7 @@ Route::Route()
 	m_db = std::make_shared<Database>("file.db");
 	m_waitingList = std::make_shared<PlayersQueue>();
 	m_logger.setMinimumLogLevel(Logger::Level::Info);
-	m_logger.log( "Server started", Logger::Level::Info);
+	m_logger.log("Server started", Logger::Level::Info);
 }
 
 void Route::requestDuelTurn()
@@ -31,12 +31,12 @@ void Route::requestDuelTurn()
 	auto& requestDuerlTurn = CROW_ROUTE(m_app, "/requestDuerlTurn")
 		.methods(crow::HTTPMethod::Post);
 	requestDuerlTurn([this](const crow::request& req) {
-	
-	auto bodyArgs = parseUrlArgs(req.body);
+
+		auto bodyArgs = parseUrlArgs(req.body);
 	auto gameIdIter = bodyArgs.find("gameID");
 	auto sessionKeyIter = bodyArgs.find("sessionKey");
 	long gameID = std::stoi(gameIdIter->second);
-	
+
 
 	if (gameIdIter->second == "" || sessionKeyIter->second == "")
 	{
@@ -60,8 +60,8 @@ void Route::requestDuelTurn()
 		{
 			m_gamesActive[gameID]->deleteColorToAttack();
 		}
-		
-	
+
+
 		m_logger.logg(Logger::Level::Info, "Request: ", req.url);
 		m_logger.logg(Logger::Level::Info, "Response: ", crow::response(json).code, req.url);
 		return crow::response(json);
@@ -75,7 +75,7 @@ void Route::sendResponseEt2()
 	auto& sendResponseVariants = CROW_ROUTE(m_app, "/sendResponseEt2").methods(crow::HTTPMethod::Post);
 	sendResponseVariants([this](const crow::request& req) {
 
-	auto bodyArgs = parseUrlArgs(req.body);
+		auto bodyArgs = parseUrlArgs(req.body);
 	auto sessionKeyIter = bodyArgs.find("sessionKey");
 	auto gameIdIter = bodyArgs.find("gameID");
 	auto colorIter = bodyArgs.find("color");
@@ -189,7 +189,7 @@ void Route::getQuestionTypeNumericalRouteEt2()
 	auto& getQuestionTypeNumericalEt2 = CROW_ROUTE(m_app, "/getQuestionTypeNumericalEt2")
 		.methods(crow::HTTPMethod::Get);
 	getQuestionTypeNumericalEt2([this](const crow::request& req) {
-	auto bodyArgs = parseUrlArgs(req.body);
+		auto bodyArgs = parseUrlArgs(req.body);
 	auto gameIdIter = bodyArgs.find("gameID");
 	long gameID = std::stoi(gameIdIter->second);
 	crow::response res;
@@ -213,7 +213,7 @@ void Route::duelParticipantsRoute()
 	auto& duelParticipants = CROW_ROUTE(m_app, "/duelParticipants").methods(crow::HTTPMethod::Post);
 	duelParticipants([this](const crow::request& req) {
 
-	auto bodyArgs = parseUrlArgs(req.body);
+		auto bodyArgs = parseUrlArgs(req.body);
 	auto gameIdIter = bodyArgs.find("gameID");
 	auto sessionKeyIter = bodyArgs.find("sessionKeyIter");
 	auto attackerIter = bodyArgs.find("attacker");
@@ -291,9 +291,9 @@ void Route::loginRoute()
 	json["error"] = static_cast<int>(check);
 	res = json;
 	res.code = 200;
-	m_logger.logg(Logger::Level::Info,"Request: ", req.url);
-	m_logger.logg(Logger::Level::Info,"Response: ", res.code,req.url);
-	
+	m_logger.logg(Logger::Level::Info, "Request: ", req.url);
+	m_logger.logg(Logger::Level::Info, "Response: ", res.code, req.url);
+
 	return res;
 		});
 }
@@ -332,7 +332,7 @@ void Route::checkValidBasePosition()
 		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 		return res;
 	}
-	
+
 	m_logger.logg(Logger::Level::Error, "Request: ", req.url);
 	m_logger.logg(Logger::Level::Error, "Response: ", crow::response(404).code, req.url);
 	std::this_thread::sleep_for(std::chrono::milliseconds(10));
@@ -413,7 +413,7 @@ void Route::checkValidAttackMove()
 		{
 			json["valid"] = "false";
 		}
-		
+
 		crow::response res;
 		res.code = 200;
 		res = json;
@@ -422,7 +422,7 @@ void Route::checkValidAttackMove()
 		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 		return res;
 	}
-	
+
 	m_logger.logg(Logger::Level::Error, "Request: ", req.url);
 	m_logger.logg(Logger::Level::Error, "Response: ", crow::response(404).code, req.url);
 	std::this_thread::sleep_for(std::chrono::milliseconds(10));
@@ -454,7 +454,7 @@ void Route::checkIfBoardIsFull()
 		{
 			json["valid"] = "false";
 		}
-		
+
 		crow::response res;
 		res.code = 200;
 		res = json;
@@ -463,7 +463,7 @@ void Route::checkIfBoardIsFull()
 		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 		return res;
 	}
-	
+
 	m_logger.logg(Logger::Level::Error, "Request: ", req.url);
 	m_logger.logg(Logger::Level::Error, "Response: ", crow::response(404).code, req.url);
 	std::this_thread::sleep_for(std::chrono::milliseconds(10));
@@ -502,7 +502,7 @@ void Route::updateZoneInfo()
 		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 		return res;
 	}
-	
+
 	m_logger.logg(Logger::Level::Error, "Request: ", req.url);
 	m_logger.logg(Logger::Level::Error, "Response: ", crow::response(404).code, req.url);
 	std::this_thread::sleep_for(std::chrono::milliseconds(10));
@@ -686,7 +686,7 @@ void Route::gamesHistoryRoute()
 	}
 	else
 	{
-		
+
 		m_logger.logg(Logger::Level::Error, "Request: ", req.url);
 		m_logger.logg(Logger::Level::Error, "Response: ", crow::response(404).code, req.url);
 		return crow::response(404);
@@ -765,8 +765,8 @@ void Route::sendResponseQTypeNumericalEt1()
 	}
 	else
 	{
-	
-		m_logger.logg(Logger::Level::Error, "Request: ", req.url);	
+
+		m_logger.logg(Logger::Level::Error, "Request: ", req.url);
 		m_logger.logg(Logger::Level::Error, "Response: ", crow::response(404).code, req.url);
 		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 		return crow::response(404);
@@ -900,7 +900,7 @@ void Route::getQuestionTypeVariantsRoute()
 	{
 		res.code = 404;
 	}
-	
+
 	m_logger.logg(Logger::Level::Error, "Request: ", req.url);
 	m_logger.logg(Logger::Level::Error, "Response: ", res.code, req.url);
 	std::this_thread::sleep_for(std::chrono::milliseconds(10));
