@@ -523,7 +523,11 @@ void Route::useAdvantage()
 	long gameID = std::stoi(gameIdIter->second);
 	if (m_gamesActive.count(gameID) > 0 && m_waitingList->isActive(sessionKeyIter->second))
 	{
-		m_gamesActive[gameID]->taxForAdvantage(m_waitingList->getPlayer(sessionKeyIter->second)->getColor());
+		std::pair<int, int> zoneData = m_gamesActive[gameID]->taxForAdvantage(m_waitingList->getPlayer(sessionKeyIter->second)->getColor());
+		crow::json::wvalue json;
+		json["zone"] = zoneData.first;
+		json["score"] = zoneData.second;
+		json["color"] = Color::ColorToInt(m_waitingList->getPlayer(sessionKeyIter->second)->getColor());
 		if (stageIter->second == "ET1")
 		{
 			QTypeNumerical question = m_gamesActive[gameID]->getQuestionTypeNumerical();
@@ -531,7 +535,6 @@ void Route::useAdvantage()
 			{
 				FourCloseAnswers advantage;
 				advantage.GenerateVariants(question);
-				crow::json::wvalue json;
 				std::array<int, 4> answers = advantage.getAnswers();
 				json["r1"] = answers[0];
 				json["r2"] = answers[1];
@@ -541,7 +544,6 @@ void Route::useAdvantage()
 			}
 			else if (advantageTypeIter->second == "sugestion")
 			{
-				crow::json::wvalue json;
 				json["r"] = AnswerSugestion::useAdvantage(question.getAnswer());
 				return crow::response(json);
 			}
@@ -552,7 +554,6 @@ void Route::useAdvantage()
 			{
 				FourCloseAnswers advantage;
 				advantage.GenerateVariants(m_gamesActive[gameID]->getDuelNumericalQ());
-				crow::json::wvalue json;
 				std::array<int, 4> answers = advantage.getAnswers();
 				json["r1"] = answers[0];
 				json["r2"] = answers[1];
@@ -562,7 +563,6 @@ void Route::useAdvantage()
 			}
 			else if (advantageTypeIter->second == "sugestion")
 			{
-				crow::json::wvalue json;
 				QTypeNumerical question = m_gamesActive[gameID]->getDuelNumericalQ();
 				json["r"] = AnswerSugestion::useAdvantage(question.getAnswer());
 				return crow::response(json);
@@ -572,7 +572,6 @@ void Route::useAdvantage()
 				QTypeVariants question = m_gamesActive[gameID]->getQuestionTypeVariants();
 				AnswerFiftyFifty advantage(question);
 				std::array<std::string, 2> options = advantage.AdvantageUtility();
-				crow::json::wvalue json;
 				json["r1"] = options[0];
 				json["r2"] = options[1];
 				return crow::response(json);

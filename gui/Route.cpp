@@ -601,3 +601,93 @@ bool Route::logOut()
 		return false;
 	}
 }
+
+std::pair<std::array<int, 4>, std::array<int, 3>> Route::useFourCloseAdvantage(const std::string& stage)
+{
+	auto response = cpr::Post(
+		cpr::Url{ "http://localhost:18080/useAdvantage" },
+		cpr::Payload{
+			{ "sessionKey", m_sessionKey},
+			{ "advantageType", "fourClose"},
+			{ "gameID", std::to_string(m_gameId)},
+			{ "stage", stage}
+		}
+	);
+	std::array<int, 4> answers;
+	std::array<int, 3 > zoneData;
+	if (response.text != "")
+	{
+		return std::make_pair(answers, zoneData);
+	}
+	else
+	{
+		crow::json::rvalue json = crow::json::load(response.text);
+		answers[0] = json["r1"].i();
+		answers[1] = json["r2"].i();
+		answers[2] = json["r3"].i();
+		answers[3] = json["r4"].i();
+		zoneData[0] = json["zone"].i();
+		zoneData[1] = json["score"].i();
+		zoneData[2] = json["color"].i();
+	}
+	return std::make_pair(answers, zoneData);
+}
+
+std::pair<int, std::array<int, 3 >> Route::useSugestionAdvantage(const std::string& stage)
+{
+	auto response = cpr::Post(
+		cpr::Url{ "http://localhost:18080/useAdvantage" },
+		cpr::Payload{
+			{ "sessionKey", m_sessionKey},
+			{ "advantageType", "sugestion"},
+			{ "gameID", std::to_string(m_gameId)},
+			{ "stage", stage}
+		}
+	);
+	int answer = 0;
+	std::array<int, 3 > zoneData;
+	if (response.text != "")
+	{
+		return std::make_pair(answer, zoneData);
+	}
+	else
+	{
+		crow::json::rvalue json = crow::json::load(response.text);
+		zoneData[0] = json["zone"].i();
+		zoneData[1] = json["score"].i();
+		zoneData[2] = json["color"].i();
+		answer = json["r"].i();
+	}
+	return std::make_pair(answer, zoneData);
+}
+
+std::pair<std::array<std::string, 2>, std::array<int, 3 >> Route::useFiftyAdvantage()
+{
+	auto response = cpr::Post(
+		cpr::Url{ "http://localhost:18080/useAdvantage" },
+		cpr::Payload{
+			{ "sessionKey", m_sessionKey},
+			{ "advantageType", "50-50"},
+			{ "gameID", std::to_string(m_gameId)},
+			{ "stage", "ET2"}
+		}
+	);
+	crow::json::rvalue resData = crow::json::load(response.text);
+	std::array<std::string, 2> options;
+	std::array<int, 3 > zoneData;
+	if (response.text != "")
+	{
+		return std::make_pair(options, zoneData);
+	}
+	else
+	{
+		crow::json::rvalue json = crow::json::load(response.text);
+		zoneData[0] = json["zone"].i();
+		zoneData[1] = json["score"].i();
+		zoneData[2] = json["color"].i();
+		options[0] = json["r1"].s();
+		options[1] = json["r2"].s();
+	}
+	return std::make_pair(options, zoneData);
+}
+

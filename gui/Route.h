@@ -42,5 +42,7 @@ public:
 	CredentialErrors signUp(std::string username, std::string password, std::string name);
 	bool logOut();
 
-
+	std::pair<std::array<int, 4>, std::array<int, 3>> useFourCloseAdvantage(const std::string& stage); // "ET1" sau "ET2" la stage
+	std::pair<int, std::array<int, 3 >> useSugestionAdvantage(const std::string& stage); // "ET1" sau "ET2" la stage
+	std::pair<std::array<std::string, 2>, std::array<int, 3 >> useFiftyAdvantage();
 };
