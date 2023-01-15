@@ -224,11 +224,13 @@ DuelManager Route::sendResponseEt2(Color::ColorEnum color, int response, int tim
 			Color::ColorEnum defender = Color::getColor(resData["defender"].i());
 			duel.setLifeTaken(ZoneId, lives, score, color, attacker, defender);
 			duel.setDuelStatus(DuelManager::duelStatus::lifeTaken);
+			m_logger.logg(Logger::Level::Info, "life taken",ZoneId,score,lives);
 			return duel;
 		}
 		else if (duelStatus == "Lose")
 		{
 			duel.setDuelStatus(DuelManager::duelStatus::Lose);
+			m_logger.logg(Logger::Level::Info, "lose");
 			return duel;
 		}
 		else if (duelStatus == "Draw")
@@ -237,6 +239,7 @@ DuelManager Route::sendResponseEt2(Color::ColorEnum color, int response, int tim
 			Color::ColorEnum attacker = Color::getColor(resData["attacker"].i());
 			Color::ColorEnum defender = Color::getColor(resData["defender"].i());
 			duel.setTieBreakerParticipants({ attacker, defender });
+			m_logger.logg(Logger::Level::Info, "draw next to tie breaker");
 			return duel;
 		}
 		else if (duelStatus == "Win")
@@ -253,6 +256,7 @@ DuelManager Route::sendResponseEt2(Color::ColorEnum color, int response, int tim
 			}
 			duel.setDuelStatus(DuelManager::duelStatus::Win);
 			duel.setWinChanges(zonesData);
+			m_logger.logg(Logger::Level::Info, "win");
 			return duel;
 		}
 
@@ -269,10 +273,12 @@ std::string Route::getQuestionTypeNumericalEt2()
 		});
 	if (response.status_code == 200)
 	{
+		m_logger.logg(Logger::Level::Info, "get question type numerical et2 is succesful", response.status_code);
 		return response.text;
 	}
 	else
 	{
+		m_logger.logg(Logger::Level::Error, "get question type numerical is failed", response.status_code);
 		return "";
 	}
 }
@@ -436,6 +442,7 @@ std::vector<std::pair<Color::ColorEnum, int>> Route::updatePlayersInfo()
 			int s = resData["playerScore" + std::to_string(i)].i();
 			playersInfo.push_back(std::make_pair(c, s));
 		}
+		m_logger.logg(Logger::Level::Info, "update players info is successful", response.status_code);
 	}
 	return playersInfo;
 
@@ -621,6 +628,7 @@ std::pair<std::array<int, 4>, std::array<int, 3>> Route::useFourCloseAdvantage(c
 	std::array<int, 3 > zoneData;
 	if (response.text != "")
 	{
+		m_logger.logg(Logger::Level::Info, "Use four close advantage fail", response.status_code);
 		return std::make_pair(answers, zoneData);
 	}
 	else
@@ -633,6 +641,9 @@ std::pair<std::array<int, 4>, std::array<int, 3>> Route::useFourCloseAdvantage(c
 		zoneData[0] = json["zone"].i();
 		zoneData[1] = json["score"].i();
 		zoneData[2] = json["color"].i();
+		m_logger.logg(Logger::Level::Info, "Use four close advantages is successful ", response.status_code);
+		m_logger.logg(Logger::Level::Info, "Response: " + response.text);
+		
 	}
 	return std::make_pair(answers, zoneData);
 }
@@ -652,6 +663,7 @@ std::pair<int, std::array<int, 3 >> Route::useSugestionAdvantage(const std::stri
 	std::array<int, 3 > zoneData;
 	if (response.text != "")
 	{
+		m_logger.logg(Logger::Level::Info, "Use sugestion advantage fail", response.status_code);
 		return std::make_pair(answer, zoneData);
 	}
 	else
@@ -661,6 +673,7 @@ std::pair<int, std::array<int, 3 >> Route::useSugestionAdvantage(const std::stri
 		zoneData[1] = json["score"].i();
 		zoneData[2] = json["color"].i();
 		answer = json["r"].i();
+		
 	}
 	return std::make_pair(answer, zoneData);
 }
@@ -681,6 +694,7 @@ std::pair<std::array<std::string, 2>, std::array<int, 3 >> Route::useFiftyAdvant
 	std::array<int, 3 > zoneData;
 	if (response.text != "")
 	{
+		m_logger.logg(Logger::Level::Info, "Use fifty advantage fail", response.status_code);
 		return std::make_pair(options, zoneData);
 	}
 	else
@@ -691,6 +705,7 @@ std::pair<std::array<std::string, 2>, std::array<int, 3 >> Route::useFiftyAdvant
 		zoneData[2] = json["color"].i();
 		options[0] = json["r1"].s();
 		options[1] = json["r2"].s();
+		m_logger.logg(Logger::Level::Info, "Use four clase advantage successful", response.status_code);
 	}
 	return std::make_pair(options, zoneData);
 }
