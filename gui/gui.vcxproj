@@ -92,6 +92,7 @@
   <ItemGroup>
     <ClCompile Include="Battle.cpp" />
     <ClCompile Include="BoardInterpretation.cpp" />
+    <ClCompile Include="DuelManager.cpp" />
     <ClCompile Include="GridButtons.cpp" />
     <ClCompile Include="lobby.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -143,6 +144,7 @@
     <QtMoc Include="QTypeNumericWindow.h" />
     <QtMoc Include="QTypeVariantsWindow.h" />
     <QtMoc Include="MapForThreePlayers.h" />
+    <ClInclude Include="DuelManager.h" />
     <ClInclude Include="GamePhaseEnum.h" />
     <QtMoc Include="GridButtons.h" />
     <ClInclude Include="PlayerQString.h" />

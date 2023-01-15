@@ -77,7 +77,7 @@ void QTypeVariantsWindow::resetTheWindow()
 	for (auto& button : findChildren<QPushButton*>())
 		button->setStyleSheet("QPushButton { background-color: white; }");
 	ui.TimeSlider->setValue(0);
-	variant = "";
+	variant = -1;
 }
 
 QTypeVariantsWindow::~QTypeVariantsWindow()
@@ -110,9 +110,9 @@ void QTypeVariantsWindow::setGameInstance(const std::shared_ptr<Route>& GameInst
 	m_GameInstance = GameInstance;
 }
 
-void QTypeVariantsWindow::sendResponseToServer(const QString& response)
+void QTypeVariantsWindow::sendResponseToServer(int response)
 {
-	auto duelStatus = m_GameInstance->sendResponseEt2(m_player->getColor(), response.toInt(), 0);
+	auto duelStatus = m_GameInstance->sendResponseEt2(m_player->getColor(), response, 0);
 	if (duelStatus.getDuelStatus() == DuelManager::duelStatus::Lose)
 	{
 		emit emitAttackerLost();
@@ -150,25 +150,25 @@ void QTypeVariantsWindow::showEvent(QShowEvent* event)
 
 void QTypeVariantsWindow::on_Variant1_clicked()
 {
-	variant = "a";
+	variant = 0;
 	on_Variant_clicked();
 }
 
 void QTypeVariantsWindow::on_Variant2_clicked()
 {
-	variant = "b";
+	variant = 1;
 	on_Variant_clicked();
 }
 
 void QTypeVariantsWindow::on_Variant3_clicked()
 {
-	variant = "c";
+	variant = 2;
 	on_Variant_clicked();
 }
 
 void QTypeVariantsWindow::on_Variant4_clicked()
 {
-	variant = "d";
+	variant = 3;
 	on_Variant_clicked();
 }
 

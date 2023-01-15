@@ -423,7 +423,7 @@ void TriviadorGame::duelParticipants(const std::pair<Color::ColorEnum, Color::Co
 	else
 	{
 		m_QTypeVariantsWindow->disableAllButtons();
-		m_QTypeVariantsWindow->sendResponseToServer("INVALID");
+		m_QTypeVariantsWindow->sendResponseToServer(-1);
 	}
 }
 

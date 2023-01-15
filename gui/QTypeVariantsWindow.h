@@ -20,7 +20,7 @@ public:
 	void setPlayer(const std::shared_ptr<PlayerQString>& player);
 	void setGameInstance(const std::shared_ptr<Route>& GameInstance);
 
-	void sendResponseToServer(const QString& response);
+	void sendResponseToServer(int response);
 
 	void disableAllButtons();
 	void enableAllButtons();
@@ -56,7 +56,7 @@ private:
 	std::shared_ptr<Route> m_GameInstance;
 	QPushButton* m_Variant = nullptr;
 	QTimer* m_timeRemaining;
-	QString variant = "";
+	int variant = -1;
 	std::shared_ptr<PlayerQString> m_player;
 	Ui::QTypeVariantsWindowClass ui;
 };
