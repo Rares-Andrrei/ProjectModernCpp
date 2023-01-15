@@ -399,8 +399,9 @@ void TriviadorGame::getUpdatedZonesAfterWin(const std::vector<std::tuple<int, Co
 
 void TriviadorGame::duelParticipants(const std::pair<Color::ColorEnum, Color::ColorEnum>& duelParticipants)
 {
+	QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
 	m_QTypeVariantsWindow->requestQuestion();
-
+	QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
 	if (m_player->getColor() == duelParticipants.first || m_player->getColor() == duelParticipants.second)
 	{
 		m_QTypeVariantsWindow->enableAllButtons();
@@ -415,7 +416,9 @@ void TriviadorGame::duelParticipants(const std::pair<Color::ColorEnum, Color::Co
 
 void TriviadorGame::tieBreakerRound(const std::pair<Color::ColorEnum, Color::ColorEnum>& duelParticipants)
 {
+	QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
 	m_QTypeNumericWindow->requestQuestion();
+	QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
 	if (m_player->getColor() == duelParticipants.first || m_player->getColor() == duelParticipants.second)
 	{
 		m_QTypeNumericWindow->enableAllButtons();
@@ -431,16 +434,6 @@ void TriviadorGame::tieBreakerRound(const std::pair<Color::ColorEnum, Color::Col
 void TriviadorGame::getTieBreakerResults(const std::vector<std::tuple<int, Color::ColorEnum, int, int>>& UpdatedZones, const std::vector<std::pair<int, Color::ColorEnum>>& updatedPlayers)
 {
 	MapWindow->getUpdatedZones(UpdatedZones);
-	//for (auto& player : updatedPlayers)
-	//{
-	//	for (auto& playerInGame : m_players)
-	//	{
-	//		if (playerInGame->getColor() == player.second)
-	//		{
-	//			playerInGame->setScore(player.first);
-	//		}
-	//	}
-	//}
 }
 
 void TriviadorGame::onSendOrderToParent(const std::queue<std::pair<Color::ColorEnum, int>>& playerOrder)
@@ -458,7 +451,6 @@ void TriviadorGame::getDuelStatus(DuelManager& duelStatus)
 	else if (duelStatus.getDuelStatus() == DuelManager::duelStatus::lifeTaken)
 	{
 		auto attackInfo = duelStatus.getUpdatedBase();
-		// emit signal to update the life of the attacked base ?
 		auto& [zone, score, life,zoneColor , attacker , defender] = attackInfo;
 		std::vector<std::tuple<int, Color::ColorEnum, int, int>> updatedZones;
 		updatedZones.push_back(std::make_tuple(zone, zoneColor, score, life));
@@ -487,8 +479,12 @@ void TriviadorGame::getTieBreakerDuelStatus(DuelManager& duelStatus)
 	else if (duelStatus.getDuelStatus() == DuelManager::duelStatus::lifeTaken)
 	{
 		auto attackInfo = duelStatus.getUpdatedBase();
-		// emit signal to update the life of the attacked base ?
-		duelParticipants({ std::get<3>(attackInfo), std::get<4>(attackInfo) });
+		auto& [zone, score, life, zoneColor, attacker, defender] = attackInfo;
+		std::vector<std::tuple<int, Color::ColorEnum, int, int>> updatedZones;
+		updatedZones.push_back(std::make_tuple(zone, zoneColor, score, life));
+		MapWindow->getUpdatedZones(updatedZones);
+
+		duelParticipants({ std::get<4>(attackInfo), std::get<5>(attackInfo) });
 	}
 	else if (duelStatus.getDuelStatus() == DuelManager::duelStatus::Win)
 	{

@@ -163,6 +163,7 @@ void QTypeVariantsWindow::on_Variant_clicked()
 void QTypeVariantsWindow::on_Enter_clicked()
 {
 	disableAllButtons();
+	m_timeRemaining->stop();
 	sendResponseToServer(variant, m_player->getColor());
 }
 
