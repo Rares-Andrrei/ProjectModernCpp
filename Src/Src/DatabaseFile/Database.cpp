@@ -1,8 +1,4 @@
 #include "Database.h"
-#include <random>
-#include "Account.h"
-#include "MatchInfo.h"
-#include "utils.h"
 
 CredentialErrors Database::registerUser(const Account& account)
 {
@@ -46,7 +42,7 @@ std::list<MatchInfo> Database::getMatchHistory(const std::string& nickname)
 	return merged;
 }
 
-Database::Database(const std::string& filename) : m_storage{createStorage(filename)}
+Database::Database(const std::string& filename) : m_storage{ createStorage(filename) }
 {
 	m_storage.sync_schema();
 }

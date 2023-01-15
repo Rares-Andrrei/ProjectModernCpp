@@ -2,6 +2,8 @@
 #include <array>
 #include <string>
 #include <optional>
+#include <chrono>
+#include <sstream>
 
 class MatchInfo
 {

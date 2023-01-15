@@ -6,6 +6,10 @@
 #include "Account.h"
 #include "QTypeVariants.h"
 #include "QTypeNumerical.h"
+#include <random>
+#include "Account.h"
+#include "MatchInfo.h"
+#include "utils.h"
 
 namespace sql = sqlite_orm;
 
@@ -57,7 +61,6 @@ public:
 	QTypeNumerical randQTypeNumerical();
 
 	CredentialErrors loginUser(Account& account);
-
 	CredentialErrors registerUser(const Account& account);
 
 	void insertMatch(const MatchInfo& match);
