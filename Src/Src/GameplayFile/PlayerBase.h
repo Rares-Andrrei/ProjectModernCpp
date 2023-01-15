@@ -9,12 +9,8 @@ public:
 	uint16_t getNumberOfLifesLeft() const ;
 	
 	void DecrementLives();
-
 	PlayerBase operator +(const uint16_t& value);
 	friend PlayerBase operator+(const uint16_t& value, PlayerBase& zone);
-
-	friend std::ostream& operator<<(std::ostream& out, const PlayerBase& zona);
-
 	~PlayerBase()= default;
 };
 

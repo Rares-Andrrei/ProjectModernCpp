@@ -165,4 +165,3 @@ void Duel::generateQuestion()
 	m_qTypeVariants = m_db->randQTypeVariants();
 	m_numerical.setQuestion(m_db->randQTypeNumerical());
 }
-
