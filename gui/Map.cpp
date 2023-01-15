@@ -191,27 +191,96 @@ void Map::updatePlayersInfo()
 			}
 		}
 	}
+
+	for (int i = 0; i < m_players.size(); i++)
+	{
+		if (m_players[i]->getName() == m_player->getName())
+		{
+			ui.player1Score->setText(QString::number(m_player->getScore()));
+		}
+		else if (i == 1)
+		{
+			ui.player2Score->setText(QString::number(m_players[i]->getScore()));
+		}
+		else if (i == 2)
+		{
+			ui.player3Score->setText(QString::number(m_players[i]->getScore()));
+		}
+		else
+			ui.player4Score->setText(QString::number(m_players[i]->getScore()));
+
+	}
+
 }
 
 void Map::playersAvatar()
 {
-	//ui.player1Avatar->setScaledContents(true);
 	QStringList filenames;
 	filenames.append(":/gui/red.png");
 	filenames.append(":/gui/blue.png");
 	filenames.append(":/gui/yellow.png");
 	filenames.append(":/gui/green.png");
-
-	ui.player1Avatar->setPixmap(filenames.at(0));
-	//int i = 0;
-	//ui.player1Avatar->setStyleSheet("QLabel{background-image:url(:/gui/red.png);}");
-	//ui.player1Avatar->setScaledContents(true);
-
-	for (auto& p : m_players)
+	for (int i = 0; i < m_players.size(); i++)
 	{
-		ui.player1Name->setText(m_players[0]->getName());
-		ui.player2Name->setText(m_players[1]->getName());
+		auto playerColor = m_players[i]->getColor();
+
+		if (m_players[i]->getName() == m_player->getName())
+		{
+			if (playerColor == Color::ColorEnum::Red)
+				ui.player1Avatar->setPixmap(filenames.at(0));
+			else if (playerColor == Color::ColorEnum::Blue)
+				ui.player1Avatar->setPixmap(filenames.at(1));
+			else if (playerColor == Color::ColorEnum::Yellow)
+				ui.player1Avatar->setPixmap(filenames.at(2));
+			else if (playerColor == Color::ColorEnum::Green)
+				ui.player1Avatar->setPixmap(filenames.at(3));
+			ui.player1Name->setText("you");
+		}
+		else
+		{
+			if (i == 1)
+			{
+				if (playerColor == Color::ColorEnum::Red)
+					ui.player2Avatar->setPixmap(filenames.at(0));
+				else if (playerColor == Color::ColorEnum::Blue)
+					ui.player2Avatar->setPixmap(filenames.at(1));
+				else if (playerColor == Color::ColorEnum::Yellow)
+					ui.player2Avatar->setPixmap(filenames.at(2));
+				else if (playerColor == Color::ColorEnum::Green)
+					ui.player2Avatar->setPixmap(filenames.at(3));
+
+				ui.player2Name->setText(m_players[i]->getName());
+			}
+			else if (i == 2)
+			{
+				if (playerColor == Color::ColorEnum::Red)
+					ui.player3Avatar->setPixmap(filenames.at(0));
+				else if (playerColor == Color::ColorEnum::Blue)
+					ui.player3Avatar->setPixmap(filenames.at(1));
+				else if (playerColor == Color::ColorEnum::Yellow)
+					ui.player3Avatar->setPixmap(filenames.at(2));
+				else if (playerColor == Color::ColorEnum::Green)
+					ui.player3Avatar->setPixmap(filenames.at(3));
+
+				ui.player3Name->setText(m_players[i]->getName());
+			}
+			else
+			{
+				if (playerColor == Color::ColorEnum::Red)
+					ui.player4Avatar->setPixmap(filenames.at(0));
+				else if (playerColor == Color::ColorEnum::Blue)
+					ui.player4Avatar->setPixmap(filenames.at(1));
+				else if (playerColor == Color::ColorEnum::Yellow)
+					ui.player4Avatar->setPixmap(filenames.at(2));
+				else if (playerColor == Color::ColorEnum::Green)
+					ui.player4Avatar->setPixmap(filenames.at(3));
+
+				ui.player4Name->setText(m_players[i]->getName());
+			}
+		}
 	}
+	updatePlayersInfo();
+
 }
 
 void Map::setupGridButtons()
