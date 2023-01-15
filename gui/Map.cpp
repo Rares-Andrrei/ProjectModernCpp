@@ -170,6 +170,7 @@ void Map::getUpdatedZones(const std::vector<std::tuple<int, Color::ColorEnum, in
 		m_gridButtons->setButtonColor(index, color);
 		m_gridButtons->setCustomName(index, "Zona " + QString::number(index), score);
 	}
+	emit emitGetNextDuel();
 }
 
 

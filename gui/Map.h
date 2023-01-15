@@ -44,6 +44,7 @@ public:
 signals:
 	void emitMapUpdatedChooseRegionsPhase();
 	void emitDuelParticipants(const std::pair<Color::ColorEnum, Color::ColorEnum>& duelParticipants);
+	void emitGetNextDuel();
 
 public slots:
 	void onButtonClickedSignal(int index);

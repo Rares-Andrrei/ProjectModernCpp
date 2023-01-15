@@ -34,7 +34,10 @@ TriviadorGame::TriviadorGame(QWidget* parent)
 	connect(m_QTypeVariantsWindow.get(), &QTypeVariantsWindow::emitTieBreakerParticipants, this, &TriviadorGame::tieBreakerRound);
 
 	connect(m_QTypeVariantsWindow.get(), &QTypeVariantsWindow::emitAttackerLost, this, &TriviadorGame::startNextDuel);
+	connect(m_QTypeVariantsWindow.get(), &QTypeVariantsWindow::emitLifeTakenDisplayAnotherQuestion, this, &TriviadorGame::duelParticipants);
+	connect(m_QTypeVariantsWindow.get(), &QTypeVariantsWindow::emitUpdatedZonesAfterWin, this, &TriviadorGame::getUpdatedZonesAfterWin);
 
+	connect(MapWindow.get(), &Map::emitGetNextDuel, this, &TriviadorGame::startNextDuel);
 }
 
 TriviadorGame::~TriviadorGame()
