@@ -14,7 +14,13 @@ public:
 	std::queue<std::pair<Color::ColorEnum, int>> sendResponseNumericalEt1(int resp, int time, Color::ColorEnum color);
 	std::pair<int, Color::ColorEnum> chooseRegion(int id, Color::ColorEnum color);
 
+	std::tuple<Color::ColorEnum, Color::ColorEnum, int> getDuelingPlayersAndZone(Color::ColorEnum attacker, int zoneId);
 	Color::ColorEnum getAttackerColor();
+
+	//crow::json::rvalue sendResponseEt2(Color::ColorEnum color, int response, int time);
+	void sendResponseEt2(Color::ColorEnum color, int response, int time);
+
+	std::string getQuestionTypeNumericalEt2();
 
 	bool checkValidBasePosition(int ZoneId);
 	bool checkValidRegionPosition(int ZoneId, const Color::ColorEnum& color);

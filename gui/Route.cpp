@@ -124,6 +124,34 @@ std::pair<int, Color::ColorEnum> Route::chooseRegion(int id, Color::ColorEnum co
 	return data;
 }
 
+std::tuple<Color::ColorEnum,Color::ColorEnum,int> Route::getDuelingPlayersAndZone(Color::ColorEnum attacker, int zoneId)
+{
+	cpr::Url url{ "http://localhost:18080/duelParticipants" };
+	cpr::Payload payload{
+			{ "gameID", std::to_string(m_gameId)},
+			{ "color", std::to_string(Color::ColorToInt(attacker))},
+			{ "regionId", std::to_string(zoneId)}
+	};
+	auto lambda = [](cpr::Response response) {
+		return response.text;
+	};
+
+	auto future_text = cpr::PostCallback(lambda, url, payload);
+	while (future_text.wait_for(std::chrono::microseconds(10)) != std::future_status::ready)
+	{
+		QCoreApplication::processEvents();
+	}
+	auto aux = future_text.get();
+	std::tuple<Color::ColorEnum, Color::ColorEnum, int> data;
+	if (aux != "")
+	{
+		crow::json::rvalue resData = crow::json::load(aux);
+		data = std::make_tuple(Color::getColor(resData["color1"].i()), Color::getColor(resData["color2"].i()), resData["zoneId"].i());
+	}
+	return data;
+
+}
+
 Color::ColorEnum Route::getAttackerColor()
 {
 	cpr::Url url{ "http://localhost:18080/requestDuerlTurn" };
@@ -147,6 +175,82 @@ Color::ColorEnum Route::getAttackerColor()
 		return Color::getColor(resData["attackerColor"].i());
 	}
 	return Color::ColorEnum::None;
+}
+
+
+void Route::sendResponseEt2(Color::ColorEnum color, int response, int time)
+{
+	cpr::Url url{ "http://localhost:18080/sendResponseEt2" }; //cand trimiti variantele time nu conteaza pi oricat
+	cpr::Payload payload{
+			{ "sessionKey", m_sessionKey},
+			{ "gameID", std::to_string(m_gameId)},
+			{"color", std::to_string(Color::ColorToInt(color))},
+			{"response", std::to_string(response)},
+			{"time", std::to_string(time)},
+	};
+	auto lambda = [](cpr::Response response) {
+		return response.text;
+	};
+	auto future_text = cpr::PostCallback(lambda, url, payload);
+	while (future_text.wait_for(std::chrono::microseconds(10)) != std::future_status::ready)
+	{
+		QCoreApplication::processEvents();
+	}
+	auto aux = future_text.get();
+	if (aux != "")
+	{
+		crow::json::rvalue resData = crow::json::load(aux);
+
+	}
+	//aici sa te uiti pe server si interpreteaza tu jsonu sa iei datele in functie de ce duelStatus e
+	//daca e draw ti-am facut ruta  getQuestionTypeNumericalEt2, pentru raspunsuri tot ruta asta trebuie apelata
+}
+/*Dintr-un oarecare motiv nu ma lasa sa returnez rvalue da niste errori de compilare aiurea pe server am reusit wvalue, poate reusesti tu sa rezolvi cumva*/
+
+//crow::json::rvalue Route::sendResponseEt2(Color::ColorEnum color, int response, int time)
+//{
+//	cpr::Url url{ "http://localhost:18080/sendResponseEt2" }; //cand trimiti variantele time nu conteaza pi oricat
+//	cpr::Payload payload{
+//			{ "sessionKey", m_sessionKey},
+//			{ "gameID", std::to_string(m_gameId)},
+//			{"color", std::to_string(Color::ColorToInt(color))},
+//			{"response", std::to_string(response)},
+//			{"time", std::to_string(time)},
+//	};
+//	auto lambda = [](cpr::Response response) {
+//		return response.text;
+//	};
+//	auto future_text = cpr::PostCallback(lambda, url, payload);
+//	while (future_text.wait_for(std::chrono::microseconds(10)) != std::future_status::ready)
+//	{
+//		QCoreApplication::processEvents();
+//	}
+//	auto aux = future_text.get();
+//	if (aux != "")
+//	{
+//		crow::json::rvalue resData = crow::json::load(aux);
+//		return resData;
+//	}
+//	return crow::json::rvalue(); //aici sa te uiti pe server si interpreteaza tu jsonu sa iei datele in functie de ce duelStatus e
+//	//daca e draw ti-am facut ruta  getQuestionTypeNumericalEt2, pentru raspunsuri tot ruta asta trebuie apelata
+//}
+///*Dintr-un oarecare motiv nu ma lasa sa returnez rvalue da niste errori de compilare aiurea pe server am reusit wvalue, poate reusesti tu sa rezolvi cumva*/
+
+std::string Route::getQuestionTypeNumericalEt2()
+{
+	auto response = cpr::Get(
+		cpr::Url{ "http://localhost:18080/getQuestionTypeNumericalEt2" },
+		cpr::Payload{
+			{ "gameID", std::to_string(m_gameId)}
+		});
+	if (response.status_code == 200)
+	{
+		return response.text;
+	}
+	else
+	{
+		return "";
+	}
 }
 
 bool Route::checkValidBasePosition(int ZoneId)
