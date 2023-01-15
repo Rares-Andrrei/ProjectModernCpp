@@ -144,6 +144,11 @@ void Route::sendResponseEt2()
 			else if (state == Duel::DuelState::Draw)
 			{
 				json["duelStatus"] = "Draw";
+				int zoneId;
+				Color::ColorEnum color1, color2;
+				m_gamesActive[gameID]->getDuelingPlayersAndZone(color1, color2, zoneId);
+				json["attacker"] = Color::ColorToInt(color1);
+				json["defender"] = Color::ColorToInt(color2);
 				res = json;
 				res.code = 200;
 				return res;
