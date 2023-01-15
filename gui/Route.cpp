@@ -237,7 +237,7 @@ DuelManager Route::sendResponseEt2(Color::ColorEnum color, int response, int tim
 		{
 			std::vector<std::tuple<int, Color::ColorEnum, int>> zonesData;
 			// Id , color , score
-			int zoneNr = resData["ZoneNr"].i();
+			int zoneNr = resData["zoneNr"].i();
 			for (int i = 0; i < zoneNr; i++)
 			{
 				int score = resData["zoneScore" + std::to_string(i)].i();
