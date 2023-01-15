@@ -2,6 +2,7 @@
 #include <cpr/cpr.h>
 #include "Route.h"
 #include "CredentialErrors.h"
+#include <regex>
 
 signUp::signUp(std::shared_ptr<Route> routes, QWidget* parent)
 	: m_routes(routes), QMainWindow(parent)
@@ -60,7 +61,8 @@ void signUp::onEnterButtonClicked()
 		QMessageBox::about(this, "Sign up error", "The passwords do not match");
 		return;
 	}
-
+	std::regex spaceRegex("\\s");
+	std::regex digitRegex("[0-9]{2,}");
 	std::string usernameString, passwordString, nicknameString;
 	usernameString = username.toLocal8Bit().constData();
 	passwordString = password.toLocal8Bit().constData();
@@ -68,6 +70,26 @@ void signUp::onEnterButtonClicked()
 	if (usernameString.empty() || passwordString.empty() || nicknameString.empty())
 	{
 		QMessageBox::about(this, "Sign up error", "Please fill in all the fields");
+		return;
+	}
+	else if(std::regex_search(usernameString, spaceRegex))
+	{
+		QMessageBox::about(this, "Username error", "Your username can't have spaces");
+		return;
+	}
+	else if (std::regex_search(nicknameString, spaceRegex))
+	{
+		QMessageBox::about(this, "NickName error", "Your nickname can't have spaces");
+		return;
+	}
+	else if (std::regex_search(passwordString, spaceRegex))
+	{
+		QMessageBox::about(this, "Password error", "Your password can't have spaces");
+		return;
+	}
+	else if(!std::regex_search(passwordString, digitRegex))
+	{
+		QMessageBox::about(this, "Password safety error", "Your password must conatin at least 2 digits in a row");
 		return;
 	}
 	CredentialErrors check = m_routes->signUp(usernameString, passwordString, nicknameString);
