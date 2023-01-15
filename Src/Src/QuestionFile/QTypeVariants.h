@@ -15,6 +15,8 @@ public:
 	int getId() const;
 	void setId(int id);
 
+	int getAnswerIndex();
+
 	void setQuestion(const std::string& question);
 	std::string getQuestion() const;
 	void setAnswer(const std::string& answer);

@@ -36,6 +36,9 @@ void useRoutes()
 	r.checkValidAttackMove();
 	r.checkIfBoardIsFull();
 	r.requestDuelTurn();
+	r.duelParticipantsRoute();
+	r.sendResponseEt2();
+	r.getQuestionTypeNumericalRouteEt2();
 	r.startApp();
 }
 

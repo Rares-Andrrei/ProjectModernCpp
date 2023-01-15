@@ -1,3 +1,4 @@
+#pragma once
 #include <cstdlib>
 #include "../../Player/Player/Player.h"
 #include "PlayerBase.h"
