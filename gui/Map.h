@@ -33,6 +33,7 @@ public:
 	void Send_Response_To_Server(int ZoneId);
 	void send_Attacker_Response_To_Server(int ZoneId);
 	void getUpdatedZones(const std::vector<std::tuple<int, Color::ColorEnum, int, int>>& UpdatedZones);
+	void getUpdatedZones(const std::vector<std::tuple<int, Color::ColorEnum, int>>& UpdatedZones);
 
 
 	void disableAllButtons();

@@ -179,7 +179,7 @@ Color::ColorEnum Route::getAttackerColor()
 }
 
 
-void Route::sendResponseEt2(Color::ColorEnum color, int response, int time)
+DuelManager Route::sendResponseEt2(Color::ColorEnum color, int response, int time)
 {
 	cpr::Url url{ "http://localhost:18080/sendResponseEt2" }; //cand trimiti variantele time nu conteaza pi oricat
 	cpr::Payload payload{
@@ -198,6 +198,7 @@ void Route::sendResponseEt2(Color::ColorEnum color, int response, int time)
 		QCoreApplication::processEvents();
 	}
 	auto aux = future_text.get();
+	DuelManager duel;
 	if (aux != "")
 	{
 		crow::json::rvalue resData = crow::json::load(aux);
@@ -211,14 +212,21 @@ void Route::sendResponseEt2(Color::ColorEnum color, int response, int time)
 			Color::ColorEnum color = Color::getColor(resData["color"].i());
 			Color::ColorEnum attacker = Color::getColor(resData["attacker"].i());
 			Color::ColorEnum defender = Color::getColor(resData["defender"].i());
+			duel.setLifeTaken(ZoneId, lives, score, attacker, defender);
+			duel.setDuelStatus(DuelManager::duelStatus::lifeTaken);
+			return duel;
 		}
 		else if (duelStatus == "Lose")
 		{
+			duel.setDuelStatus(DuelManager::duelStatus::Lose);
+			return duel;
 			//TODO
 			// return status and go for next duel
 		}
 		else if (duelStatus == "Draw")
 		{
+			duel.setDuelStatus(DuelManager::duelStatus::Draw);
+			return duel;
 			//TODO
 			// return just the status
 		}
@@ -234,10 +242,14 @@ void Route::sendResponseEt2(Color::ColorEnum color, int response, int time)
 				Color::ColorEnum color = Color::getColor(resData["zoneColor" + std::to_string(i)].i());
 				zonesData.push_back(std::make_tuple(id, color, score));
 			}
+			duel.setDuelStatus(DuelManager::duelStatus::Win);
+			duel.setWinChanges(zonesData);
+			return duel;
 			//TODO
 		}
 
 	}
+	return duel;
 	//aici sa te uiti pe server si interpreteaza tu jsonu sa iei datele in functie de ce duelStatus e
 	//daca e draw ti-am facut ruta  getQuestionTypeNumericalEt2, pentru raspunsuri tot ruta asta trebuie apelata
 }

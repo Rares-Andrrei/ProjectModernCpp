@@ -112,17 +112,32 @@ void QTypeVariantsWindow::setGameInstance(const std::shared_ptr<Route>& GameInst
 
 void QTypeVariantsWindow::sendResponseToServer(const QString& response)
 {
-	/*auto duelStatus =*/ m_GameInstance->sendResponseEt2(m_player->getColor(), response.toInt(),0);
-	//RESPONSE :: get the duel status and the new score / board layout
-	if (true) // if it's a DRAW get the list of players which should participate 
+	auto duelStatus = m_GameInstance->sendResponseEt2(m_player->getColor(), response.toInt(), 0);
+	if (duelStatus.getDuelStatus() == DuelManager::duelStatus::Lose)
+	{
+		emit emitAttackerLost();
+		this->hide();
+		return;
+	}
+	else if (duelStatus.getDuelStatus() == DuelManager::duelStatus::lifeTaken)
+	{
+		auto attackInfo = duelStatus.getUpdatedBase();
+		// emit signal to update the life of the attacked base ?
+		emit emitLifeTakenDisplayAnotherQuestion({ std::get<3>(attackInfo), std::get<4>(attackInfo) });
+		this->hide();
+		return;
+	}
+	else if (duelStatus.getDuelStatus() == DuelManager::duelStatus::Win) 
+	{
+		auto updatedZones = duelStatus.getUpdatedZones();
+		emit emitUpdatedZonesAfterWin(updatedZones);
+		this->hide();
+		return;
+	}
+	else if (duelStatus.getDuelStatus() == DuelManager::duelStatus::Draw)
 	{
 		std::pair<Color::ColorEnum, Color::ColorEnum> players = { Color::ColorEnum::Red, Color::ColorEnum::Yellow }; //for test 
 		emit emitTieBreakerParticipants(players);
-	}
-	else
-	{
-		//get a list/vector of updated Zones & players 
-		// emit the signal to update the board & players
 	}
 }
 

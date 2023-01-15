@@ -4,6 +4,7 @@
 #include "PlayerQString.h"
 #include "CredentialErrors.h"
 #include <queue>
+#include "DuelManager.h"
 class Route
 {
 	std::string m_sessionKey;
@@ -18,7 +19,7 @@ public:
 	Color::ColorEnum getAttackerColor();
 
 	//crow::json::rvalue sendResponseEt2(Color::ColorEnum color, int response, int time);
-	void sendResponseEt2(Color::ColorEnum color, int response, int time);
+	DuelManager sendResponseEt2(Color::ColorEnum color, int response, int time);
 
 	std::string getQuestionTypeNumericalEt2();
 

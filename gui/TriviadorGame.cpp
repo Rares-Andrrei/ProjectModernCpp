@@ -33,6 +33,8 @@ TriviadorGame::TriviadorGame(QWidget* parent)
 	connect(m_QTypeNumericWindow.get(), &QTypeNumericWindow::emitTieBreakerResults, this, &TriviadorGame::getTieBreakerResults);
 	connect(m_QTypeVariantsWindow.get(), &QTypeVariantsWindow::emitTieBreakerParticipants, this, &TriviadorGame::tieBreakerRound);
 
+	connect(m_QTypeVariantsWindow.get(), &QTypeVariantsWindow::emitAttackerLost, this, &TriviadorGame::startNextDuel);
+
 }
 
 TriviadorGame::~TriviadorGame()
@@ -397,6 +399,16 @@ void TriviadorGame::updateTheQueueStatus()
 			}
 		}
 	}
+}
+
+void TriviadorGame::startNextDuel()
+{
+	duelsPhase();
+}
+
+void TriviadorGame::getUpdatedZonesAfterWin(const std::vector<std::tuple<int, Color::ColorEnum, int>>& updatedZones)
+{
+	MapWindow->getUpdatedZones(updatedZones);
 }
 
 void TriviadorGame::duelParticipants(const std::pair<Color::ColorEnum, Color::ColorEnum>& duelParticipants)

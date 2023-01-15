@@ -67,6 +67,8 @@ public slots:
 	void onSendOrderToParent(const std::queue<std::pair<Color::ColorEnum, int>>& playerOrder);
 	void nextPlayerInQueue();
 	void updateTheQueueStatus();
+	void startNextDuel();
+	void getUpdatedZonesAfterWin(const std::vector<std::tuple<int, Color::ColorEnum, int>>& updatedZones);
 
 private:
 	std::queue<std::pair<Color::ColorEnum, int>> m_playerOrder;
