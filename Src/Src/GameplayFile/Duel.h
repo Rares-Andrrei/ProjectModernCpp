@@ -26,13 +26,11 @@ private:
 
 	int m_zoneId;
 	std::shared_ptr<Zone> m_zone;
+	std::vector<std::shared_ptr<Zone>> m_updatedZones;
 
 	std::optional<QTypeVariants> m_qTypeVariants;
-
 	NumericQuestionManager m_numerical;
 
-	std::vector<std::shared_ptr<Zone>> m_updatedZones;
-	Color::ColorEnum m_winner;
 	bool m_draw;
 
 	void generateQuestion();

@@ -37,7 +37,6 @@
     <ClCompile Include="GameplayFile\GameLogic.cpp" />
     <ClCompile Include="GameplayFile\PlayerBase.cpp" />
     <ClCompile Include="GameplayFile\Zone.cpp" />
-    <ClCompile Include="ManualTests.cpp" />
     <ClCompile Include="QuestionFile\QTypeNumerical.cpp" />
     <ClCompile Include="QuestionFile\QTypeVariants.cpp" />
     <ClCompile Include="QuestionFile\QuestionManager.cpp" />
@@ -64,7 +63,6 @@
     <ClInclude Include="GameplayFile\GameLogic.h" />
     <ClInclude Include="GameplayFile\PlayerBase.h" />
     <ClInclude Include="GameplayFile\Zone.h" />
-    <ClInclude Include="ManualTests.h" />
     <ClInclude Include="QuestionFile\QTypeNumerical.h" />
     <ClInclude Include="QuestionFile\QTypeVariants.h" />
     <ClInclude Include="QuestionFile\QuestionManager.h" />

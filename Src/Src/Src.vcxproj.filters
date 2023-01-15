@@ -103,7 +103,6 @@
       <Filter>GamePlayFiles\Cpp</Filter>
     </ClCompile>
     <ClCompile Include="GameplayFile\GameLogic.cpp" />
-    <ClCompile Include="ManualTests.cpp" />
     <ClCompile Include="Route.cpp" />
     <ClCompile Include="PlayersQueue.cpp" />
     <ClCompile Include="Lobby.cpp" />
@@ -162,7 +161,6 @@
       <Filter>GamePlayFiles\Header</Filter>
     </ClInclude>
     <ClInclude Include="GameplayFile\GameLogic.h" />
-    <ClInclude Include="ManualTests.h" />
     <ClInclude Include="CredentialErrors.h">
       <Filter>DatabaseFiles\Header</Filter>
     </ClInclude>

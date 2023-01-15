@@ -7,7 +7,6 @@
 #include "utils.h"
 #include "GameLogic.h"
 
-#include "ManualTests.h"
 #include <unordered_map>
 #include <unordered_set>
 
