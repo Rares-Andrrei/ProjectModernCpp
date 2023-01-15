@@ -12,12 +12,11 @@ QTypeNumericWindow::QTypeNumericWindow(QWidget* parent)
 	connect(ui.Delete, &QPushButton::pressed, this, &QTypeNumericWindow::on_Delete_pressed);
 	connect(ui.Delete, &QPushButton::released, this, &QTypeNumericWindow::on_Delete_release);
 
-	ui.TimeRemaining->setRange(0, 3000);
+	ui.TimeRemaining->setRange(0, 1500);
 	ui.TimeRemaining->setValue(0);
 
 	ui.Answer->setEnabled(false);
 
-	// Use a stylesheet to customize the appearance of the slider
 	ui.TimeRemaining->setStyleSheet("QSlider {"
 		"  background: transparent;"
 		"  height: 10px;"

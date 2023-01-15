@@ -20,13 +20,6 @@ TriviadorGame::TriviadorGame(QWidget* parent)
 	t_checkCurrentPhase->setInterval(500);
 	connect(t_checkCurrentPhase.get(), &QTimer::timeout, this, &TriviadorGame::checkCurrentPhase);
 
-	t_MapWindowTimer = std::make_unique<QTimer>();
-	t_MapWindowTimer->setInterval(500);
-
-	t_VariantsWindowTimer = std::make_unique<QTimer>();
-	t_VariantsWindowTimer->setInterval(500);
-	connect(t_VariantsWindowTimer.get(), &QTimer::timeout, this, &TriviadorGame::checkVariantsWindowClosed);
-
 	connect(MapWindow.get(), &Map::emitMapUpdatedChooseRegionsPhase, this, &TriviadorGame::updateTheQueueStatus);
 	connect(MapWindow.get(), &Map::emitDuelParticipants, this, &TriviadorGame::duelParticipants);
 
@@ -44,40 +37,11 @@ void TriviadorGame::setNumberOfPlayers(const uint16_t& numberOfPlayers)
 	m_numberOfPlayers = numberOfPlayers;
 	if (m_numberOfPlayers <= 2)
 	{
-		m_MaxNumberOfDuels = 4 * m_numberOfPlayers;
 		m_numberOfInteractionsLeft = 2;
 	}
 	else {
-		m_MaxNumberOfDuels = 5 * m_numberOfPlayers;
 		m_numberOfInteractionsLeft = numberOfPlayers - 1;
 	}
-}
-
-void TriviadorGame::displayLoadingMessage(/*const QTimer& timer*/)
-{
-	// afisare loading screen , parametrizat
-}
-
-void TriviadorGame::StartGame()
-{
-	t_checkCurrentPhase->start();
-	t_NumericWindowTimer->start();
-	//TODO :
-	// afisare loading screen
-	// Etape :
-	//		alegere baza
-	// 		alegere regiuni
-	//		dueluri
-	// 
-	// Endgame
-	// afisare loagind screen
-	// afisare rezultate
-	// 
-	// Aducerea jucatorilor inaloi la lobby
-	// afisare loading screen
-
-	displayLoadingMessage(/*timer*/); // de discutat timpul de incarcare necesar
-	chooseBasePhase();
 }
 
 void TriviadorGame::setPlayer(const std::shared_ptr<PlayerQString>& player)
@@ -121,7 +85,6 @@ void TriviadorGame::chooseBasePhase()
 
 void TriviadorGame::chooseRegionsPhase()
 {
-	t_MapWindowTimer->start();
 	changePhase = false;
 	m_gamePhase = GamePhase::ChooseRegions;
 
@@ -166,8 +129,6 @@ void TriviadorGame::EndGame()
 	changePhase = false;
 
 	t_checkCurrentPhase->stop();
-	t_MapWindowTimer->stop();
-	t_VariantsWindowTimer->stop();
 	t_NumericWindowTimer->stop();
 
 	m_gamePhase = GamePhase::End;
@@ -178,7 +139,6 @@ void TriviadorGame::EndGame()
 	// GUI :: revenire la pagina de lobby
 	this->close();
 	this->parentWidget()->show();
-	displayLoadingMessage(/*timer*/); // de discutat timpul de incarcare necesar
 }
 
 void TriviadorGame::displayPodium()
@@ -191,7 +151,7 @@ void TriviadorGame::displayPodium()
 
 void TriviadorGame::checkNumericWindowClosed()
 {
-	if (changePhase == true || serverAproveStatus == false) // daca o faza s-a terminat , asteptam sa trecem la urmatoarea
+	if (changePhase == true) // daca o faza s-a terminat , asteptam sa trecem la urmatoarea
 	{
 		return;
 	}
@@ -219,42 +179,10 @@ void TriviadorGame::checkNumericWindowClosed()
 	}
 }
 
-void TriviadorGame::checkVariantsWindowClosed()
-{
-	if (changePhase == true || serverAproveStatus == false) // daca o faza s-a terminat , asteptam sa trecem la urmatoarea
-	{
-		return;
-	}
-	if (m_VariantsWindowClosed == true && !m_QTypeVariantsWindow->isVisible() && !MapWindow->isVisible() && serverAproveStatus == true)
-	{
-		m_VariantsWindowClosed = false;
-		m_duelStatus = DuelStatus::Draw; // statusul va fi primit de la server prin json sau prin response.status_code
-		if (m_duelStatus == DuelStatus::Win)
-		{
-			// Request :: de modificat statusul la board  ??
-
-			MapWindow->show(); // MapWindow->ShowWindowForXSeconds();
-			//mesaj de duel castigat ??
-			//startDuel();
-		}
-		else if (m_duelStatus == DuelStatus::Lose)
-		{
-			// mesaj de duel pierdut ??
-		}
-		else if (m_duelStatus == DuelStatus::Draw)
-		{
-
-			m_QTypeNumericWindow->requestQuestion();
-			m_QTypeNumericWindow->enableAllButtons();
-			m_QTypeNumericWindow->show();
-			// GUI :: deschidere fereastra cu intrebarea numerica => creare ordine si restabilirea  la duelStatus
-		}
-	}
-}
 
 void TriviadorGame::checkCurrentPhase()
 {
-	if (checkIfWindowsAreClosed() == false || serverAproveStatus == false)
+	if (checkIfWindowsAreClosed() == false )
 	{
 		return;
 	}

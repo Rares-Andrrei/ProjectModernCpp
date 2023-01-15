@@ -29,11 +29,6 @@ public:
 	~TriviadorGame();
 
 	void setNumberOfPlayers(const uint16_t& numberOfPlayers);
-
-	void displayLoadingMessage(/*const QTimer& timer*/);
-
-	void StartGame();
-
 	void setPlayer(const std::shared_ptr<PlayerQString>& player);
 	void setPlayers(const std::vector<std::shared_ptr<PlayerQString>>& players);
 	void setGameInstance(const std::shared_ptr<Route>& GameInstance);
@@ -42,19 +37,13 @@ protected:
 
 private:
 	void chooseBasePhase();
-
 	void chooseRegionsPhase();
-
 	void duelsPhase();
-	//void startDuel();
-
 	void EndGame();
 
 	void displayPodium();
 
 	void checkNumericWindowClosed();
-	//void checkMapWindowClosed();
-	void checkVariantsWindowClosed();
 	void checkCurrentPhase();
 
 	bool checkIfWindowsAreClosed();
@@ -81,20 +70,11 @@ private:
 	GamePhase m_gamePhase : 3 = GamePhase::None;
 	DuelStatus m_duelStatus : 3 = DuelStatus::None;
 
-	bool serverAproveStatus = true;
 	bool changePhase = true;
-	bool m_MapWindowClosed = false;
-	bool m_VariantsWindowClosed = false;
-	bool duelFinished = false;
-
-	int m_numberOfDuels = 0;
-	int m_MaxNumberOfDuels = 0;
 
 	int m_numberOfInteractionsLeft;
 
-	std::unique_ptr<QTimer> t_MapWindowTimer;
 	std::unique_ptr<QTimer> t_NumericWindowTimer;
-	std::unique_ptr<QTimer> t_VariantsWindowTimer;
 	std::unique_ptr<QTimer> t_checkCurrentPhase;
 
 	Ui::TriviadorGameClass ui;

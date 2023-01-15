@@ -67,7 +67,6 @@ void Map::onButtonClickedSignal(int index)
 	}
 }
 
-
 void Map::setGameInstance(const std::shared_ptr<Route>& GameInstance)
 {
 	m_GameInstance = GameInstance;
@@ -167,7 +166,6 @@ void Map::getUpdatedZones(const std::vector<std::tuple<int, Color::ColorEnum, in
 	}
 	emit emitGetNextDuel();
 }
-
 
 void Map::disableAllButtons()
 {

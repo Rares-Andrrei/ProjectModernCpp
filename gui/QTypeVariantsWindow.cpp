@@ -28,7 +28,7 @@ void QTypeVariantsWindow::buttonsConnections()
 
 void QTypeVariantsWindow::createTimeSlider()
 {
-	ui.TimeSlider->setRange(0, 3000);
+	ui.TimeSlider->setRange(0, 1500);
 	ui.TimeSlider->setValue(0);
 	ui.TimeSlider->setStyleSheet("QSlider {"
 		"  background: transparent;"

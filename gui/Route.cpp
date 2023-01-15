@@ -693,4 +693,3 @@ std::pair<std::array<std::string, 2>, std::array<int, 3 >> Route::useFiftyAdvant
 	}
 	return std::make_pair(options, zoneData);
 }
-

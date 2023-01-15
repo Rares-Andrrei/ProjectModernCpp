@@ -1,7 +1,5 @@
 #include "PlayerQString.h"
 
-
-
 PlayerQString::PlayerQString()
 	:m_color{ Color::getDefaultColor() }, m_name{ }, m_score{ 300 }
 {
@@ -93,4 +91,3 @@ void PlayerQString::setName(const QString& name)
 {
 	this->m_name = name;
 }
-
