@@ -1,6 +1,5 @@
 #pragma once
 #include <array>
-
 #include "../QuestionFile/QTypeNumerical.h"
 
 class FourCloseAnswers
@@ -14,4 +13,3 @@ public:
 	std::array<int, 4> getAnswers();
 	friend std::ostream& operator << (std::ostream& out, FourCloseAnswers const& answers);
 };
-

@@ -3,6 +3,8 @@
 #include<array>
 #include<string>
 #include "../QuestionFile/QTypeVariants.h"
+#include<random>
+
 class AnswerFiftyFifty
 {
 private:
@@ -10,6 +12,5 @@ private:
 	std::vector<std::string>m_variants;
 public:
 	AnswerFiftyFifty(QTypeVariants& Q);
-	std::array<std::string,2>AdvantageUtility();
+	std::array<std::string, 2>AdvantageUtility();
 };
-

@@ -1,5 +1,5 @@
 #include "AnswerFiftyFifty.h"
-#include<random>
+
 AnswerFiftyFifty::AnswerFiftyFifty(QTypeVariants& Q)
 {
 	this->m_answer = Q.getAnswer();

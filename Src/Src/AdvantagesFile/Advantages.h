@@ -6,6 +6,7 @@
 #include "FourCloseAnswers.h"
 #include <cstdint>
 #include <vector>
+
 class Advantages
 {
 	QTypeVariants* m_qTypeV;
