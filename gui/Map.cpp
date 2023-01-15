@@ -75,6 +75,11 @@ void Map::setGameInstance(const std::shared_ptr<Route>& GameInstance)
 	m_GameInstance = GameInstance;
 }
 
+void Map::setBoard(const std::shared_ptr<BoardInterpretation>& board)
+{
+	m_board = board;
+}
+
 void Map::setPhase(GamePhase gamePhase)
 {
 	m_gamePhase = gamePhase;

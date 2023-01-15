@@ -10,6 +10,7 @@
 #include "PlayerQString.h"
 #include <qtimer.h>
 #include <qthread.h>
+#include "BoardInterpretation.h"
 #include "GamePhaseEnum.h"
 #include "GridButtons.h"
 #include <qrandom.h>
@@ -25,6 +26,7 @@ public:
 	void setPlayer(const std::shared_ptr<PlayerQString>& player);
 	void setPlayers(const std::vector<std::shared_ptr<PlayerQString>>& players);
 	void setGameInstance(const std::shared_ptr<Route>& GameInstance);
+	void setBoard(const std::shared_ptr<BoardInterpretation>& board);
 	void setPhase(GamePhase gamePhase);
 	QColor getColor(const Color::ColorEnum& color);
 
@@ -50,6 +52,7 @@ public slots:
 private:
 	//int currentButtonIndex;
 	Ui::MapClass ui;
+	std::shared_ptr<BoardInterpretation> m_board;
 	std::shared_ptr<Route> m_GameInstance;
 
 	GamePhase m_gamePhase : 3 = GamePhase::None;
