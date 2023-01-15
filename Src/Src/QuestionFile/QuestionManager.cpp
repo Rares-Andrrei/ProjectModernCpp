@@ -18,14 +18,14 @@ bool QuestionManager::readQTypeVariants(const std::string& fileQTypeVariants)
 		{
 			std::getline(qFile, temporary);
 			question.setQuestion(temporary);
-			for ( uint8_t i = 0; i < numberOfVariants; i++)
+			for (uint8_t i = 0; i < numberOfVariants; i++)
 			{
 				std::getline(qFile, temporary);
 				variants[i] = temporary;
 			}
 			std::getline(qFile, temporary);
 			question.setVariants(variants);
-			question.setAnswer(temporary);	
+			question.setAnswer(temporary);
 			m_qWithVariants.push_back(question);
 		}
 		qFile.close();

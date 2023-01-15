@@ -1,7 +1,7 @@
 #include "QTypeVariants.h"
 
 
-QTypeVariants::QTypeVariants() : defaultAnswer{ "No answer found" }, m_id{-1}, m_answer{defaultAnswer}
+QTypeVariants::QTypeVariants() : defaultAnswer{ "No answer found" }, m_id{ -1 }, m_answer{ defaultAnswer }
 {
 }
 
@@ -38,7 +38,7 @@ int QTypeVariants::getAnswerIndex()
 
 void QTypeVariants::setAnswer(const std::string& answer)
 {
-	for (uint8_t i = 0;  i < m_variants.size();  i++)
+	for (uint8_t i = 0; i < m_variants.size(); i++)
 	{
 		if (answer == m_variants[i])
 		{

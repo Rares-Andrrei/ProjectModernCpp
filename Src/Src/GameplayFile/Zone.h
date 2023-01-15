@@ -10,7 +10,7 @@ protected:
 	Color::ColorEnum m_color;
 public:
 	Zone();
-	Zone(const Color::ColorEnum& color );
+	Zone(const Color::ColorEnum& color);
 	void SetScore(const uint16_t& score = 100);
 
 	//Operator for score

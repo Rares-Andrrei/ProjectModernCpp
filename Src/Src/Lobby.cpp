@@ -1,6 +1,4 @@
 #include "Lobby.h"
-#include <sstream>
-
 
 Lobby::LobbyType Lobby::getType()
 {

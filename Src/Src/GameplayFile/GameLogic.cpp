@@ -1,6 +1,5 @@
 #include "GameLogic.h"
 
-
 void GameLogic::randomQTypeNumerical()
 {
 	m_numericQuestionManager.setQuestion(m_db->randQTypeNumerical());

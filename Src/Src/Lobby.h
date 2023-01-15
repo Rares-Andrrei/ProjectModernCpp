@@ -3,6 +3,7 @@
 #include <memory>
 #include <crow.h>
 #include <stack>
+#include <sstream>
 #include "../../Player/Player/Player.h"
 
 class Lobby

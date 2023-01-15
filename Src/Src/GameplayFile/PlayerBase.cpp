@@ -1,7 +1,7 @@
 #include "PlayerBase.h"
 
 PlayerBase::PlayerBase(const Color::ColorEnum& color)
-	:Zone(color )
+	:Zone(color)
 {
 	this->SetScore(300);
 }

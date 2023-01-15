@@ -1,7 +1,7 @@
 #include "Duel.h"
 
 Duel::Duel(const Color::ColorEnum& player, std::shared_ptr<Zone> zone, int zoneId, std::shared_ptr<Database> db)
-	:m_duelingPlayers{ player, zone->getColor() }, m_zone{ zone }, m_draw{ false }, m_zoneId{ zoneId }, m_db{ db }, m_numerical{NumericQuestionManager(2)}
+	:m_duelingPlayers{ player, zone->getColor() }, m_zone{ zone }, m_draw{ false }, m_zoneId{ zoneId }, m_db{ db }, m_numerical{ NumericQuestionManager(2) }
 {
 	generateQuestion();
 }

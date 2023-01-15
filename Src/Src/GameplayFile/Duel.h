@@ -10,7 +10,7 @@
 class Duel
 {
 public:
-	enum class DuelState{
+	enum class DuelState {
 		Win,
 		Lose,
 		Draw,
