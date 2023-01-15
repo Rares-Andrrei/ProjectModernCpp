@@ -136,6 +136,9 @@
       <Project>{375b82c3-f193-4085-89a2-fd9ffb4b97aa}</Project>
     </ProjectReference>
     <ClInclude Include="CredentialErrors.h" />
+    <ProjectReference Include="..\Logging\Logging\Logging.vcxproj">
+      <Project>{777b00c2-a834-43e6-b74a-8465a2785a41}</Project>
+    </ProjectReference>
     <QtMoc Include="QTypeNumericWindow.h" />
     <QtMoc Include="QTypeVariantsWindow.h" />
     <ClInclude Include="DuelManager.h" />

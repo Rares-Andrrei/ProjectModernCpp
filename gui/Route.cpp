@@ -17,6 +17,7 @@ bool Route::leaveLobby()
 		cpr::Payload{
 			{ "sessionKey", m_sessionKey}
 		});
+	m_logger.logg(Logger::Level::Info, "leave lobby is succesful", response.status_code);
 	return response.status_code == 200;
 }
 
@@ -29,10 +30,12 @@ std::string Route::getQuestionTypeNumerical()
 		});
 	if (response.status_code == 200)
 	{
+		m_logger.logg(Logger::Level::Info, "get question type numerical is succesful", response.status_code,"\n", response.text);
 		return response.text;
 	}
 	else
 	{
+		m_logger.logg(Logger::Level::Error,"get question type numerical is failed", response.status_code);
 		return "";
 	}
 }
@@ -53,10 +56,13 @@ std::array<std::string, 5> Route::getQuestionTypeVariants()
 		questionData[2] = resData["var2"].s();
 		questionData[3] = resData["var3"].s();
 		questionData[4] = resData["var4"].s();
+		m_logger.logg(Logger::Level::Info, "get variants is succesful", response.status_code,"\n", questionData[0],"\n", questionData[1],"\n", questionData[2],"\n", questionData[3]);
 		return questionData;
+		
 	}
 	else
 	{
+		m_logger.logg(Logger::Level::Error, "Get variants is failed", response.status_code);
 		return questionData = { "", "", "", "", "" };
 	}
 }
@@ -73,9 +79,10 @@ std::queue<std::pair<Color::ColorEnum, int>> Route::sendResponseNumericalEt1(int
 			{ "time", std::to_string(time)}
 	};
 	auto lambda = [](cpr::Response response) {
+	
 		return response.text;
 	};
-
+	m_logger.logg(Logger::Level::Info, "send response numerical et1 is succesful",resp);
 	auto future_text = cpr::PostCallback(lambda, url, payload);
 
 	while (future_text.wait_for(std::chrono::milliseconds(10)) != std::future_status::ready)
@@ -93,6 +100,7 @@ std::queue<std::pair<Color::ColorEnum, int>> Route::sendResponseNumericalEt1(int
 			players.push({ c, s });
 		}
 	}
+	//m_logger.logg(Logger::Level::Info, "players queue is succesful","\n","player color",players.front().first, "\n","player score" ,players.front().second);
 	return players; //logica de pe gui va decide de cate ori se va apela fucntia de alegere teritoriu, daca playerul curent trebuie a aaleaga va trimite culoarea si teritoriul ales daca nu se va trimite un string gol, ca raspuns la ruta de alegere teritoriu se va returna harta actualizata.
 }
 
@@ -173,6 +181,9 @@ Color::ColorEnum Route::getAttackerColor()
 	if (aux != "")
 	{
 		crow::json::rvalue resData = crow::json::load(aux);
+		Color::ColorEnum colorAttacker = Color::getColor(resData["attackerColor"].i());
+		std::string colorAttackerString = Color::ColorToString(colorAttacker);
+		m_logger.logg(Logger::Level::Info, "get attacker color is succesful","\n","color attacker: ",colorAttackerString);
 		return Color::getColor(resData["attackerColor"].i());
 	}
 	return Color::ColorEnum::None;
@@ -316,10 +327,12 @@ bool Route::checkValidBasePosition(int ZoneId)
 	{
 		crow::json::rvalue resData = crow::json::load(response.text);
 		std::string value = resData["valid"].s();
+		m_logger.logg(Logger::Level::Info, "valid", response.status_code);
 		return value == "true";
 	}
 	else
 	{
+		m_logger.logg(Logger::Level::Warning,"invalid",response.status_code);
 		return false;
 	}
 }
@@ -337,10 +350,12 @@ bool Route::checkValidRegionPosition(int ZoneId, const Color::ColorEnum& color)
 	{
 		crow::json::rvalue resData = crow::json::load(response.text);
 		std::string value = resData["valid"].s();
+		m_logger.logg(Logger::Level::Info, "valid", response.status_code);
 		return value == "true";
 	}
 	else
 	{
+		m_logger.logg(Logger::Level::Info, "invalid", response.status_code);
 		return false;
 	}
 }
@@ -358,10 +373,12 @@ bool Route::checkValidAttackMove(int ZoneId, const Color::ColorEnum& color)
 	{
 		crow::json::rvalue resData = crow::json::load(response.text);
 		std::string value = resData["valid"].s();
+		m_logger.logg(Logger::Level::Info, "valid", response.status_code);
 		return value == "true";
 	}
 	else
 	{
+		m_logger.logg(Logger::Level::Info, "invalid", response.status_code);
 		return false;
 	}
 }
@@ -377,10 +394,35 @@ bool Route::checkIfBoardIsFull()
 	{
 		crow::json::rvalue resData = crow::json::load(response.text);
 		std::string value = resData["valid"].s();
+		m_logger.logg(Logger::Level::Info, "valid", response.status_code);
 		return value == "true";
 	}
 	else
 	{
+		m_logger.logg(Logger::Level::Info, "invalid", response.status_code);
+		return false;
+	}
+}
+
+bool Route::checkIfPlayerCanUseAdvantages(const Color::ColorEnum& color)
+{
+	auto response = cpr::Get(
+		cpr::Url{ "http://localhost:18080/checkIfPlayerCanUseAdvantages" },
+		cpr::Payload{
+			{ "gameID", std::to_string(m_gameId)},
+			{ "color", std::to_string(Color::ColorToInt(color))},
+
+		});
+	if (response.status_code == 200)
+	{
+		crow::json::rvalue resData = crow::json::load(response.text);
+		std::string value = resData["valid"].s();
+		m_logger.logg(Logger::Level::Info, "valid", response.status_code);
+		return value == "true";
+	}
+	else
+	{
+		m_logger.logg(Logger::Level::Info, "invalid", response.status_code);
 		return false;
 	}
 }
@@ -423,11 +465,14 @@ std::tuple<int, Color::ColorEnum, int, int> Route::updateZoneInfo(int ZoneId)
 		zoneColor = Color::getColor(resData["zoneColor"].i());
 		zoneScore = resData["zoneScore"].i();
 		zoneLifes = resData["zoneLifes"].i();
-
+		auto zoneColorDll = Color::ColorToString(zoneColor);
+		m_logger.logg(Logger::Level::Info, "zoneInfo update", response.status_code, zoneId,zoneColorDll,zoneScore,zoneLifes);
 		return zoneInfo;
 	}
 	else
 	{
+		std::tuple<int, Color::ColorEnum, int, int> zoneInfo= std::make_tuple(0, Color::ColorEnum::None, 0, 0);
+		m_logger.logg(Logger::Level::Warning, "-",0,"None",0,0);
 		return std::make_tuple(0, Color::ColorEnum::None, 0, 0);
 	}
 }
@@ -467,7 +512,7 @@ void Route::enterLobby(int type, std::vector<std::shared_ptr<PlayerQString>>& pl
 	auto lambda = [](cpr::Response response) {
 		return response.text;
 	};
-
+	m_logger.logg(Logger::Level::Info, "lobby type", type, "is succesful", lambda);
 	auto future_text = cpr::PostCallback(lambda, url, payload);
 
 	while (future_text.wait_for(std::chrono::microseconds(10)) != std::future_status::ready)
@@ -501,6 +546,7 @@ std::list<std::array<std::string, 5>> Route::getMatchHistoryRoute()
 		cpr::Payload{
 			{ "sessionKey", m_sessionKey}
 		});
+	m_logger.logg(Logger::Level::Info, "getMatchHistoryRoute is succesful ", response.status_code);
 	if (response.status_code == 200)
 	{
 		crow::json::rvalue resData = crow::json::load(response.text);
@@ -516,6 +562,7 @@ std::list<std::array<std::string, 5>> Route::getMatchHistoryRoute()
 			);
 		}
 	}
+
 	return matches;
 }
 
@@ -531,22 +578,28 @@ CredentialErrors Route::login(std::string username, std::string password, QStrin
 	crow::json::rvalue resData = crow::json::load(response.text);
 	if (response.text == "")
 	{
+		m_logger.logg(Logger::Level::Warning, "Other");
 		return CredentialErrors::Other;
 	}
 	int resp = resData["error"].i();
 	switch (resp)
 	{
 	case static_cast<int>(CredentialErrors::AlreadyConnected):
+		m_logger.logg(Logger::Level::Warning, "Already Connected");
 		return CredentialErrors::AlreadyConnected;
 	case static_cast<int>(CredentialErrors::IncorrectAccount):
+		m_logger.logg(Logger::Level::Warning, "Incorrect Account");
 		return CredentialErrors::IncorrectAccount;
 	case static_cast<int>(CredentialErrors::IncorrectPassword):
+		m_logger.logg(Logger::Level::Warning, "Incorrect Password");
 		return CredentialErrors::IncorrectPassword;
 	case static_cast<int>(CredentialErrors::Valid):
 		m_sessionKey = resData["sessionKey"].s();
 		setNickname = QString::fromLocal8Bit(std::string(resData["nickname"].s()));
+		m_logger.logg(Logger::Level::Info, "Valid");
 		return CredentialErrors::Valid;
 	default:
+		m_logger.logg(Logger::Level::Warning, "Other");
 		return CredentialErrors::Other;
 	}
 }
@@ -563,25 +616,33 @@ CredentialErrors Route::signUp(std::string username, std::string password, std::
 	);
 	if (response.text == "")
 	{
+		m_logger.logg(Logger::Level::Warning, "Other");
 		return CredentialErrors::Other;
 	}
 	int resp = std::stoi(response.text);
 	switch (resp)
 	{
 	case static_cast<int>(CredentialErrors::NameSize):
+		m_logger.logg(Logger::Level::Warning, "NameSize");
 		return CredentialErrors::NameSize;
 	case static_cast<int>(CredentialErrors::UsernameSize):
+		m_logger.logg(Logger::Level::Warning, "UsernameSize");
 		return CredentialErrors::UsernameSize;
 	case static_cast<int>(CredentialErrors::PasswordSize):
+		m_logger.logg(Logger::Level::Warning, "PasswordSize");
 		return CredentialErrors::PasswordSize;
 	case static_cast<int>(CredentialErrors::UserTaken):
+		m_logger.logg(Logger::Level::Warning, "UserTaken");
 		return CredentialErrors::UserTaken;
 	case static_cast<int>(CredentialErrors::NameTaken):
+		m_logger.logg(Logger::Level::Warning, "NameTaken");
 		return CredentialErrors::NameTaken;
 	case static_cast<int>(CredentialErrors::Valid):
+		m_logger.logg(Logger::Level::Info, "Valid");
 		return CredentialErrors::Valid;
 
 	default:
+		m_logger.logg(Logger::Level::Warning, "Other");
 		return CredentialErrors::Other;
 	}
 }
@@ -595,9 +656,11 @@ bool Route::logOut()
 		}
 	);
 	if (response.status_code == 200 || response.status_code == 202) {
+		m_logger.logg(Logger::Level::Info, "Logout successful",response.status_code);
 		return true;
 	}
 	else {
+		m_logger.logg(Logger::Level::Error, "Logout unsuccesful", response.status_code);
 		return false;
 	}
 }
