@@ -161,6 +161,7 @@ void Route::sendResponseEt2()
 
 					zoneNr++;
 				}
+				json["zoneNr"] = zoneNr;
 				res = json;
 				res.code = 200;
 				return res;
