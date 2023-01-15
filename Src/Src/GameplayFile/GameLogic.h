@@ -20,16 +20,12 @@ class GameLogic
 	const uint16_t k_numberOfPlayers;
 	std::vector<std::shared_ptr<Player>> m_players;
 	std::vector<std::shared_ptr<Player>> m_eliminatedPlayers;
-
-	//std::vector<std::shared_ptr<Advantages>> m_advantages; // de vazut unde sa fie folosit . 
-
 	std::shared_ptr<Database> m_db;
 	void randomQTypeNumerical();
 
 	Color::ColorEnum m_colorToAttack;
 	std::queue<Color::ColorEnum> m_duelOrder;
-	//se apeleaza functia createDuelOrder dupa ce sunt adaugati toti jucatorii in meci si se creeaza  ordinea duelurilor
-	std::optional<std::pair<int, Color::ColorEnum>> m_updatedZone; //sa se stearga dupa ce toti playerii au updatat zona
+	std::optional<std::pair<int, Color::ColorEnum>> m_updatedZone;
 	std::unordered_map<Color::ColorEnum, bool> m_requests;
 
 public:
@@ -68,7 +64,7 @@ public:
 	bool checkZoneUpdates();
 	std::pair<int, Color::ColorEnum> getUpdatedZone();
 	void updateZone(int zoneId, Color::ColorEnum zoneColor);
-	void eraseUpdatedZone(); //se apeleaza atuncic and se genereaza o noua intrebare (inseamna ca toti layerii au updatat zona si s-a trecut mai deprarte
+	void eraseUpdatedZone();
 public:
 	static crow::json::wvalue playersToJson(std::vector < std::shared_ptr<Player>> players);
 	QTypeNumerical getQuestionTypeNumerical();

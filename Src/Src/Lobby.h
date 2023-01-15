@@ -13,7 +13,7 @@ public:
 	enum class LobbyType : int
 	{
 		TwoPlayer = 2,
-		ThreePlayers = 3, //in functie de acest enum o sa fie ales si tipul hartii
+		ThreePlayers = 3,
 		FourPlayers = 4
 	};
 private:

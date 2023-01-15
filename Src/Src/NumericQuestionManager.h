@@ -16,7 +16,6 @@ class NumericQuestionManager
 	std::vector <std::tuple<int, int, Color::ColorEnum>> m_PlayerOrder;
 
 public:
-
 	bool compareResponseAndTime(std::tuple<int, int, Color::ColorEnum> p1, std::tuple<int, int, Color::ColorEnum> p2);
 
 	NumericQuestionManager(const uint16_t& playerNr);
