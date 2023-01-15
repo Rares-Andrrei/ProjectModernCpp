@@ -48,15 +48,15 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>140</y>
+      <y>190</y>
       <width>131</width>
-      <height>16</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>Calibri Light</family>
-      <pointsize>10</pointsize>
+      <pointsize>13</pointsize>
       <italic>true</italic>
      </font>
     </property>
@@ -69,8 +69,8 @@
      <rect>
       <x>50</x>
       <y>20</y>
-      <width>131</width>
-      <height>111</height>
+      <width>130</width>
+      <height>159</height>
      </rect>
     </property>
     <property name="text">
@@ -82,8 +82,8 @@
      <rect>
       <x>1740</x>
       <y>20</y>
-      <width>131</width>
-      <height>111</height>
+      <width>130</width>
+      <height>159</height>
      </rect>
     </property>
     <property name="text">
@@ -94,10 +94,16 @@
     <property name="geometry">
      <rect>
       <x>1740</x>
-      <y>140</y>
+      <y>190</y>
       <width>131</width>
-      <height>16</height>
+      <height>20</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+      <italic>true</italic>
+     </font>
     </property>
     <property name="text">
      <string/>
@@ -107,9 +113,9 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>940</y>
-      <width>131</width>
-      <height>111</height>
+      <y>900</y>
+      <width>130</width>
+      <height>159</height>
      </rect>
     </property>
     <property name="text">
@@ -119,11 +125,14 @@
    <widget class="QLabel" name="player4Avatar">
     <property name="geometry">
      <rect>
-      <x>1750</x>
-      <y>940</y>
-      <width>131</width>
-      <height>111</height>
+      <x>1740</x>
+      <y>900</y>
+      <width>130</width>
+      <height>159</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
     </property>
     <property name="text">
      <string/>
@@ -132,11 +141,21 @@
    <widget class="QLabel" name="player4Name">
     <property name="geometry">
      <rect>
-      <x>1750</x>
-      <y>920</y>
+      <x>1740</x>
+      <y>865</y>
       <width>131</width>
-      <height>16</height>
+      <height>21</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Calibri Light</family>
+      <pointsize>13</pointsize>
+      <italic>true</italic>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
     </property>
     <property name="text">
      <string/>
@@ -146,10 +165,17 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>920</y>
+      <y>865</y>
       <width>131</width>
-      <height>16</height>
+      <height>21</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Calibri Light</family>
+      <pointsize>13</pointsize>
+      <italic>true</italic>
+     </font>
     </property>
     <property name="text">
      <string/>
@@ -159,15 +185,15 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>170</y>
+      <y>220</y>
       <width>131</width>
-      <height>16</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>Calibri Light</family>
-      <pointsize>10</pointsize>
+      <pointsize>12</pointsize>
       <bold>true</bold>
      </font>
     </property>
@@ -179,15 +205,15 @@
     <property name="geometry">
      <rect>
       <x>1740</x>
-      <y>160</y>
+      <y>220</y>
       <width>131</width>
-      <height>16</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>Calibri Light</family>
-      <pointsize>10</pointsize>
+      <pointsize>12</pointsize>
       <bold>true</bold>
      </font>
     </property>
@@ -198,16 +224,16 @@
    <widget class="QLabel" name="player4Score">
     <property name="geometry">
      <rect>
-      <x>1750</x>
-      <y>880</y>
+      <x>1740</x>
+      <y>835</y>
       <width>131</width>
-      <height>16</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>Calibri Light</family>
-      <pointsize>10</pointsize>
+      <pointsize>12</pointsize>
       <bold>true</bold>
      </font>
     </property>
@@ -219,15 +245,15 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>880</y>
+      <y>830</y>
       <width>131</width>
-      <height>16</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>Calibri Light</family>
-      <pointsize>10</pointsize>
+      <pointsize>12</pointsize>
       <bold>true</bold>
      </font>
     </property>
@@ -239,29 +265,13 @@
     <property name="geometry">
      <rect>
       <x>-10</x>
-      <y>300</y>
+      <y>-10</y>
       <width>1931</width>
       <height>1091</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">background-image: url(:/gui/mapBackground.png);</string>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-   </widget>
-   <widget class="QFrame" name="playerAvatar1">
-    <property name="geometry">
-     <rect>
-      <x>270</x>
-      <y>20</y>
-      <width>131</width>
-      <height>111</height>
-     </rect>
     </property>
     <property name="frameShape">
      <enum>QFrame::StyledPanel</enum>
@@ -283,7 +293,6 @@
    <zorder>player2Score</zorder>
    <zorder>player4Score</zorder>
    <zorder>player3Score</zorder>
-   <zorder>playerAvatar1</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

@@ -4,19 +4,19 @@
         <file>background.png</file>
         <file>backgroundLobby.png</file>
         <file>backgroundQuestions.png</file>
-        <file>blue.png</file>
         <file>fiftyFifty.png</file>
         <file>fourPlayers.png</file>
         <file>generateAnAnswer.png</file>
         <file>generateFourAnswers.png</file>
-        <file>green.png</file>
-        <file>red.png</file>
         <file>Ro.png</file>
         <file>startMeniu.png</file>
         <file>threePlayers.png</file>
         <file>twoPlayers.png</file>
-        <file>yellow.png</file>
         <file>mapBackground.png</file>
+        <file>blue.png</file>
+        <file>green.png</file>
+        <file>red.png</file>
+        <file>yellow.png</file>
     </qresource>
     <qresource prefix="/slideShowCats">
         <file>cat1.png</file>
