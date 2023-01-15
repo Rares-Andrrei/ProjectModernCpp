@@ -28,11 +28,6 @@ public:
 signals:
 	void emitDuelStatus(DuelManager& duelStatus);
 
-	//void emitTieBreakerParticipants(const std::pair<Color::ColorEnum, Color::ColorEnum>& duelParticipants);
-	//void emitAttackerLost();
-	//void emitLifeTakenDisplayAnotherQuestion(const std::pair<Color::ColorEnum, Color::ColorEnum>& duelParticipants);
-	//void emitUpdatedZonesAfterWin(const std::vector<std::tuple<int, Color::ColorEnum, int>>& updatedZones);
-
 protected:
 	void showEvent(QShowEvent* event) override;
 

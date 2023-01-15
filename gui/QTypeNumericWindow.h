@@ -34,8 +34,6 @@ protected:
 signals:
 	void emitTieBreakerDuelStatus(DuelManager& duelStatus);
 	void sendOrderToParent(const std::queue<std::pair<Color::ColorEnum, int>>& playerOrder);
-	//void emitTieBreakerResults(const std::vector<std::tuple<int, Color::ColorEnum, int, int>>& UpdatedZones, const std::vector<std::pair<int, Color::ColorEnum>>& updatedPlayers);
-
 
 private slots:
 	void on_Number0_clicked();

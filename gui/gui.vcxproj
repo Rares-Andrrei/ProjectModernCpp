@@ -91,12 +91,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Battle.cpp" />
-    <ClCompile Include="BoardInterpretation.cpp" />
     <ClCompile Include="DuelManager.cpp" />
     <ClCompile Include="GridButtons.cpp" />
     <ClCompile Include="lobby.cpp" />
     <ClCompile Include="Map.cpp" />
-    <ClCompile Include="MapForThreePlayers.cpp" />
     <ClCompile Include="PlayerQString.cpp" />
     <ClCompile Include="QTypeNumericWindow.cpp" />
     <ClCompile Include="QTypeVariantsWindow.cpp" />
@@ -114,8 +112,6 @@
     <QtUic Include="lobby.ui" />
     <QtUic Include="logIn.ui" />
     <QtUic Include="Map.ui" />
-    <QtUic Include="MapForThreePlayers.ui" />
-    <QtUic Include="QTypeNumericWindow.ui" />
     <QtUic Include="QTypeVariantsWindow.ui" />
     <QtUic Include="signUp.ui" />
     <QtUic Include="TriviadorGame.ui" />
@@ -139,11 +135,9 @@
     <ProjectReference Include="..\Color\Color\Color.vcxproj">
       <Project>{375b82c3-f193-4085-89a2-fd9ffb4b97aa}</Project>
     </ProjectReference>
-    <ClInclude Include="BoardInterpretation.h" />
     <ClInclude Include="CredentialErrors.h" />
     <QtMoc Include="QTypeNumericWindow.h" />
     <QtMoc Include="QTypeVariantsWindow.h" />
-    <QtMoc Include="MapForThreePlayers.h" />
     <ClInclude Include="DuelManager.h" />
     <ClInclude Include="GamePhaseEnum.h" />
     <QtMoc Include="GridButtons.h" />
