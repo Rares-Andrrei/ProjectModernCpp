@@ -20,6 +20,11 @@ void DuelManager::setWinChanges(const std::vector<std::tuple<int, Color::ColorEn
 	m_updatedZones = updatedZones;
 }
 
+void DuelManager::setTieBreakerParticipants(const std::pair<Color::ColorEnum, Color::ColorEnum>& players)
+{
+	m_tieBreakerParticipants = players;
+}
+
 DuelManager::duelStatus DuelManager::getDuelStatus()
 {
 	return m_duelStatus;
@@ -33,4 +38,9 @@ std::tuple<int, int, int, Color::ColorEnum, Color::ColorEnum> DuelManager::getUp
 std::vector<std::tuple<int, Color::ColorEnum, int>> DuelManager::getUpdatedZones()
 {
 	return m_updatedZones;
+}
+
+std::pair<Color::ColorEnum, Color::ColorEnum> DuelManager::getTieBreakerParticipants()
+{
+	return m_tieBreakerParticipants;
 }

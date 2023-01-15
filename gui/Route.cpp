@@ -226,6 +226,9 @@ DuelManager Route::sendResponseEt2(Color::ColorEnum color, int response, int tim
 		else if (duelStatus == "Draw")
 		{
 			duel.setDuelStatus(DuelManager::duelStatus::Draw);
+			Color::ColorEnum attacker = Color::getColor(resData["attacker"].i());
+			Color::ColorEnum defender = Color::getColor(resData["defender"].i());
+			duel.setTieBreakerParticipants({ attacker, defender });
 			return duel;
 			//TODO
 			// return just the status

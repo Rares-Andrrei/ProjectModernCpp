@@ -136,8 +136,8 @@ void QTypeVariantsWindow::sendResponseToServer(int response)
 	}
 	else if (duelStatus.getDuelStatus() == DuelManager::duelStatus::Draw)
 	{
-		std::pair<Color::ColorEnum, Color::ColorEnum> players = { Color::ColorEnum::Red, Color::ColorEnum::Yellow }; //for test 
-		emit emitTieBreakerParticipants(players);
+		auto tieBreakterParticipants = duelStatus.getTieBreakerParticipants();
+		emit emitTieBreakerParticipants(tieBreakterParticipants);
 	}
 }
 
