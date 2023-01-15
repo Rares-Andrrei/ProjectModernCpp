@@ -7,10 +7,10 @@ TriviadorGame::TriviadorGame(QWidget* parent)
 	/*MapWindow.reset(new Map(this));*/
 	MapWindow.reset(new Map(this));
 
-	m_QTypeNumericWindow.reset(new QTypeNumericWindow(this));
+	m_QTypeNumericWindow = std::make_unique<QTypeNumericWindow>(this);
 	connect(m_QTypeNumericWindow.get(), &QTypeNumericWindow::sendOrderToParent, this, &TriviadorGame::onSendOrderToParent);
 
-	m_QTypeVariantsWindow.reset(new QTypeVariantsWindow(this));
+	m_QTypeVariantsWindow = std::make_unique<QTypeVariantsWindow>(this);
 
 	t_NumericWindowTimer = std::make_unique<QTimer>();
 	t_NumericWindowTimer->setInterval(500);
@@ -419,7 +419,6 @@ void TriviadorGame::getTieBreakerDuelStatus(DuelManager& duelStatus)
 		std::vector<std::tuple<int, Color::ColorEnum, int, int>> updatedZones;
 		updatedZones.push_back(std::make_tuple(zone, zoneColor, score, life));
 		MapWindow->getUpdatedZones(updatedZones);
-
 
 		duelParticipants({ std::get<4>(attackInfo), std::get<5>(attackInfo) });
 	}

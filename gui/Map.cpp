@@ -29,15 +29,15 @@ void Map::setPlayers(const std::vector<std::shared_ptr<PlayerQString>>& players)
 	m_players = players;
 	if (players.size() == 2)
 	{
-		m_gridButtons = new  GridButtons(3, 3, this);
+		m_gridButtons = std::make_shared<GridButtons>(3, 3, this);
 	}
 	else if (players.size() == 3)
 	{
-		m_gridButtons = new  GridButtons(3, 5, this);
+		m_gridButtons = std::make_shared<GridButtons>(3, 5, this);
 	}
 	else
 	{
-		m_gridButtons = new  GridButtons(4, 6, this);
+		m_gridButtons = std::make_shared<GridButtons>(4, 6, this);
 	}
 	setupGridButtons();
 }
@@ -290,9 +290,9 @@ void Map::setupGridButtons()
 {
 	m_gridButtons->setSizeAndAlignment(70, 70);
 	layout = std::make_shared<QVBoxLayout>();
-	layout->addWidget(m_gridButtons);
+	layout->addWidget(m_gridButtons.get());
 	layout->setAlignment(Qt::AlignCenter);
 	ui.centralWidget->setLayout(layout.get());
 	m_gridButtons->show();
-	connect(m_gridButtons, &GridButtons::sendButtonIndexClicked, this, &Map::onButtonClickedSignal);
+	connect(m_gridButtons.get(), &GridButtons::sendButtonIndexClicked, this, &Map::onButtonClickedSignal);
 }

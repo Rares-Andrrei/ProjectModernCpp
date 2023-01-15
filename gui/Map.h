@@ -52,7 +52,7 @@ private:
 	GamePhase m_gamePhase : 3 = GamePhase::None;
 
 	std::shared_ptr<QVBoxLayout> layout;
-	GridButtons* m_gridButtons;
+	std::shared_ptr<GridButtons> m_gridButtons;
 	std::shared_ptr<PlayerQString> m_player;
 	std::vector<std::shared_ptr<PlayerQString>>m_players;
 

@@ -217,4 +217,8 @@ void QTypeVariantsWindow::enableAllButtons()
 void QTypeVariantsWindow::showWindow()
 {
 	this->show();
+	if (this->isVisible())
+		qDebug("Variants window is visible");
+	else
+		qDebug("Variants window is not visible");
 }

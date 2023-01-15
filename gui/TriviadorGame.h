@@ -79,7 +79,7 @@ private:
 
 	Ui::TriviadorGameClass ui;
 
-	std::shared_ptr<QTypeNumericWindow> m_QTypeNumericWindow;
-	std::shared_ptr<QTypeVariantsWindow> m_QTypeVariantsWindow;
+	std::unique_ptr<QTypeNumericWindow> m_QTypeNumericWindow;
+	std::unique_ptr<QTypeVariantsWindow> m_QTypeVariantsWindow;
 	std::unique_ptr<Map> MapWindow;
 };
