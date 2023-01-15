@@ -33,7 +33,6 @@ void Route::requestDuelTurn()
 	auto sessionKeyIter = bodyArgs.find("sessionKey");
 	long gameID = std::stoi(gameIdIter->second);
 
-
 	if (gameIdIter->second == "" || sessionKeyIter->second == "")
 	{
 		return crow::response(404);
@@ -41,7 +40,6 @@ void Route::requestDuelTurn()
 
 	if (m_gamesActive.count(gameID) > 0 && m_waitingList->isActive(sessionKeyIter->second))
 	{
-
 		m_gamesActive[gameID]->addWaitingRequest(m_waitingList->getPlayer(sessionKeyIter->second)->getColor());
 		m_gamesActive[gameID]->setColorToAttack();
 		while (!m_gamesActive[gameID]->allRequestsReady())
@@ -50,13 +48,12 @@ void Route::requestDuelTurn()
 		}
 		crow::json::wvalue json;
 		json["attackerColor"] = Color::ColorToInt(m_gamesActive[gameID]->getAttackerColor());
-		std::this_thread::sleep_for(std::chrono::milliseconds(16));
+		std::this_thread::sleep_for(std::chrono::milliseconds(116));
 		m_gamesActive[gameID]->deleteRequestsReady();
 		if (m_waitingList->getPlayer(sessionKeyIter->second)->getColor() == m_gamesActive[gameID]->getAttackerColor())
 		{
 			m_gamesActive[gameID]->deleteColorToAttack();
 		}
-
 
 		m_logger.logg(Logger::Level::Error, "Request: ", req.url);
 		m_logger.logg(Logger::Level::Error, "Response: ", crow::response(json).code, req.url);

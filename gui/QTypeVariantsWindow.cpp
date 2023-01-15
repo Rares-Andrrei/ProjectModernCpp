@@ -77,7 +77,7 @@ void QTypeVariantsWindow::resetTheWindow()
 	for (auto& button : findChildren<QPushButton*>())
 		button->setStyleSheet("QPushButton { background-color: white; }");
 	ui.TimeSlider->setValue(0);
-	variant = -1;
+	variant = 0;
 }
 
 QTypeVariantsWindow::~QTypeVariantsWindow()

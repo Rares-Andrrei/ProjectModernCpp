@@ -54,7 +54,7 @@ private:
 	std::shared_ptr<Route> m_GameInstance;
 	QPushButton* m_Variant = nullptr;
 	QTimer* m_timeRemaining;
-	int variant = -1;
+	int variant = 0;
 	std::shared_ptr<PlayerQString> m_player;
 	Ui::QTypeVariantsWindowClass ui;
 };
