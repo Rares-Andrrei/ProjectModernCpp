@@ -222,7 +222,7 @@ void Route::duelParticipantsRoute()
 
 		if (regionId != -1)
 		{
-			m_gamesActive[gameID]->setDuel(Color::StringToColor(attackerIter->second), regionId);
+			m_gamesActive[gameID]->setDuel(color, regionId);
 		}
 		m_gamesActive[gameID]->addWaitingRequest(m_waitingList->getPlayer(sessionKeyIter->second)->getColor());
 		while (!m_gamesActive[gameID]->allRequestsReady())

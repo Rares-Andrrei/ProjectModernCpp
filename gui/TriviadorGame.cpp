@@ -148,6 +148,7 @@ void TriviadorGame::duelsPhase()
 	if (m_player->getColor() == color)
 	{
 		MapWindow->enableAllButtons();
+		QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
 		MapWindow->show();
 	}
 	else {

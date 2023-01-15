@@ -128,9 +128,8 @@ void Map::Send_Response_To_Server(int ZoneId)
 
 	QThread::msleep(10);
 
-	emit emitMapUpdatedChooseRegionsPhase();
-
 	this->hide();
+	emit emitMapUpdatedChooseRegionsPhase();
 }
 
 void Map::send_Attacker_Response_To_Server(int ZoneId)
@@ -141,14 +140,14 @@ void Map::send_Attacker_Response_To_Server(int ZoneId)
 	std::tuple<Color::ColorEnum, Color::ColorEnum, int> colors = m_GameInstance->getDuelingPlayersAndZone(m_player->getColor(), ZoneId);
 	updatePlayersInfo();
 
-	m_gridButtons->setButtonColor(ZoneId, Color::ColorEnum::None);
+	m_gridButtons->setButtonColor(std::get<2>(colors), Color::ColorEnum::None);
 
 	disableAllButtons();
 	QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
 
-	emit emitDuelParticipants({ std::get<0>(colors),std::get<1>(colors) });
-
 	this->hide();
+	
+	emit emitDuelParticipants({ std::get<0>(colors),std::get<1>(colors) });
 }
 
 void Map::getUpdatedZones(const std::vector<std::tuple<int, Color::ColorEnum, int, int>>& UpdatedZones)
