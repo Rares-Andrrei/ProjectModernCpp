@@ -351,39 +351,39 @@ void GameLogic::EndGame()
 	m_board.ObtainTotalScore();
 }
 
-void GameLogic::chooseBasePhase()
-{
-	ChooseBase chooseBase(m_questions);
-	int playerAnswer;
-	for (uint16_t index = 0; index < m_players.size(); index++)
-	{
-		std::cout << Color::ColorToString(m_players[index]->getColor()) << " player answer: ";
-		std::cin >> playerAnswer;
-		chooseBase.CreateOrder(m_players[index]->getColor(), 0, playerAnswer);
-	}
+//void GameLogic::chooseBasePhase()
+//{
+//	ChooseBase chooseBase(m_questions);
+//	int playerAnswer;
+//	for (uint16_t index = 0; index < m_players.size(); index++)
+//	{
+//		std::cout << Color::ColorToString(m_players[index]->getColor()) << " player answer: ";
+//		std::cin >> playerAnswer;
+//		chooseBase.CreateOrder(m_players[index]->getColor(), 0, playerAnswer);
+//	}
+//
+//	chooseBase.setBaseZone(m_board);
+//}
 
-	chooseBase.setBaseZone(m_board);
-}
-
-void GameLogic::chooseRegionsPhase()
-{
-	uint16_t roundCounter = 0;
-
-	while (m_board.CheckIfBoardIsFull() == false)
-	{
-		int playerAnswer;
-		ChooseRegion chooseRegion(m_questions);
-
-		for (uint16_t index = 0; index < m_players.size(); index++)
-		{
-			std::cout << Color::ColorToString(m_players[index]->getColor()) << " player answer: ";
-			std::cin >> playerAnswer;
-			chooseRegion.CreateOrder(m_players[index]->getColor(), 0, playerAnswer);
-		}
-
-		chooseRegion.setRegionZone(m_board);
-	}
-}
+//void GameLogic::chooseRegionsPhase()
+//{
+//	uint16_t roundCounter = 0;
+//
+//	while (m_board.CheckIfBoardIsFull() == false)
+//	{
+//		int playerAnswer;
+//		ChooseRegion chooseRegion(m_questions);
+//
+//		for (uint16_t index = 0; index < m_players.size(); index++)
+//		{
+//			std::cout << Color::ColorToString(m_players[index]->getColor()) << " player answer: ";
+//			std::cin >> playerAnswer;
+//			chooseRegion.CreateOrder(m_players[index]->getColor(), 0, playerAnswer);
+//		}
+//
+//		chooseRegion.setRegionZone(m_board);
+//	}
+//}
 // 0 0 0 0 0 1 1 1 1 1 1 2 0 2 1 1 1 0 2 1 2 2 0 0 2 0
 //void GameLogic::duelsPhase()
 //{

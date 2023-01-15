@@ -4,7 +4,6 @@
 #include "QuestionManager.h"
 #include "../../Player/Player/Player.h"
 #include  "Advantages.h"
-#include "ChooseBase.h"
 #include "Duel.h"
 #include "NumericQuestionManager.h"
 
@@ -97,8 +96,8 @@ public:
 private:
 
 	//void phases();
-	void chooseBasePhase();
-	void chooseRegionsPhase();
+	//void chooseBasePhase();
+	//void chooseRegionsPhase();
 	bool checkIfPlayerWasEliminated(std::shared_ptr<PlayerBase>& playerBase);
 	void updatePlayersScores();
 };

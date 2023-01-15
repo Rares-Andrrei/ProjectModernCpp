@@ -287,25 +287,3 @@ std::shared_ptr<Zone>& Board::end()
 {
 	return m_board[m_BoardHeight * m_BoardWidth];
 }
-
-std::ostream& operator<<(std::ostream& out, const Board& board)
-{
-	out << '\n';
-	//Board::Position pos;
-	//auto& [row, column] = pos;
-	for (int row = 0; row < board.m_BoardHeight; row++)
-	{
-		for (int column = 0; column < board.m_BoardWidth; column++)
-		{
-			if (board.m_board[row * board.m_BoardWidth + column] != nullptr)
-			{
-				out << *board.m_board[row * board.m_BoardWidth + column] << ' ';
-			}
-			else {
-				out << "________ ";
-			}
-		}
-		out << std::endl;
-	}
-	return out;
-}

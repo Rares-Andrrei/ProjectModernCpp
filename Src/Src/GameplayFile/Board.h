@@ -8,7 +8,7 @@
 #include <iostream>
 class Board
 {
-	uint8_t m_NumberOfPlayers; // Numarul maxim de jucatori este 4
+	uint8_t m_NumberOfPlayers;
 	uint8_t m_BoardWidth;
 	uint8_t m_BoardHeight;
 	std::vector<std::shared_ptr<Zone>> m_board;
@@ -17,16 +17,13 @@ class Board
 	int m_modifiedZones;
 
 public:
-	Board(const uint8_t& NumberOfPlayers = 2);
-
 	using Position = std::pair<int, int>;
 
-	friend std::ostream& operator <<(std::ostream& out, const Board& board);
+	Board(const uint8_t& NumberOfPlayers = 2);
 
 	const std::shared_ptr<Zone>& operator[](const Position& indices) const;
 	std::shared_ptr<Zone>& operator[](const Position& indices);
 	std::shared_ptr<Zone>& operator[](int id);
-
 
 	bool ValidateBasePosition(int idZone);
 	bool ValidateRegionPosition(int idZone, const Color::ColorEnum& color);
@@ -36,7 +33,6 @@ public:
 	bool checkIfPlayerCanUseAdvantages(const Color::ColorEnum& color);
 
 	std::tuple<int, Color::ColorEnum, int, int> getZoneInfo(int idZone);
-
 
 	void incrementModifiedZones();
 	int getModifiedZones();
@@ -49,7 +45,6 @@ public:
 	void generateNeighbours();
 
 	int getPlayerScore(const Color::ColorEnum& color);
-
 
 private:
 	void ChangeBoardDimensions();
