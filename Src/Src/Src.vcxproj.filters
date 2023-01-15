@@ -63,9 +63,6 @@
     <ClCompile Include="GameplayFile\Board.cpp">
       <Filter>GamePlayFiles\Cpp</Filter>
     </ClCompile>
-    <ClCompile Include="GameplayFile\ChooseBase.cpp">
-      <Filter>GamePlayFiles\Cpp</Filter>
-    </ClCompile>
     <ClCompile Include="GameplayFile\Duel.cpp">
       <Filter>GamePlayFiles\Cpp</Filter>
     </ClCompile>
@@ -99,9 +96,6 @@
     <ClCompile Include="DatabaseFile\utils.cpp">
       <Filter>DatabaseFiles\Cpp</Filter>
     </ClCompile>
-    <ClCompile Include="GameplayFile\ChooseRegion.cpp">
-      <Filter>GamePlayFiles\Cpp</Filter>
-    </ClCompile>
     <ClCompile Include="GameplayFile\GameLogic.cpp" />
     <ClCompile Include="Route.cpp" />
     <ClCompile Include="PlayersQueue.cpp" />
@@ -122,9 +116,6 @@
       <Filter>AdvantagesFiles\Header</Filter>
     </ClInclude>
     <ClInclude Include="GameplayFile\Board.h">
-      <Filter>GamePlayFiles\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="GameplayFile\ChooseBase.h">
       <Filter>GamePlayFiles\Header</Filter>
     </ClInclude>
     <ClInclude Include="GameplayFile\Duel.h">
@@ -156,9 +147,6 @@
     </ClInclude>
     <ClInclude Include="DatabaseFile\utils.h">
       <Filter>DatabaseFiles\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="GameplayFile\ChooseRegion.h">
-      <Filter>GamePlayFiles\Header</Filter>
     </ClInclude>
     <ClInclude Include="GameplayFile\GameLogic.h" />
     <ClInclude Include="CredentialErrors.h">

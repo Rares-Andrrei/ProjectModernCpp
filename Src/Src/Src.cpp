@@ -1,6 +1,5 @@
 #include "Route.h"
 
-
 long Lobby::currentCount = 0;
 void useRoutes()
 {

@@ -6,17 +6,15 @@
 #include  "Advantages.h"
 #include "Duel.h"
 #include "NumericQuestionManager.h"
+#include <random>
+#include <algorithm>
 
 class GameLogic
 {
 	Board m_board;
-
 	QuestionManager m_questions;
-
 	NumericQuestionManager m_numericQuestionManager;
-
 	std::optional<Duel> m_duel;
-
 	std::vector<std::shared_ptr<Player>> m_winners;
 
 	const uint16_t k_numberOfPlayers;
@@ -64,14 +62,8 @@ public:
 	bool checkIfPlayerCanUseAdvantages(const Color::ColorEnum& color);
 	std::tuple<int, Color::ColorEnum, int, int> getZoneInfo(int idZone);
 
-
-
 	GameLogic();
 	GameLogic(const uint16_t& numberOfPlayers, std::shared_ptr<Database> db);
-	//GameLogic(const GameLogic&) = delete;
-	//GameLogic(GameLogic&&) = delete;
-	//GameLogic& operator=(const GameLogic&) = delete;
-	//GameLogic& operator=(GameLogic&&) = delete;
 
 	bool checkZoneUpdates();
 	std::pair<int, Color::ColorEnum> getUpdatedZone();
@@ -86,18 +78,10 @@ public:
 	std::vector<std::shared_ptr<Player>> getWinnerList();
 	std::vector<std::shared_ptr<Player>> getPlayers();
 
-
-
-	//void StartGame();
-	void EndGame();
 	void addPlayer(std::shared_ptr<Player> player);
 
 	~GameLogic() = default;
 private:
-
-	//void phases();
-	//void chooseBasePhase();
-	//void chooseRegionsPhase();
 	bool checkIfPlayerWasEliminated(std::shared_ptr<PlayerBase>& playerBase);
 	void updatePlayersScores();
 };

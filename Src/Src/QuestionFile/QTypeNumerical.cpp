@@ -34,9 +34,3 @@ int QTypeNumerical::getAnswer() const
 {
 	return m_answer;
 }
-
-std::ostream& operator<<(std::ostream& out, const QTypeNumerical& q)
-{
-	out << q.m_question << std::endl;
-	return out;
-}

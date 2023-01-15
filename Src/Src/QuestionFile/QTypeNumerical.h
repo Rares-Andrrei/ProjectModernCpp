@@ -21,7 +21,5 @@ public:
 	std::string getQuestion() const;
 
 	int getAnswer() const;
-
-	friend std::ostream& operator <<(std::ostream& out, const QTypeNumerical& q);
 };
 

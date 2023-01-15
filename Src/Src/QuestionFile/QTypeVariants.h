@@ -42,8 +42,6 @@ public:
 	}
 
 	QTypeVariants& operator = (const QTypeVariants& quesiton);
-
 	void setVariants(const std::array<std::string, 4>& variants);
 	std::array<std::string, 4>getVariants();
-	friend std::ostream& operator <<(std::ostream& out, const QTypeVariants& q); //afisare in consola temporar pana avem gui
 };

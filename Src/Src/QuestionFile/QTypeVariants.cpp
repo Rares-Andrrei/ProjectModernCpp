@@ -38,7 +38,6 @@ int QTypeVariants::getAnswerIndex()
 
 void QTypeVariants::setAnswer(const std::string& answer)
 {
-	//se vor adauga mereu inainte variantele altfel nu functioneaza
 	for (uint8_t i = 0;  i < m_variants.size();  i++)
 	{
 		if (answer == m_variants[i])
@@ -70,15 +69,4 @@ std::string QTypeVariants::getAnswer() const
 std::array<std::string, 4> QTypeVariants::getVariants()
 {
 	return m_variants;
-}
-
-std::ostream& operator<<(std::ostream& out, const QTypeVariants& q)
-{
-	out << q.m_question << '\n';
-	for (int i = 0; i < q.m_variants.size(); i++)
-	{
-		out << q.m_variants[i] << "  |  ";
-	}
-	out << '\n';
-	return out;
 }
