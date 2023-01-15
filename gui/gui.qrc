@@ -17,6 +17,7 @@
         <file>green.png</file>
         <file>red.png</file>
         <file>yellow.png</file>
+        <file>backgroundPodium.png</file>
     </qresource>
     <qresource prefix="/slideShowCats">
         <file>cat1.png</file>
