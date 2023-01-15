@@ -62,8 +62,8 @@ void Route::requestDuelTurn()
 		}
 
 
-		m_logger.logg(Logger::Level::Info, "Request: ", req.url);
-		m_logger.logg(Logger::Level::Info, "Response: ", crow::response(json).code, req.url);
+		m_logger.logg(Logger::Level::Error, "Request: ", req.url);
+		m_logger.logg(Logger::Level::Error, "Response: ", crow::response(json).code, req.url);
 		return crow::response(json);
 	}
 	return crow::response(404);
@@ -83,6 +83,8 @@ void Route::sendResponseEt2()
 
 	if (gameIdIter->second == "" || sessionKeyIter->second == "" || responseIter->second == "" || colorIter->second == "")
 	{
+		m_logger.logg(Logger::Level::Error, "Request: ", req.url);
+		m_logger.logg(Logger::Level::Error, "Response: ", crow::response(404).code, req.url);
 		return crow::response(404);
 	}
 
@@ -128,6 +130,8 @@ void Route::sendResponseEt2()
 				json["duelStatus"] = "Lose"; //aici practic nu castiga nimeni, nu se intampla nimic
 				res = json;
 				res.code = 200;
+				m_logger.logg(Logger::Level::Info, "Request: ", req.url);
+				m_logger.logg(Logger::Level::Info, "Response: ", res.code, req.url);
 				return res;
 			}
 			else if (state == Duel::DuelState::lifeTaken)
@@ -146,6 +150,8 @@ void Route::sendResponseEt2()
 				json["defender"] = Color::ColorToInt(color2);
 				res = json;
 				res.code = 200;
+				m_logger.logg(Logger::Level::Info, "Request: ", req.url);
+				m_logger.logg(Logger::Level::Info, "Response: ", res.code, req.url);
 				return res;
 			}
 			else if (state == Duel::DuelState::Draw)
@@ -158,6 +164,8 @@ void Route::sendResponseEt2()
 				json["defender"] = Color::ColorToInt(color2);
 				res = json;
 				res.code = 200;
+				m_logger.logg(Logger::Level::Info, "Request: ", req.url);
+				m_logger.logg(Logger::Level::Info, "Response: ", res.code, req.url);
 				return res;
 			}
 			else if (state == Duel::DuelState::Win)
@@ -176,10 +184,14 @@ void Route::sendResponseEt2()
 				json["zoneNr"] = zoneNr;
 				res = json;
 				res.code = 200;
+				m_logger.logg(Logger::Level::Info, "Request: ", req.url);
+				m_logger.logg(Logger::Level::Info, "Response: ", res.code, req.url);
 				return res;
 			}
 		}
 	}
+	m_logger.logg(Logger::Level::Error, "Request: ", req.url);
+	m_logger.logg(Logger::Level::Error, "Response: ", crow::response(404).code, req.url);
 	return crow::response(404);
 		});
 }
@@ -198,11 +210,15 @@ void Route::getQuestionTypeNumericalRouteEt2()
 		QTypeNumerical question = m_gamesActive[gameID]->getDuelNumericalQ();
 		res.body = question.getQuestion();
 		res.code = 200;
+		m_logger.logg(Logger::Level::Info, "Request: ", req.url);
+		m_logger.logg(Logger::Level::Info, "Response: ", res.code, req.url);
 		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
 		return res;
 	}
 	res.code = 404;
+	m_logger.logg(Logger::Level::Error, "Request: ", req.url);
+	m_logger.logg(Logger::Level::Error, "Response: ", res.code, req.url);
 	return res;
 		});
 
@@ -223,6 +239,8 @@ void Route::duelParticipantsRoute()
 
 	if (gameIdIter->second == "" || sessionKeyIter->second == "" || attackerIter->second == "" || regionIdIter->second == "")
 	{
+		m_logger.logg(Logger::Level::Error, "Request: ", req.url);
+		m_logger.logg(Logger::Level::Error, "Response: ", crow::response(404).code, req.url);
 		return crow::response(404);
 	}
 
@@ -253,8 +271,14 @@ void Route::duelParticipantsRoute()
 		crow::response res;
 		res.code = 200;
 		res = json;
+		m_logger.logg(Logger::Level::Info, "Request: ", req.url);
+		m_logger.logg(Logger::Level::Info, "Response: ", res.code, req.url);
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 		return res;
 	}
+	m_logger.logg(Logger::Level::Error, "Request: ", req.url);
+	m_logger.logg(Logger::Level::Error, "Response: ", crow::response(404).code, req.url);
+	std::this_thread::sleep_for(std::chrono::milliseconds(10));
 	return crow::response(404);
 
 		});
@@ -539,9 +563,13 @@ void Route::checkIfPlayerCanUseAdvantages()
 		crow::response res;
 		res.code = 200;
 		res = json;
+		m_logger.logg(Logger::Level::Info, "Request: ", req.url);
+		m_logger.logg(Logger::Level::Info, "Response: ", res.code, req.url);
 		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 		return res;
 	}
+	m_logger.logg(Logger::Level::Error, "Request: ", req.url);
+	m_logger.logg(Logger::Level::Error, "Response: ", crow::response(404).code, req.url);
 	std::this_thread::sleep_for(std::chrono::milliseconds(10));
 	return crow::response(404);
 		});
@@ -577,11 +605,15 @@ void Route::useAdvantage()
 				json["r2"] = answers[1];
 				json["r3"] = answers[2];
 				json["r4"] = answers[3];
+				m_logger.logg(Logger::Level::Info, "Request: ", req.url);
+				m_logger.logg(Logger::Level::Info, "Response: ", crow::response(json).code, req.url);
 				return crow::response(json);
 			}
 			else if (advantageTypeIter->second == "sugestion")
 			{
 				json["r"] = AnswerSugestion::useAdvantage(question.getAnswer());
+				m_logger.logg(Logger::Level::Info, "Request: ", req.url);
+				m_logger.logg(Logger::Level::Info, "Response: ", crow::response(json).code, req.url);
 				return crow::response(json);
 			}
 		}
@@ -596,12 +628,16 @@ void Route::useAdvantage()
 				json["r2"] = answers[1];
 				json["r3"] = answers[2];
 				json["r4"] = answers[3];
+				m_logger.logg(Logger::Level::Info, "Request: ", req.url);
+				m_logger.logg(Logger::Level::Info, "Response: ", crow::response(json).code, req.url);
 				return crow::response(json);
 			}
 			else if (advantageTypeIter->second == "sugestion")
 			{
 				QTypeNumerical question = m_gamesActive[gameID]->getDuelNumericalQ();
 				json["r"] = AnswerSugestion::useAdvantage(question.getAnswer());
+				m_logger.logg(Logger::Level::Info, "Request: ", req.url);
+				m_logger.logg(Logger::Level::Info, "Response: ", crow::response(json).code, req.url);
 				return crow::response(json);
 			}
 			else if (advantageTypeIter->second == "50-50")
@@ -611,10 +647,14 @@ void Route::useAdvantage()
 				std::array<std::string, 2> options = advantage.AdvantageUtility();
 				json["r1"] = options[0];
 				json["r2"] = options[1];
+				m_logger.logg(Logger::Level::Info, "Request: ", req.url);
+				m_logger.logg(Logger::Level::Info, "Response: ", crow::response(json).code, req.url);
 				return crow::response(json);
 			}
 		}
 	}
+	m_logger.logg(Logger::Level::Warning, "Request: ", req.url);
+	m_logger.logg(Logger::Level::Warning, "Response: ", crow::response().code, req.url);
 	return crow::response();
 		});
 
@@ -643,9 +683,13 @@ void Route::updatePlayerInfo()
 
 		res.code = 200;
 		res = json;
+		m_logger.logg(Logger::Level::Info, "Request: ", req.url);
+		m_logger.logg(Logger::Level::Info, "Response: ", res.code, req.url);
 		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 		return res;
 	}
+	m_logger.logg(Logger::Level::Error, "Request: ", req.url);
+	m_logger.logg(Logger::Level::Error, "Response: ", crow::response(404).code, req.url);
 	std::this_thread::sleep_for(std::chrono::milliseconds(10));
 	return crow::response(404);
 		});
