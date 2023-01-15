@@ -60,8 +60,6 @@ void Map::onButtonClickedSignal(int index)
 	else if (m_gamePhase == GamePhase::Duels)
 	{
 		if (m_GameInstance->checkValidAttackMove(index, m_player->getColor()))
-			// request to server :: cei doi participanti , in functie de jucatorul care ataca si zona selectata
-			// response :: 2 culori 
 			send_Attacker_Response_To_Server(index);
 		else
 			QMessageBox::warning(this, "Error", "Invalid Attack Position");
@@ -114,7 +112,7 @@ void Map::Send_Response_To_Server(int ZoneId)
 	if (this->isHidden())
 		this->show();
 	updatePlayersInfo();
-	
+
 	std::pair<int, Color::ColorEnum> colorZone = m_GameInstance->chooseRegion(ZoneId, m_player->getColor());
 	disableAllButtons();
 	m_gridButtons->setButtonColor(colorZone.first, colorZone.second);
@@ -125,7 +123,7 @@ void Map::Send_Response_To_Server(int ZoneId)
 	if (zoneColor != Color::ColorEnum::None)
 	{
 		m_gridButtons->setButtonColor(zoneId, zoneColor);
-		m_gridButtons->setCustomName(zoneId, "Zona " + QString::number(zoneId) , zoneScore , zoneLifes);
+		m_gridButtons->setCustomName(zoneId, "Zona " + QString::number(zoneId), zoneScore, zoneLifes);
 	}
 
 	QThread::msleep(10);
@@ -140,14 +138,15 @@ void Map::send_Attacker_Response_To_Server(int ZoneId)
 	if (this->isHidden())
 		this->show();
 	updatePlayersInfo();
-	
-	std::pair<Color::ColorEnum, Color::ColorEnum> colors = { Color::ColorEnum::Red, Color::ColorEnum::Yellow };// varianta de test
-	//Ruta prin care se trimite jucatorul si ZoneId , daca ZoneId e valid  , el e atacatorul
+	QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
+	std::tuple<Color::ColorEnum, Color::ColorEnum, int> colors = m_GameInstance->getDuelingPlayersAndZone(m_player->getColor(), ZoneId);
+
+	m_gridButtons->setButtonColor(ZoneId, Color::ColorEnum::None);
 
 	disableAllButtons();
-	QThread::msleep(QRandomGenerator::global()->bounded(1, 10));
+	QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
 
-	emit emitDuelParticipants(colors);
+	emit emitDuelParticipants({ std::get<0>(colors),std::get<1>(colors) });
 
 	this->hide();
 }
@@ -197,7 +196,7 @@ void Map::updatePlayersInfo()
 void Map::playersAvatar()
 {
 	//ui.player1Avatar->setScaledContents(true);
-	QStringList filenames; 
+	QStringList filenames;
 	filenames.append(":/gui/red.png");
 	filenames.append(":/gui/blue.png");
 	filenames.append(":/gui/yellow.png");

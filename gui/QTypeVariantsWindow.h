@@ -47,6 +47,7 @@ private:
 	void createTimeSlider();
 	void createAnswerVariants();
 	void advantageButtonEnabled();
+	void resetTheWindow();
 
 
 	std::shared_ptr<Route> m_GameInstance;

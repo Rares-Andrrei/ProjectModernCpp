@@ -134,13 +134,15 @@ void TriviadorGame::chooseRegionsPhase()
 
 void TriviadorGame::duelsPhase()
 {	
+	QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
 	auto color = m_GameInstance->getAttackerColor();
 	if (color == Color::ColorEnum::None)
 	{
-		changePhase = true;
+		m_gamePhase = GamePhase::End;
+		EndGame();
 		return;
 	}
-	QThread::msleep(QRandomGenerator::global()->bounded(1, 10));
+	QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
 	if (m_player->getColor() == color)
 	{
 		MapWindow->enableAllButtons();
@@ -308,7 +310,7 @@ bool TriviadorGame::checkIfWindowsAreClosed()
 
 void TriviadorGame::nextPlayerInQueue()
 {
-	QThread::msleep(QRandomGenerator::global()->bounded(1, 10));
+	QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
 	if (changePhase == true)
 	{
 		return;
@@ -329,7 +331,7 @@ void TriviadorGame::nextPlayerInQueue()
 		else
 		{
 			MapWindow->enableAllButtons();
-			QThread::msleep(QRandomGenerator::global()->bounded(1, 10));
+			QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
 			MapWindow->show();
 		}
 	}
@@ -343,7 +345,10 @@ void TriviadorGame::updateTheQueueStatus()
 	}
 	if (m_GameInstance->checkIfBoardIsFull() == true && m_gamePhase == GamePhase::ChooseRegions)
 	{
-		changePhase = true;
+		m_gamePhase = GamePhase::Duels;
+		t_checkCurrentPhase->stop();
+		t_NumericWindowTimer->stop();
+
 		while (!m_playerOrder.empty())
 		{
 			m_playerOrder.pop();

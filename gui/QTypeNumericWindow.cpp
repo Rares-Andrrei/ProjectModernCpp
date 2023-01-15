@@ -15,8 +15,6 @@ QTypeNumericWindow::QTypeNumericWindow(QWidget* parent)
 	ui.TimeRemaining->setRange(0, 3000);
 	ui.TimeRemaining->setValue(0);
 
-	// nu sunt sigur daca trebuie ?
-	ui.Answer->setClearButtonEnabled(false);
 	ui.Answer->setEnabled(false);
 
 	// Use a stylesheet to customize the appearance of the slider
@@ -43,7 +41,6 @@ QTypeNumericWindow::QTypeNumericWindow(QWidget* parent)
 		"}"
 		"QSlider::groove:horizontal { background: green; }");
 
-	//TD:  Clasa custom pentru button , pentru a simplifica codul
 	ui.Number0->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	ui.Number1->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	ui.Number2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -68,7 +65,6 @@ void QTypeNumericWindow::requestQuestion()
 	ui.Question->setText(question);
 	ui.Question->setFont(QFont("Arial", 25));
 	ui.Question->setAlignment(Qt::AlignCenter);
-	// Request :: ask the server fro a random question 
 }
 
 void QTypeNumericWindow::setPlayer(const std::shared_ptr<PlayerQString>& player)
@@ -114,55 +110,66 @@ void QTypeNumericWindow::on_Number0_clicked()
 	else if (ui.Answer->text().size() > 0 && ui.Answer->text()[0] != '0')
 		ui.Answer->setText(ui.Answer->text() + "0");
 }
+
 void QTypeNumericWindow::on_Number1_clicked()
 {
 	if (ui.Answer->text().size() == 0 || (ui.Answer->text().size() > 0 && ui.Answer->text()[0] != '0'))
 		ui.Answer->setText(ui.Answer->text() + "1");
 }
+
 void QTypeNumericWindow::on_Number2_clicked()
 {
 	if (ui.Answer->text().size() == 0 || (ui.Answer->text().size() > 0 && ui.Answer->text()[0] != '0'))
 		ui.Answer->setText(ui.Answer->text() + "2");
 }
+
 void QTypeNumericWindow::on_Number3_clicked()
 {
 	if (ui.Answer->text().size() == 0 || (ui.Answer->text().size() > 0 && ui.Answer->text()[0] != '0'))
 		ui.Answer->setText(ui.Answer->text() + "3");
 }
+
 void QTypeNumericWindow::on_Number4_clicked()
 {
 	if (ui.Answer->text().size() == 0 || (ui.Answer->text().size() > 0 && ui.Answer->text()[0] != '0'))
 		ui.Answer->setText(ui.Answer->text() + "4");
 }
+
 void QTypeNumericWindow::on_Number5_clicked()
 {
 	if (ui.Answer->text().size() == 0 || (ui.Answer->text().size() > 0 && ui.Answer->text()[0] != '0'))
 		ui.Answer->setText(ui.Answer->text() + "5");
 }
+
 void QTypeNumericWindow::on_Number6_clicked()
 {
 	if (ui.Answer->text().size() == 0 || (ui.Answer->text().size() > 0 && ui.Answer->text()[0] != '0'))
 		ui.Answer->setText(ui.Answer->text() + "6");
 }
+
 void QTypeNumericWindow::on_Number7_clicked()
 {
 	if (ui.Answer->text().size() == 0 || (ui.Answer->text().size() > 0 && ui.Answer->text()[0] != '0'))
 		ui.Answer->setText(ui.Answer->text() + "7");
 }
+
 void QTypeNumericWindow::on_Number8_clicked()
 {
 	if (ui.Answer->text().size() == 0 || (ui.Answer->text().size() > 0 && ui.Answer->text()[0] != '0'))
 		ui.Answer->setText(ui.Answer->text() + "8");
 }
+
 void QTypeNumericWindow::on_Number9_clicked()
 {
 	if (ui.Answer->text().size() == 0 || (ui.Answer->text().size() > 0 && ui.Answer->text()[0] != '0'))
 		ui.Answer->setText(ui.Answer->text() + "9");
 }
+
 void QTypeNumericWindow::on_Delete_clicked()
 {
 	ui.Answer->setText(ui.Answer->text().left(ui.Answer->text().length() - 1));
 }
+
 void QTypeNumericWindow::on_Enter_clicked()
 {
 	m_TimeRemaining->stop();
@@ -189,10 +196,12 @@ void QTypeNumericWindow::on_Delete_pressed()
 {
 	m_timer->start(100);
 }
+
 void QTypeNumericWindow::on_Delete_release()
 {
 	m_timer->stop();
 }
+
 void QTypeNumericWindow::on_Timer_Timeout()
 {
 	if (ui.Answer->text().length() > 0)
@@ -203,6 +212,7 @@ void QTypeNumericWindow::on_Timer_Timeout()
 		m_timer->stop();
 	}
 }
+
 void QTypeNumericWindow::on_TimeRemaining_Timeout()
 {
 	int value = ui.TimeRemaining->value();
@@ -213,7 +223,6 @@ void QTypeNumericWindow::on_TimeRemaining_Timeout()
 	else {
 		m_TimeRemaining->stop();
 		on_Enter_clicked();
-		// REQUEST :: send the response  provided to the server
 	}
 }
 
@@ -235,10 +244,7 @@ void QTypeNumericWindow::enableAllButtons()
 
 void QTypeNumericWindow::resetTheWindow()
 {
-	for (const auto& button : findChildren<QAbstractButton*>())
-	{
-		button->setEnabled(true);
-	}
+	enableAllButtons();
 	ui.Answer->clear();
 	ui.TimeRemaining->setValue(0);
 	m_TimeRemaining->start(10);

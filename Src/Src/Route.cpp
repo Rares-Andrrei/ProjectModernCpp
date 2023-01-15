@@ -158,6 +158,8 @@ void Route::sendResponseEt2()
 					json["zoneColor" + std::to_string(zoneNr)] = Color::ColorToInt(zone->getColor());
 					json["zoneId" + std::to_string(zoneNr)] = m_gamesActive[gameID]->getZoneId(zone);
 					json["zoneScore" + std::to_string(zoneNr)] = zone->getScore();
+
+					zoneNr++;
 				}
 				res = json;
 				res.code = 200;

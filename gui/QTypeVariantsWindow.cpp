@@ -71,7 +71,14 @@ void QTypeVariantsWindow::advantageButtonEnabled()
 	ui.fiftyFiftyAdvantajeButton->setToolTip("50-50 : this advantage eliminates 2 variants");
 }
 
-
+void QTypeVariantsWindow::resetTheWindow()
+{
+	enableAllButtons();
+	for (auto& button : findChildren<QPushButton*>())
+		m_Variant->setStyleSheet("QPushButton { background-color: white; }");
+	ui.TimeSlider->setValue(0);
+	variant = "";
+}
 
 QTypeVariantsWindow::~QTypeVariantsWindow()
 {
@@ -122,6 +129,7 @@ void QTypeVariantsWindow::sendResponseToServer(const QString& response)
 
 void QTypeVariantsWindow::showEvent(QShowEvent* event)
 {
+	resetTheWindow();
 	m_timeRemaining->start(10);
 	QWidget::showEvent(event);
 }

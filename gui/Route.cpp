@@ -200,6 +200,32 @@ void Route::sendResponseEt2(Color::ColorEnum color, int response, int time)
 	if (aux != "")
 	{
 		crow::json::rvalue resData = crow::json::load(aux);
+		std::string duelStatus = resData["duelStatus"].s();
+		if (duelStatus == "lifeTaken")
+		{
+			//TODO
+			int ZoneId = resData["baseId"].i();
+			int lives = resData["lives"].i();
+			int score = resData["score"].i();
+			Color::ColorEnum color = Color::getColor(resData["color"].i());
+			Color::ColorEnum attacker = Color::getColor(resData["attacker"].i());
+			Color::ColorEnum defender = Color::getColor(resData["defender"].i());
+		}
+		else if (duelStatus == "Lose")
+		{
+			//TODO
+			// return status and go for next duel
+		}
+		else if (duelStatus == "Draw")
+		{
+			//TODO
+			// return just the status
+		}
+		else if (duelStatus == "Win")
+		{
+			//TODO
+		}
+
 
 	}
 	//aici sa te uiti pe server si interpreteaza tu jsonu sa iei datele in functie de ce duelStatus e
