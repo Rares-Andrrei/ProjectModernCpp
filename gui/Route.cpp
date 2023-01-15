@@ -124,12 +124,13 @@ std::pair<int, Color::ColorEnum> Route::chooseRegion(int id, Color::ColorEnum co
 	return data;
 }
 
-std::tuple<Color::ColorEnum,Color::ColorEnum,int> Route::getDuelingPlayersAndZone(Color::ColorEnum attacker, int zoneId)
+std::tuple<Color::ColorEnum, Color::ColorEnum, int> Route::getDuelingPlayersAndZone(Color::ColorEnum attacker, int zoneId)
 {
 	cpr::Url url{ "http://localhost:18080/duelParticipants" };
 	cpr::Payload payload{
 			{ "gameID", std::to_string(m_gameId)},
-			{ "color", std::to_string(Color::ColorToInt(attacker))},
+			{ "sessionKey", m_sessionKey}
+			{ "attacker", std::to_string(Color::ColorToInt(attacker))},
 			{ "regionId", std::to_string(zoneId)}
 	};
 	auto lambda = [](cpr::Response response) {
@@ -225,7 +226,6 @@ void Route::sendResponseEt2(Color::ColorEnum color, int response, int time)
 		{
 			//TODO
 		}
-
 
 	}
 	//aici sa te uiti pe server si interpreteaza tu jsonu sa iei datele in functie de ce duelStatus e

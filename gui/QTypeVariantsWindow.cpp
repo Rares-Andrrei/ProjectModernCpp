@@ -112,8 +112,7 @@ void QTypeVariantsWindow::setGameInstance(const std::shared_ptr<Route>& GameInst
 
 void QTypeVariantsWindow::sendResponseToServer(const QString& response)
 {
-	//REQUEST :: send responses to server , and determinate the duel status (W/L/Conqueror/Draw)
-
+	/*auto duelStatus =*/ m_GameInstance->sendResponseEt2(m_player->getColor(), response.toInt(),0);
 	//RESPONSE :: get the duel status and the new score / board layout
 	if (true) // if it's a DRAW get the list of players which should participate 
 	{
