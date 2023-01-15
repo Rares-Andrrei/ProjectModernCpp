@@ -9,9 +9,9 @@ TriviadorGame::TriviadorGame(QWidget* parent)
 
 	m_QTypeNumericWindow.reset(new QTypeNumericWindow(this));
 	connect(m_QTypeNumericWindow.get(), &QTypeNumericWindow::sendOrderToParent, this, &TriviadorGame::onSendOrderToParent);
-	
+
 	m_QTypeVariantsWindow.reset(new QTypeVariantsWindow(this));
-	
+
 	t_NumericWindowTimer = std::make_unique<QTimer>();
 	t_NumericWindowTimer->setInterval(500);
 	connect(t_NumericWindowTimer.get(), &QTimer::timeout, this, &TriviadorGame::checkNumericWindowClosed);
@@ -32,7 +32,7 @@ TriviadorGame::TriviadorGame(QWidget* parent)
 	connect(MapWindow.get(), &Map::emitDuelParticipants, this, &TriviadorGame::duelParticipants);
 	connect(m_QTypeNumericWindow.get(), &QTypeNumericWindow::emitTieBreakerResults, this, &TriviadorGame::getTieBreakerResults);
 	connect(m_QTypeVariantsWindow.get(), &QTypeVariantsWindow::emitTieBreakerParticipants, this, &TriviadorGame::tieBreakerRound);
-	
+
 }
 
 TriviadorGame::~TriviadorGame()
@@ -133,9 +133,11 @@ void TriviadorGame::chooseRegionsPhase()
 }
 
 void TriviadorGame::duelsPhase()
-{	
+{
 	QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
 	auto color = m_GameInstance->getAttackerColor();
+	MapWindow->hide();
+
 	if (color == Color::ColorEnum::None)
 	{
 		m_gamePhase = GamePhase::End;
@@ -348,11 +350,13 @@ void TriviadorGame::updateTheQueueStatus()
 		m_gamePhase = GamePhase::Duels;
 		t_checkCurrentPhase->stop();
 		t_NumericWindowTimer->stop();
+		MapWindow->setPhase(GamePhase::Duels);
 
 		while (!m_playerOrder.empty())
 		{
 			m_playerOrder.pop();
 		}
+		MapWindow->close();
 		duelsPhase();
 		return;
 	}

@@ -137,9 +137,9 @@ void Map::send_Attacker_Response_To_Server(int ZoneId)
 {
 	if (this->isHidden())
 		this->show();
-	updatePlayersInfo();
 	QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
 	std::tuple<Color::ColorEnum, Color::ColorEnum, int> colors = m_GameInstance->getDuelingPlayersAndZone(m_player->getColor(), ZoneId);
+	updatePlayersInfo();
 
 	m_gridButtons->setButtonColor(ZoneId, Color::ColorEnum::None);
 

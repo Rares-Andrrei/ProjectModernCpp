@@ -129,7 +129,7 @@ std::tuple<Color::ColorEnum, Color::ColorEnum, int> Route::getDuelingPlayersAndZ
 	cpr::Url url{ "http://localhost:18080/duelParticipants" };
 	cpr::Payload payload{
 			{ "gameID", std::to_string(m_gameId)},
-			{ "sessionKey", m_sessionKey}
+			{ "sessionKeyIter", m_sessionKey},
 			{ "attacker", std::to_string(Color::ColorToInt(attacker))},
 			{ "regionId", std::to_string(zoneId)}
 	};

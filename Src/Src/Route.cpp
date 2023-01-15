@@ -206,6 +206,8 @@ void Route::duelParticipantsRoute()
 	auto sessionKeyIter = bodyArgs.find("sessionKeyIter");
 	auto attackerIter = bodyArgs.find("attacker");
 	auto regionIdIter = bodyArgs.find("regionId");
+	auto end = bodyArgs.end();
+
 
 	if (gameIdIter->second == "" || sessionKeyIter->second == "" || attackerIter->second == "" || regionIdIter->second == "")
 	{
