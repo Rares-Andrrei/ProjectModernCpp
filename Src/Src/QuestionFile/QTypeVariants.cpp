@@ -25,6 +25,17 @@ void QTypeVariants::setId(int id)
 	m_id = id;
 }
 
+int QTypeVariants::getAnswerIndex()
+{
+	for (int i = 0; i < m_variants.size(); i++)
+	{
+		if (m_variants[i] == m_answer)
+		{
+			return i;
+		}
+	}
+}
+
 void QTypeVariants::setAnswer(const std::string& answer)
 {
 	//se vor adauga mereu inainte variantele altfel nu functioneaza

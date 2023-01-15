@@ -20,9 +20,12 @@ public:
 	Route();
 
 	void requestDuelTurn();
+	void duelParticipantsRoute();
+	void getQuestionTypeVariantsRoute();
+	void sendResponseEt2();
+	void getQuestionTypeNumericalRouteEt2();
 
 	void getQuestionTypeNumericalRoute();
-	void getQuestionTypeVariantsRoute();
 	void sendResponseQTypeNumericalEt1();
 	void chooseRegionRoute();
 

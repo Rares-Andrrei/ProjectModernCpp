@@ -29,10 +29,17 @@ void Route::requestDuelTurn()
 	auto& requestDuerlTurn = CROW_ROUTE(m_app, "/requestDuerlTurn")
 		.methods(crow::HTTPMethod::Post);
 	requestDuerlTurn([this](const crow::request& req) {
-		auto bodyArgs = parseUrlArgs(req.body);
+	
+	auto bodyArgs = parseUrlArgs(req.body);
 	auto gameIdIter = bodyArgs.find("gameID");
 	auto sessionKeyIter = bodyArgs.find("sessionKey");
 	long gameID = std::stoi(gameIdIter->second);
+
+	if (gameIdIter->second == "" || sessionKeyIter->second == "")
+	{
+		return crow::response(404);
+	}
+
 	if (m_gamesActive.count(gameID) > 0 && m_waitingList->isActive(sessionKeyIter->second))
 	{
 
@@ -46,10 +53,193 @@ void Route::requestDuelTurn()
 		json["attackerColor"] = Color::ColorToInt(m_gamesActive[gameID]->getAttackerColor());
 		std::this_thread::sleep_for(std::chrono::milliseconds(16));
 		m_gamesActive[gameID]->deleteRequestsReady();
-		m_gamesActive[gameID]->deleteColorToAttack();
+		if (m_waitingList->getPlayer(sessionKeyIter->second)->getColor() == m_gamesActive[gameID]->getAttackerColor())
+		{
+			m_gamesActive[gameID]->deleteColorToAttack();
+		}
 		return crow::response(json);
 	}
 	return crow::response(404);
+		});
+}
+
+void Route::sendResponseEt2()
+{
+	auto& sendResponseVariants = CROW_ROUTE(m_app, "/sendResponseEt2").methods(crow::HTTPMethod::Post);
+	sendResponseVariants([this](const crow::request& req) {
+
+	auto bodyArgs = parseUrlArgs(req.body);
+	auto sessionKeyIter = bodyArgs.find("sessionKey");
+	auto gameIdIter = bodyArgs.find("gameID");
+	auto colorIter = bodyArgs.find("color");
+	auto responseIter = bodyArgs.find("response");
+
+	if (gameIdIter->second == "" || sessionKeyIter->second == "" || responseIter->second == "" || colorIter->second == "")
+	{
+		return crow::response(404);
+	}
+
+	long gameID = std::stoi(gameIdIter->second);
+	Color::ColorEnum color = Color::getColor(std::stoi(colorIter->second));
+
+	if (m_waitingList->isActive(sessionKeyIter->second) && m_gamesActive.count(gameID) > 0)
+	{
+		if (color != Color::ColorEnum::None)
+		{
+			if (m_gamesActive[gameID]->duelDraw())
+			{
+				auto timeIter = bodyArgs.find("time");
+				m_gamesActive[gameID]->setDuelNumericalAnswer(std::stoi(timeIter->second), std::stoi(responseIter->second), color);
+			}
+			else
+			{
+				m_gamesActive[gameID]->duelPlayerResponse(color, std::stoi(responseIter->second));
+			}
+		}
+
+		m_gamesActive[gameID]->addWaitingRequest(m_waitingList->getPlayer(sessionKeyIter->second)->getColor());
+		while (!m_gamesActive[gameID]->allRequestsReady())
+		{
+			std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		}
+		std::this_thread::sleep_for(std::chrono::milliseconds(16));
+		m_gamesActive[gameID]->deleteRequestsReady();
+
+		if (color == m_gamesActive[gameID]->getAttackerColor())
+		{
+			m_gamesActive[gameID]->setDuelPlayerWinner();
+		}
+		std::this_thread::sleep_for(std::chrono::milliseconds(16));
+
+		Duel::DuelState state = m_gamesActive[gameID]->getDuelState();
+		crow::response res;
+		if (state != Duel::DuelState::None)
+		{
+			crow::json::wvalue json;
+			if (state == Duel::DuelState::Lose)
+			{
+				json["duelStatus"] = "Lose"; //aici practic nu castiga nimeni, nu se intampla nimic
+				res = json;
+				res.code = 200;
+				return res;
+			}
+			else if (state == Duel::DuelState::lifeTaken)
+			{
+				json["duelStatus"] = "lifeTaken";
+				std::vector<std::shared_ptr<Zone>> zones = m_gamesActive[gameID]->getDuelZones();
+				auto isBase = std::dynamic_pointer_cast<PlayerBase>(zones[0]);
+				Color::ColorEnum color1, color2;
+				int zoneId;
+				m_gamesActive[gameID]->getDuelingPlayersAndZone(color1, color2, zoneId);
+				json["baseId"] = zoneId;
+				json["lives"] = isBase->getNumberOfLifesLeft();
+				json["score"] = isBase->getScore();
+				json["color"] = Color::ColorToInt(isBase->getColor());
+				json["attacker"] = Color::ColorToInt(color1); //aici inseamna ca i-a luat o viata din baza si pe client apelezi iar duelu cu ei doi
+				json["defender"] = Color::ColorToInt(color2);
+				res = json;
+				res.code = 200;
+				return res;
+			}
+			else if (state == Duel::DuelState::Draw)
+			{
+				json["duelStatus"] = "Draw";
+				res = json;
+				res.code = 200;
+				return res;
+			}
+			else if (state == Duel::DuelState::Win)
+			{
+				json["duelStatus"] = "Win";
+				std::vector<std::shared_ptr<Zone>> zones = m_gamesActive[gameID]->getDuelZones(); //aici e un vector pt ca exista si posibilitatea sa fi distrus baza si sa ia mai multe zone
+				int zoneNr = 0;
+				for (auto zone : zones)
+				{
+					json["zoneColor" + std::to_string(zoneNr)] = Color::ColorToInt(zone->getColor());
+					json["zoneId" + std::to_string(zoneNr)] = m_gamesActive[gameID]->getZoneId(zone);
+					json["zoneScore" + std::to_string(zoneNr)] = zone->getScore();
+				}
+				res = json;
+				res.code = 200;
+				return res;
+			}
+		}
+	}
+	return crow::response(404);
+		});
+}
+
+void Route::getQuestionTypeNumericalRouteEt2()
+{
+	auto& getQuestionTypeNumericalEt2 = CROW_ROUTE(m_app, "/getQuestionTypeNumericalEt2")
+		.methods(crow::HTTPMethod::Get);
+	getQuestionTypeNumericalEt2([this](const crow::request& req) {
+	auto bodyArgs = parseUrlArgs(req.body);
+	auto gameIdIter = bodyArgs.find("gameID");
+	long gameID = std::stoi(gameIdIter->second);
+	crow::response res;
+	if (m_gamesActive.count(gameID) > 0)
+	{
+		QTypeNumerical question = m_gamesActive[gameID]->getDuelNumericalQ();
+		res.body = question.getQuestion();
+		res.code = 200;
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+
+		return res;
+	}
+	res.code = 404;
+	return res;
+		});
+
+}
+
+void Route::duelParticipantsRoute()
+{
+	auto& duelParticipants = CROW_ROUTE(m_app, "/duelParticipants").methods(crow::HTTPMethod::Post);
+	duelParticipants([this](const crow::request& req) {
+
+	auto bodyArgs = parseUrlArgs(req.body);
+	auto gameIdIter = bodyArgs.find("gameID");
+	auto sessionKeyIter = bodyArgs.find("sessionKeyIter");
+	auto attackerIter = bodyArgs.find("attacker");
+	auto regionIdIter = bodyArgs.find("regionId");
+
+	if (gameIdIter->second == "" || sessionKeyIter->second == "" || attackerIter->second == "" || regionIdIter->second == "")
+	{
+		return crow::response(404);
+	}
+
+	long gameID = std::stoi(gameIdIter->second);
+	if (m_gamesActive.count(gameID) > 0 && m_waitingList->isActive(sessionKeyIter->second))
+	{
+		int regionId = std::stoi(regionIdIter->second);
+		Color::ColorEnum color = Color::getColor(std::stoi(attackerIter->second));
+
+		if (regionId != -1)
+		{
+			m_gamesActive[gameID]->setDuel(Color::StringToColor(attackerIter->second), regionId);
+		}
+		m_gamesActive[gameID]->addWaitingRequest(m_waitingList->getPlayer(sessionKeyIter->second)->getColor());
+		while (!m_gamesActive[gameID]->allRequestsReady())
+		{
+			std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		}
+		std::this_thread::sleep_for(std::chrono::milliseconds(16));
+		m_gamesActive[gameID]->deleteRequestsReady();
+		Color::ColorEnum color1, color2;
+		int zoneId;
+		m_gamesActive[gameID]->getDuelingPlayersAndZone(color1, color2, zoneId);
+		crow::json::wvalue json;
+		json["color1"] = Color::ColorToInt(color1);
+		json["color2"] = Color::ColorToInt(color2);
+		json["zoneId"] = zoneId;
+		crow::response res;
+		res.code = 200;
+		res = json;
+		return res;
+	}
+	return crow::response(404);
+
 		});
 }
 

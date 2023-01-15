@@ -7,9 +7,17 @@ void GameLogic::randomQTypeNumerical()
 	m_numericQuestionManager.setQuestion(m_db->randQTypeNumerical());
 }
 
-void GameLogic::randomQTypeVariants()
+void GameLogic::setDuel(Color::ColorEnum attacker, int regionId)
 {
-	m_questionTypeVariants = m_db->randQTypeVariants();
+	if (m_board[regionId] != m_board.end())
+	{
+		m_duel = Duel(attacker, m_board[regionId], regionId, m_db);
+	}
+}
+
+void GameLogic::getDuelingPlayersAndZone(Color::ColorEnum& c1, Color::ColorEnum& c2, int& zoneId)
+{
+	m_duel->getDuelInfo(c1, c2, zoneId);
 }
 
 void GameLogic::createDuelOrder()
@@ -29,6 +37,30 @@ void GameLogic::createDuelOrder()
 	}
 }
 
+int GameLogic::getDuelZoneId()
+{
+	return m_duel->getZoneId();
+}
+
+int GameLogic::getZoneId(std::shared_ptr<Zone> zone)
+{
+	int id = 0;
+	while (m_board[id] != m_board.end())
+	{
+		if (zone == m_board[id])
+		{
+			return id;
+		}
+		id++;
+	}
+	return -1;
+}
+
+void GameLogic::duelPlayerResponse(Color::ColorEnum color, int variant)
+{
+	m_duel->setDuelVaraintsAnswer(color, variant);
+}
+
 void GameLogic::setColorToAttack()
 {
 	if (m_duelOrder.size() != 0)
@@ -41,9 +73,51 @@ void GameLogic::setColorToAttack()
 	}
 }
 
+void GameLogic::setDuelNumericalAnswer(int time, int response, const Color::ColorEnum& color)
+{
+	m_duel->setNumericalAnswer(time, response, color);
+}
+
+Color::ColorEnum GameLogic::currentDuelAttacker()
+{
+	return m_duel->getAttacker();
+}
+
+QTypeNumerical GameLogic::getDuelNumericalQ()
+{
+	return m_duel->getQTypeNumerical();
+}
+
 void GameLogic::deleteColorToAttack()
 {
 	m_duelOrder.pop();
+}
+
+std::vector<std::shared_ptr<Zone>> GameLogic::getDuelZones()
+{
+	return m_duel->getUpdatedZones();
+}
+
+Duel::DuelState GameLogic::getDuelState()
+{
+	return m_duel->getState();
+}
+
+void GameLogic::setDuelPlayerWinner()
+{
+	m_duel->setWinner(m_board);
+}
+
+bool GameLogic::duelDraw()
+{
+	if (m_duel.has_value())
+	{
+		return m_duel->isDraw();
+	}
+	else
+	{
+		return false;
+	}
 }
 
 Color::ColorEnum GameLogic::getAttackerColor()
@@ -97,14 +171,12 @@ GameLogic::GameLogic()
 	:k_numberOfPlayers{ 2 }, m_numericQuestionManager{ NumericQuestionManager(k_numberOfPlayers) }
 {
 	randomQTypeNumerical();
-	randomQTypeVariants();
 }
 
 GameLogic::GameLogic(const uint16_t& numberOfPlayers, std::shared_ptr<Database> db)
 	: k_numberOfPlayers(numberOfPlayers), m_db{ db }, m_numericQuestionManager{ NumericQuestionManager(numberOfPlayers) }
 {
 	randomQTypeNumerical();
-	randomQTypeVariants();
 }
 
 bool GameLogic::checkZoneUpdates()
@@ -206,7 +278,7 @@ QTypeNumerical GameLogic::getQuestionTypeNumerical()
 
 QTypeVariants GameLogic::getQuestionTypeVariants()
 {
-	return m_questionTypeVariants;
+	return m_duel->getQTypeVariants();
 }
 
 void GameLogic::setPlayerNumericalAnswer(int time, int response, const Color::ColorEnum& color)
@@ -245,19 +317,19 @@ std::vector<std::shared_ptr<Player>> GameLogic::getPlayers()
 	return m_players;
 }
 
-void GameLogic::StartGame()
-{
-	if (m_players.size() != k_numberOfPlayers)
-	{
-		std::cout << "Not enough players to start the game" << std::endl;
-		return;
-	}
-	m_board = Board(k_numberOfPlayers);
-	m_questions.addQFiles("QTypeVariants.txt", "QTypeNumerical.txt");
-	chooseBasePhase();
-	chooseRegionsPhase();
-	duelsPhase();
-}
+//void GameLogic::StartGame()
+//{
+//	if (m_players.size() != k_numberOfPlayers)
+//	{
+//		std::cout << "Not enough players to start the game" << std::endl;
+//		return;
+//	}
+//	m_board = Board(k_numberOfPlayers);
+//	m_questions.addQFiles("QTypeVariants.txt", "QTypeNumerical.txt");
+//	chooseBasePhase();
+//	chooseRegionsPhase();
+//	duelsPhase();
+//}
 
 void GameLogic::EndGame()
 {
@@ -298,62 +370,62 @@ void GameLogic::chooseRegionsPhase()
 	}
 }
 // 0 0 0 0 0 1 1 1 1 1 1 2 0 2 1 1 1 0 2 1 2 2 0 0 2 0
-void GameLogic::duelsPhase()
-{
-	uint16_t maxRounds = 5;
-	uint16_t roundCounter = 0;
-	if (k_numberOfPlayers == 2)
-		maxRounds = 4;
-	while (roundCounter < maxRounds)
-	{
-		roundCounter++;
-		for (const auto& player : m_players)
-		{
-			std::cout << std::endl << m_board << std::endl;
-			std::cout << Color::ColorToString(player->getColor()) << " Choose a zone to Attack : ";
-			Board::Position position;
-			auto& [row, column] = position;
-			while (true)
-			{
-				try
-				{
-					std::cin >> row >> column;
-					if (m_board[position]->getColor() == Color::ColorEnum::None)
-					{
-						throw std::out_of_range("Board Index Out of range , Please choose another position: ");
-					}
-					if (m_board[position]->getColor() != player->getColor())
-						break;
-					else {
-						throw std::logic_error("You can't attack your own zone , Please choose another position: ");
-					}
-				}
-				catch (const std::exception& e)
-				{
-					std::cout << std::endl << e.what() << std::endl;
-				}
-
-			}
-			Duel duel(player->getColor(), m_board[position]);
-			duel.generateQuestion(m_questions);
-			duel.startDuel();
-			auto isBase = std::dynamic_pointer_cast<PlayerBase>(m_board[position]);
-			if (isBase && checkIfPlayerWasEliminated(isBase))
-			{
-				for (uint16_t ind = 0; ind < m_players.size(); ind++)
-				{
-					if (m_players[ind]->getColor() == player->getColor())
-					{
-						m_eliminatedPlayers.emplace_back(m_players[ind]);
-						m_board.eliminatePlayer(m_players[ind]->getColor(), player->getColor());
-						m_players.erase(m_players.begin() + ind);
-						break;
-					}
-				}
-			}
-		}
-	}
-}
+//void GameLogic::duelsPhase()
+//{
+//	uint16_t maxRounds = 5;
+//	uint16_t roundCounter = 0;
+//	if (k_numberOfPlayers == 2)
+//		maxRounds = 4;
+//	while (roundCounter < maxRounds)
+//	{
+//		roundCounter++;
+//		for (const auto& player : m_players)
+//		{
+//			std::cout << std::endl << m_board << std::endl;
+//			std::cout << Color::ColorToString(player->getColor()) << " Choose a zone to Attack : ";
+//			Board::Position position;
+//			auto& [row, column] = position;
+//			while (true)
+//			{
+//				try
+//				{
+//					std::cin >> row >> column;
+//					if (m_board[position]->getColor() == Color::ColorEnum::None)
+//					{
+//						throw std::out_of_range("Board Index Out of range , Please choose another position: ");
+//					}
+//					if (m_board[position]->getColor() != player->getColor())
+//						break;
+//					else {
+//						throw std::logic_error("You can't attack your own zone , Please choose another position: ");
+//					}
+//				}
+//				catch (const std::exception& e)
+//				{
+//					std::cout << std::endl << e.what() << std::endl;
+//				}
+//
+//			}
+//			Duel duel(player->getColor(), m_board[position]);
+//			duel.generateQuestion(m_questions);
+//			duel.startDuel();
+//			auto isBase = std::dynamic_pointer_cast<PlayerBase>(m_board[position]);
+//			if (isBase && checkIfPlayerWasEliminated(isBase))
+//			{
+//				for (uint16_t ind = 0; ind < m_players.size(); ind++)
+//				{
+//					if (m_players[ind]->getColor() == player->getColor())
+//					{
+//						m_eliminatedPlayers.emplace_back(m_players[ind]);
+//						m_board.eliminatePlayer(m_players[ind]->getColor(), player->getColor());
+//						m_players.erase(m_players.begin() + ind);
+//						break;
+//					}
+//				}
+//			}
+//		}
+//	}
+//}
 
 bool GameLogic::checkIfPlayerWasEliminated(std::shared_ptr<PlayerBase>& playerBase)
 {
