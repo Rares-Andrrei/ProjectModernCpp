@@ -24,5 +24,4 @@ public:
 	bool isActive(const std::string& sessionKey);
 
 	void logOutPlayer(const std::string& sessionKey); // la logOut playerul este scos din map
-
 };
