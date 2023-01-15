@@ -10,13 +10,13 @@
         <file>generateAnAnswer.png</file>
         <file>generateFourAnswers.png</file>
         <file>green.png</file>
-        <file>mapBackground.png</file>
         <file>red.png</file>
         <file>Ro.png</file>
         <file>startMeniu.png</file>
         <file>threePlayers.png</file>
         <file>twoPlayers.png</file>
         <file>yellow.png</file>
+        <file>mapBackground.png</file>
     </qresource>
     <qresource prefix="/slideShowCats">
         <file>cat1.png</file>
