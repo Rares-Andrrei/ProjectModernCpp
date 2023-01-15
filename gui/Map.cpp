@@ -4,6 +4,9 @@ Map::Map(QWidget* parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
+
+	setWindowState(Qt::WindowFullScreen);
+
 	BattleWindow.reset(new Battle());
 	for (const auto& button : findChildren<QAbstractButton*>())
 	{
