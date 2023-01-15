@@ -3,77 +3,56 @@
 
 void FourCloseAnswers::GenerateVariants(QTypeNumerical q)
 {
-	if (!AdvantageIsUsed())
+	int correctAnswer = q.getAnswer();
+
+	std::random_device rd;
+	std::mt19937 eng(rd());
+	std::uniform_int_distribution<> distr(0, m_answers.size() - 1);
+	int rando = distr(eng);
+
+	int answer10 = correctAnswer - (correctAnswer * 0.10);
+	int answer50 = correctAnswer + (correctAnswer * 0.50);
+	int answer75 = correctAnswer - (correctAnswer * 0.75);
+
+	bool a10 = false;
+	bool a50 = false;
+	bool a75 = false;
+
+	for (int i = 0; i < m_answers.size(); i++)
 	{
-		int correctAnswer = q.getAnswer();
-
-		std::random_device rd;
-		std::mt19937 eng(rd());
-		std::uniform_int_distribution<> distr(0, m_answers.size() - 1);
-		int rando = distr(eng);
-
-		int answer10 = correctAnswer - (correctAnswer * 0.10);
-		int answer50 = correctAnswer + (correctAnswer * 0.50);
-		int answer75 = correctAnswer - (correctAnswer * 0.75);
-
-		bool a10 = false;
-		bool a50 = false;
-		bool a75 = false;
-
-		for (int i = 0; i < m_answers.size(); i++)
+		if (i == rando)
 		{
-			if (i == rando)
+			m_answers[i] = correctAnswer;
+		}
+		else
+			if (m_answers[i])
 			{
-				m_answers[i] = correctAnswer;
-			}
-			else
-				if (m_answers[i])
+				if (a10 == false)
 				{
-					if (a10 == false)
+					m_answers[i] = answer10;
+					a10 = true;
+				}
+				else
+					if (a50 == false)
 					{
-						m_answers[i] = answer10;
-						a10 = true;
+						m_answers[i] = answer50;
+						a50 = true;
 					}
 					else
-						if (a50 == false)
+					{
+						if (a75 == false)
 						{
-							m_answers[i] = answer50;
-							a50 = true;
+							m_answers[i] = answer75;
+							a75 = true;
 						}
-						else
-						{
-							if (a75 == false)
-							{
-								m_answers[i] = answer75;
-								a75 = true;
-							}
-						}
-				}
-		}
-	}
-	else
-	{
-		std::string message = "The advantage is already use";
-		try
-		{
-			if (m_used = true)
-			{
-				throw(message);
+					}
 			}
-		}
-		catch (std::string message)
-		{
-			std::cerr << "Pay attention" << message;
-		}
 	}
 }
-bool FourCloseAnswers::AdvantageIsUsed()
+std::array<int, 4> FourCloseAnswers::getAnswers()
 {
-	if (m_used == false)
-		return false;
-	return true;
+	return m_answers;
 }
-
 std::ostream& operator<<(std::ostream& out, FourCloseAnswers const& answers)
 {
 	for (auto& a : answers.m_answers)

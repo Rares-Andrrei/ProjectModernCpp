@@ -6,13 +6,10 @@
 class AnswerFiftyFifty
 {
 private:
-	bool m_used = false;
 	std::string m_answer;
 	std::vector<std::string>m_variants;
 public:
-	AnswerFiftyFifty( QTypeVariants& Q);
-	bool AdvantageUsed();
-	bool getAdvantageFiftyFifty();
-	std::array<std::string,3>AdvantageUtility();
+	AnswerFiftyFifty(QTypeVariants& Q);
+	std::array<std::string,2>AdvantageUtility();
 };
 

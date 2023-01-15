@@ -38,6 +38,7 @@ public:
 	void updateZoneInfo();
 
 	void checkIfPlayerCanUseAdvantages();
+	void useAdvantage();
 
 	void updatePlayerInfo();
 

@@ -52,6 +52,7 @@ public:
 	void setDuelPlayerWinner();
 	bool duelDraw();
 	Color::ColorEnum getAttackerColor();
+	std::pair<int, int> taxForAdvantage(Color::ColorEnum color);
 
 	void addWaitingRequest(const Color::ColorEnum& sessionKey);
 	bool allRequestsReady();

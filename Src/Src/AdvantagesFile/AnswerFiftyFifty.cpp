@@ -11,54 +11,19 @@ AnswerFiftyFifty::AnswerFiftyFifty(QTypeVariants& Q)
 	}
 }
 
-bool AnswerFiftyFifty::AdvantageUsed()
+std::array<std::string, 2> AnswerFiftyFifty::AdvantageUtility()
 {
-	if (m_used == true)
-		return m_used;
-}
-
-bool AnswerFiftyFifty::getAdvantageFiftyFifty()
-{
-	return m_used;
-}
-
-std::array<std::string, 3> AnswerFiftyFifty::AdvantageUtility()
-{
-	if (!m_used)
+	auto f = std::find(m_variants.begin(), m_variants.end(), m_answer);
+	m_variants.erase(f);
+	std::array<std::string, 2>answerRemain;
+	std::random_device rde;
+	std::mt19937 engr(rde());
+	std::uniform_int_distribution<> distrt(0, m_variants.size() - 1);
+	auto answer1 = m_variants[distrt(engr)];
+	if (answer1 != m_answer)
 	{
-		auto f = std::find(m_variants.begin(), m_variants.end(), m_answer);
-		m_variants.erase(f);
-		std::array<std::string, 3>answerRemain;
-		std::random_device rde;
-		std::mt19937 engr(rde());
-		std::uniform_int_distribution<> distrt(0, m_variants.size() - 1);
-		auto answer1 = m_variants[distrt(engr)];
-		if (answer1 != m_answer)
-		{
-			answerRemain[0] = answer1;
-			answerRemain[1] = "|";
-			answerRemain[2] = m_answer;
-		}
-		else
-		{
-
-		}
-		m_used = true;
-		return answerRemain;
+		answerRemain[0] = answer1;
+		answerRemain[1] = m_answer;
 	}
-	else
-	{
-		std::string message = "The advantage is already use";
-		try
-		{
-			if (m_used = true)
-			{
-				throw(message);
-			}
-		}
-		catch (std::string message)
-		{
-			std::cerr << "Pay attention" << message;
-		}
-	}
+	return answerRemain;
 }

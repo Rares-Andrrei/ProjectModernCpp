@@ -40,6 +40,7 @@ void useRoutes()
 	r.getQuestionTypeNumericalRouteEt2();
 	r.updateZoneInfo();
 	r.checkIfPlayerCanUseAdvantages();
+	r.useAdvantage();
 	r.updatePlayerInfo();
 	r.startApp();
 }

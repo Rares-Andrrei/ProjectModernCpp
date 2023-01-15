@@ -125,6 +125,21 @@ Color::ColorEnum GameLogic::getAttackerColor()
 	return m_duelOrder.front();
 }
 
+std::pair<int, int> GameLogic::taxForAdvantage(Color::ColorEnum color)
+{
+	int id = 0;
+	while (m_board[id] != m_board.end())
+	{
+		if (m_board[id]->getScore() >= 200 && m_board[id]->getColor() == color)
+		{
+			m_board[id]->DecrementScore();
+			return std::make_pair(id, m_board[id]->getScore());
+			break;
+		}
+		id++;
+	}
+}
+
 void GameLogic::addWaitingRequest(const Color::ColorEnum& color)
 {
 	m_requests[color] = true;

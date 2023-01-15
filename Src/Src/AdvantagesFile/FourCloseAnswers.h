@@ -6,13 +6,12 @@
 class FourCloseAnswers
 {
 private:
-	bool m_used = false;
 	std::array<int, 4> m_answers;
 
 public:
 	FourCloseAnswers() = default;
 	void GenerateVariants(QTypeNumerical q);
-	bool AdvantageIsUsed();
+	std::array<int, 4> getAnswers();
 	friend std::ostream& operator << (std::ostream& out, FourCloseAnswers const& answers);
 };
 

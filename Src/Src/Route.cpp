@@ -510,6 +510,82 @@ void Route::checkIfPlayerCanUseAdvantages()
 		});
 }
 
+void Route::useAdvantage()
+{
+	auto& useAdvantage = CROW_ROUTE(m_app, "/useAdvantage")
+		.methods(crow::HTTPMethod::Post);
+	useAdvantage([this](const crow::request& req) {
+		auto bodyArgs = parseUrlArgs(req.body);
+	auto gameIdIter = bodyArgs.find("gameID");
+	auto sessionKeyIter = bodyArgs.find("sessionKey");
+	auto advantageTypeIter = bodyArgs.find("advantageType");
+	auto stageIter = bodyArgs.find("stage");
+	long gameID = std::stoi(gameIdIter->second);
+	if (m_gamesActive.count(gameID) > 0 && m_waitingList->isActive(sessionKeyIter->second))
+	{
+		m_gamesActive[gameID]->taxForAdvantage(m_waitingList->getPlayer(sessionKeyIter->second)->getColor());
+		if (stageIter->second == "ET1")
+		{
+			QTypeNumerical question = m_gamesActive[gameID]->getQuestionTypeNumerical();
+			if (advantageTypeIter->second == "fourClose")
+			{
+				FourCloseAnswers advantage;
+				advantage.GenerateVariants(question);
+				crow::json::wvalue json;
+				std::array<int, 4> answers = advantage.getAnswers();
+				json["r1"] = answers[0];
+				json["r2"] = answers[1];
+				json["r3"] = answers[2];
+				json["r4"] = answers[3];
+				return crow::response(json);
+			}
+			else if (advantageTypeIter->second == "sugestion")
+			{
+				crow::json::wvalue json;
+				json["r"] = AnswerSugestion::useAdvantage(question.getAnswer());
+				return crow::response(json);
+			}
+		}
+		else if (stageIter->second == "ET2")
+		{
+			if (advantageTypeIter->second == "fourClose")
+			{
+				FourCloseAnswers advantage;
+				advantage.GenerateVariants(m_gamesActive[gameID]->getDuelNumericalQ());
+				crow::json::wvalue json;
+				std::array<int, 4> answers = advantage.getAnswers();
+				json["r1"] = answers[0];
+				json["r2"] = answers[1];
+				json["r3"] = answers[2];
+				json["r4"] = answers[3];
+				return crow::response(json);
+			}
+			else if (advantageTypeIter->second == "sugestion")
+			{
+				crow::json::wvalue json;
+				QTypeNumerical question = m_gamesActive[gameID]->getDuelNumericalQ();
+				json["r"] = AnswerSugestion::useAdvantage(question.getAnswer());
+				return crow::response(json);
+			}
+			else if (advantageTypeIter->second == "50-50")
+			{
+				QTypeVariants question = m_gamesActive[gameID]->getQuestionTypeVariants();
+				AnswerFiftyFifty advantage(question);
+				std::array<std::string, 2> options = advantage.AdvantageUtility();
+				crow::json::wvalue json;
+				json["r1"] = options[0];
+				json["r2"] = options[1];
+				return crow::response(json);
+			}
+		}
+	}
+	return crow::response();
+		});
+
+
+
+}
+
 void Route::updatePlayerInfo()
 {
 	auto& updatePlayerInfo = CROW_ROUTE(m_app, "/updatePlayerInfo")
