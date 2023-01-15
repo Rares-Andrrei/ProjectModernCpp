@@ -90,7 +90,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Battle.cpp" />
     <ClCompile Include="DuelManager.cpp" />
     <ClCompile Include="GridButtons.cpp" />
     <ClCompile Include="lobby.cpp" />
@@ -102,7 +101,6 @@
     <ClCompile Include="signUp.cpp" />
     <ClCompile Include="TriviadorGame.cpp" />
     <QtRcc Include="gui.qrc" />
-    <QtUic Include="Battle.ui" />
     <QtUic Include="GridButtons.ui" />
     <QtUic Include="gui.ui" />
     <QtMoc Include="gui.h" />
@@ -128,9 +126,6 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Map.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="Battle.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Color\Color\Color.vcxproj">

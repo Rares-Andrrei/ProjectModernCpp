@@ -32,6 +32,5 @@ private:
 	int numberOfColumns;
 	std::shared_ptr<QGridLayout> layout;
 	QVector<std::shared_ptr<QPushButton>> buttons;
-
 	QColor getColor(const Color::ColorEnum& color);
 };

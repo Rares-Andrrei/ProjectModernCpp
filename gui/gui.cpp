@@ -3,7 +3,6 @@
 gui::gui(QWidget* parent)
 	: QMainWindow(parent)
 {
-
 	m_routes = std::make_shared<Route>();
 
 	ui.setupUi(this);

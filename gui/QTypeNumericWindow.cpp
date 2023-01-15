@@ -4,11 +4,11 @@ QTypeNumericWindow::QTypeNumericWindow(QWidget* parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
-	m_TimeRemaining = new QTimer(this);
-	m_timer = new QTimer(this);
+	m_TimeRemaining = std::make_unique<QTimer>(new QTimer(this));
+	m_timer = std::make_unique<QTimer>(new QTimer(this));
 
-	connect(m_TimeRemaining, &QTimer::timeout, this, &QTypeNumericWindow::on_TimeRemaining_Timeout);
-	connect(m_timer, &QTimer::timeout, this, &QTypeNumericWindow::on_Timer_Timeout);
+	connect(m_TimeRemaining.get(), &QTimer::timeout, this, &QTypeNumericWindow::on_TimeRemaining_Timeout);
+	connect(m_timer.get(), &QTimer::timeout, this, &QTypeNumericWindow::on_Timer_Timeout);
 	connect(ui.Delete, &QPushButton::pressed, this, &QTypeNumericWindow::on_Delete_pressed);
 	connect(ui.Delete, &QPushButton::released, this, &QTypeNumericWindow::on_Delete_release);
 
@@ -241,6 +241,11 @@ void QTypeNumericWindow::resetTheWindow()
 	ui.Answer->clear();
 	ui.TimeRemaining->setValue(0);
 	m_TimeRemaining->start(10);
+}
+
+void QTypeNumericWindow::showWindow()
+{
+	this->show();
 }
 
 void sendOrderToParent(const std::queue<std::pair<Color::ColorEnum, int>>& playerOrder) {}

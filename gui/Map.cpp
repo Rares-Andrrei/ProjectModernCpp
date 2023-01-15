@@ -7,7 +7,6 @@ Map::Map(QWidget* parent)
 
 	setWindowState(Qt::WindowFullScreen);
 
-	BattleWindow.reset(new Battle());
 	for (const auto& button : findChildren<QAbstractButton*>())
 	{
 		button->setStyleSheet("background:transparent;"
@@ -18,7 +17,6 @@ Map::Map(QWidget* parent)
 
 Map::~Map()
 {
-
 }
 
 void Map::setPlayer(const std::shared_ptr<PlayerQString>& player)
@@ -218,9 +216,7 @@ void Map::updatePlayersInfo()
 		}
 		else
 			ui.player4Score->setText(QString::number(m_players[i]->getScore()));
-
 	}
-
 }
 
 void Map::playersAvatar()
@@ -290,7 +286,6 @@ void Map::playersAvatar()
 		}
 	}
 	updatePlayersInfo();
-
 }
 
 void Map::setupGridButtons()

@@ -25,13 +25,10 @@ public:
 	void disableAllButtons();
 	void enableAllButtons();
 
+	void showWindow();
+
 signals:
 	void emitDuelStatus(DuelManager& duelStatus);
-
-	//void emitTieBreakerParticipants(const std::pair<Color::ColorEnum, Color::ColorEnum>& duelParticipants);
-	//void emitAttackerLost();
-	//void emitLifeTakenDisplayAnotherQuestion(const std::pair<Color::ColorEnum, Color::ColorEnum>& duelParticipants);
-	//void emitUpdatedZonesAfterWin(const std::vector<std::tuple<int, Color::ColorEnum, int>>& updatedZones);
 
 protected:
 	void showEvent(QShowEvent* event) override;
@@ -53,7 +50,6 @@ private:
 	void createAnswerVariants();
 	void advantageButtonEnabled();
 	void resetTheWindow();
-
 
 	std::shared_ptr<Route> m_GameInstance;
 	QPushButton* m_Variant = nullptr;

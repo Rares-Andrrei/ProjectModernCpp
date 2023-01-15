@@ -3,7 +3,6 @@
 #include <QtWidgets/QMainWindow>
 #include "ui_gui.h"
 #include "Route.h"
-
 #include "signUp.h"
 #include "logIn.h"
 

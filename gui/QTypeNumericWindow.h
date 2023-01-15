@@ -7,7 +7,6 @@
 #include "Route.h"
 #include "GamePhaseEnum.h"
 
-
 class QTypeNumericWindow : public QMainWindow
 {
 	Q_OBJECT
@@ -27,15 +26,13 @@ public:
 	void enableAllButtons();
 	void resetTheWindow();
 
+	void showWindow();
 protected:
 	void showEvent(QShowEvent* event) override;
-
 
 signals:
 	void emitTieBreakerDuelStatus(DuelManager& duelStatus);
 	void sendOrderToParent(const std::queue<std::pair<Color::ColorEnum, int>>& playerOrder);
-	//void emitTieBreakerResults(const std::vector<std::tuple<int, Color::ColorEnum, int, int>>& UpdatedZones, const std::vector<std::pair<int, Color::ColorEnum>>& updatedPlayers);
-
 
 private slots:
 	void on_Number0_clicked();
@@ -60,8 +57,8 @@ private:
 
 	GamePhase m_gamePhase = GamePhase::None;
 	std::shared_ptr<Route> m_GameInstance;
-	QTimer* m_TimeRemaining;
-	QTimer* m_timer;
+	std::unique_ptr<QTimer> m_TimeRemaining;
+	std::unique_ptr<QTimer> m_timer;
 	std::shared_ptr<PlayerQString> m_player;
 	Ui::QTypeNumericWindowClass ui;
 };

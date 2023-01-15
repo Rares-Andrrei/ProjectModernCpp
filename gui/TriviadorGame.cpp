@@ -405,7 +405,7 @@ void TriviadorGame::duelParticipants(const std::pair<Color::ColorEnum, Color::Co
 		qDebug("showing Variants Window for player %d", Color::ColorToInt(m_player->getColor()));
 		QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
 		m_QTypeVariantsWindow->enableAllButtons();
-		m_QTypeVariantsWindow->show();
+		m_QTypeVariantsWindow->showWindow();
 	}
 	else
 	{

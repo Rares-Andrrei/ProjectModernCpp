@@ -5,21 +5,10 @@
 #include "TriviadorGame.h"
 #include "Route.h"
 #include <qmessagebox.h>
-#include <cpr/cpr.h>
-#include <crow.h>
 #include "CredentialErrors.h"
-#include <string>
-#include "PlayerQString.h"
-#include <cpr/cpr.h>
-#include <memory>
-#include <crow.h>
-#include <qtimer.h>
-#include <qthread.h>
-
 #include <QMovie>
 #include <QStringList>
 #include <QScrollArea>
-
 
 class lobby : public QMainWindow
 {
@@ -61,4 +50,3 @@ private slots:
 	void on_nextButton_clicked();
 	void on_previousButton_clicked();
 };
-// broadcast

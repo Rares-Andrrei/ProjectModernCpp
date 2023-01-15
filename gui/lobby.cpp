@@ -176,8 +176,6 @@ void lobby::onCancelButtonClicked()
 	}
 }
 
-
-///MATCH HISTORY
 void lobby::on_gamesHistoryButton_clicked()
 {
 	ui.lobbyGameModes->setCurrentIndex(2);
@@ -228,9 +226,7 @@ void lobby::on_gamesHistoryButton_clicked()
 		ui.tableMatchHistory->setItem(i, 5, item.release());
 		i++;
 	}
-
 	ui.tableMatchHistory->setEditTriggers(QAbstractItemView::NoEditTriggers);
-
 }
 
 void lobby::on_backButton_clicked()

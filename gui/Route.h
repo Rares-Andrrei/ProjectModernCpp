@@ -8,6 +8,7 @@
 #include<iostream>
 #include<fstream>
 #include "DuelManager.h"
+
 class Route
 {
 	std::string m_sessionKey;
@@ -24,9 +25,7 @@ public:
 	std::tuple<Color::ColorEnum, Color::ColorEnum, int> getDuelingPlayersAndZone(Color::ColorEnum attacker, int zoneId);
 	Color::ColorEnum getAttackerColor();
 
-	//crow::json::rvalue sendResponseEt2(Color::ColorEnum color, int response, int time);
 	DuelManager sendResponseEt2(Color::ColorEnum color, int response, int time);
-
 	std::string getQuestionTypeNumericalEt2();
 
 	bool checkValidBasePosition(int ZoneId);

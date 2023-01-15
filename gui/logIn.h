@@ -2,14 +2,8 @@
 
 #include <QMainWindow>
 #include "ui_logIn.h"
-
-#include <QString>
-#include <QMessageBox>
-#include <memory>
 #include "Route.h"
 #include "lobby.h"
-
-
 
 class logIn : public QMainWindow
 {

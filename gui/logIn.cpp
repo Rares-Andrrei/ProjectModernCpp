@@ -1,6 +1,5 @@
 #include "logIn.h"
 
-
 logIn::logIn(std::shared_ptr<Route> routes, QWidget* parent)
 	: m_routes{ routes }, QMainWindow(parent)
 {
@@ -70,5 +69,4 @@ void logIn::onEnterButtonClicked()
 		QMessageBox::information(this, "Failure", "An unknown error has occured");
 		break;
 	}
-
 }

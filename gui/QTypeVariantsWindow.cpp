@@ -113,7 +113,7 @@ void QTypeVariantsWindow::setGameInstance(const std::shared_ptr<Route>& GameInst
 void QTypeVariantsWindow::sendResponseToServer(int response, const Color::ColorEnum& color)
 {
 	auto duelStatus = m_GameInstance->sendResponseEt2(color, response, 0);
-	qDebug("Duel status");
+	qDebug("Duel status for Variants");
 	emit emitDuelStatus(duelStatus);
 	this->hide();
 }
@@ -212,4 +212,9 @@ void QTypeVariantsWindow::enableAllButtons()
 	{
 		button->setEnabled(true);
 	}
+}
+
+void QTypeVariantsWindow::showWindow()
+{
+	this->show();
 }
