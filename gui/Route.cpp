@@ -17,6 +17,7 @@ bool Route::leaveLobby()
 		cpr::Payload{
 			{ "sessionKey", m_sessionKey}
 		});
+	m_logger.logg(Logger::Level::Info, "leave lobby", response.status_code);
 	return response.status_code == 200;
 }
 
@@ -29,10 +30,12 @@ std::string Route::getQuestionTypeNumerical()
 		});
 	if (response.status_code == 200)
 	{
+		m_logger.logg(Logger::Level::Info, "get question type numerical", response.status_code, response.text);
 		return response.text;
 	}
 	else
 	{
+		m_logger.logg(Logger::Level::Error, response.status_code," ");
 		return "";
 	}
 }
@@ -53,10 +56,13 @@ std::array<std::string, 5> Route::getQuestionTypeVariants()
 		questionData[2] = resData["var2"].s();
 		questionData[3] = resData["var3"].s();
 		questionData[4] = resData["var4"].s();
+		m_logger.logg(Logger::Level::Info, "get variants", response.status_code, questionData[0],questionData[1],questionData[2],questionData[3]);
 		return questionData;
+		
 	}
 	else
 	{
+		m_logger.logg(Logger::Level::Error, response.status_code," "," "," "," ");
 		return questionData = { "", "", "", "", "" };
 	}
 }
@@ -73,6 +79,7 @@ std::queue<std::pair<Color::ColorEnum, int>> Route::sendResponseNumericalEt1(int
 			{ "time", std::to_string(time)}
 	};
 	auto lambda = [](cpr::Response response) {
+	
 		return response.text;
 	};
 
@@ -93,6 +100,7 @@ std::queue<std::pair<Color::ColorEnum, int>> Route::sendResponseNumericalEt1(int
 			players.push({ c, s });
 		}
 	}
+
 	return players; //logica de pe gui va decide de cate ori se va apela fucntia de alegere teritoriu, daca playerul curent trebuie a aaleaga va trimite culoarea si teritoriul ales daca nu se va trimite un string gol, ca raspuns la ruta de alegere teritoriu se va returna harta actualizata.
 }
 
@@ -161,10 +169,12 @@ bool Route::checkValidBasePosition(int ZoneId)
 	{
 		crow::json::rvalue resData = crow::json::load(response.text);
 		std::string value = resData["valid"].s();
+		m_logger.logg(Logger::Level::Info, "valid", response.status_code);
 		return value == "true";
 	}
 	else
 	{
+		m_logger.logg(Logger::Level::Warning,"invalid",response.status_code);
 		return false;
 	}
 }
@@ -182,10 +192,12 @@ bool Route::checkValidRegionPosition(int ZoneId, const Color::ColorEnum& color)
 	{
 		crow::json::rvalue resData = crow::json::load(response.text);
 		std::string value = resData["valid"].s();
+		m_logger.logg(Logger::Level::Info, "valid", response.status_code);
 		return value == "true";
 	}
 	else
 	{
+		m_logger.logg(Logger::Level::Info, "invalid", response.status_code);
 		return false;
 	}
 }
@@ -203,10 +215,12 @@ bool Route::checkValidAttackMove(int ZoneId, const Color::ColorEnum& color)
 	{
 		crow::json::rvalue resData = crow::json::load(response.text);
 		std::string value = resData["valid"].s();
+		m_logger.logg(Logger::Level::Info, "valid", response.status_code);
 		return value == "true";
 	}
 	else
 	{
+		m_logger.logg(Logger::Level::Info, "invalid", response.status_code);
 		return false;
 	}
 }
@@ -222,10 +236,12 @@ bool Route::checkIfBoardIsFull()
 	{
 		crow::json::rvalue resData = crow::json::load(response.text);
 		std::string value = resData["valid"].s();
+		m_logger.logg(Logger::Level::Info, "valid", response.status_code);
 		return value == "true";
 	}
 	else
 	{
+		m_logger.logg(Logger::Level::Info, "invalid", response.status_code);
 		return false;
 	}
 }
@@ -247,11 +263,14 @@ std::tuple<int, Color::ColorEnum, int, int> Route::updateZoneInfo(int ZoneId)
 		zoneColor = Color::getColor(resData["zoneColor"].i());
 		zoneScore = resData["zoneScore"].i();
 		zoneLifes = resData["zoneLifes"].i();
-		
+		auto zoneColorDll = Color::ColorToString(zoneColor);
+		m_logger.logg(Logger::Level::Info, "zoneInfo update", response.status_code, zoneId,zoneColorDll,zoneScore,zoneLifes);
 		return zoneInfo;
 	}
 	else
 	{
+		std::tuple<int, Color::ColorEnum, int, int> zoneInfo= std::make_tuple(0, Color::ColorEnum::None, 0, 0);
+		m_logger.logg(Logger::Level::Warning, "-",0,"None",0,0);
 		return std::make_tuple(0, Color::ColorEnum::None, 0, 0);
 	}
 }
@@ -317,6 +336,7 @@ std::list<std::array<std::string, 5>> Route::getMatchHistoryRoute()
 			);
 		}
 	}
+
 	return matches;
 }
 
@@ -396,9 +416,11 @@ bool Route::logOut()
 		}
 	);
 	if (response.status_code == 200 || response.status_code == 202) {
+		m_logger.logg(Logger::Level::Info, "Logout successful",response.status_code);
 		return true;
 	}
 	else {
+		m_logger.logg(Logger::Level::Error, "Logout unsuccesful", response.status_code);
 		return false;
 	}
 }

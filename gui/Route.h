@@ -4,10 +4,16 @@
 #include "PlayerQString.h"
 #include "CredentialErrors.h"
 #include <queue>
+#include"../Logging/Logging/Logger.h"
+#include<iostream>
+#include<fstream>
 class Route
 {
 	std::string m_sessionKey;
 	long m_gameId;
+	std::ofstream m_file{ "clientLog.log",std::ios::app };
+	Logger m_logger{ m_file };
+	
 public:
 	std::string getQuestionTypeNumerical();
 	std::array<std::string, 5> getQuestionTypeVariants();

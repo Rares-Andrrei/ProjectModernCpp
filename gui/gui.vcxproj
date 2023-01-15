@@ -140,6 +140,9 @@
     </ProjectReference>
     <ClInclude Include="BoardInterpretation.h" />
     <ClInclude Include="CredentialErrors.h" />
+    <ProjectReference Include="..\Logging\Logging\Logging.vcxproj">
+      <Project>{777b00c2-a834-43e6-b74a-8465a2785a41}</Project>
+    </ProjectReference>
     <QtMoc Include="QTypeNumericWindow.h" />
     <QtMoc Include="QTypeVariantsWindow.h" />
     <QtMoc Include="MapForThreePlayers.h" />
