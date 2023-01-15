@@ -73,7 +73,7 @@ void QTypeVariantsWindow::advantageButtonEnabled()
 
 void QTypeVariantsWindow::resetTheWindow()
 {
-	enableAllButtons();
+	//enableAllButtons();
 	for (auto& button : findChildren<QPushButton*>())
 		button->setStyleSheet("QPushButton { background-color: white; }");
 	ui.TimeSlider->setValue(0);
@@ -113,12 +113,14 @@ void QTypeVariantsWindow::setGameInstance(const std::shared_ptr<Route>& GameInst
 void QTypeVariantsWindow::sendResponseToServer(int response, const Color::ColorEnum& color)
 {
 	auto duelStatus = m_GameInstance->sendResponseEt2(color, response, 0);
+	qDebug("Duel status");
 	emit emitDuelStatus(duelStatus);
 	this->hide();
 }
 
 void QTypeVariantsWindow::showEvent(QShowEvent* event)
 {
+	qDebug("SHOW the Variants window for player %d", Color::ColorToInt(m_player->getColor()));
 	resetTheWindow();
 	m_timeRemaining->start(10);
 	QWidget::showEvent(event);

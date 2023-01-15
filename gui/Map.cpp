@@ -136,11 +136,13 @@ void Map::send_Attacker_Response_To_Server(int ZoneId)
 		this->show();
 	QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
 	std::tuple<Color::ColorEnum, Color::ColorEnum, int> colors = m_GameInstance->getDuelingPlayersAndZone(m_player->getColor(), ZoneId);
+	qDebug("Duel entre %d si %d pentru zona %d", Color::ColorToInt(std::get<0>(colors)), Color::ColorToInt(std::get<1>(colors)), std::get<2>(colors));
 	updatePlayersInfo();
 
 	//m_gridButtons->setButtonColor(std::get<2>(colors), Color::ColorEnum::None);
 
 	disableAllButtons();
+	qDebug("Disabled the buttons");
 	QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
 
 	this->hide();

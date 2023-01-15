@@ -22,7 +22,6 @@ TriviadorGame::TriviadorGame(QWidget* parent)
 
 	t_MapWindowTimer = std::make_unique<QTimer>();
 	t_MapWindowTimer->setInterval(500);
-	//connect(t_MapWindowTimer.get(), &QTimer::timeout, this, &TriviadorGame::checkMapWindowClosed);
 
 	t_VariantsWindowTimer = std::make_unique<QTimer>();
 	t_VariantsWindowTimer->setInterval(500);
@@ -30,13 +29,6 @@ TriviadorGame::TriviadorGame(QWidget* parent)
 
 	connect(MapWindow.get(), &Map::emitMapUpdatedChooseRegionsPhase, this, &TriviadorGame::updateTheQueueStatus);
 	connect(MapWindow.get(), &Map::emitDuelParticipants, this, &TriviadorGame::duelParticipants);
-	//connect(m_QTypeNumericWindow.get(), &QTypeNumericWindow::emitTieBreakerResults, this, &TriviadorGame::getTieBreakerResults);
-
-	//connect(m_QTypeVariantsWindow.get(), &QTypeVariantsWindow::emitTieBreakerParticipants, this, &TriviadorGame::tieBreakerRound);
-
-	//connect(m_QTypeVariantsWindow.get(), &QTypeVariantsWindow::emitAttackerLost, this, &TriviadorGame::startNextDuel);
-	//connect(m_QTypeVariantsWindow.get(), &QTypeVariantsWindow::emitLifeTakenDisplayAnotherQuestion, this, &TriviadorGame::duelParticipants);
-	//connect(m_QTypeVariantsWindow.get(), &QTypeVariantsWindow::emitUpdatedZonesAfterWin, this, &TriviadorGame::getUpdatedZonesAfterWin);
 
 	connect(MapWindow.get(), &Map::emitGetNextDuel, this, &TriviadorGame::startNextDuel);
 
@@ -123,7 +115,7 @@ void TriviadorGame::chooseBasePhase()
 	m_gamePhase = GamePhase::ChooseBase;
 
 	m_QTypeNumericWindow->requestQuestion();
-
+	m_QTypeNumericWindow->enableAllButtons();
 	m_QTypeNumericWindow->show();
 }
 
@@ -135,7 +127,7 @@ void TriviadorGame::chooseRegionsPhase()
 
 	QThread::msleep(1000);
 	m_QTypeNumericWindow->requestQuestion();
-
+	m_QTypeNumericWindow->enableAllButtons();
 	m_QTypeNumericWindow->show();
 }
 
@@ -143,23 +135,27 @@ void TriviadorGame::duelsPhase()
 {
 	QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
 	auto color = m_GameInstance->getAttackerColor();
+	qDebug("Attacker color : %d", Color::ColorToInt(color));
 	QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
 	MapWindow->hide();
 
 	if (color == Color::ColorEnum::None)
 	{
 		m_gamePhase = GamePhase::End;
+		qDebug("End game");
 		EndGame();
 		return;
 	}
 	QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
 	if (m_player->getColor() == color)
 	{
+		qDebug("current player is the Attacker ");
 		MapWindow->enableAllButtons();
 		QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
 		MapWindow->show();
 	}
 	else {
+		qDebug("current player is inactive ");
 		MapWindow->disableAllButtons();
 		MapWindow->send_Attacker_Response_To_Server(-1);
 	}
@@ -249,7 +245,7 @@ void TriviadorGame::checkVariantsWindowClosed()
 		{
 
 			m_QTypeNumericWindow->requestQuestion();
-
+			m_QTypeNumericWindow->enableAllButtons();
 			m_QTypeNumericWindow->show();
 			// GUI :: deschidere fereastra cu intrebarea numerica => creare ordine si restabilirea  la duelStatus
 		}
@@ -389,6 +385,7 @@ void TriviadorGame::updateTheQueueStatus()
 
 void TriviadorGame::startNextDuel()
 {
+	qDebug("called duel function");
 	duelsPhase();
 }
 
@@ -399,18 +396,22 @@ void TriviadorGame::getUpdatedZonesAfterWin(const std::vector<std::tuple<int, Co
 
 void TriviadorGame::duelParticipants(const std::pair<Color::ColorEnum, Color::ColorEnum>& duelParticipants)
 {
+	qDebug("called duel participants , they are %d and %d", Color::ColorToInt(duelParticipants.first), Color::ColorToInt(duelParticipants.second));
 	QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
 	m_QTypeVariantsWindow->requestQuestion();
 	QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
 	if (m_player->getColor() == duelParticipants.first || m_player->getColor() == duelParticipants.second)
 	{
+		qDebug("showing Variants Window for player %d", Color::ColorToInt(m_player->getColor()));
+		QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
 		m_QTypeVariantsWindow->enableAllButtons();
 		m_QTypeVariantsWindow->show();
 	}
 	else
 	{
+		qDebug("showing duel window for INCATIVE player %d", Color::ColorToInt(m_player->getColor()));
 		m_QTypeVariantsWindow->disableAllButtons();
-		m_QTypeVariantsWindow->sendResponseToServer(-1,Color::ColorEnum::None);
+		m_QTypeVariantsWindow->sendResponseToServer(-1, Color::ColorEnum::None);
 	}
 }
 
@@ -446,26 +447,30 @@ void TriviadorGame::getDuelStatus(DuelManager& duelStatus)
 {
 	if (duelStatus.getDuelStatus() == DuelManager::duelStatus::Lose)
 	{
+		qDebug("Duel was lost , now a new duel should start");
 		startNextDuel();
 	}
 	else if (duelStatus.getDuelStatus() == DuelManager::duelStatus::lifeTaken)
 	{
 		auto attackInfo = duelStatus.getUpdatedBase();
-		auto& [zone, score, life,zoneColor , attacker , defender] = attackInfo;
+		auto& [zone, score, life, zoneColor, attacker, defender] = attackInfo;
 		std::vector<std::tuple<int, Color::ColorEnum, int, int>> updatedZones;
+		qDebug("Life was taken , now a new duel should start , with same people %d %d", Color::ColorToInt(attacker), Color::ColorToInt(defender));
 		updatedZones.push_back(std::make_tuple(zone, zoneColor, score, life));
 		MapWindow->getUpdatedZones(updatedZones);
-		
+
 		duelParticipants({ std::get<4>(attackInfo), std::get<5>(attackInfo) });
 	}
 	else if (duelStatus.getDuelStatus() == DuelManager::duelStatus::Win)
 	{
 		auto updatedZones = duelStatus.getUpdatedZones();
+		qDebug("Duel was won , now a new duel should start , and change the zones %d", Color::ColorToInt(std::get<1>(updatedZones[0])));
 		getUpdatedZonesAfterWin(updatedZones);
 	}
 	else if (duelStatus.getDuelStatus() == DuelManager::duelStatus::Draw)
 	{
 		auto tieBreakterParticipants = duelStatus.getTieBreakerParticipants();
+		qDebug("Duel was draw , now a new duel should start between %d and %d", Color::ColorToInt(tieBreakterParticipants.first), Color::ColorToInt(tieBreakterParticipants.second));
 		tieBreakerRound(tieBreakterParticipants);
 	}
 }
@@ -474,21 +479,27 @@ void TriviadorGame::getTieBreakerDuelStatus(DuelManager& duelStatus)
 {
 	if (duelStatus.getDuelStatus() == DuelManager::duelStatus::Lose)
 	{
+		qDebug("Duel was lost , now a new duel should start");
 		startNextDuel();
 	}
 	else if (duelStatus.getDuelStatus() == DuelManager::duelStatus::lifeTaken)
 	{
 		auto attackInfo = duelStatus.getUpdatedBase();
 		auto& [zone, score, life, zoneColor, attacker, defender] = attackInfo;
+		qDebug("Life was taken , now a new duel should start , with same people %d %d", Color::ColorToInt(attacker), Color::ColorToInt(defender));
+
 		std::vector<std::tuple<int, Color::ColorEnum, int, int>> updatedZones;
 		updatedZones.push_back(std::make_tuple(zone, zoneColor, score, life));
 		MapWindow->getUpdatedZones(updatedZones);
+
 
 		duelParticipants({ std::get<4>(attackInfo), std::get<5>(attackInfo) });
 	}
 	else if (duelStatus.getDuelStatus() == DuelManager::duelStatus::Win)
 	{
+
 		auto updatedZones = duelStatus.getUpdatedZones();
+		qDebug("Duel was won , now a new duel should start , and change the zones %d", Color::ColorToInt(std::get<1>(updatedZones[0])));
 		getUpdatedZonesAfterWin(updatedZones);
 	}
 }

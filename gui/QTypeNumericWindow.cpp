@@ -237,7 +237,7 @@ void QTypeNumericWindow::enableAllButtons()
 
 void QTypeNumericWindow::resetTheWindow()
 {
-	enableAllButtons();
+	//enableAllButtons();
 	ui.Answer->clear();
 	ui.TimeRemaining->setValue(0);
 	m_TimeRemaining->start(10);

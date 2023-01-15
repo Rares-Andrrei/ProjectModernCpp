@@ -189,7 +189,6 @@ Color::ColorEnum Route::getAttackerColor()
 	return Color::ColorEnum::None;
 }
 
-
 DuelManager Route::sendResponseEt2(Color::ColorEnum color, int response, int time)
 {
 	cpr::Url url{ "http://localhost:18080/sendResponseEt2" }; //cand trimiti variantele time nu conteaza pi oricat
