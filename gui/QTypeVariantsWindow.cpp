@@ -115,7 +115,6 @@ void QTypeVariantsWindow::sendResponseToServer(int response, const Color::ColorE
 	auto duelStatus = m_GameInstance->sendResponseEt2(color, response, 0);
 	qDebug("Duel status for Variants");
 	emit emitDuelStatus(duelStatus);
-	this->hide();
 }
 
 void QTypeVariantsWindow::showEvent(QShowEvent* event)

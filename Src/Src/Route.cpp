@@ -5,10 +5,10 @@ void Route::addActiveGame(std::shared_ptr<Lobby> lobby)
 	if (m_gamesActive.count(lobby->getId()) == 0)
 	{
 		m_gamesActive[lobby->getId()] = std::make_shared<GameLogic>(static_cast<int>(lobby->getType()), m_db);
-		std::vector<std::shared_ptr<Player>> players = lobby->getPlayers();
+		std::vector<std::shared_ptr<Player>> players = std::move(lobby->getPlayers());
 		for (auto player : players)
 		{
-			m_gamesActive[lobby->getId()]->addPlayer(player);
+			m_gamesActive[lobby->getId()]->addPlayer(std::move(player));
 		}
 		m_gamesActive[lobby->getId()]->createDuelOrder();
 	}

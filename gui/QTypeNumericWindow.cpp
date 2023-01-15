@@ -86,7 +86,6 @@ void QTypeNumericWindow::sendResponseToServerAndGetDuelStatus(int response, int 
 	auto duelStatus = m_GameInstance->sendResponseEt2(color, response, time);
 
 	emit emitTieBreakerDuelStatus(duelStatus);
-	this->hide();
 }
 
 void QTypeNumericWindow::showEvent(QShowEvent* event)
@@ -236,7 +235,6 @@ void QTypeNumericWindow::enableAllButtons()
 
 void QTypeNumericWindow::resetTheWindow()
 {
-	//enableAllButtons();
 	ui.Answer->clear();
 	ui.TimeRemaining->setValue(0);
 	m_TimeRemaining->start(10);
@@ -246,5 +244,3 @@ void QTypeNumericWindow::showWindow()
 {
 	this->show();
 }
-
-void sendOrderToParent(const std::queue<std::pair<Color::ColorEnum, int>>& playerOrder) {}

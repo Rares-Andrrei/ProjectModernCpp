@@ -263,6 +263,7 @@ void TriviadorGame::updateTheQueueStatus()
 		m_gamePhase = GamePhase::Duels;
 		t_checkCurrentPhase->stop();
 		t_NumericWindowTimer->stop();
+		m_QTypeNumericWindow->setDuelPhase();
 		MapWindow->setPhase(GamePhase::Duels);
 
 		while (!m_playerOrder.empty())
@@ -373,6 +374,7 @@ void TriviadorGame::onSendOrderToParent(const std::queue<std::pair<Color::ColorE
 
 void TriviadorGame::getDuelStatus(DuelManager& duelStatus)
 {
+	m_QTypeVariantsWindow->close();
 	if (duelStatus.getDuelStatus() == DuelManager::duelStatus::Lose)
 	{
 		qDebug("Duel was lost , now a new duel should start");
@@ -405,6 +407,7 @@ void TriviadorGame::getDuelStatus(DuelManager& duelStatus)
 
 void TriviadorGame::getTieBreakerDuelStatus(DuelManager& duelStatus)
 {
+	m_QTypeNumericWindow->close();
 	if (duelStatus.getDuelStatus() == DuelManager::duelStatus::Lose)
 	{
 		qDebug("Duel was lost , now a new duel should start");
