@@ -82,19 +82,12 @@ void QTypeNumericWindow::setDuelPhase()
 	m_gamePhase = GamePhase::Duels;
 }
 
-void QTypeNumericWindow::sendResponseToServerAndGetDuelStatus(const QString& response)
+void QTypeNumericWindow::sendResponseToServerAndGetDuelStatus(int response, int time, const Color::ColorEnum& color)
 {
-	// request :: send the response to the server and get the duel status W/L/Conqueror
-	// make the changes to the specified zones
-	std::vector<std::tuple<int, Color::ColorEnum, int, int>> updatedZones ;		// ZoneId , Color , score , NumberOfLives
-	updatedZones.push_back(std::make_tuple(1, Color::ColorEnum::Red,100, 1));
-	std::vector<std::pair<int, Color::ColorEnum>> UpdatedPlayersScores;		// Score , Color
-	UpdatedPlayersScores.push_back(std::make_pair(2100, Color::ColorEnum::Red));
-	UpdatedPlayersScores.push_back(std::make_pair(1900, Color::ColorEnum::Yellow));
+	auto duelStatus = m_GameInstance->sendResponseEt2(color, response, time);
 
-	emit emitTieBreakerResults(updatedZones, UpdatedPlayersScores);
-		
-	//TD
+	emit emitTieBreakerDuelStatus(duelStatus);
+	this->hide();
 }
 
 void QTypeNumericWindow::showEvent(QShowEvent* event)
@@ -188,7 +181,7 @@ void QTypeNumericWindow::on_Enter_clicked()
 	}
 	else
 	{
-		sendResponseToServerAndGetDuelStatus(ui.Answer->text());
+		sendResponseToServerAndGetDuelStatus(answer, value, m_player->getColor());
 	}
 }
 

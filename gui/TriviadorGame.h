@@ -61,6 +61,8 @@ private:
 	bool checkIfWindowsAreClosed();
 
 public slots:
+	void getDuelStatus(DuelManager& duelStatus);
+	void getTieBreakerDuelStatus(DuelManager& duelStatus);
 	void duelParticipants(const std::pair<Color::ColorEnum, Color::ColorEnum>& duelParticipants);
 	void tieBreakerRound(const std::pair<Color::ColorEnum, Color::ColorEnum>& duelParticipants);
 	void getTieBreakerResults(const std::vector<std::tuple<int, Color::ColorEnum, int, int>>& UpdatedZones, const std::vector<std::pair<int, Color::ColorEnum>>& updatedPlayers);
@@ -89,7 +91,7 @@ private:
 
 	int m_numberOfDuels = 0;
 	int m_MaxNumberOfDuels = 0;
-	
+
 	int m_numberOfInteractionsLeft;
 
 	std::unique_ptr<QTimer> t_MapWindowTimer;

@@ -212,7 +212,7 @@ DuelManager Route::sendResponseEt2(Color::ColorEnum color, int response, int tim
 			Color::ColorEnum color = Color::getColor(resData["color"].i());
 			Color::ColorEnum attacker = Color::getColor(resData["attacker"].i());
 			Color::ColorEnum defender = Color::getColor(resData["defender"].i());
-			duel.setLifeTaken(ZoneId, lives, score, attacker, defender);
+			duel.setLifeTaken(ZoneId, lives, score, color, attacker, defender);
 			duel.setDuelStatus(DuelManager::duelStatus::lifeTaken);
 			return duel;
 		}

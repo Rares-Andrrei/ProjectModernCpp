@@ -110,35 +110,11 @@ void QTypeVariantsWindow::setGameInstance(const std::shared_ptr<Route>& GameInst
 	m_GameInstance = GameInstance;
 }
 
-void QTypeVariantsWindow::sendResponseToServer(int response)
+void QTypeVariantsWindow::sendResponseToServer(int response, const Color::ColorEnum& color)
 {
-	auto duelStatus = m_GameInstance->sendResponseEt2(m_player->getColor(), response, 0);
-	if (duelStatus.getDuelStatus() == DuelManager::duelStatus::Lose)
-	{
-		emit emitAttackerLost();
-		this->hide();
-		return;
-	}
-	else if (duelStatus.getDuelStatus() == DuelManager::duelStatus::lifeTaken)
-	{
-		auto attackInfo = duelStatus.getUpdatedBase();
-		// emit signal to update the life of the attacked base ?
-		emit emitLifeTakenDisplayAnotherQuestion({ std::get<3>(attackInfo), std::get<4>(attackInfo) });
-		this->hide();
-		return;
-	}
-	else if (duelStatus.getDuelStatus() == DuelManager::duelStatus::Win) 
-	{
-		auto updatedZones = duelStatus.getUpdatedZones();
-		emit emitUpdatedZonesAfterWin(updatedZones);
-		this->hide();
-		return;
-	}
-	else if (duelStatus.getDuelStatus() == DuelManager::duelStatus::Draw)
-	{
-		auto tieBreakterParticipants = duelStatus.getTieBreakerParticipants();
-		emit emitTieBreakerParticipants(tieBreakterParticipants);
-	}
+	auto duelStatus = m_GameInstance->sendResponseEt2(color, response, 0);
+	emit emitDuelStatus(duelStatus);
+	this->hide();
 }
 
 void QTypeVariantsWindow::showEvent(QShowEvent* event)
@@ -186,7 +162,8 @@ void QTypeVariantsWindow::on_Variant_clicked()
 
 void QTypeVariantsWindow::on_Enter_clicked()
 {
-	sendResponseToServer(variant);
+	disableAllButtons();
+	sendResponseToServer(variant, m_player->getColor());
 }
 
 void QTypeVariantsWindow::on_TimeRemaining_Timeout()

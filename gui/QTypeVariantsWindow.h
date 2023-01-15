@@ -20,16 +20,18 @@ public:
 	void setPlayer(const std::shared_ptr<PlayerQString>& player);
 	void setGameInstance(const std::shared_ptr<Route>& GameInstance);
 
-	void sendResponseToServer(int response);
+	void sendResponseToServer(int response, const Color::ColorEnum& color);
 
 	void disableAllButtons();
 	void enableAllButtons();
 
 signals:
-	void emitTieBreakerParticipants(const std::pair<Color::ColorEnum, Color::ColorEnum>& duelParticipants);
-	void emitAttackerLost();
-	void emitLifeTakenDisplayAnotherQuestion(const std::pair<Color::ColorEnum, Color::ColorEnum>& duelParticipants);
-	void emitUpdatedZonesAfterWin(const std::vector<std::tuple<int, Color::ColorEnum, int>>& updatedZones);
+	void emitDuelStatus(DuelManager& duelStatus);
+
+	//void emitTieBreakerParticipants(const std::pair<Color::ColorEnum, Color::ColorEnum>& duelParticipants);
+	//void emitAttackerLost();
+	//void emitLifeTakenDisplayAnotherQuestion(const std::pair<Color::ColorEnum, Color::ColorEnum>& duelParticipants);
+	//void emitUpdatedZonesAfterWin(const std::vector<std::tuple<int, Color::ColorEnum, int>>& updatedZones);
 
 protected:
 	void showEvent(QShowEvent* event) override;

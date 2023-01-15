@@ -30,14 +30,18 @@ TriviadorGame::TriviadorGame(QWidget* parent)
 
 	connect(MapWindow.get(), &Map::emitMapUpdatedChooseRegionsPhase, this, &TriviadorGame::updateTheQueueStatus);
 	connect(MapWindow.get(), &Map::emitDuelParticipants, this, &TriviadorGame::duelParticipants);
-	connect(m_QTypeNumericWindow.get(), &QTypeNumericWindow::emitTieBreakerResults, this, &TriviadorGame::getTieBreakerResults);
-	connect(m_QTypeVariantsWindow.get(), &QTypeVariantsWindow::emitTieBreakerParticipants, this, &TriviadorGame::tieBreakerRound);
+	//connect(m_QTypeNumericWindow.get(), &QTypeNumericWindow::emitTieBreakerResults, this, &TriviadorGame::getTieBreakerResults);
 
-	connect(m_QTypeVariantsWindow.get(), &QTypeVariantsWindow::emitAttackerLost, this, &TriviadorGame::startNextDuel);
-	connect(m_QTypeVariantsWindow.get(), &QTypeVariantsWindow::emitLifeTakenDisplayAnotherQuestion, this, &TriviadorGame::duelParticipants);
-	connect(m_QTypeVariantsWindow.get(), &QTypeVariantsWindow::emitUpdatedZonesAfterWin, this, &TriviadorGame::getUpdatedZonesAfterWin);
+	//connect(m_QTypeVariantsWindow.get(), &QTypeVariantsWindow::emitTieBreakerParticipants, this, &TriviadorGame::tieBreakerRound);
+
+	//connect(m_QTypeVariantsWindow.get(), &QTypeVariantsWindow::emitAttackerLost, this, &TriviadorGame::startNextDuel);
+	//connect(m_QTypeVariantsWindow.get(), &QTypeVariantsWindow::emitLifeTakenDisplayAnotherQuestion, this, &TriviadorGame::duelParticipants);
+	//connect(m_QTypeVariantsWindow.get(), &QTypeVariantsWindow::emitUpdatedZonesAfterWin, this, &TriviadorGame::getUpdatedZonesAfterWin);
 
 	connect(MapWindow.get(), &Map::emitGetNextDuel, this, &TriviadorGame::startNextDuel);
+
+	connect(m_QTypeVariantsWindow.get(), &QTypeVariantsWindow::emitDuelStatus, this, &TriviadorGame::getDuelStatus);
+	connect(m_QTypeNumericWindow.get(), &QTypeNumericWindow::emitTieBreakerDuelStatus, this, &TriviadorGame::getTieBreakerDuelStatus);
 }
 
 TriviadorGame::~TriviadorGame()
@@ -141,6 +145,7 @@ void TriviadorGame::duelsPhase()
 {
 	QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
 	auto color = m_GameInstance->getAttackerColor();
+	QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
 	MapWindow->hide();
 
 	if (color == Color::ColorEnum::None)
@@ -426,7 +431,7 @@ void TriviadorGame::duelParticipants(const std::pair<Color::ColorEnum, Color::Co
 	else
 	{
 		m_QTypeVariantsWindow->disableAllButtons();
-		m_QTypeVariantsWindow->sendResponseToServer(-1);
+		m_QTypeVariantsWindow->sendResponseToServer(-1,Color::ColorEnum::None);
 	}
 }
 
@@ -441,7 +446,7 @@ void TriviadorGame::tieBreakerRound(const std::pair<Color::ColorEnum, Color::Col
 	else
 	{
 		m_QTypeNumericWindow->disableAllButtons();
-		m_QTypeNumericWindow->sendResponseToServerAndGetDuelStatus("INVALID");
+		m_QTypeNumericWindow->sendResponseToServerAndGetDuelStatus(INT_MAX, INT_MAX, Color::ColorEnum::None);
 	}
 }
 
@@ -464,4 +469,57 @@ void TriviadorGame::onSendOrderToParent(const std::queue<std::pair<Color::ColorE
 {
 	m_playerOrder = playerOrder;
 	m_QTypeNumericWindow->close();
+}
+
+void TriviadorGame::getDuelStatus(DuelManager& duelStatus)
+{
+	if (duelStatus.getDuelStatus() == DuelManager::duelStatus::Lose)
+	{
+		startNextDuel();
+	}
+	else if (duelStatus.getDuelStatus() == DuelManager::duelStatus::lifeTaken)
+	{
+		auto attackInfo = duelStatus.getUpdatedBase();
+		// emit signal to update the life of the attacked base ?
+		auto& [zone, score, life,zoneColor , attacker , defender] = attackInfo;
+		std::vector<std::tuple<int, Color::ColorEnum, int, int>> updatedZones;
+		updatedZones.push_back(std::make_tuple(zone, zoneColor, score, life));
+		MapWindow->getUpdatedZones(updatedZones);
+		
+		duelParticipants({ std::get<4>(attackInfo), std::get<5>(attackInfo) });
+	}
+	else if (duelStatus.getDuelStatus() == DuelManager::duelStatus::Win)
+	{
+		auto updatedZones = duelStatus.getUpdatedZones();
+		getUpdatedZonesAfterWin(updatedZones);
+	}
+	else if (duelStatus.getDuelStatus() == DuelManager::duelStatus::Draw)
+	{
+		auto tieBreakterParticipants = duelStatus.getTieBreakerParticipants();
+		tieBreakerRound(tieBreakterParticipants);
+	}
+}
+
+void TriviadorGame::getTieBreakerDuelStatus(DuelManager& duelStatus)
+{
+	if (duelStatus.getDuelStatus() == DuelManager::duelStatus::Lose)
+	{
+		startNextDuel();
+	}
+	else if (duelStatus.getDuelStatus() == DuelManager::duelStatus::lifeTaken)
+	{
+		auto attackInfo = duelStatus.getUpdatedBase();
+		// emit signal to update the life of the attacked base ?
+		duelParticipants({ std::get<3>(attackInfo), std::get<4>(attackInfo) });
+	}
+	else if (duelStatus.getDuelStatus() == DuelManager::duelStatus::Win)
+	{
+		auto updatedZones = duelStatus.getUpdatedZones();
+		getUpdatedZonesAfterWin(updatedZones);
+	}
+	else if (duelStatus.getDuelStatus() == DuelManager::duelStatus::Draw)
+	{
+		auto tieBreakterParticipants = duelStatus.getTieBreakerParticipants();
+		tieBreakerRound(tieBreakterParticipants);
+	}
 }

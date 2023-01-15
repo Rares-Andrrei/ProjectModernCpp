@@ -21,7 +21,7 @@ public:
 	void setGameInstance(const std::shared_ptr<Route>& GameInstance);
 	void setDuelPhase();
 
-	void sendResponseToServerAndGetDuelStatus(const QString& response);
+	void sendResponseToServerAndGetDuelStatus(int response, int time, const Color::ColorEnum& color);
 
 	void disableAllButtons();
 	void enableAllButtons();
@@ -32,8 +32,9 @@ protected:
 
 
 signals:
+	void emitTieBreakerDuelStatus(DuelManager& duelStatus);
 	void sendOrderToParent(const std::queue<std::pair<Color::ColorEnum, int>>& playerOrder);
-	void emitTieBreakerResults(const std::vector<std::tuple<int, Color::ColorEnum, int, int>>& UpdatedZones , const std::vector<std::pair<int, Color::ColorEnum>>& updatedPlayers);
+	//void emitTieBreakerResults(const std::vector<std::tuple<int, Color::ColorEnum, int, int>>& UpdatedZones, const std::vector<std::pair<int, Color::ColorEnum>>& updatedPlayers);
 
 
 private slots:
