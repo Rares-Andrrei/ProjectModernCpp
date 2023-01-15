@@ -70,12 +70,6 @@
     <ClCompile Include="PlayerQString.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MapForThreePlayers.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BoardInterpretation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GridButtons.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -102,16 +96,13 @@
     <QtUic Include="TriviadorGame.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="QTypeNumericWindow.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
     <QtUic Include="QTypeVariantsWindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="MapForThreePlayers.ui">
+    <QtUic Include="GridButtons.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="GridButtons.ui">
+    <QtUic Include="QTypeNumericWindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -140,9 +131,6 @@
     <QtMoc Include="QTypeVariantsWindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="MapForThreePlayers.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="GridButtons.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -158,9 +146,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PlayerQString.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BoardInterpretation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GamePhaseEnum.h">

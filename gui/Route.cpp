@@ -216,7 +216,6 @@ DuelManager Route::sendResponseEt2(Color::ColorEnum color, int response, int tim
 		std::string duelStatus = resData["duelStatus"].s();
 		if (duelStatus == "lifeTaken")
 		{
-			//TODO
 			int ZoneId = resData["baseId"].i();
 			int lives = resData["lives"].i();
 			int score = resData["score"].i();
@@ -231,8 +230,6 @@ DuelManager Route::sendResponseEt2(Color::ColorEnum color, int response, int tim
 		{
 			duel.setDuelStatus(DuelManager::duelStatus::Lose);
 			return duel;
-			//TODO
-			// return status and go for next duel
 		}
 		else if (duelStatus == "Draw")
 		{
@@ -241,8 +238,6 @@ DuelManager Route::sendResponseEt2(Color::ColorEnum color, int response, int tim
 			Color::ColorEnum defender = Color::getColor(resData["defender"].i());
 			duel.setTieBreakerParticipants({ attacker, defender });
 			return duel;
-			//TODO
-			// return just the status
 		}
 		else if (duelStatus == "Win")
 		{
@@ -259,44 +254,11 @@ DuelManager Route::sendResponseEt2(Color::ColorEnum color, int response, int tim
 			duel.setDuelStatus(DuelManager::duelStatus::Win);
 			duel.setWinChanges(zonesData);
 			return duel;
-			//TODO
 		}
 
 	}
 	return duel;
-	//aici sa te uiti pe server si interpreteaza tu jsonu sa iei datele in functie de ce duelStatus e
-	//daca e draw ti-am facut ruta  getQuestionTypeNumericalEt2, pentru raspunsuri tot ruta asta trebuie apelata
 }
-/*Dintr-un oarecare motiv nu ma lasa sa returnez rvalue da niste errori de compilare aiurea pe server am reusit wvalue, poate reusesti tu sa rezolvi cumva*/
-
-//crow::json::rvalue Route::sendResponseEt2(Color::ColorEnum color, int response, int time)
-//{
-//	cpr::Url url{ "http://localhost:18080/sendResponseEt2" }; //cand trimiti variantele time nu conteaza pi oricat
-//	cpr::Payload payload{
-//			{ "sessionKey", m_sessionKey},
-//			{ "gameID", std::to_string(m_gameId)},
-//			{"color", std::to_string(Color::ColorToInt(color))},
-//			{"response", std::to_string(response)},
-//			{"time", std::to_string(time)},
-//	};
-//	auto lambda = [](cpr::Response response) {
-//		return response.text;
-//	};
-//	auto future_text = cpr::PostCallback(lambda, url, payload);
-//	while (future_text.wait_for(std::chrono::microseconds(10)) != std::future_status::ready)
-//	{
-//		QCoreApplication::processEvents();
-//	}
-//	auto aux = future_text.get();
-//	if (aux != "")
-//	{
-//		crow::json::rvalue resData = crow::json::load(aux);
-//		return resData;
-//	}
-//	return crow::json::rvalue(); //aici sa te uiti pe server si interpreteaza tu jsonu sa iei datele in functie de ce duelStatus e
-//	//daca e draw ti-am facut ruta  getQuestionTypeNumericalEt2, pentru raspunsuri tot ruta asta trebuie apelata
-//}
-///*Dintr-un oarecare motiv nu ma lasa sa returnez rvalue da niste errori de compilare aiurea pe server am reusit wvalue, poate reusesti tu sa rezolvi cumva*/
 
 std::string Route::getQuestionTypeNumericalEt2()
 {
@@ -423,27 +385,6 @@ bool Route::checkIfPlayerCanUseAdvantages(const Color::ColorEnum& color)
 	else
 	{
 		m_logger.logg(Logger::Level::Info, "invalid", response.status_code);
-		return false;
-	}
-}
-
-bool Route::checkIfPlayerCanUseAdvantages(const Color::ColorEnum& color)
-{
-	auto response = cpr::Get(
-		cpr::Url{ "http://localhost:18080/checkIfPlayerCanUseAdvantages" },
-		cpr::Payload{
-			{ "gameID", std::to_string(m_gameId)},
-			{ "color", std::to_string(Color::ColorToInt(color))},
-
-		});
-	if (response.status_code == 200)
-	{
-		crow::json::rvalue resData = crow::json::load(response.text);
-		std::string value = resData["valid"].s();
-		return value == "true";
-	}
-	else
-	{
 		return false;
 	}
 }

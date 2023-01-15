@@ -59,8 +59,6 @@ void TriviadorGame::setNumberOfPlayers(const uint16_t& numberOfPlayers)
 		m_MaxNumberOfDuels = 5 * m_numberOfPlayers;
 		m_numberOfInteractionsLeft = numberOfPlayers - 1;
 	}
-	m_board.reset(new BoardInterpretation(m_numberOfPlayers));
-	MapWindow->setBoard(m_board);
 }
 
 void TriviadorGame::displayLoadingMessage(/*const QTimer& timer*/)
@@ -223,26 +221,6 @@ void TriviadorGame::checkNumericWindowClosed()
 			}
 		}
 	}
-	//else if (m_gamePhase == GamePhase::Duels && m_duelStatus == DuelStatus::Draw)
-	//{
-	//	if (!m_QTypeNumericWindow->isVisible())
-	//	{
-	//		m_duelStatus = DuelStatus::Lose; // statusul va fi primit de la server prin json sau prin response.status_code , poate fi doar WIN sau LOSE , DRAW = LOSE
-	//		if (m_duelStatus == DuelStatus::Win)
-	//		{
-	//			// Request :: de modificat statusul la board  ??
-	//			// GUI :: deschidere fereastra cu harta pentru a se vedea cum zona a fost castigata , in cazul in care sunt indeplinite conditiile
-	//			MapWindow->show();
-	//			//mesaj de duel castigat ??
-	//		}
-	//		else if (m_duelStatus == DuelStatus::Lose)
-	//		{
-	//			// mesaj de duel pierdut ??
-	//		}
-	//		duelFinished = true;
-	//		//startDuel();
-	//	}
-	//}
 }
 
 void TriviadorGame::checkVariantsWindowClosed()
