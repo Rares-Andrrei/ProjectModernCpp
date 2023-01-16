@@ -33,7 +33,6 @@ void GameLogic::createDuelOrder()
 	{
 		m_duelOrder.push(color);
 	}
-	m_duelOrder.push(Color::ColorEnum::None);
 }
 
 int GameLogic::getDuelZoneId()

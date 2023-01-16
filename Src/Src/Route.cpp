@@ -145,6 +145,7 @@ void Route::sendResponseEt2()
 				res.code = 200;
 				m_logger.logg(Logger::Level::Info, "Request: ", req.url);
 				m_logger.logg(Logger::Level::Info, "Response: ", res.code, req.url);
+				m_gamesActive[gameID]->updatePlayersScores();
 				return res;
 			}
 			else if (state == Duel::DuelState::Draw)
@@ -175,6 +176,7 @@ void Route::sendResponseEt2()
 					zoneNr++;
 				}
 				json["zoneNr"] = zoneNr;
+				m_gamesActive[gameID]->updatePlayersScores();
 				res = json;
 				res.code = 200;
 				m_logger.logg(Logger::Level::Info, "Request: ", req.url);

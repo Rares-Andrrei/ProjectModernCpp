@@ -73,12 +73,11 @@ public:
 	bool NumericalAnswersReady();
 	std::vector<std::shared_ptr<Player>> getWinnerList();
 	std::vector<std::shared_ptr<Player>> getPlayers();
-
+	void updatePlayersScores();
 	void addPlayer(std::shared_ptr<Player> player);
 
 	~GameLogic() = default;
 private:
 	bool checkIfPlayerWasEliminated(std::shared_ptr<PlayerBase>& playerBase);
-	void updatePlayersScores();
 };
 
