@@ -137,8 +137,7 @@ void TriviadorGame::EndGame()
 
 	// Request :: terminare joc si aducerea jucatori in lobby
 	// GUI :: revenire la pagina de lobby
-	this->close();
-	this->parentWidget()->show();
+	emit emitGameEnded();
 }
 
 void TriviadorGame::displayPodium()

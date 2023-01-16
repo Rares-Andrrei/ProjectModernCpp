@@ -33,6 +33,7 @@ void GameLogic::createDuelOrder()
 	{
 		m_duelOrder.push(color);
 	}
+	m_duelOrder.push(Color::ColorEnum::None);
 }
 
 int GameLogic::getDuelZoneId()
@@ -88,7 +89,8 @@ QTypeNumerical GameLogic::getDuelNumericalQ()
 
 void GameLogic::deleteColorToAttack()
 {
-	m_duelOrder.pop();
+	if (!m_duelOrder.empty())
+		m_duelOrder.pop();
 }
 
 std::vector<std::shared_ptr<Zone>> GameLogic::getDuelZones()

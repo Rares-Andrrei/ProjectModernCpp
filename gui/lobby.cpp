@@ -49,6 +49,7 @@ lobby::lobby(const std::shared_ptr<Route>& route, QWidget* parent)
 	stylingTheLobby();
 	buttonsConnections();
 	catPictures();
+	connect(Game.get(), &TriviadorGame::emitGameEnded, this, &lobby::onGameEndedReturnToLobby);
 }
 
 void lobby::on_nextButton_clicked()
@@ -232,4 +233,11 @@ void lobby::on_gamesHistoryButton_clicked()
 void lobby::on_backButton_clicked()
 {
 	ui.lobbyGameModes->setCurrentIndex(0);
+}
+void lobby::onGameEndedReturnToLobby()
+{
+	ui.lobbyGameModes->setCurrentIndex(0);
+	Game->close();
+	Game.reset(new TriviadorGame);
+	this->show();
 }

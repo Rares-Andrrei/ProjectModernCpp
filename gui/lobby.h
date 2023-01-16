@@ -18,6 +18,8 @@ public:
 	lobby(const std::shared_ptr<Route>& route, QWidget* parent = nullptr);
 	void setPlayer(const QString& player);
 	~lobby();
+public slots:
+	void onGameEndedReturnToLobby();
 
 private:
 	QString m_PlayerName;

@@ -32,6 +32,9 @@ public:
 	void setPlayer(const std::shared_ptr<PlayerQString>& player);
 	void setPlayers(const std::vector<std::shared_ptr<PlayerQString>>& players);
 	void setGameInstance(const std::shared_ptr<Route>& GameInstance);
+
+signals:
+	void emitGameEnded();
 protected:
 	void showEvent(QShowEvent* event) override;
 
