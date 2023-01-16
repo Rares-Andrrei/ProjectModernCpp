@@ -10,7 +10,7 @@ void DuelManager::setDuelStatus(const DuelManager::duelStatus& duelStatus)
 	m_duelStatus = duelStatus;
 }
 
-void DuelManager::setLifeTaken(int ZoneId, int lives, int score, const Color::ColorEnum& attacker, const Color::ColorEnum& zoneColor, const Color::ColorEnum& defender)
+void DuelManager::setLifeTaken(int ZoneId, int lives, int score, const Color::ColorEnum& zoneColor, const Color::ColorEnum& attacker, const Color::ColorEnum& defender)
 {
 	m_duelParticipants = std::make_tuple(ZoneId, lives, score, zoneColor, attacker, defender);
 }

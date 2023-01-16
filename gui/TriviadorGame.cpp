@@ -182,7 +182,7 @@ void TriviadorGame::checkNumericWindowClosed()
 
 void TriviadorGame::checkCurrentPhase()
 {
-	if (checkIfWindowsAreClosed() == false )
+	if (checkIfWindowsAreClosed() == false)
 	{
 		return;
 	}
@@ -321,6 +321,8 @@ void TriviadorGame::startNextDuel()
 void TriviadorGame::getUpdatedZonesAfterWin(const std::vector<std::tuple<int, Color::ColorEnum, int>>& updatedZones)
 {
 	MapWindow->getUpdatedZones(updatedZones);
+	QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
+	MapWindow->updatePlayersInfo();
 }
 
 void TriviadorGame::duelParticipants(const std::pair<Color::ColorEnum, Color::ColorEnum>& duelParticipants)
@@ -383,7 +385,7 @@ void TriviadorGame::getDuelStatus(DuelManager& duelStatus)
 	else if (duelStatus.getDuelStatus() == DuelManager::duelStatus::lifeTaken)
 	{
 		auto attackInfo = duelStatus.getUpdatedBase();
-		auto& [zone, score, life, zoneColor, attacker, defender] = attackInfo;
+		auto& [zone, life, score, zoneColor, attacker, defender] = attackInfo;
 		std::vector<std::tuple<int, Color::ColorEnum, int, int>> updatedZones;
 		qDebug("Life was taken , now a new duel should start , with same people %d %d", Color::ColorToInt(attacker), Color::ColorToInt(defender));
 		updatedZones.push_back(std::make_tuple(zone, zoneColor, score, life));
@@ -422,6 +424,8 @@ void TriviadorGame::getTieBreakerDuelStatus(DuelManager& duelStatus)
 		std::vector<std::tuple<int, Color::ColorEnum, int, int>> updatedZones;
 		updatedZones.push_back(std::make_tuple(zone, zoneColor, score, life));
 		MapWindow->getUpdatedZones(updatedZones);
+		QThread::msleep(QRandomGenerator::global()->bounded(1, 50));
+		MapWindow->updatePlayersInfo();
 
 		duelParticipants({ std::get<4>(attackInfo), std::get<5>(attackInfo) });
 	}
