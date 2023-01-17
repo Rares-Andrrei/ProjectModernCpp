@@ -187,7 +187,7 @@ void Route::sendResponseEt2()
 		else if (state == Duel::DuelState::None)
 		{
 			crow::json::wvalue json;
-			json["duelStatus"] = "None";
+			json["duelStatus"] = "Lose";
 			res = json;
 			res.code = 201;
 			return res;

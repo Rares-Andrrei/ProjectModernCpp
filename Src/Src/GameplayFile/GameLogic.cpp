@@ -21,7 +21,7 @@ void GameLogic::getDuelingPlayersAndZone(Color::ColorEnum& c1, Color::ColorEnum&
 void GameLogic::createDuelOrder()
 {
 	std::vector<Color::ColorEnum> playerOrder;
-	const uint8_t nrOfDuelsPerPlayer = 3;
+	const uint8_t nrOfDuelsPerPlayer = 4;
 	for (auto player : m_players)
 	{
 		std::fill_n(std::back_inserter(playerOrder), nrOfDuelsPerPlayer, player->getColor());
