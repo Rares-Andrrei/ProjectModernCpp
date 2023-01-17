@@ -184,6 +184,14 @@ void Route::sendResponseEt2()
 				return res;
 			}
 		}
+		else if (state == Duel::DuelState::None)
+		{
+			crow::json::wvalue json;
+			json["duelStatus"] = "None";
+			res = json;
+			res.code = 201;
+			return res;
+		}
 	}
 	m_logger.logg(Logger::Level::Error, "Request: ", req.url);
 	m_logger.logg(Logger::Level::Error, "Response: ", crow::response(404).code, req.url);

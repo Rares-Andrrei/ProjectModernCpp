@@ -61,7 +61,7 @@ void GameLogic::duelPlayerResponse(Color::ColorEnum color, int variant)
 
 void GameLogic::setColorToAttack()
 {
-	if (m_duelOrder.size() != 0)
+	if (!m_duelOrder.empty())
 	{
 		m_colorToAttack = m_duelOrder.front();
 	}
@@ -121,7 +121,9 @@ bool GameLogic::duelDraw()
 
 Color::ColorEnum GameLogic::getAttackerColor()
 {
-	return m_duelOrder.front();
+	if (!m_duelOrder.empty())
+		return m_duelOrder.front();
+	return Color::ColorEnum::None;
 }
 
 std::pair<int, int> GameLogic::taxForAdvantage(Color::ColorEnum color)

@@ -49,7 +49,6 @@ lobby::lobby(const std::shared_ptr<Route>& route, QWidget* parent)
 	stylingTheLobby();
 	buttonsConnections();
 	catPictures();
-	connect(Game.get(), &TriviadorGame::emitGameEnded, this, &lobby::onGameEndedReturnToLobby);
 }
 
 void lobby::on_nextButton_clicked()
@@ -103,6 +102,7 @@ void lobby::onTwoPlayersButtonClicked()
 		Game->setPlayer(m_Player);
 		Game->setPlayers(m_players);
 		Game->setGameInstance(m_routes);
+		connect(Game.get(), &TriviadorGame::emitGameEnded, this, &lobby::onGameEndedReturnToLobby);
 		Game->show();
 		this->hide();
 	}
@@ -129,6 +129,7 @@ void lobby::onThreePlayersButtonClicked()
 		Game->setPlayer(m_Player);
 		Game->setPlayers(m_players);
 		Game->setGameInstance(m_routes);
+		connect(Game.get(), &TriviadorGame::emitGameEnded, this, &lobby::onGameEndedReturnToLobby);
 		Game->show();
 		this->hide();
 	}
@@ -155,6 +156,7 @@ void lobby::onFourPlayersButtonClicked()
 		Game->setPlayer(m_Player);
 		Game->setPlayers(m_players);
 		Game->setGameInstance(m_routes);
+		connect(Game.get(), &TriviadorGame::emitGameEnded, this, &lobby::onGameEndedReturnToLobby);
 		Game->show();
 		this->hide();
 	}
@@ -238,6 +240,6 @@ void lobby::onGameEndedReturnToLobby()
 {
 	ui.lobbyGameModes->setCurrentIndex(0);
 	Game->close();
-	Game.reset(new TriviadorGame);
+	Game.reset();
 	this->show();
 }

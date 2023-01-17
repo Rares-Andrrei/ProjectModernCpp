@@ -258,7 +258,11 @@ DuelManager Route::sendResponseEt2(Color::ColorEnum color, int response, int tim
 			m_logger.logg(Logger::Level::Info, "win");
 			return duel;
 		}
-
+		else if (duelStatus == "None")
+		{
+			duel.setDuelStatus(DuelManager::duelStatus::None);
+			return duel;
+		}
 	}
 	return duel;
 }

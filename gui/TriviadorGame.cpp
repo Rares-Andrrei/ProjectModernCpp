@@ -73,7 +73,7 @@ void TriviadorGame::showEvent(QShowEvent* event)
 }
 
 void TriviadorGame::chooseBasePhase()
-{
+{ 
 	t_NumericWindowTimer->start();
 	changePhase = false;
 	m_gamePhase = GamePhase::ChooseBase;
@@ -133,7 +133,7 @@ void TriviadorGame::EndGame()
 
 	m_gamePhase = GamePhase::End;
 	// Request :: de primit rezultatele finale
-	displayPodium();
+	//displayPodium();
 
 	// Request :: terminare joc si aducerea jucatori in lobby
 	// GUI :: revenire la pagina de lobby
@@ -404,6 +404,10 @@ void TriviadorGame::getDuelStatus(DuelManager& duelStatus)
 		qDebug("Duel was draw , now a new duel should start between %d and %d", Color::ColorToInt(tieBreakterParticipants.first), Color::ColorToInt(tieBreakterParticipants.second));
 		tieBreakerRound(tieBreakterParticipants);
 	}
+	else
+	{
+		EndGame();
+	}
 }
 
 void TriviadorGame::getTieBreakerDuelStatus(DuelManager& duelStatus)
@@ -434,5 +438,9 @@ void TriviadorGame::getTieBreakerDuelStatus(DuelManager& duelStatus)
 		auto updatedZones = duelStatus.getUpdatedZones();
 		qDebug("Duel was won , now a new duel should start , and change the zones %d", Color::ColorToInt(std::get<1>(updatedZones[0])));
 		getUpdatedZonesAfterWin(updatedZones);
+	}
+	else
+	{
+		EndGame();
 	}
 }
